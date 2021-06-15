@@ -19,7 +19,7 @@ class ApInfoBackend : public QObject
     Q_PROPERTY(QString ap_armedReference READ ap_armedReference NOTIFY ap_armedReferenceChanged)
 
 
-    bool d_has_ap = true;
+    bool d_has_ap = false;
 
     QString d_ap_lateralActive = "";
     QString d_ap_lateralArmed = "";

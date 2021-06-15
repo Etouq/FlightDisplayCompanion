@@ -22,6 +22,7 @@ void NetworkClient::connectInterfaceSignals(NetworkInterface *netInterface)
     connect(this, &NetworkClient::displayError, netInterface, &NetworkInterface::setNewErrorString);
     connect(&tcpSocket, &QAbstractSocket::connected, netInterface, &NetworkInterface::setConnected);
     connect(&tcpSocket, &QAbstractSocket::disconnected, netInterface, &NetworkInterface::setDisconnected);
+    connect(&tcpSocket, &QAbstractSocket::stateChanged, netInterface, &NetworkInterface::stateChanged);
     connect(this, &NetworkClient::simConnectionFailed, netInterface, &NetworkInterface::simConnectionClosed);
     connect(this, &NetworkClient::connectedToSimServer, netInterface, &NetworkInterface::connectedToSim);
     connect(this, &NetworkClient::connectedToGaugeDesigner, netInterface, &NetworkInterface::connectedToDesigner);

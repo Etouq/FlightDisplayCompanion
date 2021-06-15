@@ -63,7 +63,7 @@ Item {
         id: drawerCloseTimer
         repeat: false
         running: false
-        interval: 2250
+        interval: 4750
         onTriggered: errorDrawer.close()
     }
 
@@ -121,7 +121,7 @@ Item {
                 anchors.fill: parent
                 color: "white"
                 opacity: 0.24
-                visible: selectAircraft.focus && !selectAircraft.pressed
+                visible: selectAircraft.visualFocus && !selectAircraft.pressed
             }
         }
 

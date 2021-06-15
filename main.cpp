@@ -63,6 +63,8 @@ int main(int argc, char *argv[])
     QObject::connect(&planeManager, &AircraftManager::updateAircraft, &pfdInterfaceManager, &PfdManager::changeAircraft);
     netClient.connectInterfaceSignals(&netInterface);
 
+    QObject::connect(&settingsInterface, &SettingsInterface::temperatureUnitChanged, pfdInterfaceManager.getBottomInterface(), &BottombarBackend::updateTemperatureUnit);
+
 
     planeManager.initialize();
     mfdInterface.loadFlightplan();

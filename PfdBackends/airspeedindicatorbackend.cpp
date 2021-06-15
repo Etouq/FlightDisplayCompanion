@@ -1,4 +1,5 @@
 #include "airspeedindicatorbackend.h"
+#include <cmath>
 
 AirspeedIndicatorBackend::AirspeedIndicatorBackend(QObject *parent) : QObject(parent)
 {
@@ -116,6 +117,7 @@ double AirspeedIndicatorBackend::airspeed() const
 {
     return d_airspeed;
 }
+
 double AirspeedIndicatorBackend::maxSpeed() const
 {
     return d_max_speed;

@@ -26,7 +26,7 @@ public:
     Q_INVOKABLE bool getShowRangeRingText() const;
 
 signals:
-    void temperatureUnitChanged();
+    void temperatureUnitChanged(int unit);
     void pressureUnitChanged();
     void showMapFuelRangeChanged();
     void showRangeRingsChanged();

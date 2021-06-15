@@ -484,10 +484,10 @@ class AirspeedIndicator {
         this.centerGroup.transform[0].y = (value - center) * 10 * this.scaleFactor;
 
         if (!this.nocolor && this.minValue > 0) {
-            this.startElement.transform[0].y = (835 + ((center + 40 - this.minValue) * 10) + (value - center) * 10) * this.scaleFactor;
+            this.startElement.transform[0].y = (1185.6 - 9.6 * this.minValue + 9.6 * value);
         }
         if (iasInterface.maxSpeed > 0) {
-            this.endElement.transform[0].y = ((Math.min(Math.max(center + 40 - iasInterface.maxSpeed, -10), 80) * 10) + (value - center) * 10) * this.scaleFactor;
+            this.endElement.transform[0].y = (Math.min(Math.max(center + 40 - iasInterface.maxSpeed, -10), 80) + value - center) * 9.6;
         }
 
         if (this.currentCenterGrad != center) {
@@ -520,7 +520,7 @@ class AirspeedIndicator {
 
         let endValue = value % 10;
         let endCenter = Math.round(endValue);
-        this.endDigitsGroup.transform[0].y = (endValue - endCenter) * 45 * this.scaleFactor;
+        this.endDigitsGroup.transform[0].y = (endValue - endCenter) * 43.2;
         for (let i = 0; i < this.endDigits.length; i++) {
             if (value == 20) {
                 this.endDigits[i].text = (i == 2 ? "-" : " ");
@@ -534,7 +534,7 @@ class AirspeedIndicator {
             this.digit2Bot.text = Math.floor(d2Value);
             this.digit2Top.text = Math.ceil(d2Value) % 10;
             if (endValue > 9) {
-                let translate = (endValue - 9) * 55 * this.scaleFactor;
+                let translate = (endValue - 9) * 52.8;
                 this.digit2Bot.transform[0].y = translate;
                 this.digit2Top.transform[0].y = translate;
             }
@@ -548,7 +548,7 @@ class AirspeedIndicator {
                 this.digit1Bot.text = value < 100 ? "" : Math.floor(d1Value);
                 this.digit1Top.text = Math.ceil(d1Value) % 10;
                 if (endValue > 9 && d2Value > 9) {
-                    let translate = (endValue - 9) * 55 * this.scaleFactor;
+                    let translate = (endValue - 9) * 52.8;
                     this.digit1Bot.transform[0].y = translate;
                     this.digit1Top.transform[0].y = translate;
                 }

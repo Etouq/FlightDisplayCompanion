@@ -127,3 +127,13 @@ void NetworkInterface::connectedToDesigner()
     d_serverIsDesigner = true;
     emit serverIsDesignerChanged();
 }
+
+void NetworkInterface::connectionChanged(QAbstractSocket::SocketState state)
+{
+    if (state == QAbstractSocket::UnconnectedState)
+        setDisconnected();
+    if (state == QAbstractSocket::ConnectedState)
+        setConnected();
+    emit stateChanged(static_cast<int>(state));
+    setNewErrorString("received state change");
+}

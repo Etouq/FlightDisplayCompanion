@@ -576,7 +576,7 @@ void NetworkClient::readData()
             }
             case DataIdentifiers::TOTAL_AIR_TEMP:
             {
-                int32_t newValue = 0;
+                float newValue = 0;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();

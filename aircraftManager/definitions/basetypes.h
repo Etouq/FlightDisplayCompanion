@@ -4,6 +4,7 @@
 #include <QColor>
 #include <QString>
 
+// fileversion for aircraft definition files
 enum class FileVersion : int16_t
 {
     V1

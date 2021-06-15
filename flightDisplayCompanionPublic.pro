@@ -1,6 +1,6 @@
 QT += core qml quick androidextras network positioning location svg gui sql quickcontrols2
 TEMPLATE = app
-CONFIG += c++latest
+CONFIG += c++latest console
 
 
 #android: include(C:/Users/Mikey/Downloads/android_openssl-master/android_openssl-master/openssl.pri)
@@ -106,7 +106,55 @@ DISTFILES += \
     android/gradle/wrapper/gradle-wrapper.properties \
     android/gradlew \
     android/gradlew.bat \
-    android/res/values/libs.xml
+    android/res/values/libs.xml \
+    qml/main.qml \
+    qml/deniedAccessDialog.qml \
+    qml/mfdPage/engineDisplay/JetDouble.qml \
+    qml/mfdPage/engineDisplay/JetQuad.qml \
+    qml/mfdPage/engineDisplay/JetSingle.qml \
+    qml/mfdPage/engineDisplay/PropDouble.qml \
+    qml/mfdPage/engineDisplay/PropSingle.qml \
+    qml/mfdPage/engineDisplay/TurbopropDouble.qml \
+    qml/mfdPage/engineDisplay/TurbopropSingle.qml \
+    qml/mfdPage/engineDisplay/gauges/CircularGauge.qml \
+    qml/mfdPage/engineDisplay/gauges/VerticalGauge.qml \
+    qml/mfdPage/engineDisplay/gauges/VerticalDoubleGauge.qml \
+    qml/mfdPage/engineDisplay/gauges/FuelText.qml \
+    qml/mfdPage/engineDisplay/gauges/FlapsGauge.qml \
+    qml/mfdPage/engineDisplay/gauges/FlapsSpoilersGauge.qml \
+    qml/mfdPage/engineDisplay/gauges/TrimGauges.qml \
+    qml/mfdPage/engineDisplay/gauges/ElevatorTrimGauge.qml \
+    qml/mfdPage/engineDisplay/gauges/RudderTrimGauge.qml \
+    qml/mfdPage/engineDisplay/gauges/AileronTrimGauge.qml \
+    qml/mfdPage/engineDisplay/gauges/FuelSingleTankGauge.qml \
+    qml/mfdPage/engineDisplay/gauges/FuelDoubleTankGauge.qml \
+    qml/mfdPage/map/MapItem.qml \
+    qml/mfdPage/map/RangeCircles.qml \
+    qml/mfdPage/map/FlightplanWpIcons.qml \
+    qml/mfdPage/map/MapButtons.qml \
+    qml/mfdPage/MfdPage.qml \
+    qml/mfdPage/NavTopBar.qml \
+    qml/pfdPage/PfdPage.qml \
+    qml/pfdPage/pfdElements/AirspeedIndicator/AirspeedReferenceGroup.qml \
+    qml/pfdPage/pfdElements/AirspeedIndicator/CenterGroup.qml \
+    qml/pfdPage/pfdElements/AngleOfAttackIndicator.qml \
+    qml/pfdPage/pfdElements/AutopilotInfos.qml \
+    qml/pfdPage/pfdElements/BottomBar.qml \
+    qml/pfdPage/pfdElements/ComInfos.qml \
+    qml/pfdPage/pfdElements/NavFreqInfos.qml \
+    qml/pfdPage/pfdElements/NavInfos.qml \
+    qml/pfdPage/pfdElements/RadarAltitude.qml \
+    qml/pfdPage/pfdElements/WindDataDisplay.qml \
+    qml/settingsPage/flightplan/FlightplanPage.qml \
+    qml/settingsPage/flightplan/FlightplanTable.qml \
+    qml/settingsPage/flightplan/FlightplanTableCell.qml \
+    qml/settingsPage/flightplan/FlightplanInput.qml \
+    qml/settingsPage/flightplan/StyledButton.qml \
+    qml/settingsPage/flightplan/StyledComboBox.qml \
+    qml/settingsPage/ThumbnailView.qml \
+    qml/settingsPage/StyledCheckBox.qml \
+    qml/settingsPage/connection/ConnectionInput.qml \
+    qml/settingsPage/SettingsPage.qml
 
 ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
 

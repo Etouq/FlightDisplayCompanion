@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 4.15.0, 2021-06-10T21:10:52. -->
+<!-- Written by QtCreator 4.15.0, 2021-06-15T15:57:54. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -112,9 +112,6 @@
       <value type="bool" key="QtProjectManager.QMakeBuildStep.QMakeForced">false</value>
       <valuelist type="QVariantList" key="QtProjectManager.QMakeBuildStep.SelectedAbis">
        <value type="QString">armeabi-v7a</value>
-       <value type="QString">arm64-v8a</value>
-       <value type="QString">x86</value>
-       <value type="QString">x86_64</value>
       </valuelist>
      </valuemap>
      <valuemap type="QVariantMap" key="ProjectExplorer.BuildStepList.Step.1">

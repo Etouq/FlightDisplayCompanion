@@ -21,7 +21,7 @@ int BottombarBackend::groundSpeed() const
     return d_groundSpeed;
 }
 
-int BottombarBackend::totalAirTemp() const
+QString BottombarBackend::totalAirTemp() const
 {
     return d_totalAirTemp;
 }
@@ -45,8 +45,31 @@ void BottombarBackend::updateGroundSpeed(int newValue)
     emit groundSpeedChanged();
 }
 
-void BottombarBackend::updateTotalAirTemp(int newValue)
+void BottombarBackend::updateTotalAirTemp(float newValue)
 {
-    d_totalAirTemp = newValue;
+    switch (d_tempUnit)
+    {
+        case 1:
+            d_totalAirTemp = QString::number(lround(newValue * 1.8 + 32.0)) + "ºF";
+            break;
+        case 2:
+            d_totalAirTemp = QString::number(lround(newValue + 273.15)) + "K";
+            break;
+        case 3:
+            d_totalAirTemp = QString::number(lround((newValue + 273.15) * 1.8)) + "ºR";
+            break;
+        case 0:
+        default:
+            d_totalAirTemp = QString::number(lround(newValue)) + "ºC";
+            break;
+    }
+
+    d_tatValue = newValue;
     emit totalAirTempChanged();
+}
+
+void BottombarBackend::updateTemperatureUnit(int unit)
+{
+    d_tempUnit = unit;
+    updateTotalAirTemp(d_tatValue);
 }

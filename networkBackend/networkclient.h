@@ -88,7 +88,7 @@ signals:
     void zulu_secondsChanged(int newValue);
     void local_secondsChanged(int newValue);
     void ground_speedChanged(int newValue);
-    void total_air_tempChanged(int newValue);
+    void total_air_tempChanged(float newValue);
 
     // hsi
     void rotationChanged(double newValue);

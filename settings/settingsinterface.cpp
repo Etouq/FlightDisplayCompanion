@@ -8,7 +8,7 @@ SettingsInterface::SettingsInterface(QObject *parent) : QObject(parent)
 void SettingsInterface::setTemperatureUnit(int unitId)
 {
     SettingsController::setTemperatureUnit(unitId);
-    emit temperatureUnitChanged();
+    emit temperatureUnitChanged(unitId);
 }
 
 int SettingsInterface::getTemperatureUnit() const

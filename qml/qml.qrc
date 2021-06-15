@@ -30,12 +30,8 @@
         <file>mfdPage/map/MapItem.qml</file>
         <file>pfdPage/jsHelpers/AirspeedIndicator.js</file>
         <file>pfdPage/jsHelpers/Altimeter.js</file>
-        <file>pfdPage/jsHelpers/AngleOfAttackIndicator.js</file>
         <file>pfdPage/jsHelpers/AttitudeIndicator.js</file>
-        <file>pfdPage/jsHelpers/AutopilotInfos.js</file>
         <file>pfdPage/jsHelpers/HSIndicator.js</file>
-        <file>pfdPage/jsHelpers/RadioInfos.js</file>
-        <file>pfdPage/jsHelpers/WindDataDisplay.js</file>
         <file>pfdPage/PfdPage.qml</file>
         <file>settingsPage/flightplan/FlightplanPage.qml</file>
         <file>settingsPage/thumbnails/AIRBUS_A320_NEO.JPG</file>
@@ -68,7 +64,6 @@
         <file>settingsPage/thumbnails/TBM_930.JPG</file>
         <file>settingsPage/thumbnails/VL3.JPG</file>
         <file>settingsPage/thumbnails/XCUB.JPG</file>
-        <file>pfdPage/RadarAltitudeItem.qml</file>
         <file>main.qml</file>
         <file>settingsPage/SettingsPage.qml</file>
         <file>mfdPage/MfdPage.qml</file>
@@ -92,7 +87,6 @@
         <file>mfdPage/engineDisplay/gauges/FuelSingleTankGauge.qml</file>
         <file>mfdPage/engineDisplay/gauges/FuelDoubleTankGauge.qml</file>
         <file>deniedAccessDialog.qml</file>
-        <file>pfdPage/NavInfoItem.qml</file>
         <file>settingsPage/connection/ConnectionInput.qml</file>
         <file>images/check.png</file>
         <file>settingsPage/flightplan/StyledButton.qml</file>
@@ -100,5 +94,16 @@
         <file>settingsPage/flightplan/StyledTextInput.qml</file>
         <file>settingsPage/ThumbnailView.qml</file>
         <file>settingsPage/StyledCheckBox.qml</file>
+        <file>images/fdArrow.png</file>
+        <file>images/courseToIcon.png</file>
+        <file>images/directToIcon.png</file>
+        <file>pfdPage/pfdElements/AngleOfAttackIndicator.qml</file>
+        <file>pfdPage/pfdElements/AutopilotInfos.qml</file>
+        <file>pfdPage/pfdElements/BottomBar.qml</file>
+        <file>pfdPage/pfdElements/ComInfos.qml</file>
+        <file>pfdPage/pfdElements/NavFreqInfos.qml</file>
+        <file>pfdPage/pfdElements/NavInfos.qml</file>
+        <file>pfdPage/pfdElements/RadarAltitude.qml</file>
+        <file>pfdPage/pfdElements/WindDataDisplay.qml</file>
     </qresource>
 </RCC>

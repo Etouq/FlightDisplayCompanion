@@ -6,9 +6,32 @@ import "../flightplan"
 
 GridLayout {
     x: 50
-    y: 100
+    y: 80
     columns: 2
     rowSpacing: 10
+
+    Connections {
+        target: netInterface
+        function onStateChanged(stateId) {
+            switch (stateId) {
+                case 1:
+                    connectionText.text = "Looking up Host";
+                    break;
+                case 2:
+                    connectionText.text = "Connecting";
+                    break;
+                case 4:
+                    connectionText.text = "Socket Bound";
+                    break;
+                case 6:
+                    connectionText.text = "Closing";
+                    break;
+                default:
+                    connectionText.text = "";
+                    break;
+            }
+        }
+    }
 
     Button {
         id: connectButton
@@ -16,7 +39,6 @@ GridLayout {
         Layout.preferredHeight: 100
         Layout.rowSpan: 2
         Layout.rightMargin: 20
-        opacity: enabled ? 1 : 0.38
 
         background: Rectangle {
             color: connectButton.enabled ? (connectButton.pressed ? "white" : "#00b4ff") : "#949595"
@@ -26,12 +48,12 @@ GridLayout {
                 anchors.fill: parent
                 color: "white"
                 opacity: 0.24
-                visible: connectButton.focus && !connectButton.pressed
+                visible: connectButton.visualFocus && !connectButton.pressed
             }
         }
 
         contentItem: Text {
-            text: netInterface.connected === 0 ? "Connect" : netInterface.connected === 1 ? "Disconnect" : netInterface.connected === 2 ? "Connecting" : "Disconnecting"
+            text: netInterface.connected === 0 || netInterface.connected === 2 ? "Connect" : "Disconnect"
             color: connectButton.enabled ? (connectButton.pressed ? "#00b4ff" : "white") : "#666767"
             font.family: "Roboto Mono"
             font.bold: true
@@ -80,5 +102,14 @@ GridLayout {
             if (netInterface.port > -1)
                 text = netInterface.port;
         }
+    }
+
+    Text {
+        id: connectionText
+        Layout.columnSpan: 2
+        Layout.fillWidth: true
+        color: "black"
+        font.family: "Roboto Mono"
+        font.pixelSize: 20
     }
 }

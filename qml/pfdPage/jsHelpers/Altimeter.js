@@ -578,7 +578,7 @@ class Altimeter {
         }
         let endValue = value % 100;
         let endCenter = Math.round(endValue / 10) * 10;
-        this.endDigitsGroup.transform[0].y = (endValue - endCenter) * 4.5 * this.scaleFactor;
+        this.endDigitsGroup.transform[0].y = (endValue - endCenter) * 4.32;
         for (let i = 0; i < this.endDigits.length; i++) {
             let digitValue = Math.round((((2 - i) * 10) + value) % 100 / 10) * 10;
             this.endDigits[i].text = Math.round(Math.abs((digitValue % 100) / 10)) + "0";
@@ -592,7 +592,7 @@ class Altimeter {
                 this.digit3Bot.text = value < 100 ? "" : Math.floor(d3Value);
                 this.digit3Top.text = Math.ceil(d3Value) % 10;
 
-                let translate = (endValue - 90) * 5.7 * this.scaleFactor;
+                let translate = (endValue - 90) * 5.472;
                 this.digit3Bot.transform[0].y = translate;
                 this.digit3Top.transform[0].y = translate;
             }
@@ -600,7 +600,7 @@ class Altimeter {
                 this.digit3Bot.text = Math.ceil(d3Value) % 10;
                 this.digit3Top.text = value > -100 ? "" : Math.floor(d3Value);
 
-                let translate = (endValue + 100) * 5.7 * this.scaleFactor;
+                let translate = (endValue + 100) * 5.472;
                 this.digit3Bot.transform[0].y = translate;
                 this.digit3Top.transform[0].y = translate;
             }
@@ -620,7 +620,7 @@ class Altimeter {
                         this.digit2Bot.text = value < 1000 ? "" : Math.floor(d2Value);
                         this.digit2Top.text = Math.ceil(d2Value) % 10;
 
-                        let translate = (endValue - 90) * 5.7 * this.scaleFactor;
+                        let translate = (endValue - 90) * 5.472;
                         this.digit2Bot.transform[0].y = translate;
                         this.digit2Top.transform[0].y = translate;
                     }
@@ -628,7 +628,7 @@ class Altimeter {
                         this.digit2Bot.text = Math.ceil(d2Value) % 10;
                         this.digit2Top.text = value > -1000 ? "" : Math.floor(d2Value);
 
-                        let translate = (endValue + 100) * 5.7 * this.scaleFactor;
+                        let translate = (endValue + 100) * 5.472;
                         this.digit2Bot.transform[0].y = translate;
                         this.digit2Top.transform[0].y = translate;
                     }
@@ -656,7 +656,7 @@ class Altimeter {
                             this.digit1Bot.text = value < 10000 ? "" : Math.floor(d1Value);
                             this.digit1Top.text = Math.ceil(d1Value) % 10;
 
-                            let translate = (endValue - 90) * 5.7 * this.scaleFactor;
+                            let translate = (endValue - 90) * 5.472;
                             this.digit1Bot.transform[0].y = translate;
                             this.digit1Top.transform[0].y = translate;
                         }
@@ -664,7 +664,7 @@ class Altimeter {
                             this.digit1Bot.text = Math.ceil(d1Value) % 10;
                             this.digit1Top.text = value > -10000 ? "" : Math.floor(d1Value);
 
-                            let translate = (endValue + 100) * 5.7 * this.scaleFactor;
+                            let translate = (endValue + 100) * 5.472;
                             this.digit1Bot.transform[0].y = translate;
                             this.digit1Top.transform[0].y = translate;
                         }

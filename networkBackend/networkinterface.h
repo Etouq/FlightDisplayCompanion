@@ -4,6 +4,8 @@
 
 #include <QObject>
 #include <QString>
+#include <QAbstractSocket>
+
 
 // interface for qml to get connection state etc.
 class NetworkInterface : public QObject
@@ -51,6 +53,7 @@ signals:
     void disconnectPressed();
 
     void serverIsDesignerChanged();
+    void stateChanged(int state);
 
 public slots:
     void resetButton();
@@ -60,6 +63,7 @@ public slots:
     void simConnectionClosed();
     void connectedToSim();
     void connectedToDesigner();
+    void connectionChanged(QAbstractSocket::SocketState state);
 };
 
 #endif   // NETWORKINTERFACE_H
