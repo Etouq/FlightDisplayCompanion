@@ -109,7 +109,7 @@ Item {
     Button {
         id: selectAircraft
         x: 965
-        y: 100
+        y: 80
         width: 250
         height: 100
 
