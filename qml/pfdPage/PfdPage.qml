@@ -4,10 +4,10 @@ import QtQuick.Shapes 1.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
 import "jsHelpers/AirspeedIndicator.js" as AirspeedIndicatorJs
-import "jsHelpers/AttitudeIndicator.js" as AttitudeIndicatorJs
 import "jsHelpers/Altimeter.js" as AltimeterJs
 import "jsHelpers/HSIndicator.js" as HSIndicatorJs
 import "pfdElements"
+import "pfdElements/AttitudeIndicator"
 
 Item {
 
@@ -18,7 +18,6 @@ Item {
 
     property int airspeedLastCallTime: 0
 
-    property var attItem: new AttitudeIndicatorJs.AttitudeIndicator()
     property var altItem: new AltimeterJs.Altimeter()
     property var iasItem: new AirspeedIndicatorJs.AirspeedIndicator()
     property var hsiItem: new HSIndicatorJs.HSIndicator()
@@ -61,20 +60,15 @@ Item {
         }
     }
 
+    AttitudeBackground {
+        anchors.fill: parent
+    }
 
-    Item {
-        id: attParent
-        width: 576
-        height: 432
+    AttitudeIndicator {
         anchors.top: parent.top
         anchors.topMargin: 150
         anchors.left: parent.left
         anchors.leftMargin: 672
-
-        Component.onCompleted:
-        {
-            pfdPageId.attItem.completedCallback(attParent);
-        }
     }
 
     Shape {

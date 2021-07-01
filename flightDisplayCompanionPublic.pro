@@ -138,6 +138,13 @@ DISTFILES += \
     qml/pfdPage/pfdElements/AirspeedIndicator/AirspeedReferenceGroup.qml \
     qml/pfdPage/pfdElements/AirspeedIndicator/CenterGroup.qml \
     qml/pfdPage/pfdElements/AngleOfAttackIndicator.qml \
+    qml/pfdPage/pfdElements/AttitudeIndicator/AttitudeBackground.qml \
+    qml/pfdPage/pfdElements/AttitudeIndicator/AttitudeBank.qml \
+    qml/pfdPage/pfdElements/AttitudeIndicator/AttitudeIndicator.qml \
+    qml/pfdPage/pfdElements/AttitudeIndicator/AttitudePitch.qml \
+    qml/pfdPage/pfdElements/AttitudeIndicator/AttitudePitchContainer.qml \
+    qml/pfdPage/pfdElements/AttitudeIndicator/Cursors.qml \
+    qml/pfdPage/pfdElements/AttitudeIndicator/FlightDirector.qml \
     qml/pfdPage/pfdElements/AutopilotInfos.qml \
     qml/pfdPage/pfdElements/BottomBar.qml \
     qml/pfdPage/pfdElements/ComInfos.qml \

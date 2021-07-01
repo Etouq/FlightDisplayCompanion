@@ -136,7 +136,7 @@ class AttitudeIndicator {
     }
 
     completedCallback(_parent) {
-        this.horizonTop = Qt.createQmlObject(
+        /*this.horizonTop = Qt.createQmlObject(
             'import QtQuick 2.15; Rectangle {' +
             'x: ' + (-800 * this.scaleFactor) + ';' +
             'y: ' + (-800 * this.scaleFactor) + ';' +
@@ -168,7 +168,7 @@ class AttitudeIndicator {
             'height: ' + (6 * this.scaleFactor) + ';' +
             'color: "#e0e0e0" }',
             this.bottomPart);
-        this.bottomPart.data.push(separator);
+        this.bottomPart.data.push(separator);*/
 
         let attitude_pitch_container = Qt.createQmlObject(
             'import QtQuick 2.15; Item {' +
