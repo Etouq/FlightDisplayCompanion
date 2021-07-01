@@ -18,103 +18,100 @@ class QIODevice;
 
 
 // utility function for conversion to and from binary format
-class BinaryUtil
+namespace BinaryUtil
 {
-    BinaryUtil() = default;
+// fundamental types
+QByteArray toBinary(int8_t val);
+QByteArray toBinary(uint8_t val);
+QByteArray toBinary(int16_t val);
+QByteArray toBinary(uint16_t val);
+QByteArray toBinary(int32_t val);
+QByteArray toBinary(uint32_t val);
+QByteArray toBinary(int64_t val);
+QByteArray toBinary(uint64_t val);
 
-public:
-    // fundamental types
-    static QByteArray toBinary(int8_t val);
-    static QByteArray toBinary(uint8_t val);
-    static QByteArray toBinary(int16_t val);
-    static QByteArray toBinary(uint16_t val);
-    static QByteArray toBinary(int32_t val);
-    static QByteArray toBinary(uint32_t val);
-    static QByteArray toBinary(int64_t val);
-    static QByteArray toBinary(uint64_t val);
+QByteArray toBinary(bool bl);
 
-    static QByteArray toBinary(bool bl);
-
-    static QByteArray toBinary(float flt);
-    static QByteArray toBinary(double dbl);
+QByteArray toBinary(float flt);
+QByteArray toBinary(double dbl);
 
 
-    // basic types
-    static QByteArray toBinary(const QString &str);
+// basic types
+QByteArray toBinary(const QString &str);
 
-    static QByteArray toBinary(const QColor &col);
+QByteArray toBinary(const QColor &col);
 
-    static QByteArray toBinary(Units unit);
-
-
-    // struct types
-    static QByteArray toBinary(const ColorZone &zone);
-
-    static QByteArray toBinary(const GradDef &grad);
-
-    static QByteArray toBinary(const TextGradDef &textGrad);
-
-    static QByteArray toBinary(const FlightPlanWaypoint &wp);
+QByteArray toBinary(Units unit);
 
 
-    // vector types
-    static QByteArray toBinary(const QVector<ColorZone> &vec);
+// struct types
+QByteArray toBinary(const ColorZone &zone);
 
-    static QByteArray toBinary(const QVector<GradDef> &vec);
+QByteArray toBinary(const GradDef &grad);
 
-    static QByteArray toBinary(const QVector<TextGradDef> &vec);
+QByteArray toBinary(const TextGradDef &textGrad);
 
-    static QByteArray toBinary(const QList<FlightPlanWaypoint> &wpList);
+QByteArray toBinary(const FlightPlanWaypoint &wp);
 
-    static QByteArray toBinary(const QVector<FlightPlanWaypoint> &wpVec);
+
+// vector types
+QByteArray toBinary(const QVector<ColorZone> &vec);
+
+QByteArray toBinary(const QVector<GradDef> &vec);
+
+QByteArray toBinary(const QVector<TextGradDef> &vec);
+
+QByteArray toBinary(const QList<FlightPlanWaypoint> &wpList);
+
+QByteArray toBinary(const QVector<FlightPlanWaypoint> &wpVec);
 
 
 
-    // read functions
-    // fundamental types
-    static int8_t readInt8_t(QIODevice &data);
-    static uint8_t readUint8_t(QIODevice &data);
-    static int16_t readInt16_t(QIODevice &data);
-    static uint16_t readUint16_t(QIODevice &data);
-    static int32_t readInt32_t(QIODevice &data);
-    static uint32_t readUint32_t(QIODevice &data);
-    static int64_t readInt64_t(QIODevice &data);
-    static uint64_t readUint64_t(QIODevice &data);
+// read functions
+// fundamental types
+int8_t readInt8_t(QIODevice &data);
+uint8_t readUint8_t(QIODevice &data);
+int16_t readInt16_t(QIODevice &data);
+uint16_t readUint16_t(QIODevice &data);
+int32_t readInt32_t(QIODevice &data);
+uint32_t readUint32_t(QIODevice &data);
+int64_t readInt64_t(QIODevice &data);
+uint64_t readUint64_t(QIODevice &data);
 
-    static bool readBool(QIODevice &data);
+bool readBool(QIODevice &data);
 
-    static float readFloat(QIODevice &data);
-    static double readDouble(QIODevice &data);
-
-
-    // basic types
-    static QString readString(QIODevice &data);
-
-    static QColor readColor(QIODevice &data);
-
-    static Units readUnit(QIODevice &data);
+float readFloat(QIODevice &data);
+double readDouble(QIODevice &data);
 
 
-    // struct types
-    static ColorZone readColorZone(QIODevice &data);
+// basic types
+QString readString(QIODevice &data);
 
-    static GradDef readGrad(QIODevice &data);
+QColor readColor(QIODevice &data);
 
-    static TextGradDef readTextGrad(QIODevice &data);
-
-    static FlightPlanWaypoint readFpWp(QIODevice &data);
+Units readUnit(QIODevice &data);
 
 
-    // vector types
-    static void readColorZoneVec(QIODevice &data, QVector<ColorZone> &vec);
+// struct types
+ColorZone readColorZone(QIODevice &data);
 
-    static void readGradVec(QIODevice &data, QVector<GradDef> &vec);
+GradDef readGrad(QIODevice &data);
 
-    static void readTextGradVec(QIODevice &data, QVector<TextGradDef> &vec);
+TextGradDef readTextGrad(QIODevice &data);
 
-    static QList<FlightPlanWaypoint> readFpList(QIODevice &data);
+FlightPlanWaypoint readFpWp(QIODevice &data);
 
-    static QVector<FlightPlanWaypoint> readFpVec(QIODevice &data);
-};
+
+// vector types
+void readColorZoneVec(QIODevice &data, QVector<ColorZone> &vec);
+
+void readGradVec(QIODevice &data, QVector<GradDef> &vec);
+
+void readTextGradVec(QIODevice &data, QVector<TextGradDef> &vec);
+
+QList<FlightPlanWaypoint> readFpList(QIODevice &data);
+
+QVector<FlightPlanWaypoint> readFpVec(QIODevice &data);
+}
 
 #endif   // BINARYUTIL_H
