@@ -30,7 +30,6 @@
         <file>mfdPage/map/MapItem.qml</file>
         <file>pfdPage/jsHelpers/AirspeedIndicator.js</file>
         <file>pfdPage/jsHelpers/Altimeter.js</file>
-        <file>pfdPage/jsHelpers/AttitudeIndicator.js</file>
         <file>pfdPage/jsHelpers/HSIndicator.js</file>
         <file>pfdPage/PfdPage.qml</file>
         <file>settingsPage/flightplan/FlightplanPage.qml</file>
@@ -125,6 +124,5 @@
         <file>pfdPage/pfdElements/AttitudeIndicator/AttitudePitchContainer.qml</file>
         <file>pfdPage/pfdElements/AttitudeIndicator/Cursors.qml</file>
         <file>pfdPage/pfdElements/AttitudeIndicator/FlightDirector.qml</file>
-        <file>qml.qrc</file>
     </qresource>
 </RCC>
