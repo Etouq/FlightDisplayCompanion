@@ -59,6 +59,7 @@ void NetworkClient::connectPressed(const QString &address, int port)
     tcpSocket.setSocketOption(QAbstractSocket::KeepAliveOption, 1);
     tcpSocket.setSocketOption(QAbstractSocket::LowDelayOption, 1);
     tcpSocket.connectToHost(address, port);
+    tcpSocket.setSocketOption(QAbstractSocket::LowDelayOption, 1);
 }
 
 void NetworkClient::disconnectPressed()
