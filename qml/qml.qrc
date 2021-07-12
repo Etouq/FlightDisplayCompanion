@@ -104,19 +104,6 @@
         <file>pfdPage/pfdElements/RadarAltitude.qml</file>
         <file>pfdPage/pfdElements/WindDataDisplay.qml</file>
         <file>pfdPage/pfdElements/AttitudeIndicator/AttitudeBackground.qml</file>
-        <file>mfdPage/engineDisplay/gaugeClasses/circularGaugeClass.js</file>
-        <file>mfdPage/engineDisplay/gaugeClasses/doubleVerticalGaugeClass.js</file>
-        <file>mfdPage/engineDisplay/gaugeClasses/flapsGaugeClass.js</file>
-        <file>mfdPage/engineDisplay/gaugeClasses/fuelTextClass.js</file>
-        <file>mfdPage/engineDisplay/gaugeClasses/trimsGaugeClass.js</file>
-        <file>mfdPage/engineDisplay/gaugeClasses/verticalGaugeClass.js</file>
-        <file>mfdPage/engineDisplay/JetDoubleFunctions.js</file>
-        <file>mfdPage/engineDisplay/JetQuadFunctions.js</file>
-        <file>mfdPage/engineDisplay/JetSingleFunctions.js</file>
-        <file>mfdPage/engineDisplay/PropDoubleFunctions.js</file>
-        <file>mfdPage/engineDisplay/PropSingleFunctions.js</file>
-        <file>mfdPage/engineDisplay/TurbopropDoubleFunctions.js</file>
-        <file>mfdPage/engineDisplay/TurbopropSingleFunctions.js</file>
         <file>pfdPage/pfdElements/AttitudeIndicator/AttitudeBank.qml</file>
         <file>pfdPage/pfdElements/AttitudeIndicator/AttitudeIndicator.qml</file>
         <file>pfdPage/pfdElements/AttitudeIndicator/AttitudePitch.qml</file>
