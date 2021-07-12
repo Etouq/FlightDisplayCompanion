@@ -486,7 +486,7 @@ class AirspeedIndicator {
         if (!this.nocolor && this.minValue > 0) {
             this.startElement.transform[0].y = (1185.6 - 9.6 * this.minValue + 9.6 * value);
         }
-        if (iasInterface.maxSpeed > 0) {
+        if (!this.nocolor && iasInterface.maxSpeed > 0) {
             this.endElement.transform[0].y = (Math.min(Math.max(center + 40 - iasInterface.maxSpeed, -10), 80) + value - center) * 9.6;
         }
 
