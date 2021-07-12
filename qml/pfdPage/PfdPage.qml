@@ -5,22 +5,18 @@ import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
 import "jsHelpers/AirspeedIndicator.js" as AirspeedIndicatorJs
 import "jsHelpers/Altimeter.js" as AltimeterJs
-import "jsHelpers/HSIndicator.js" as HSIndicatorJs
 import "pfdElements"
 import "pfdElements/AttitudeIndicator"
+import "pfdElements/HsiIndicator"
 
 Item {
 
-    property int bearing1Mode: 0
-    property int bearing2Mode: 0
-    property int dmeMode: 0
     property int pressureUnit: 0
 
     property int airspeedLastCallTime: 0
 
     property var altItem: new AltimeterJs.Altimeter()
     property var iasItem: new AirspeedIndicatorJs.AirspeedIndicator()
-    property var hsiItem: new HSIndicatorJs.HSIndicator()
 
     Component.onCompleted: {
         airspeedLastCallTime = new Date().getTime();
@@ -107,9 +103,7 @@ Item {
 
     }
 
-
-    Item {
-        id: hsiParent
+    HSIndicator {
         height: 116 * 691.2 / 156
         anchors.left: parent.left
         anchors.leftMargin: 614.4
@@ -117,9 +111,6 @@ Item {
         anchors.rightMargin: 614.4
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 22.2
-
-
-        Component.onCompleted: pfdPageId.hsiItem.completedCallback(hsiParent);
     }
 
 

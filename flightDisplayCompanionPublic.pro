@@ -148,6 +148,15 @@ DISTFILES += \
     qml/pfdPage/pfdElements/AutopilotInfos.qml \
     qml/pfdPage/pfdElements/BottomBar.qml \
     qml/pfdPage/pfdElements/ComInfos.qml \
+    qml/pfdPage/pfdElements/HsiIndicator/BackgroundCircle.qml \
+    qml/pfdPage/pfdElements/HsiIndicator/Bearing1FixedGroup.qml \
+    qml/pfdPage/pfdElements/HsiIndicator/Bearing2FixedGroup.qml \
+    qml/pfdPage/pfdElements/HsiIndicator/BgCircleItems.qml \
+    qml/pfdPage/pfdElements/HsiIndicator/Course.qml \
+    qml/pfdPage/pfdElements/HsiIndicator/DmeGroup.qml \
+    qml/pfdPage/pfdElements/HsiIndicator/HSIndicator.qml \
+    qml/pfdPage/pfdElements/HsiIndicator/StaticParts.qml \
+    qml/pfdPage/pfdElements/HsiIndicator/Turnrate.qml \
     qml/pfdPage/pfdElements/NavFreqInfos.qml \
     qml/pfdPage/pfdElements/NavInfos.qml \
     qml/pfdPage/pfdElements/RadarAltitude.qml \

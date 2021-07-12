@@ -38,7 +38,7 @@ class HSIndicatorBackend : public QObject
 
     double d_turn_rate = 0;
 
-    int d_navSource = 0;   // 0: GPS, 1: VOR1, 2: LOC1, 3: VOR2, 4: LOC2
+    int d_navSource = -1;   // 0: GPS, 1: VOR1, 2: LOC1, 3: VOR2, 4: LOC2
 
     double d_current_track_angle = 0;
 
@@ -72,6 +72,8 @@ public:
     double currentTrackAngle() const;
 
     int toFrom() const;
+
+    Q_INVOKABLE void qmlArrowCompleted() { updateNavSource(0); }
 
 signals:
     void rotationChanged();
