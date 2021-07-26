@@ -3,11 +3,15 @@
 
 #include <cstdint>
 
-enum class DataIdentifiers : uint8_t
+enum class SharedServerIds : uint8_t
 {
     // server identifier
     SIMCONNECT_SERVER,
     GAUGE_DESIGNER_SERVER,
+};
+
+enum class SimconnectIds : uint8_t
+{
     // pfd
     // airspeed
     AIRSPEED,
@@ -113,10 +117,6 @@ enum class DataIdentifiers : uint8_t
     SIM_STOP_EVENT,
     SIM_CONNECTION_FAILED,
     ERROR_STRING,
-    // gauge designer
-    REMOVE_AIRCRAFT_LIST,
-    LOAD_AIRCRAFT_LIST,
-    SAVE_AIRCRAFT,
     // engine
     ENGINE1_N1,
     ENGINE2_N1,
@@ -156,9 +156,17 @@ enum class DataIdentifiers : uint8_t
     AIL_TRIM_PCT
 };
 
+enum class DesignerIds : uint8_t
+{
+    REMOVE_AIRCRAFT_LIST,
+    LOAD_AIRCRAFT_LIST,
+    SAVE_AIRCRAFT
+};
+
 // used for communication from client to server
 enum class ClientIds : uint8_t
 {
+    CLIENT_NETWORK_VERSION,
     // simconnect server
     QUIT,
     CHANGE_AIRCRAFT,

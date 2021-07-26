@@ -6,7 +6,7 @@ Shape {
 
     visible: bearing1Mode != 0
 
-    property int bearing1Mode: 0
+    property int bearing1Mode: 1
 
     states: [
         State {

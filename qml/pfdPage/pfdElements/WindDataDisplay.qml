@@ -5,14 +5,22 @@ Item {
     width: 135
     height: 90
 
-    property int windMode: 0
+    property int windMode: 1
 
     TapHandler {
         onTapped: {
-            if (windMode >= 3)
-                windMode = 0;
-            else
-                windMode++;
+            if (windInterface.windStrength < 1) {
+                if (windMode > 0)
+                    windMode = 0;
+                else
+                    windMode = 1;
+            }
+            else {
+                if (windMode >= 3)
+                    windMode = 0;
+                else
+                    windMode++;
+            }
         }
     }
 

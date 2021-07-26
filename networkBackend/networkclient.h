@@ -17,6 +17,9 @@ class NetworkClient : public QObject
 
     QTcpSocket tcpSocket;
 
+    const uint8_t latestGaugeNetworkVersion = 1;
+    const uint8_t latestSimconnectNetworkVersion = 1;
+
 public:
     explicit NetworkClient(QObject *parent = nullptr);
 
@@ -32,7 +35,12 @@ public slots:
     void sendAircraftKeys(const QStringList &keys);
 
 private slots:
-    void readData();
+    void readInitData();
+    void readDesignerData();
+    void readSimconnectData();
+
+    void socketDisconnected();
+
     void newErrorReceived(QAbstractSocket::SocketError socketError);
 
 signals:
@@ -40,6 +48,7 @@ signals:
     void connectedToGaugeDesigner();
     void displayError(const QString &newError);
     void resetButton();
+    void versionError(const QString &msg);
 
     // airspeed
     void airspeedChanged(double newValue);

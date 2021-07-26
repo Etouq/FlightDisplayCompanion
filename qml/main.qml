@@ -1,6 +1,7 @@
 import QtQuick 2.15
 import QtQuick.Window 2.15
 import QtQuick.Controls 2.15
+import QtQuick.Dialogs 1.3
 
 import "mfdPage"
 import "pfdPage"
@@ -60,6 +61,22 @@ Window {
                 anchors.centerIn: parent
             }
         }
+    }
+
+    Connections {
+        target: netInterface
+        function onShowPopupError(msg) {
+            errorPopup.text = msg;
+            errorPopup.open();
+        }
+    }
+
+
+    MessageDialog {
+        id: errorPopup
+        icon: StandardIcon.Critical
+        title: "Error"
+        standardButtons: StandardButton.Ok
     }
 }
 

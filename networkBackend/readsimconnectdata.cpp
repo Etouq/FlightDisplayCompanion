@@ -2,39 +2,25 @@
 #include <QImage>
 #include <QString>
 
+#include "networkclient.h"
 #include "aircraftManager/aircraftfile.h"
 #include "dataIdentifiers.h"
-#include "networkclient.h"
 #include "mfdbackend.h"
 
-
-void NetworkClient::readData()
+void NetworkClient::readSimconnectData()
 {
     bool reading = true;
-
     while (reading && !tcpSocket.atEnd())
     {
         tcpSocket.startTransaction();
-        DataIdentifiers identifier = DataIdentifiers::AIRSPEED;
+
+        SimconnectIds identifier = SimconnectIds::AIRSPEED;
         tcpSocket.read(reinterpret_cast<char *>(&identifier), sizeof(identifier));
 
         switch (identifier)
         {
-            // server identifier
-            case DataIdentifiers::SIMCONNECT_SERVER:
-            {
-                tcpSocket.commitTransaction();
-                emit connectedToSimServer();
-                break;
-            }
-            case DataIdentifiers::GAUGE_DESIGNER_SERVER:
-            {
-                tcpSocket.commitTransaction();
-                emit connectedToGaugeDesigner();
-                break;
-            }
             // airspeed
-            case DataIdentifiers::AIRSPEED:
+            case SimconnectIds::AIRSPEED:
             {
                 double newValue = 0;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
@@ -48,7 +34,7 @@ void NetworkClient::readData()
                 emit airspeedChanged(newValue);
                 break;
             }
-            case DataIdentifiers::MAX_SPEED:
+            case SimconnectIds::MAX_SPEED:
             {
                 double newValue = 0;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
@@ -62,7 +48,7 @@ void NetworkClient::readData()
                 emit max_speedChanged(newValue);
                 break;
             }
-            case DataIdentifiers::TRUE_AIRSPEED:
+            case SimconnectIds::TRUE_AIRSPEED:
             {
                 int32_t newValue = 0;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
@@ -76,7 +62,7 @@ void NetworkClient::readData()
                 emit true_airspeedChanged(newValue);
                 break;
             }
-            case DataIdentifiers::REF_SPEED:
+            case SimconnectIds::REF_SPEED:
             {
                 int32_t newValue = 0;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
@@ -90,7 +76,7 @@ void NetworkClient::readData()
                 emit ref_speedChanged(newValue);
                 break;
             }
-            case DataIdentifiers::AP_FLC:
+            case SimconnectIds::AP_FLC:
             {
                 bool newValue = false;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
@@ -104,8 +90,9 @@ void NetworkClient::readData()
                 emit ap_flcChanged(newValue);
                 break;
             }
+
             // altitude
-            case DataIdentifiers::ALTITUDE:
+            case SimconnectIds::ALTITUDE:
             {
                 double newValue = 0;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
@@ -119,7 +106,7 @@ void NetworkClient::readData()
                 emit altitudeChanged(newValue);
                 break;
             }
-            case DataIdentifiers::RADAR_ALTITUDE:
+            case SimconnectIds::RADAR_ALTITUDE:
             {
                 double newValue = 0;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
@@ -133,7 +120,7 @@ void NetworkClient::readData()
                 emit radar_altitudeChanged(newValue);
                 break;
             }
-            case DataIdentifiers::REF_ALTITUDE:
+            case SimconnectIds::REF_ALTITUDE:
             {
                 int32_t newValue = 0;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
@@ -147,7 +134,7 @@ void NetworkClient::readData()
                 emit ref_altitudeChanged(newValue);
                 break;
             }
-            case DataIdentifiers::PRESSURE:
+            case SimconnectIds::PRESSURE:
             {
                 double newValue = 0;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
@@ -161,8 +148,9 @@ void NetworkClient::readData()
                 emit pressureChanged(newValue);
                 break;
             }
+
             // vspeed
-            case DataIdentifiers::VSPEED:
+            case SimconnectIds::VSPEED:
             {
                 double newValue = 0;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
@@ -176,7 +164,7 @@ void NetworkClient::readData()
                 emit vspeedChanged(newValue);
                 break;
             }
-            case DataIdentifiers::REF_VSPEED:
+            case SimconnectIds::REF_VSPEED:
             {
                 int32_t newValue = 0;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
@@ -190,8 +178,9 @@ void NetworkClient::readData()
                 emit ref_vspeedChanged(newValue);
                 break;
             }
+
             // vert dev
-            case DataIdentifiers::VERT_DEV_MODE:
+            case SimconnectIds::VERT_DEV_MODE:
             {
                 int32_t newValue = 0;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
@@ -205,7 +194,7 @@ void NetworkClient::readData()
                 emit vert_dev_modeChanged(newValue);
                 break;
             }
-            case DataIdentifiers::VERT_DEV_VALUE:
+            case SimconnectIds::VERT_DEV_VALUE:
             {
                 double newValue = 0;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
@@ -219,8 +208,9 @@ void NetworkClient::readData()
                 emit vert_dev_valueChanged(newValue);
                 break;
             }
+
             // aoa
-            case DataIdentifiers::ANGLE_OF_ATTACK:
+            case SimconnectIds::ANGLE_OF_ATTACK:
             {
                 double newValue = 0;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
@@ -234,8 +224,9 @@ void NetworkClient::readData()
                 emit angle_of_attackChanged(newValue);
                 break;
             }
+
             // ap info
-            case DataIdentifiers::AP_LATERAL_ACTIVE:
+            case SimconnectIds::AP_LATERAL_ACTIVE:
             {
                 uint8_t size = 0;
                 if (tcpSocket.bytesAvailable() < sizeof(size))
@@ -264,7 +255,7 @@ void NetworkClient::readData()
 
                 break;
             }
-            case DataIdentifiers::AP_LATERAL_ARMED:
+            case SimconnectIds::AP_LATERAL_ARMED:
             {
                 uint8_t size = 0;
                 if (tcpSocket.bytesAvailable() < sizeof(size))
@@ -292,7 +283,7 @@ void NetworkClient::readData()
                 tcpSocket.commitTransaction();
                 break;
             }
-            case DataIdentifiers::AP_AVAILABLE:
+            case SimconnectIds::AP_AVAILABLE:
             {
                 bool newValue = false;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
@@ -306,7 +297,7 @@ void NetworkClient::readData()
                 emit ap_availableChanged(newValue);
                 break;
             }
-            case DataIdentifiers::AP_STATUS:
+            case SimconnectIds::AP_STATUS:
             {
                 bool newValue = false;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
@@ -320,7 +311,7 @@ void NetworkClient::readData()
                 emit ap_statusChanged(newValue);
                 break;
             }
-            case DataIdentifiers::AP_YD_STATUS:
+            case SimconnectIds::AP_YD_STATUS:
             {
                 bool newValue = false;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
@@ -334,7 +325,7 @@ void NetworkClient::readData()
                 emit ap_yd_statusChanged(newValue);
                 break;
             }
-            case DataIdentifiers::AP_FD_STATUS:
+            case SimconnectIds::AP_FD_STATUS:
             {
                 bool newValue = false;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
@@ -348,7 +339,7 @@ void NetworkClient::readData()
                 emit ap_fd_statusChanged(newValue);
                 break;
             }
-            case DataIdentifiers::AP_VERTICAL_ACTIVE:
+            case SimconnectIds::AP_VERTICAL_ACTIVE:
             {
                 uint8_t size = 0;
                 if (tcpSocket.bytesAvailable() < sizeof(size))
@@ -376,7 +367,7 @@ void NetworkClient::readData()
                 tcpSocket.commitTransaction();
                 break;
             }
-            case DataIdentifiers::AP_MODE_REFERENCE:
+            case SimconnectIds::AP_MODE_REFERENCE:
             {
                 uint8_t size = 0;
                 if (tcpSocket.bytesAvailable() < sizeof(size))
@@ -404,7 +395,7 @@ void NetworkClient::readData()
                 tcpSocket.commitTransaction();
                 break;
             }
-            case DataIdentifiers::AP_ARMED:
+            case SimconnectIds::AP_ARMED:
             {
                 uint8_t size = 0;
                 if (tcpSocket.bytesAvailable() < sizeof(size))
@@ -432,7 +423,7 @@ void NetworkClient::readData()
                 tcpSocket.commitTransaction();
                 break;
             }
-            case DataIdentifiers::AP_ARMED_REFERENCE:
+            case SimconnectIds::AP_ARMED_REFERENCE:
             {
                 uint8_t size = 0;
                 if (tcpSocket.bytesAvailable() < sizeof(size))
@@ -460,8 +451,9 @@ void NetworkClient::readData()
                 tcpSocket.commitTransaction();
                 break;
             }
+
             // attitude
-            case DataIdentifiers::BANK:
+            case SimconnectIds::BANK:
             {
                 double newValue = 0;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
@@ -475,7 +467,7 @@ void NetworkClient::readData()
                 emit bankChanged(newValue);
                 break;
             }
-            case DataIdentifiers::PITCH:
+            case SimconnectIds::PITCH:
             {
                 double newValue = 0;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
@@ -489,7 +481,7 @@ void NetworkClient::readData()
                 emit pitchChanged(newValue);
                 break;
             }
-            case DataIdentifiers::SLIPSKID:
+            case SimconnectIds::SLIPSKID:
             {
                 double newValue = 0;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
@@ -503,7 +495,7 @@ void NetworkClient::readData()
                 emit slipskidChanged(newValue);
                 break;
             }
-            case DataIdentifiers::FD_BANK:
+            case SimconnectIds::FD_BANK:
             {
                 double newValue = 0;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
@@ -517,7 +509,7 @@ void NetworkClient::readData()
                 emit fd_bankChanged(newValue);
                 break;
             }
-            case DataIdentifiers::FD_PITCH:
+            case SimconnectIds::FD_PITCH:
             {
                 double newValue = 0;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
@@ -531,8 +523,9 @@ void NetworkClient::readData()
                 emit fd_pitchChanged(newValue);
                 break;
             }
+
             // bottombar
-            case DataIdentifiers::ZULU_SECONDS:
+            case SimconnectIds::ZULU_SECONDS:
             {
                 int32_t newValue = 0;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
@@ -546,7 +539,7 @@ void NetworkClient::readData()
                 emit zulu_secondsChanged(newValue);
                 break;
             }
-            case DataIdentifiers::LOCAL_SECONDS:
+            case SimconnectIds::LOCAL_SECONDS:
             {
                 int32_t newValue = 0;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
@@ -560,7 +553,7 @@ void NetworkClient::readData()
                 emit local_secondsChanged(newValue);
                 break;
             }
-            case DataIdentifiers::GROUND_SPEED:
+            case SimconnectIds::GROUND_SPEED:
             {
                 int32_t newValue = 0;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
@@ -574,7 +567,7 @@ void NetworkClient::readData()
                 emit ground_speedChanged(newValue);
                 break;
             }
-            case DataIdentifiers::TOTAL_AIR_TEMP:
+            case SimconnectIds::TOTAL_AIR_TEMP:
             {
                 float newValue = 0;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
@@ -588,8 +581,9 @@ void NetworkClient::readData()
                 emit total_air_tempChanged(newValue);
                 break;
             }
+
             // hsi
-            case DataIdentifiers::ROTATION:
+            case SimconnectIds::ROTATION:
             {
                 double newValue = 0;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
@@ -603,7 +597,7 @@ void NetworkClient::readData()
                 emit rotationChanged(newValue);
                 break;
             }
-            case DataIdentifiers::HEADING:   // might be int
+            case SimconnectIds::HEADING:   // might be int
             {
                 double newValue = 0;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
@@ -617,7 +611,7 @@ void NetworkClient::readData()
                 emit headingChanged(newValue);
                 break;
             }
-            case DataIdentifiers::COURSE:   // might be int
+            case SimconnectIds::COURSE:   // might be int
             {
                 double newValue = 0;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
@@ -631,7 +625,7 @@ void NetworkClient::readData()
                 emit courseChanged(newValue);
                 break;
             }
-            case DataIdentifiers::COURSE_DEVIATION:
+            case SimconnectIds::COURSE_DEVIATION:
             {
                 double newValue = 0;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
@@ -645,7 +639,7 @@ void NetworkClient::readData()
                 emit course_deviationChanged(newValue);
                 break;
             }
-            case DataIdentifiers::DISPLAY_DEVIATION:
+            case SimconnectIds::DISPLAY_DEVIATION:
             {
                 bool newValue = false;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
@@ -659,7 +653,7 @@ void NetworkClient::readData()
                 emit display_deviationChanged(newValue);
                 break;
             }
-            case DataIdentifiers::TURN_RATE:
+            case SimconnectIds::TURN_RATE:
             {
                 double newValue = 0;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
@@ -673,7 +667,7 @@ void NetworkClient::readData()
                 emit turn_rateChanged(newValue);
                 break;
             }
-            case DataIdentifiers::NAV_SOURCE:
+            case SimconnectIds::NAV_SOURCE:
             {
                 int32_t newValue = 0;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
@@ -687,7 +681,7 @@ void NetworkClient::readData()
                 emit nav_sourceChanged(newValue);
                 break;
             }
-            case DataIdentifiers::CURRENT_TRACK:
+            case SimconnectIds::CURRENT_TRACK:
             {
                 double newValue = 0;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
@@ -701,7 +695,7 @@ void NetworkClient::readData()
                 emit current_trackChanged(newValue);
                 break;
             }
-            case DataIdentifiers::TO_FROM:
+            case SimconnectIds::TO_FROM:
             {
                 int32_t newValue = 0;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
@@ -715,8 +709,9 @@ void NetworkClient::readData()
                 emit to_fromChanged(newValue);
                 break;
             }
+
             // hsi brg
-            case DataIdentifiers::NAV1_IDENT:
+            case SimconnectIds::NAV1_IDENT:
             {
                 uint8_t size = 0;
                 if (tcpSocket.bytesAvailable() < sizeof(size))
@@ -744,7 +739,7 @@ void NetworkClient::readData()
                 tcpSocket.commitTransaction();
                 break;
             }
-            case DataIdentifiers::NAV1_DME:
+            case SimconnectIds::NAV1_DME:
             {
                 double newValue = 0;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
@@ -758,7 +753,7 @@ void NetworkClient::readData()
                 emit nav1_dmeChanged(newValue);
                 break;
             }
-            case DataIdentifiers::NAV1_BEARING:
+            case SimconnectIds::NAV1_BEARING:
             {
                 double newValue = 0;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
@@ -772,7 +767,7 @@ void NetworkClient::readData()
                 emit nav1_bearingChanged(newValue);
                 break;
             }
-            case DataIdentifiers::NAV1_HAS_NAV:
+            case SimconnectIds::NAV1_HAS_NAV:
             {
                 bool newValue = false;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
@@ -786,7 +781,7 @@ void NetworkClient::readData()
                 emit nav1_has_navChanged(newValue);
                 break;
             }
-            case DataIdentifiers::NAV1_HAS_SIGNAL:
+            case SimconnectIds::NAV1_HAS_SIGNAL:
             {
                 bool newValue = false;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
@@ -800,7 +795,7 @@ void NetworkClient::readData()
                 emit nav1_has_signalChanged(newValue);
                 break;
             }
-            case DataIdentifiers::NAV1_HAS_DME:
+            case SimconnectIds::NAV1_HAS_DME:
             {
                 bool newValue = false;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
@@ -814,7 +809,7 @@ void NetworkClient::readData()
                 emit nav1_has_dmeChanged(newValue);
                 break;
             }
-            case DataIdentifiers::NAV2_IDENT:
+            case SimconnectIds::NAV2_IDENT:
             {
                 uint8_t size = 0;
                 if (tcpSocket.bytesAvailable() < sizeof(size))
@@ -842,7 +837,7 @@ void NetworkClient::readData()
                 tcpSocket.commitTransaction();
                 break;
             }
-            case DataIdentifiers::NAV2_DME:
+            case SimconnectIds::NAV2_DME:
             {
                 double newValue = 0;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
@@ -856,7 +851,7 @@ void NetworkClient::readData()
                 emit nav2_dmeChanged(newValue);
                 break;
             }
-            case DataIdentifiers::NAV2_BEARING:
+            case SimconnectIds::NAV2_BEARING:
             {
                 double newValue = 0;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
@@ -870,7 +865,7 @@ void NetworkClient::readData()
                 emit nav2_bearingChanged(newValue);
                 break;
             }
-            case DataIdentifiers::NAV2_HAS_NAV:
+            case SimconnectIds::NAV2_HAS_NAV:
             {
                 bool newValue = false;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
@@ -884,7 +879,7 @@ void NetworkClient::readData()
                 emit nav2_has_navChanged(newValue);
                 break;
             }
-            case DataIdentifiers::NAV2_HAS_SIGNAL:
+            case SimconnectIds::NAV2_HAS_SIGNAL:
             {
                 bool newValue = false;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
@@ -898,7 +893,7 @@ void NetworkClient::readData()
                 emit nav2_has_signalChanged(newValue);
                 break;
             }
-            case DataIdentifiers::NAV2_HAS_DME:
+            case SimconnectIds::NAV2_HAS_DME:
             {
                 bool newValue = false;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
@@ -912,7 +907,7 @@ void NetworkClient::readData()
                 emit nav2_has_dmeChanged(newValue);
                 break;
             }
-            case DataIdentifiers::GPS_DISTANCE:
+            case SimconnectIds::GPS_DISTANCE:
             {
                 double newValue = 0;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
@@ -926,7 +921,7 @@ void NetworkClient::readData()
                 emit gps_distanceChanged(newValue);
                 break;
             }
-            case DataIdentifiers::GPS_BEARING:
+            case SimconnectIds::GPS_BEARING:
             {
                 double newValue = 0;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
@@ -940,7 +935,7 @@ void NetworkClient::readData()
                 emit gps_bearingChanged(newValue);
                 break;
             }
-            case DataIdentifiers::ADF_HAS_SIGNAL:
+            case SimconnectIds::ADF_HAS_SIGNAL:
             {
                 bool newValue = false;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
@@ -954,7 +949,7 @@ void NetworkClient::readData()
                 emit adf_has_signalChanged(newValue);
                 break;
             }
-            case DataIdentifiers::ADF_FREQ:
+            case SimconnectIds::ADF_FREQ:
             {
                 double newValue = 0;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
@@ -968,7 +963,7 @@ void NetworkClient::readData()
                 emit adf_freqChanged(newValue);
                 break;
             }
-            case DataIdentifiers::ADF_RADIAL:
+            case SimconnectIds::ADF_RADIAL:
             {
                 double newValue = 0;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
@@ -982,8 +977,9 @@ void NetworkClient::readData()
                 emit adf_radialChanged(newValue);
                 break;
             }
+
             // nav info
-            case DataIdentifiers::GPS_IS_ACTIVE_FLIGHTPLAN:
+            case SimconnectIds::GPS_IS_ACTIVE_FLIGHTPLAN:
             {
                 bool newValue = false;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
@@ -997,7 +993,7 @@ void NetworkClient::readData()
                 emit gps_is_active_flightplanChanged(newValue);
                 break;
             }
-            case DataIdentifiers::CURRENT_LEG_TO:
+            case SimconnectIds::CURRENT_LEG_TO:
             {
                 uint8_t size = 0;
                 if (tcpSocket.bytesAvailable() < sizeof(size))
@@ -1025,7 +1021,7 @@ void NetworkClient::readData()
                 tcpSocket.commitTransaction();
                 break;
             }
-            case DataIdentifiers::CURRENT_LEG_FROM:
+            case SimconnectIds::CURRENT_LEG_FROM:
             {
                 uint8_t size = 0;
                 if (tcpSocket.bytesAvailable() < sizeof(size))
@@ -1053,7 +1049,7 @@ void NetworkClient::readData()
                 tcpSocket.commitTransaction();
                 break;
             }
-            case DataIdentifiers::LEG_IS_DIRECT_TO:
+            case SimconnectIds::LEG_IS_DIRECT_TO:
             {
                 bool newValue = false;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
@@ -1067,7 +1063,7 @@ void NetworkClient::readData()
                 emit leg_is_direct_toChanged(newValue);
                 break;
             }
-            case DataIdentifiers::CURRENT_LEG_DISTANCE:
+            case SimconnectIds::CURRENT_LEG_DISTANCE:
             {
                 double newValue = 0;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
@@ -1081,7 +1077,7 @@ void NetworkClient::readData()
                 emit current_leg_distanceChanged(newValue);
                 break;
             }
-            case DataIdentifiers::CURRENT_LEG_BEARING:
+            case SimconnectIds::CURRENT_LEG_BEARING:
             {
                 double newValue = 0;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
@@ -1095,8 +1091,9 @@ void NetworkClient::readData()
                 emit current_leg_bearingChanged(newValue);
                 break;
             }
+
             // radio info
-            case DataIdentifiers::HAS_COM1:
+            case SimconnectIds::HAS_COM1:
             {
                 bool newValue = false;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
@@ -1110,7 +1107,7 @@ void NetworkClient::readData()
                 emit has_com1Changed(newValue);
                 break;
             }
-            case DataIdentifiers::HAS_COM2:
+            case SimconnectIds::HAS_COM2:
             {
                 bool newValue = false;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
@@ -1124,7 +1121,7 @@ void NetworkClient::readData()
                 emit has_com2Changed(newValue);
                 break;
             }
-            case DataIdentifiers::HAS_NAV1:
+            case SimconnectIds::HAS_NAV1:
             {
                 bool newValue = false;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
@@ -1138,7 +1135,7 @@ void NetworkClient::readData()
                 emit has_nav1Changed(newValue);
                 break;
             }
-            case DataIdentifiers::HAS_NAV2:
+            case SimconnectIds::HAS_NAV2:
             {
                 bool newValue = false;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
@@ -1152,7 +1149,7 @@ void NetworkClient::readData()
                 emit has_nav2Changed(newValue);
                 break;
             }
-            case DataIdentifiers::COM1_FREQ:
+            case SimconnectIds::COM1_FREQ:
             {
                 double newValue = 0;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
@@ -1166,7 +1163,7 @@ void NetworkClient::readData()
                 emit com1_freqChanged(newValue);
                 break;
             }
-            case DataIdentifiers::COM2_FREQ:
+            case SimconnectIds::COM2_FREQ:
             {
                 double newValue = 0;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
@@ -1180,7 +1177,7 @@ void NetworkClient::readData()
                 emit com2_freqChanged(newValue);
                 break;
             }
-            case DataIdentifiers::NAV1_FREQ:
+            case SimconnectIds::NAV1_FREQ:
             {
                 double newValue = 0;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
@@ -1194,7 +1191,7 @@ void NetworkClient::readData()
                 emit nav1_freqChanged(newValue);
                 break;
             }
-            case DataIdentifiers::NAV2_FREQ:
+            case SimconnectIds::NAV2_FREQ:
             {
                 double newValue = 0;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
@@ -1208,8 +1205,9 @@ void NetworkClient::readData()
                 emit nav2_freqChanged(newValue);
                 break;
             }
+
             // wind
-            case DataIdentifiers::WIND_DIRECTION:
+            case SimconnectIds::WIND_DIRECTION:
             {
                 double newValue = 0;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
@@ -1223,7 +1221,7 @@ void NetworkClient::readData()
                 emit wind_directionChanged(newValue);
                 break;
             }
-            case DataIdentifiers::WIND_STRENGTH:
+            case SimconnectIds::WIND_STRENGTH:
             {
                 double newValue = 0;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
@@ -1237,7 +1235,7 @@ void NetworkClient::readData()
                 emit wind_strengthChanged(newValue);
                 break;
             }
-            case DataIdentifiers::WIND_TRUE_DIRECTION:
+            case SimconnectIds::WIND_TRUE_DIRECTION:
             {
                 double newValue = 0;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
@@ -1251,8 +1249,9 @@ void NetworkClient::readData()
                 emit wind_true_directionChanged(newValue);
                 break;
             }
+
             // mfd
-            case DataIdentifiers::COORDINATES:
+            case SimconnectIds::COORDINATES:
             {
                 double newLat = 0;
                 double newLon = 0;
@@ -1268,7 +1267,7 @@ void NetworkClient::readData()
                 emit coordinates_Changed(QGeoCoordinate(newLat, newLon));
                 break;
             }
-            case DataIdentifiers::TRUE_HEADING:
+            case SimconnectIds::TRUE_HEADING:
             {
                 double newValue = 0;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
@@ -1282,7 +1281,7 @@ void NetworkClient::readData()
                 emit true_headingChanged(newValue);
                 break;
             }
-            case DataIdentifiers::GPS_WP_DTK:
+            case SimconnectIds::GPS_WP_DTK:
             {
                 double newValue = 0;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
@@ -1296,7 +1295,7 @@ void NetworkClient::readData()
                 emit gps_wp_desired_trackChanged(newValue);
                 break;
             }
-            case DataIdentifiers::GPS_WP_ETE:
+            case SimconnectIds::GPS_WP_ETE:
             {
                 int32_t newValue = 0;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
@@ -1310,7 +1309,7 @@ void NetworkClient::readData()
                 emit gps_wp_eteChanged(newValue);
                 break;
             }
-            case DataIdentifiers::GPS_ETE:
+            case SimconnectIds::GPS_ETE:
             {
                 int32_t newValue = 0;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
@@ -1324,14 +1323,15 @@ void NetworkClient::readData()
                 emit gps_eteChanged(newValue);
                 break;
             }
+
             // flightplan
-            case DataIdentifiers::CLEAR_FLIGHTPLAN:
+            case SimconnectIds::CLEAR_FLIGHTPLAN:
             {
                 tcpSocket.commitTransaction();
                 emit clear_flightplan_received();
                 break;
             }
-            case DataIdentifiers::FLIGHTPLAN_LIST:
+            case SimconnectIds::FLIGHTPLAN_LIST:
             {
                 int64_t byteSize = 0;
                 if (tcpSocket.bytesAvailable() < sizeof(byteSize))
@@ -1352,34 +1352,35 @@ void NetworkClient::readData()
                 emit received_flightplan(wpList);
                 break;
             }
-            // simconnect server
-            case DataIdentifiers::QUIT:
+
+            // simconnect server events
+            case SimconnectIds::QUIT:
             {
                 tcpSocket.commitTransaction();
                 emit displayError("Sim closed");
                 tcpSocket.disconnectFromHost();
                 break;
             }
-            case DataIdentifiers::SIM_START_EVENT:
+            case SimconnectIds::SIM_START_EVENT:
             {
                 tcpSocket.commitTransaction();
                 emit sim_start_received();
                 break;
             }
-            case DataIdentifiers::SIM_STOP_EVENT:
+            case SimconnectIds::SIM_STOP_EVENT:
             {
                 tcpSocket.commitTransaction();
                 emit sim_stop_received();
                 break;
             }
-            case DataIdentifiers::SIM_CONNECTION_FAILED:
+            case SimconnectIds::SIM_CONNECTION_FAILED:
             {
                 tcpSocket.commitTransaction();
                 emit displayError("Failed to connect to sim");
                 emit simConnectionFailed();
                 break;
             }
-            case DataIdentifiers::ERROR_STRING:
+            case SimconnectIds::ERROR_STRING:
             {
                 uint8_t size = 0;
                 if (tcpSocket.bytesAvailable() < sizeof(size))
@@ -1406,90 +1407,9 @@ void NetworkClient::readData()
                 emit displayError(newValue);
                 break;
             }
-            // gauge designer
-            case DataIdentifiers::REMOVE_AIRCRAFT_LIST:
-            {
-                int64_t byteSize = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(byteSize))
-                {
-                    tcpSocket.rollbackTransaction();
-                    reading = false;
-                    break;
-                }
-                tcpSocket.read(reinterpret_cast<char *>(&byteSize), sizeof(byteSize));
-                if (tcpSocket.bytesAvailable() < byteSize)
-                {
-                    tcpSocket.rollbackTransaction();
-                    reading = false;
-                    break;
-                }
-                uint16_t listSize = 0;
-                tcpSocket.read(reinterpret_cast<char *>(&listSize), sizeof(listSize));
-                QStringList keys;
-                for (int i = 0; i < listSize; i++)
-                {
-                    uint8_t strSize = 0;
-                    tcpSocket.read(reinterpret_cast<char *>(&strSize), sizeof(strSize));
-                    keys.append(tcpSocket.read(strSize));
-                }
-                tcpSocket.commitTransaction();
-                emit remove_aircraft_list(keys);
-                break;
-            }
-            case DataIdentifiers::LOAD_AIRCRAFT_LIST:
-            {
-                int64_t byteSize = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(byteSize))
-                {
-                    tcpSocket.rollbackTransaction();
-                    reading = false;
-                    break;
-                }
-                tcpSocket.read(reinterpret_cast<char *>(&byteSize), sizeof(byteSize));
-                if (tcpSocket.bytesAvailable() < byteSize)
-                {
-                    tcpSocket.rollbackTransaction();
-                    reading = false;
-                    break;
-                }
-                uint16_t listSize = 0;
-                tcpSocket.read(reinterpret_cast<char *>(&listSize), sizeof(listSize));
-                QStringList keys;
-                for (int i = 0; i < listSize; i++)
-                {
-                    uint8_t strSize = 0;
-                    tcpSocket.read(reinterpret_cast<char *>(&strSize), sizeof(strSize));
-                    keys.append(tcpSocket.read(strSize));
-                }
-                tcpSocket.commitTransaction();
-                emit load_aircraft_list(keys);
-                break;
-            }
-            case DataIdentifiers::SAVE_AIRCRAFT:
-            {
-                int64_t byteSize = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(byteSize))
-                {
-                    tcpSocket.rollbackTransaction();
-                    reading = false;
-                    break;
-                }
-                tcpSocket.read(reinterpret_cast<char *>(&byteSize), sizeof(byteSize));
-                if (tcpSocket.bytesAvailable() < byteSize)
-                {
-                    tcpSocket.rollbackTransaction();
-                    reading = false;
-                    break;
-                }
-                AircraftDefinition aircraft;
-                QImage image;
-                AircraftFile::readAircraftFromStream(tcpSocket, aircraft, image);
-                tcpSocket.commitTransaction();
-                emit save_aircraft(aircraft, image);
-                break;
-            }
-            // engines
-            case DataIdentifiers::ENGINE1_N1:
+
+            // engine data
+            case SimconnectIds::ENGINE1_N1:
             {
                 double newValue = 0;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
@@ -1503,7 +1423,7 @@ void NetworkClient::readData()
                 emit engine1_n1Changed(newValue);
                 break;
             }
-            case DataIdentifiers::ENGINE2_N1:
+            case SimconnectIds::ENGINE2_N1:
             {
                 double newValue = 0;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
@@ -1517,7 +1437,7 @@ void NetworkClient::readData()
                 emit engine2_n1Changed(newValue);
                 break;
             }
-            case DataIdentifiers::ENGINE3_N1:
+            case SimconnectIds::ENGINE3_N1:
             {
                 double newValue = 0;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
@@ -1531,7 +1451,7 @@ void NetworkClient::readData()
                 emit engine3_n1Changed(newValue);
                 break;
             }
-            case DataIdentifiers::ENGINE4_N1:
+            case SimconnectIds::ENGINE4_N1:
             {
                 double newValue = 0;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
@@ -1545,7 +1465,7 @@ void NetworkClient::readData()
                 emit engine4_n1Changed(newValue);
                 break;
             }
-            case DataIdentifiers::ENGINE1_N2:
+            case SimconnectIds::ENGINE1_N2:
             {
                 double newValue = 0;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
@@ -1559,7 +1479,7 @@ void NetworkClient::readData()
                 emit engine1_n2Changed(newValue);
                 break;
             }
-            case DataIdentifiers::ENGINE2_N2:
+            case SimconnectIds::ENGINE2_N2:
             {
                 double newValue = 0;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
@@ -1573,7 +1493,7 @@ void NetworkClient::readData()
                 emit engine2_n2Changed(newValue);
                 break;
             }
-            case DataIdentifiers::ENGINE3_N2:
+            case SimconnectIds::ENGINE3_N2:
             {
                 double newValue = 0;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
@@ -1587,7 +1507,7 @@ void NetworkClient::readData()
                 emit engine3_n2Changed(newValue);
                 break;
             }
-            case DataIdentifiers::ENGINE4_N2:
+            case SimconnectIds::ENGINE4_N2:
             {
                 double newValue = 0;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
@@ -1601,7 +1521,7 @@ void NetworkClient::readData()
                 emit engine4_n2Changed(newValue);
                 break;
             }
-            case DataIdentifiers::ENGINE1_ITT:
+            case SimconnectIds::ENGINE1_ITT:
             {
                 double newValue = 0;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
@@ -1615,7 +1535,7 @@ void NetworkClient::readData()
                 emit engine1_ittChanged(newValue);
                 break;
             }
-            case DataIdentifiers::ENGINE2_ITT:
+            case SimconnectIds::ENGINE2_ITT:
             {
                 double newValue = 0;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
@@ -1629,7 +1549,7 @@ void NetworkClient::readData()
                 emit engine2_ittChanged(newValue);
                 break;
             }
-            case DataIdentifiers::ENGINE3_ITT:
+            case SimconnectIds::ENGINE3_ITT:
             {
                 double newValue = 0;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
@@ -1643,7 +1563,7 @@ void NetworkClient::readData()
                 emit engine3_ittChanged(newValue);
                 break;
             }
-            case DataIdentifiers::ENGINE4_ITT:
+            case SimconnectIds::ENGINE4_ITT:
             {
                 double newValue = 0;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
@@ -1657,7 +1577,7 @@ void NetworkClient::readData()
                 emit engine4_ittChanged(newValue);
                 break;
             }
-            case DataIdentifiers::ENGINE1_RPM:
+            case SimconnectIds::ENGINE1_RPM:
             {
                 double newValue = 0;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
@@ -1671,7 +1591,7 @@ void NetworkClient::readData()
                 emit engine1_rpmChanged(newValue);
                 break;
             }
-            case DataIdentifiers::ENGINE2_RPM:
+            case SimconnectIds::ENGINE2_RPM:
             {
                 double newValue = 0;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
@@ -1685,7 +1605,7 @@ void NetworkClient::readData()
                 emit engine2_rpmChanged(newValue);
                 break;
             }
-            case DataIdentifiers::ENGINE1_SECOND:
+            case SimconnectIds::ENGINE1_SECOND:
             {
                 double newValue = 0;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
@@ -1699,7 +1619,7 @@ void NetworkClient::readData()
                 emit engine1_secondChanged(newValue);
                 break;
             }
-            case DataIdentifiers::ENGINE2_SECOND:
+            case SimconnectIds::ENGINE2_SECOND:
             {
                 double newValue = 0;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
@@ -1713,7 +1633,7 @@ void NetworkClient::readData()
                 emit engine2_secondChanged(newValue);
                 break;
             }
-            case DataIdentifiers::ENGINE1_TRQ:
+            case SimconnectIds::ENGINE1_TRQ:
             {
                 double newValue = 0;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
@@ -1727,7 +1647,7 @@ void NetworkClient::readData()
                 emit engine1_trqChanged(newValue);
                 break;
             }
-            case DataIdentifiers::ENGINE2_TRQ:
+            case SimconnectIds::ENGINE2_TRQ:
             {
                 double newValue = 0;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
@@ -1741,7 +1661,7 @@ void NetworkClient::readData()
                 emit engine2_trqChanged(newValue);
                 break;
             }
-            case DataIdentifiers::ENGINE1_FUEL_QTY:
+            case SimconnectIds::ENGINE1_FUEL_QTY:
             {
                 double newValue = 0;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
@@ -1755,7 +1675,7 @@ void NetworkClient::readData()
                 emit engine1_fuel_qtyChanged(newValue);
                 break;
             }
-            case DataIdentifiers::ENGINE2_FUEL_QTY:
+            case SimconnectIds::ENGINE2_FUEL_QTY:
             {
                 double newValue = 0;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
@@ -1769,7 +1689,7 @@ void NetworkClient::readData()
                 emit engine2_fuel_qtyChanged(newValue);
                 break;
             }
-            case DataIdentifiers::ENGINE1_FUEL_FLOW:
+            case SimconnectIds::ENGINE1_FUEL_FLOW:
             {
                 double newValue = 0;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
@@ -1783,7 +1703,7 @@ void NetworkClient::readData()
                 emit engine1_fuel_flowChanged(newValue);
                 break;
             }
-            case DataIdentifiers::ENGINE2_FUEL_FLOW:
+            case SimconnectIds::ENGINE2_FUEL_FLOW:
             {
                 double newValue = 0;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
@@ -1797,7 +1717,7 @@ void NetworkClient::readData()
                 emit engine2_fuel_flowChanged(newValue);
                 break;
             }
-            case DataIdentifiers::ENGINE1_OIL_PRESS:
+            case SimconnectIds::ENGINE1_OIL_PRESS:
             {
                 double newValue = 0;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
@@ -1811,7 +1731,7 @@ void NetworkClient::readData()
                 emit engine1_oil_pressChanged(newValue);
                 break;
             }
-            case DataIdentifiers::ENGINE2_OIL_PRESS:
+            case SimconnectIds::ENGINE2_OIL_PRESS:
             {
                 double newValue = 0;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
@@ -1825,7 +1745,7 @@ void NetworkClient::readData()
                 emit engine2_oil_pressChanged(newValue);
                 break;
             }
-            case DataIdentifiers::ENGINE1_OIL_TEMP:
+            case SimconnectIds::ENGINE1_OIL_TEMP:
             {
                 double newValue = 0;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
@@ -1839,7 +1759,7 @@ void NetworkClient::readData()
                 emit engine1_oil_tempChanged(newValue);
                 break;
             }
-            case DataIdentifiers::ENGINE2_OIL_TEMP:
+            case SimconnectIds::ENGINE2_OIL_TEMP:
             {
                 double newValue = 0;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
@@ -1853,7 +1773,7 @@ void NetworkClient::readData()
                 emit engine2_oil_tempChanged(newValue);
                 break;
             }
-            case DataIdentifiers::ENGINE1_EGT:
+            case SimconnectIds::ENGINE1_EGT:
             {
                 double newValue = 0;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
@@ -1867,7 +1787,7 @@ void NetworkClient::readData()
                 emit engine1_egtChanged(newValue);
                 break;
             }
-            case DataIdentifiers::ENGINE2_EGT:
+            case SimconnectIds::ENGINE2_EGT:
             {
                 double newValue = 0;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
@@ -1881,7 +1801,7 @@ void NetworkClient::readData()
                 emit engine2_egtChanged(newValue);
                 break;
             }
-            case DataIdentifiers::APU_RPM_PCT:
+            case SimconnectIds::APU_RPM_PCT:
             {
                 int32_t newValue = 0;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
@@ -1895,9 +1815,9 @@ void NetworkClient::readData()
                 emit apu_rpmChanged(newValue);
                 break;
             }
-            case DataIdentifiers::FUEL_TEXT_DATA:
+            case SimconnectIds::FUEL_TEXT_DATA:
             {
-                // fueltextdata consists of 3 floats: qty flow and gs so read those
+                // fueltextdata consists of 3 floats: qty, flow and gs so read those
                 float fuelQty = 0;
                 float fuelFlow = 0;
                 float groundSpeed = 0;
@@ -1914,7 +1834,7 @@ void NetworkClient::readData()
                 emit fuel_text_dataChanged(fuelFlow, fuelQty, groundSpeed);
                 break;
             }
-            case DataIdentifiers::SPOILERS_PCT:
+            case SimconnectIds::SPOILERS_PCT:
             {
                 double newValue = 0;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
@@ -1928,7 +1848,7 @@ void NetworkClient::readData()
                 emit spoilers_pctChanged(newValue);
                 break;
             }
-            case DataIdentifiers::FLAPS_ANGLE:
+            case SimconnectIds::FLAPS_ANGLE:
             {
                 double newValue = 0;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
@@ -1942,7 +1862,7 @@ void NetworkClient::readData()
                 emit flaps_angleChanged(newValue);
                 break;
             }
-            case DataIdentifiers::ELEV_TRIM_PCT:
+            case SimconnectIds::ELEV_TRIM_PCT:
             {
                 double newValue = 0;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
@@ -1956,7 +1876,7 @@ void NetworkClient::readData()
                 emit elev_trim_pctChanged(newValue);
                 break;
             }
-            case DataIdentifiers::RUDD_TRIM_PCT:
+            case SimconnectIds::RUDD_TRIM_PCT:
             {
                 double newValue = 0;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
@@ -1970,7 +1890,7 @@ void NetworkClient::readData()
                 emit rudd_trim_pctChanged(newValue);
                 break;
             }
-            case DataIdentifiers::AIL_TRIM_PCT:
+            case SimconnectIds::AIL_TRIM_PCT:
             {
                 double newValue = 0;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))

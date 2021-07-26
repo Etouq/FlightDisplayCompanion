@@ -7,11 +7,14 @@ Item {
     width: parent.width
     height: 90
     Rectangle {
+        id: bg
         x: 420
         y: 0
         width: 1365
         height: 48
         color: "#1A1D21"
+
+        property bool flightPlanActive: navInterface.gpsIsActiveFlightPlan
 
         RowLayout {
             width: 1365
@@ -62,7 +65,7 @@ Item {
                 font.bold: true
                 font.family: "Roboto Mono"
                 color: "#d12bc7"
-                text: mfdInterface.gps_dtk.toFixed(0) + "°"
+                text: bg.flightPlanActive ? mfdInterface.gps_dtk.toFixed(0) + "°" : "___°"
             }
 
             Text {
@@ -110,7 +113,7 @@ Item {
                 font.bold: true
                 font.family: "Roboto Mono"
                 color: "#d12bc7"
-                text: mfdInterface.ete;
+                text: bg.flightPlanActive ? mfdInterface.ete : "__:__"
             }
 
             Text {
@@ -134,7 +137,7 @@ Item {
                 font.bold: true
                 font.family: "Roboto Mono"
                 color: "#d12bc7"
-                text: hsiBrgInterface.gpsBearing.toFixed(0) + "°"
+                text: bg.flightPlanActive ? hsiBrgInterface.gpsBearing.toFixed(0) + "°" : "___°"
             }
 
             Text {
@@ -158,7 +161,7 @@ Item {
                 font.bold: true
                 font.family: "Roboto Mono"
                 color: "#d12bc7"
-                text: hsiBrgInterface.gpsDistance === "" ? "__._NM" : hsiBrgInterface.gpsDistance
+                text: hsiBrgInterface.gpsDistance === "" || !bg.flightPlanActive ? "__._NM" : hsiBrgInterface.gpsDistance
             }
 
             Text {
@@ -182,7 +185,7 @@ Item {
                 font.bold: true
                 font.family: "Roboto Mono"
                 color: "#d12bc7"
-                text: mfdInterface.eta;
+                text: bg.flightPlanActive ? mfdInterface.eta : "__:__UTC"
             }
         }
     }

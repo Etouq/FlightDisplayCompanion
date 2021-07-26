@@ -5,6 +5,7 @@ import QtQuick.Layouts 1.15
 import "../flightplan"
 
 GridLayout {
+    id: root
     x: 50
     y: 80
     columns: 2
@@ -73,6 +74,7 @@ GridLayout {
 
         placeholderTxt: "Address"
 
+        EnterKey.type: Qt.EnterKeyNext
         KeyNavigation.tab: portField
 
         onEditingFinished: {
@@ -91,6 +93,9 @@ GridLayout {
         Layout.preferredHeight: 45
 
         placeholderTxt: "Port"
+
+        EnterKey.type: Qt.EnterKeyDone
+        KeyNavigation.tab: root.parent
 
         inputMethodHints: Qt.ImhDigitsOnly
         onEditingFinished: {

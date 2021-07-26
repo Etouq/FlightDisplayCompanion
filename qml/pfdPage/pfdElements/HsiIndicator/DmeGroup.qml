@@ -6,7 +6,7 @@ Shape {
 
     visible: dmeMode != 0
 
-    property int dmeMode: 0
+    property int dmeMode: 1
 
     states: [
         State {

@@ -11,7 +11,8 @@
 NetworkClient::NetworkClient(QObject *parent) : QObject(parent)
 {
     connect(&tcpSocket, &QAbstractSocket::errorOccurred, this, &NetworkClient::newErrorReceived);
-    connect(&tcpSocket, &QIODevice::readyRead, this, &NetworkClient::readData);
+    connect(&tcpSocket, &QIODevice::readyRead, this, &NetworkClient::readInitData);
+    connect(&tcpSocket, &QTcpSocket::disconnected, this, &NetworkClient::socketDisconnected);
 }
 
 
@@ -20,6 +21,7 @@ void NetworkClient::connectInterfaceSignals(NetworkInterface *netInterface)
 
     connect(this, &NetworkClient::resetButton, netInterface, &NetworkInterface::resetButton);
     connect(this, &NetworkClient::displayError, netInterface, &NetworkInterface::setNewErrorString);
+    connect(this, &NetworkClient::versionError, netInterface, &NetworkInterface::showErrorPopup);
     connect(&tcpSocket, &QAbstractSocket::connected, netInterface, &NetworkInterface::setConnected);
     connect(&tcpSocket, &QAbstractSocket::disconnected, netInterface, &NetworkInterface::setDisconnected);
     connect(&tcpSocket, &QAbstractSocket::stateChanged, netInterface, &NetworkInterface::stateChanged);
@@ -57,7 +59,6 @@ void NetworkClient::newErrorReceived(QAbstractSocket::SocketError socketError)
 void NetworkClient::connectPressed(const QString &address, int port)
 {
     tcpSocket.setSocketOption(QAbstractSocket::KeepAliveOption, 1);
-    tcpSocket.setSocketOption(QAbstractSocket::LowDelayOption, 1);
     tcpSocket.connectToHost(address, port);
     tcpSocket.setSocketOption(QAbstractSocket::LowDelayOption, 1);
 }
@@ -102,12 +103,18 @@ void NetworkClient::sendAircraftKeys(const QStringList &keys)
     uint16_t size = keys.size();
     QByteArray dataToSend = BinaryUtil::toBinary(size);
     for (int idx = 0; idx < size; idx++)
-    {
         dataToSend += BinaryUtil::toBinary(keys[idx]);
-    }
+
     int64_t totalSize = dataToSend.size();
     dataToSend.prepend(BinaryUtil::toBinary(totalSize));
+
     ClientIds id = ClientIds::AIRCRAFT_FILE_LIST;
     dataToSend.prepend(reinterpret_cast<char *>(&id), sizeof(id));
     tcpSocket.write(dataToSend);
+}
+
+void NetworkClient::socketDisconnected()
+{
+    disconnect(&tcpSocket, &QTcpSocket::readyRead, this, nullptr);
+    connect(&tcpSocket, &QTcpSocket::readyRead, this, &NetworkClient::readInitData);
 }

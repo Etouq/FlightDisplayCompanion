@@ -55,6 +55,8 @@ signals:
     void serverIsDesignerChanged();
     void stateChanged(int state);
 
+    void showPopupError(const QString &msg);
+
 public slots:
     void resetButton();
     void setNewErrorString(const QString &newError);
@@ -64,6 +66,7 @@ public slots:
     void connectedToSim();
     void connectedToDesigner();
     void connectionChanged(QAbstractSocket::SocketState state);
+    void showErrorPopup(const QString &msg) { emit showPopupError(msg); }
 };
 
 #endif   // NETWORKINTERFACE_H

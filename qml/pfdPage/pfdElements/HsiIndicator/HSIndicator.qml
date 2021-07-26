@@ -82,8 +82,7 @@ Item {
         bearing2Mode: brg2FixedGroup.bearing2Mode
     }
 
-    Course {
-    }
+
 
     StaticParts {}
 

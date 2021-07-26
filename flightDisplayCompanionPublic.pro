@@ -74,7 +74,9 @@ SOURCES += \
         mfdbackend.cpp \
         networkBackend/networkclient.cpp \
         networkBackend/networkinterface.cpp \
-        networkBackend/readnetworkdata.cpp \
+        networkBackend/readdesignerdata.cpp \
+        networkBackend/readinitdata.cpp \
+        networkBackend/readsimconnectdata.cpp \
         settings/settingscontroller.cpp \
         settings/settingsinterface.cpp \
         unitConverter/pressureConverters.cpp \
