@@ -230,7 +230,7 @@ Item {
 
     Rectangle {
         id: titleText_alertbg
-        visible: main.redBlink
+        visible: main.redBlink && titleText.text.length > 0
         x: titleText.x - 1.5
         y: titleText.y - 1.5
         width: titleText.width + 3
@@ -249,7 +249,7 @@ Item {
 
     Rectangle {
         id: unitText_alertbg
-        visible: main.redBlink
+        visible: main.redBlink && unitText.text.length > 0
         x: unitText.x - 1.5
         y: unitText.y - 1.5
         width: unitText.width + 3
@@ -268,7 +268,7 @@ Item {
 
     Rectangle {
         id: valueText_alertbg
-        visible: main.redBlink
+        visible: main.redBlink && valueText.text.length > 0
         x: valueText.x - 1.5
         y: valueText.y - 1.5
         width: valueText.width + 3
@@ -295,7 +295,6 @@ Item {
         font.family: "Roboto Mono"
         font.bold: true
         font.pixelSize: main.titleSize
-        //text: main.title
         color: "white"
         visible: text.length > 0
 

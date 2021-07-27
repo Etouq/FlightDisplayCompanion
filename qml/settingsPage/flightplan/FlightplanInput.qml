@@ -214,7 +214,7 @@ Item {
             text: "Append"
 
             KeyNavigation.tab: insertButton
-            enabled: validInput && !insertModeActive && !editModeActive && selectedItemIdx < 0
+            enabled: validInput && !insertModeActive && !editModeActive
 
             onClicked: appendWaypoint()
             Keys.onEnterPressed: appendWaypoint()
@@ -228,7 +228,7 @@ Item {
 
             KeyNavigation.tab: clearButton
 
-            enabled: validInput && selectedItemIdx < 0
+            enabled: validInput && !editModeActive
 
             onClicked: insertModeActive = !insertModeActive
 
@@ -244,7 +244,7 @@ Item {
 
             text: "Clear"
 
-            enabled: fpTableWpListModel.count > 0 && selectedItemIdx < 0 && !insertModeActive
+            enabled: fpTableWpListModel.count > 0 && !insertModeActive
 
             onClicked: {
                 insertModeActive = false
