@@ -164,8 +164,6 @@ Item {
         anchors.fill: parent
         plugin: mapPlugin
         zoomLevel: currZoom
-        minimumZoomLevel: 5
-        maximumZoomLevel: 15
         copyrightsVisible: true
         gesture.acceptedGestures: MapGestureArea.PanGesture | MapGestureArea.FlickGesture
         gesture.onPanStarted: panModeActive = true;
