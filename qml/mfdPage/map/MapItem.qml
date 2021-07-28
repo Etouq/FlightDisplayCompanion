@@ -155,16 +155,19 @@ Item {
     Plugin {
         id: mapPlugin
         name: "osm"
+        locales: "en_GB"
 
         PluginParameter { name: "osm.mapping.custom.host"; value: "https://tile.openstreetmap.org/" }
     }
+
+
 
     Map {
         id: mapDisplay
         anchors.fill: parent
         plugin: mapPlugin
         zoomLevel: currZoom
-        copyrightsVisible: true
+        copyrightsVisible: false
         gesture.acceptedGestures: MapGestureArea.PanGesture | MapGestureArea.FlickGesture
         gesture.onPanStarted: panModeActive = true;
         gesture.onFlickStarted: panModeActive = true;
@@ -172,8 +175,6 @@ Item {
         gesture.preventStealing: true
 
         activeMapType: supportedMapTypes[supportedMapTypes.length - 1]
-
-        onCopyrightLinkActivated: Qt.openUrlExternally(link);
 
         Binding {
             target: mapDisplay
@@ -309,8 +310,7 @@ Item {
 
 
 
-    Rectangle
-    {
+    Rectangle {
         anchors.right: parent.right
         anchors.bottom: parent.bottom
         width: 150
@@ -329,6 +329,21 @@ Item {
 
     }
 
+    Rectangle {
+        anchors.left: parent.left
+        anchors.bottom: parent.bottom
+        height: copyrightText.height + 5
+        width: copyrightText.width + 10
+        color: "#7FFFFFFF"
 
+        Text {
+            id: copyrightText
+            anchors.centerIn: parent
+            textFormat: Text.StyledText
+            font.pixelSize: 23
+            text: "© <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors"
+            onLinkActivated: Qt.openUrlExternally(link)
+        }
+    }
 
 }
