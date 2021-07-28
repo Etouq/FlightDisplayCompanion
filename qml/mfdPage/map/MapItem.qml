@@ -126,7 +126,6 @@ Item {
 
     Component.onCompleted: {
         fillFlightplanData();
-
     }
 
 
@@ -156,8 +155,9 @@ Item {
     Plugin {
         id: mapPlugin
         name: "osm"
-    }
 
+        PluginParameter { name: "osm.mapping.custom.host"; value: "https://tile.openstreetmap.org/" }
+    }
 
     Map {
         id: mapDisplay
@@ -172,6 +172,8 @@ Item {
         gesture.onFlickStarted: panModeActive = true;
         gesture.onFlickFinished: if(!panModeActive) mapDisplay.center = mfdInterface.currCoordinates;
         gesture.preventStealing: true
+
+        activeMapType: supportedMapTypes[supportedMapTypes.length - 1]
 
         onCopyrightLinkActivated: Qt.openUrlExternally(link);
 
