@@ -58,7 +58,7 @@ MapItemGroup {
             font.family: "Roboto Mono"
             //font.bold: true
             font.pixelSize: 20
-            text: zoomLevels[zoomLevelIdx]
+            text: Math.round(zoomLevels[zoomLevelIdx] * 10) / 10
         }
     }
 
@@ -72,7 +72,7 @@ MapItemGroup {
             font.family: "Roboto Mono"
             //font.bold: true
             font.pixelSize: 20
-            text: zoomLevels[zoomLevelIdx] * 2
+            text: Math.round(zoomLevels[zoomLevelIdx] * 20) / 10
         }
     }
 
@@ -86,7 +86,7 @@ MapItemGroup {
             font.family: "Roboto Mono"
             //font.bold: true
             font.pixelSize: 20
-            text: zoomLevels[zoomLevelIdx] * 3
+            text: Math.round(zoomLevels[zoomLevelIdx] * 30) / 10
         }
     }
 
@@ -100,7 +100,7 @@ MapItemGroup {
             font.family: "Roboto Mono"
             //font.bold: true
             font.pixelSize: 20
-            text: zoomLevels[zoomLevelIdx] * 4
+            text: Math.round(zoomLevels[zoomLevelIdx] * 40) / 10
         }
     }
 }
