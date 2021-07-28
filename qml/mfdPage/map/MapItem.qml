@@ -11,9 +11,9 @@ Item {
 
 
 
-    property variant zoomLevels: [0.5, 1, 2, 3, 5, 10, 15, 20, 35, 50, 100, 150, 200, 250]
+    property variant zoomLevels: [0.1, 0.2, 0.3, 0.5, 1, 2, 3, 5, 10, 15, 20, 35, 50, 100, 150, 200, 250]
     property bool panModeActive: false
-    property int zoomLevelIdx: 6
+    property int zoomLevelIdx: 9
     property real currZoom: 9
 
 
