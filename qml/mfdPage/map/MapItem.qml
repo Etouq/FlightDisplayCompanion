@@ -193,8 +193,6 @@ Item {
         anchors.fill: parent
         center: mapDisplay.center
         zoomLevel: currZoom
-        minimumZoomLevel: 5
-        maximumZoomLevel: 15
         gesture.enabled: false
         color: 'transparent'
 
