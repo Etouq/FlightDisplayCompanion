@@ -6,6 +6,7 @@ import QtQuick.Dialogs 1.3
 import "mfdPage"
 import "pfdPage"
 import "settingsPage"
+import "tscPage"
 
 Window {
     id: bgRect
@@ -32,6 +33,17 @@ Window {
         Item {
             SettingsPage {
                 id: settingsPageId
+                clip: true
+                width: 1920
+                height: 1200
+                scale: scaleFactor
+                anchors.centerIn: parent
+            }
+        }
+
+        Item {
+            TscPage {
+                id: tscPageId
                 clip: true
                 width: 1920
                 height: 1200

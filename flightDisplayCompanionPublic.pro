@@ -173,7 +173,45 @@ DISTFILES += \
     qml/settingsPage/ThumbnailView.qml \
     qml/settingsPage/StyledCheckBox.qml \
     qml/settingsPage/connection/ConnectionInput.qml \
-    qml/settingsPage/SettingsPage.qml
+    qml/settingsPage/SettingsPage.qml \
+    qml/tscPage/HomePage.qml \
+    qml/tscPage/TscPage.qml \
+    qml/tscPage/TscPageBase.qml \
+    qml/tscPage/images/DoubleArrowVerticalWhite.svg \
+    qml/tscPage/images/ICON_MAP_BKSP.png \
+    qml/tscPage/images/ICON_MAP_BUTTONBAR_BACK_1.png \
+    qml/tscPage/images/ICON_MAP_BUTTONBAR_HOME.png \
+    qml/tscPage/images/ICON_MAP_ENTER.png \
+    qml/tscPage/images/ICON_MAP_MINIMUMS.png \
+    qml/tscPage/images/ICON_MAP_SETTINGS_1.png \
+    qml/tscPage/images/ICON_MAP_SMALL_BEARING_1.png \
+    qml/tscPage/images/ICON_MAP_SMALL_BEARING_2_1.png \
+    qml/tscPage/images/ICON_MAP_SMALL_TIMERS.png \
+    qml/tscPage/images/ICON_MAP_SPEED_BUG.png \
+    qml/tscPage/navcom_page/FrequencyKeyboard.qml \
+    qml/tscPage/navcom_page/NavComHome.qml \
+    qml/tscPage/navcom_page/RadioRow.qml \
+    qml/tscPage/navcom_page/TransponderKeyboard.qml \
+    qml/tscPage/pfd_page/Minimums.qml \
+    qml/tscPage/pfd_page/MinimumsSource.qml \
+    qml/tscPage/pfd_page/SpeedBugs.qml \
+    qml/tscPage/pfd_page/SpeedKeyboard.qml \
+    qml/tscPage/pfd_page/TimeKeyboard.qml \
+    qml/tscPage/pfd_page/Timers.qml \
+    qml/tscPage/pfd_page/Timers.qml.CMhbaz \
+    qml/tscPage/styled_controls/GradientButton.qml \
+    qml/tscPage/styled_controls/GradientRoundButton.qml \
+    qml/tscPage/styled_controls/gradientButtonElements/CenterImg.qml \
+    qml/tscPage/styled_controls/gradientButtonElements/GradientStatusBar.qml \
+    qml/tscPage/styled_controls/gradientButtonElements/Img.qml \
+    qml/tscPage/styled_controls/gradientButtonElements/ImgSmall.qml \
+    qml/tscPage/styled_controls/gradientButtonElements/LowerImg.qml \
+    qml/tscPage/styled_controls/gradientButtonElements/LowerValue.qml \
+    qml/tscPage/styled_controls/gradientButtonElements/MainNumber.qml \
+    qml/tscPage/styled_controls/gradientButtonElements/MainText.qml \
+    qml/tscPage/styled_controls/gradientButtonElements/Title.qml \
+    qml/tscPage/styled_controls/gradientButtonElements/TopText.qml \
+    qml/tscPage/styled_controls/gradientButtonElements/UpperTitle.qml
 
 ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
 
