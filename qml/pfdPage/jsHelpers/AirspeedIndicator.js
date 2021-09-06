@@ -10,7 +10,7 @@ class AirspeedIndicator {
         this.yellowEnd = 0;
         this.minValue = 0;
         this.maxValue = 0;
-        this.currentCenterGrad = 0;
+        this.currentCenterGrad = -10000;
         this.nocolor = false;
         this.scaleFactor = 0.96;
         this.airspeedReferenceGroup = null;
