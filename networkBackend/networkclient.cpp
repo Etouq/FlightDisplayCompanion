@@ -65,14 +65,20 @@ void NetworkClient::connectPressed(const QString &address, int port)
 
 void NetworkClient::disconnectPressed()
 {
-    ClientIds clientId = ClientIds::QUIT;
-    tcpSocket.write(reinterpret_cast<char *>(&clientId), sizeof(clientId));
+    if (d_connectedToServer) {
+        ClientToServerIds clientId = ClientToServerIds::QUIT;
+        tcpSocket.write(reinterpret_cast<char *>(&clientId), sizeof(clientId));
+    }
+    else {
+        ClientToDesignerIds clientId = ClientToDesignerIds::QUIT;
+        tcpSocket.write(reinterpret_cast<char *>(&clientId), sizeof(clientId));
+    }
     tcpSocket.disconnectFromHost();
 }
 
 void NetworkClient::startSim(const QByteArray &data)
 {
-    ClientIds clientId = ClientIds::START;
+    ClientToServerIds clientId = ClientToServerIds::START;
     QByteArray msg(reinterpret_cast<char *>(&clientId), sizeof(clientId));
     msg += data;
     tcpSocket.write(msg);
@@ -80,7 +86,7 @@ void NetworkClient::startSim(const QByteArray &data)
 
 void NetworkClient::changeAircraft(const QByteArray &data)
 {
-    ClientIds clientId = ClientIds::CHANGE_AIRCRAFT;
+    ClientToServerIds clientId = ClientToServerIds::CHANGE_AIRCRAFT;
     QByteArray msg(reinterpret_cast<char *>(&clientId), sizeof(clientId));
     msg += data;
     tcpSocket.write(msg);
@@ -93,7 +99,7 @@ void NetworkClient::sendAircraftToDesigner(const AircraftDefinition &aircraft)
         imagePath = ":/DefaultImage.png";
 
     QImage img(imagePath);
-    ClientIds id = ClientIds::LOAD_AIRCRAFT;
+    ClientToDesignerIds id = ClientToDesignerIds::LOAD_AIRCRAFT;
     tcpSocket.write(reinterpret_cast<char *>(&id), sizeof(id));
     AircraftFile::writeAircraftToStream(tcpSocket, aircraft, img);
 }
@@ -108,7 +114,7 @@ void NetworkClient::sendAircraftKeys(const QStringList &keys)
     int64_t totalSize = dataToSend.size();
     dataToSend.prepend(BinaryUtil::toBinary(totalSize));
 
-    ClientIds id = ClientIds::AIRCRAFT_FILE_LIST;
+    ClientToDesignerIds id = ClientToDesignerIds::AIRCRAFT_FILE_LIST;
     dataToSend.prepend(reinterpret_cast<char *>(&id), sizeof(id));
     tcpSocket.write(dataToSend);
 }

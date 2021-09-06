@@ -13,7 +13,7 @@ void NetworkClient::readInitData()
 
     if (identifier == SharedServerIds::SIMCONNECT_SERVER)
     {
-        ClientIds versionId = ClientIds::CLIENT_NETWORK_VERSION;
+        ClientToServerIds versionId = ClientToServerIds::CLIENT_NETWORK_VERSION;
         tcpSocket.write(reinterpret_cast<const char *>(&versionId), sizeof(versionId));
         tcpSocket.write(reinterpret_cast<const char *>(&latestSimconnectNetworkVersion), sizeof(latestSimconnectNetworkVersion));
 
@@ -33,11 +33,12 @@ void NetworkClient::readInitData()
         disconnect(&tcpSocket, &QTcpSocket::readyRead, this, &NetworkClient::readInitData);
         connect(&tcpSocket, &QTcpSocket::readyRead, this, &NetworkClient::readSimconnectData);
 
+        d_connectedToServer = true;
         emit connectedToSimServer();
     }
     else
     {
-        ClientIds versionId = ClientIds::CLIENT_NETWORK_VERSION;
+        ClientToDesignerIds versionId = ClientToDesignerIds::CLIENT_NETWORK_VERSION;
         tcpSocket.write(reinterpret_cast<const char *>(&versionId), sizeof(versionId));
         tcpSocket.write(reinterpret_cast<const char *>(&latestGaugeNetworkVersion), sizeof(latestGaugeNetworkVersion));
 
@@ -57,6 +58,7 @@ void NetworkClient::readInitData()
         disconnect(&tcpSocket, &QTcpSocket::readyRead, this, &NetworkClient::readInitData);
         connect(&tcpSocket, &QTcpSocket::readyRead, this, &NetworkClient::readDesignerData);
 
+        d_connectedToServer = false;
         emit connectedToGaugeDesigner();
     }
 }

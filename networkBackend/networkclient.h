@@ -20,6 +20,8 @@ class NetworkClient : public QObject
     const uint8_t latestGaugeNetworkVersion = 1;
     const uint8_t latestSimconnectNetworkVersion = 1;
 
+    bool d_connectedToServer = false;
+
 public:
     explicit NetworkClient(QObject *parent = nullptr);
 
