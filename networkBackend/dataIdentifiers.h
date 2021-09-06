@@ -169,7 +169,17 @@ enum class ClientToServerIds : uint8_t
     CLIENT_NETWORK_VERSION,
     QUIT,
     CHANGE_AIRCRAFT,
-    START
+    START,
+    SET_COM1_FREQ,
+    SET_COM2_FREQ,
+    SET_NAV1_FREQ,
+    SET_NAV2_FREQ,
+    SWAP_COM1,
+    SWAP_COM2,
+    SWAP_NAV1,
+    SWAP_NAV2,
+    SET_XPDR_CODE,
+    SET_XPDR_STATE
 };
 
 enum class ClientToDesignerIds : uint8_t

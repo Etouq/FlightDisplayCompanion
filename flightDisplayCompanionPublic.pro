@@ -27,6 +27,7 @@ SOURCES += \
         PfdBackends/pfdmanager.cpp \
         PfdBackends/radioinfobackend.cpp \
         PfdBackends/winddatabackend.cpp \
+        TscPage/tscpagebackend.cpp \
         aircraftManager/aircraftInitializer/aircraftinitializer.cpp \
         aircraftManager/aircraftInitializer/initairbus_a320_neo.cpp \
         aircraftManager/aircraftInitializer/initaviat_pitts.cpp \
@@ -189,6 +190,7 @@ HEADERS += \
     PfdBackends/pfdmanager.h \
     PfdBackends/radioinfobackend.h \
     PfdBackends/winddatabackend.h \
+    TscPage/tscpagebackend.h \
     aircraftManager/aircraftInitializer/aircraftinitializer.h \
     aircraftManager/aircraftfile.h \
     aircraftManager/aircraftmanager.h \
@@ -210,4 +212,4 @@ HEADERS += \
     settings/settingsinterface.h \
     unitConverter/unitconverter.h \
     unitConverter/units.h
-android: include(D:/android_SDK/android_openssl/openssl.pri)
+android: include(D:/android_openssl-master/openssl.pri)
