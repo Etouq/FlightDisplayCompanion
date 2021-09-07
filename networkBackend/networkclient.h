@@ -17,8 +17,8 @@ class NetworkClient : public QObject
 
     QTcpSocket tcpSocket;
 
-    const uint8_t latestGaugeNetworkVersion = 1;
-    const uint8_t latestSimconnectNetworkVersion = 1;
+    const uint8_t latestGaugeNetworkVersion = 2;
+    const uint8_t latestSimconnectNetworkVersion = 2;
 
     bool d_connectedToServer = false;
 

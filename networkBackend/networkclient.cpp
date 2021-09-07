@@ -97,7 +97,9 @@ void NetworkClient::sendCommands(const QByteArray &data)
     if (tcpSocket.state() == QAbstractSocket::ConnectedState && d_connectedToServer)
     {
         ClientToServerIds clientId = ClientToServerIds::SIM_COMMANDS;
-        QByteArray msg(reinterpret_cast<char *>(&clientId), sizeof(clientId));
+        QByteArray msg(reinterpret_cast<const char *>(&clientId), sizeof(clientId));
+        uint8_t messageSize = data.size();
+        msg.append(reinterpret_cast<const char *>(&messageSize), sizeof(messageSize));
         msg += data;
         tcpSocket.write(msg);
     }
