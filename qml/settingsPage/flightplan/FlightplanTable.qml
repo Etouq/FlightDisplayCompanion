@@ -13,17 +13,17 @@ ListView {
     function getWpTypeUrl(typeId) {
         switch (typeId) {
             case 0:
-                return "qrc:/images/ICON_MAP_AIRPORT.png";
+                return "qrc:/images/miscImages/ICON_MAP_AIRPORT.png";
             case 1:
-                return "qrc:/images/ICON_MAP_INT.png";
+                return "qrc:/images/miscImages/ICON_MAP_INT.png";
             case 2:
-                return "qrc:/images/ICON_MAP_NDB.png";
+                return "qrc:/images/miscImages/ICON_MAP_NDB.png";
             case 3:
-                return "qrc:/images/ICON_MAP_USER.png";
+                return "qrc:/images/miscImages/ICON_MAP_USER.png";
             case 4:
-                return "qrc:/images/ICON_MAP_VOR_2.png";
+                return "qrc:/images/miscImages/ICON_MAP_VOR_2.png";
             default:
-                return "qrc:/images/ICON_MAP_USER.png";
+                return "qrc:/images/miscImages/ICON_MAP_USER.png";
         }
     }
 

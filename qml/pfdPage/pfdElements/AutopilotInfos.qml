@@ -91,7 +91,7 @@ Rectangle {
             visible: apInterface.ap_fdActive
             width: 78.336
             height: 31.3344
-            source: "qrc:/images/fdArrow.png"
+            source: "qrc:/images/miscImages/fdArrow.png"
         }
 
     }

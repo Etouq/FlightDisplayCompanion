@@ -17,7 +17,7 @@ MapItemView {
             Image {
                 width: 87.5
                 height: 87.5
-                source: type == 0 ? "qrc:/images/ICON_MAP_AIRPORT_NON_TOWERED_SERVICED_PINK.png" : type == 1 ? "qrc:/images/ICON_MAP_INTERSECTION.png" : type == 2 ? "qrc:/images/ICON_MAP_NDB_WAYPOINT.png" : type == 3 ? "qrc:/images/ICON_MAP_USERWAYPOINT.png" : "qrc:/images/ICON_MAP_VOR.png"
+                source: type == 0 ? "qrc:/images/mapImages/ICON_MAP_AIRPORT_NON_TOWERED_SERVICED_PINK.png" : type == 1 ? "qrc:/images/mapImages/ICON_MAP_INTERSECTION.png" : type == 2 ? "qrc:/images/mapImages/ICON_MAP_NDB_WAYPOINT.png" : type == 3 ? "qrc:/images/mapImages/ICON_MAP_USERWAYPOINT.png" : "qrc:/images/mapImages/ICON_MAP_VOR.png"
             }
 
             Label {

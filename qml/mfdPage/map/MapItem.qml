@@ -290,7 +290,7 @@ Item {
             coordinate: mfdInterface.currCoordinates
             sourceItem: Image {
                 id: planeIconSource
-                source: "qrc:/images/planeIconOutligned.svg"
+                source: "qrc:/images/mapImages/planeIconOutligned.svg"
                 width: 105
                 height: 105
                 smooth: true

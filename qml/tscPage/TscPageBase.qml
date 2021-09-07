@@ -43,7 +43,7 @@ Item {
             x: 6
 
             Img {
-                source: "qrc:/images/ICON_MAP_BUTTONBAR_BACK_1.png"
+                source: "qrc:/images/buttonImages/ICON_MAP_BUTTONBAR_BACK_1.png"
             }
 
             Title {
@@ -62,7 +62,7 @@ Item {
             x: 6
 
             Img {
-                source: "qrc:/images/ICON_MAP_BUTTONBAR_HOME.png"
+                source: "qrc:/images/buttonImages/ICON_MAP_BUTTONBAR_HOME.png"
             }
 
             Title {
@@ -81,7 +81,7 @@ Item {
             x: 6
 
             Img {
-                source: "qrc:/images/ICON_MAP_ENTER.png"
+                source: "qrc:/images/buttonImages/ICON_MAP_ENTER.png"
             }
 
             Title {

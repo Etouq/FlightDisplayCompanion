@@ -20,7 +20,7 @@ Item {
             color: "#bbbbbb"
             border.width: 3
             Image {
-                source: "qrc:/images/mapZoomLess.svg"
+                source: "qrc:/images/buttonImages/mapZoomLess.svg"
                 anchors.fill: parent
             }
         }
@@ -48,7 +48,7 @@ Item {
             color: "#bbbbbb"
             border.width: 3
             Image {
-                source: "qrc:/images/mapZoomPlus.svg"
+                source: "qrc:/images/buttonImages/mapZoomPlus.svg"
                 anchors.fill: parent
             }
         }
@@ -75,7 +75,7 @@ Item {
             color: "#bbbbbb"
             border.width: 3
             Image {
-                source: "qrc:/images/centerbutton.svg"
+                source: "qrc:/images/buttonImages/centerbutton.svg"
                 anchors.fill: parent
             }
         }

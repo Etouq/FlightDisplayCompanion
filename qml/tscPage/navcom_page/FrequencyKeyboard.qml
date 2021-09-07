@@ -202,7 +202,7 @@ TscPageBase {
         x: 1228.26
         width: 291.84
         Img {
-            source: "qrc:/images/ICON_MAP_BKSP.png"
+            source: "qrc:/images/buttonImages/ICON_MAP_BKSP.png"
         }
 
         Title {
@@ -314,7 +314,7 @@ TscPageBase {
                 height: 180
 
                 Img {
-                    source: "qrc:/images/DoubleArrowVerticalWhite.svg"
+                    source: "qrc:/images/buttonImages/DoubleArrowVerticalWhite.svg"
                 }
 
                 Title {

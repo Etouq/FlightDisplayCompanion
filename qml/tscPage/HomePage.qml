@@ -34,7 +34,7 @@ TscPageBase {
                 }
 
                 CenterImg {
-                    source: "qrc:/images/ICON_MAP_SMALL_BEARING_1.png"
+                    source: "qrc:/images/buttonImages/ICON_MAP_SMALL_BEARING_1.png"
                 }
 
                 LowerValue {
@@ -54,7 +54,7 @@ TscPageBase {
                 }
 
                 CenterImg {
-                    source: "qrc:/images/ICON_MAP_SMALL_BEARING_2_1.png"
+                    source: "qrc:/images/buttonImages/ICON_MAP_SMALL_BEARING_2_1.png"
                 }
 
                 LowerValue {
@@ -71,7 +71,7 @@ TscPageBase {
 
             GradientButton {
                 Img {
-                    source: "qrc:/images/ICON_MAP_SPEED_BUG.png"
+                    source: "qrc:/images/buttonImages/ICON_MAP_SPEED_BUG.png"
                 }
 
                 Title {
@@ -83,7 +83,7 @@ TscPageBase {
 
             GradientButton {
                 Img {
-                    source: "qrc:/images/ICON_MAP_SMALL_TIMERS.png"
+                    source: "qrc:/images/buttonImages/ICON_MAP_SMALL_TIMERS.png"
                 }
 
                 Title {
@@ -95,7 +95,7 @@ TscPageBase {
 
             GradientButton {
                 Img {
-                    source: "qrc:/images/ICON_MAP_MINIMUMS.png"
+                    source: "qrc:/images/buttonImages/ICON_MAP_MINIMUMS.png"
                 }
 
                 Title {

@@ -36,7 +36,7 @@ CheckBox {
             y: (parent.height - height) / 2
             width: 17.5
             height: 17.5
-            source: "qrc:/images/check.png"
+            source: "qrc:/images/buttonImages/check.png"
             fillMode: Image.PreserveAspectFit
 
             scale: root.checked ? 1 : 0

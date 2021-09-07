@@ -90,7 +90,7 @@ Row {
             height: 180
 
             Img {
-                source: "qrc:/images/DoubleArrowVerticalWhite.svg"
+                source: "qrc:/images/buttonImages/DoubleArrowVerticalWhite.svg"
             }
 
             Title {

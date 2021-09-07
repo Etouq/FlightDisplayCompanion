@@ -26,7 +26,7 @@ Rectangle {
         height: 40
         y: 8.8
         anchors.horizontalCenter: parent.horizontalCenter
-        source: navInterface.legIsDirectTo ? "qrc:/images/directToIcon.png" : "qrc:/images/courseToIcon.png"
+        source: navInterface.legIsDirectTo ? "qrc:/images/micsImages/directToIcon.png" : "qrc:/images/miscImages/courseToIcon.png"
     }
 
     Text {

@@ -209,7 +209,7 @@ TscPageBase {
         y: 30
 
         Img {
-            source: "qrc:/images/ICON_MAP_BKSP.png"
+            source: "qrc:/images/buttonImages/ICON_MAP_BKSP.png"
         }
 
         Title {
