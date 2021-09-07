@@ -54,45 +54,49 @@ int TscPageBackend::nav2ActiveHz() const
     return d_nav2ActiveHz;
 }
 
-void TscPageBackend::setCom1Freq(int32_t newFreq, bool swap)
+void TscPageBackend::setCom1Freq(int newFreq, bool swap)
 {
     CommandIds command_ids = CommandIds::SET_COM1_FREQ;
     QByteArray dataToSend(reinterpret_cast<const char *>(&command_ids), sizeof(command_ids));
     // format: 32 bit int for hz, bool for swap
-    dataToSend.append(reinterpret_cast<const char *>(&newFreq), sizeof(newFreq));
+    int32_t newVal = newFreq;
+    dataToSend.append(reinterpret_cast<const char *>(&newVal), sizeof(newVal));
     dataToSend.append(reinterpret_cast<const char *>(&swap), sizeof(swap));
 
     emit sendCommandsToSim(dataToSend);
 }
 
-void TscPageBackend::setCom2Freq(int32_t newFreq, bool swap)
+void TscPageBackend::setCom2Freq(int newFreq, bool swap)
 {
     CommandIds command_ids = CommandIds::SET_COM2_FREQ;
     QByteArray dataToSend(reinterpret_cast<const char *>(&command_ids), sizeof(command_ids));
     // format: 32 bit int for hz, bool for swap
-    dataToSend.append(reinterpret_cast<const char *>(&newFreq), sizeof(newFreq));
+    int32_t newVal = newFreq;
+    dataToSend.append(reinterpret_cast<const char *>(&newVal), sizeof(newVal));
     dataToSend.append(reinterpret_cast<const char *>(&swap), sizeof(swap));
 
     emit sendCommandsToSim(dataToSend);
 }
 
-void TscPageBackend::setNav1Freq(int32_t newFreq, bool swap)
+void TscPageBackend::setNav1Freq(int newFreq, bool swap)
 {
     CommandIds command_ids = CommandIds::SET_NAV1_FREQ;
     QByteArray dataToSend(reinterpret_cast<const char *>(&command_ids), sizeof(command_ids));
     // format: 32 bit int for hz, bool for swap
-    dataToSend.append(reinterpret_cast<const char *>(&newFreq), sizeof(newFreq));
+    int32_t newVal = newFreq;
+    dataToSend.append(reinterpret_cast<const char *>(&newVal), sizeof(newVal));
     dataToSend.append(reinterpret_cast<const char *>(&swap), sizeof(swap));
 
     emit sendCommandsToSim(dataToSend);
 }
 
-void TscPageBackend::setNav2Freq(int32_t newFreq, bool swap)
+void TscPageBackend::setNav2Freq(int newFreq, bool swap)
 {
     CommandIds command_ids = CommandIds::SET_NAV2_FREQ;
     QByteArray dataToSend(reinterpret_cast<const char *>(&command_ids), sizeof(command_ids));
     // format: 32 bit int for hz, bool for swap
-    dataToSend.append(reinterpret_cast<const char *>(&newFreq), sizeof(newFreq));
+    int32_t newVal = newFreq;
+    dataToSend.append(reinterpret_cast<const char *>(&newVal), sizeof(newVal));
     dataToSend.append(reinterpret_cast<const char *>(&swap), sizeof(swap));
 
     emit sendCommandsToSim(dataToSend);
@@ -140,20 +144,22 @@ int TscPageBackend::xpdrState() const
     return d_xpdrState;
 }
 
-void TscPageBackend::setXpdrCode(int32_t newCode)
+void TscPageBackend::setXpdrCode(int newCode)
 {
     CommandIds command_id = CommandIds::SET_XPDR_CODE;
     QByteArray dataToSend(reinterpret_cast<const char *>(&command_id), sizeof(command_id));
-    dataToSend.append(reinterpret_cast<const char *>(&newCode), sizeof(newCode));
+    int32_t newVal = newCode;
+    dataToSend.append(reinterpret_cast<const char *>(&newVal), sizeof(newVal));
 
     emit sendCommandsToSim(dataToSend);
 }
 
-void TscPageBackend::setXpdrState(int8_t newState)
+void TscPageBackend::setXpdrState(int newState)
 {
     CommandIds command_id = CommandIds::SET_XPDR_STATE;
     QByteArray dataToSend(reinterpret_cast<const char *>(&command_id), sizeof(command_id));
-    dataToSend.append(reinterpret_cast<const char *>(&newState), sizeof(newState));
+    int8_t newVal = newState;
+    dataToSend.append(reinterpret_cast<const char *>(&newVal), sizeof(newVal));
 
     emit sendCommandsToSim(dataToSend);
 }

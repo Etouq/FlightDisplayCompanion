@@ -73,6 +73,7 @@ SOURCES += \
         gaugeBackends/gaugemanager.cpp \
         gaugeBackends/gaugeqmlfunctions.cpp \
         gaugeBackends/miscedbase.cpp \
+        keepawakehelper.cpp \
         main.cpp \
         mfdbackend.cpp \
         networkBackend/networkclient.cpp \
@@ -244,6 +245,7 @@ HEADERS += \
     gaugeBackends/gaugebase.h \
     gaugeBackends/gaugemanager.h \
     gaugeBackends/miscedbase.h \
+    keepawakehelper.h \
     mfdbackend.h \
     networkBackend/dataIdentifiers.h \
     networkBackend/networkclient.h \

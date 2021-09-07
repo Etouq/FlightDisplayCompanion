@@ -15,6 +15,7 @@
 #include "settings/settingscontroller.h"
 #include "settings/settingsinterface.h"
 #include "TscPage/tscpagebackend.h"
+#include "keepawakehelper.h"
 
 
 int main(int argc, char *argv[])
@@ -32,7 +33,7 @@ int main(int argc, char *argv[])
 
     QQmlApplicationEngine engine;
 
-    QtAndroid::requestPermissionsSync({ "android.permission.WRITE_EXTERNAL_STORAGE", "android.permission.READ_EXTERNAL_STORAGE" });
+    QtAndroid::requestPermissionsSync({ "android.permission.WRITE_EXTERNAL_STORAGE", "android.permission.READ_EXTERNAL_STORAGE", "android.permission.WAKE_LOCK" });
 
     if (QtAndroid::checkPermission("android.permission.WRITE_EXTERNAL_STORAGE") == QtAndroid::PermissionResult::Denied
         || QtAndroid::checkPermission("android.permission.READ_EXTERNAL_STORAGE") == QtAndroid::PermissionResult::Denied)
@@ -42,6 +43,8 @@ int main(int argc, char *argv[])
         app.exec();
         return -1;
     }
+
+    KeepAwakeHelper helper;
 
 
     SettingsController::init();

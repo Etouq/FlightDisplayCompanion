@@ -100,10 +100,10 @@ public:
     int nav2StbyHz() const;
     int nav2ActiveHz() const;
 
-    Q_INVOKABLE void setCom1Freq(int32_t newFreq, bool swap);
-    Q_INVOKABLE void setCom2Freq(int32_t newFreq, bool swap);
-    Q_INVOKABLE void setNav1Freq(int32_t newFreq, bool swap);
-    Q_INVOKABLE void setNav2Freq(int32_t newFreq, bool swap);
+    Q_INVOKABLE void setCom1Freq(int newFreq, bool swap);
+    Q_INVOKABLE void setCom2Freq(int newFreq, bool swap);
+    Q_INVOKABLE void setNav1Freq(int newFreq, bool swap);
+    Q_INVOKABLE void setNav2Freq(int newFreq, bool swap);
 
     Q_INVOKABLE void swapCom1();
     Q_INVOKABLE void swapCom2();
@@ -113,8 +113,8 @@ public:
     int xpdrCode() const;
     int xpdrState() const;
 
-    Q_INVOKABLE void setXpdrCode(int32_t newCode);
-    void setXpdrState(int8_t newState);
+    Q_INVOKABLE void setXpdrCode(int newCode);
+    void setXpdrState(int newState);
 
 signals:
     // speedbugs
