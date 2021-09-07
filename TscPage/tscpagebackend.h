@@ -4,6 +4,8 @@
 #include <QObject>
 #include <QString>
 
+class NetworkClient;
+
 class TscPageBackend : public QObject
 {
     Q_OBJECT
@@ -24,12 +26,6 @@ class TscPageBackend : public QObject
     Q_PROPERTY(bool isCounting MEMBER d_isCounting NOTIFY isCountingChanged)
     Q_PROPERTY(
       bool isCountingDown MEMBER d_isCountingDown NOTIFY isCountingDownChanged)
-
-    // minimums
-    Q_PROPERTY(
-      int minimumsValue MEMBER d_minimumsValue NOTIFY minimumsValueChanged)
-    Q_PROPERTY(
-      int minimumsState MEMBER d_minimumsState NOTIFY minimumsStateChanged)
 
     // radios
     Q_PROPERTY(int com1StbyHz READ com1StbyHz NOTIFY com1StbyHzChanged)
@@ -65,10 +61,6 @@ class TscPageBackend : public QObject
     bool d_isCounting = false;
     bool d_isCountingDown = false;
 
-    // minimums
-    int d_minimumsValue = 0;
-    int d_minimumsState = 0;   // 0: off, 1: baro, 2: radio
-
     // radios
     int d_com1StbyHz = 118850000;
     int d_com1ActiveHz = 124850000;
@@ -84,6 +76,8 @@ class TscPageBackend : public QObject
 
 public:
     explicit TscPageBackend(QObject *parent = nullptr);
+
+    void connectTscSlots(NetworkClient *netClient);
 
     // timer
     QString timeString() const;
@@ -138,10 +132,6 @@ signals:
     void timeStringChanged();
     void isCountingChanged();
     void isCountingDownChanged();
-
-    // minimums
-    void minimumsValueChanged();
-    void minimumsStateChanged();
 
     // radios
     void com1StbyHzChanged();

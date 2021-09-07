@@ -38,7 +38,16 @@ Item {
     {
         target: iasInterface
         function onColorsChanged() {
-            iasItem.updateColors(iasInterface.getRedBegin(), iasInterface.getRedEnd(), iasInterface.getGreenBegin(), iasInterface.getGreenEnd(), iasInterface.getFlapsBegin(), iasInterface.getFlapsEnd(), iasInterface.getYellowBegin(), iasInterface.getYellowEnd(), iasInterface.getMinSpeed(), iasInterface.getNoColor());
+            iasItem.updateColors(iasInterface.getRedBegin(),
+                                 iasInterface.getRedEnd(),
+                                 iasInterface.getGreenBegin(),
+                                 iasInterface.getGreenEnd(),
+                                 iasInterface.getFlapsBegin(),
+                                 iasInterface.getFlapsEnd(),
+                                 iasInterface.getYellowBegin(),
+                                 iasInterface.getYellowEnd(),
+                                 iasInterface.getMinSpeed(),
+                                 iasInterface.getNoColor());
             iasItem.update(iasInterface.airspeed);
         }
     }
@@ -104,6 +113,7 @@ Item {
     }
 
     HSIndicator {
+        id: hsiIndicator
         height: 116 * 691.2 / 156
         anchors.left: parent.left
         anchors.leftMargin: 614.4

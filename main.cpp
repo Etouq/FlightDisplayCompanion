@@ -14,7 +14,7 @@
 #include "networkBackend/networkinterface.h"
 #include "settings/settingscontroller.h"
 #include "settings/settingsinterface.h"
-
+#include "TscPage/tscpagebackend.h"
 
 
 int main(int argc, char *argv[])
@@ -53,6 +53,7 @@ int main(int argc, char *argv[])
     NetworkClient netClient;
     NetworkInterface netInterface;
     SettingsInterface settingsInterface;
+    TscPageBackend tscBackend;
 
 
     pfdInterfaceManager.connectPfdSlots(&netClient);
@@ -62,6 +63,7 @@ int main(int argc, char *argv[])
     QObject::connect(&planeManager, &AircraftManager::updateAircraft, &gaugeManager, &GaugeManager::changeAircraft);
     QObject::connect(&planeManager, &AircraftManager::updateAircraft, &pfdInterfaceManager, &PfdManager::changeAircraft);
     netClient.connectInterfaceSignals(&netInterface);
+    tscBackend.connectTscSlots(&netClient);
 
     QObject::connect(&settingsInterface, &SettingsInterface::temperatureUnitChanged, pfdInterfaceManager.getBottomInterface(), &BottombarBackend::updateTemperatureUnit);
 
@@ -77,6 +79,7 @@ int main(int argc, char *argv[])
     engine.rootContext()->setContextProperty("netInterface", &netInterface);
     engine.rootContext()->setContextProperty("mfdInterface", &mfdInterface);
     engine.rootContext()->setContextProperty("settingsInterface", &settingsInterface);
+    engine.rootContext()->setContextProperty("tscBackend", &tscBackend);
 
 
     engine.load("qrc:/main.qml");

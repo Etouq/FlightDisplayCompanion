@@ -4,14 +4,12 @@ import QtQuick.Shapes 1.15
 Shape {
     id: root
 
-    visible: bearing2Mode != 0
-
-    property int bearing2Mode: 1
+    visible: hsiBrgInterface.brg2Mode != 0
 
     states: [
         State {
             name: "nav1ModeBrg2"
-            when: root.bearing2Mode == 1
+            when: hsiBrgInterface.brg2Mode == 1
 
             PropertyChanges {
                 target: distanceText
@@ -28,7 +26,7 @@ Shape {
         },
         State {
             name: "nav2ModeBrg2"
-            when: root.bearing2Mode == 2
+            when: hsiBrgInterface.brg2Mode == 2
 
             PropertyChanges {
                 target: distanceText
@@ -45,7 +43,7 @@ Shape {
         },
         State {
             name: "gpsModeBrg2"
-            when: root.bearing2Mode == 3
+            when: hsiBrgInterface.brg2Mode == 3
 
             PropertyChanges {
                 target: distanceText
@@ -62,7 +60,7 @@ Shape {
         },
         State {
             name: "adfModeBrg2"
-            when: root.bearing2Mode == 4
+            when: hsiBrgInterface.brg2Mode == 4
 
             PropertyChanges {
                 target: distanceText

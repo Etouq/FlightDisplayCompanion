@@ -27,7 +27,6 @@ TscPageBase {
             GradientButton {
                 id: brg1Button
                 property var values: ["OFF", "NAV1", "NAV2", "GPS", "ADF"]
-                property int idx: 0
 
                 UpperTitle {
                     text: "Bearing 1"
@@ -38,16 +37,15 @@ TscPageBase {
                 }
 
                 LowerValue {
-                    text: brg1Button.values[brg1Button.idx]
+                    text: brg1Button.values[hsiBrgInterface.brg1Mode]
                 }
 
-                onReleased: idx = (idx + 1) % 5
+                onReleased: hsiBrgInterface.brg1Mode = (hsiBrgInterface.brg1Mode + 1) % 5
             }
 
             GradientButton {
                 id: brg2Button
                 property var values: ["OFF", "NAV1", "NAV2", "GPS", "ADF"]
-                property int idx: 0
 
                 UpperTitle {
                     text: "Bearing 2"
@@ -58,10 +56,10 @@ TscPageBase {
                 }
 
                 LowerValue {
-                    text: brg2Button.values[brg2Button.idx]
+                    text: brg2Button.values[hsiBrgInterface.brg2Mode]
                 }
 
-                onReleased: idx = (idx + 1) % 5
+                onReleased: hsiBrgInterface.brg2Mode = (hsiBrgInterface.brg2Mode + 1) % 5
             }
         }
 

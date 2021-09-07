@@ -27,6 +27,8 @@ SOURCES += \
         PfdBackends/pfdmanager.cpp \
         PfdBackends/radioinfobackend.cpp \
         PfdBackends/winddatabackend.cpp \
+        TscPage/radiofunctions.cpp \
+        TscPage/timerfunctions.cpp \
         TscPage/tscpagebackend.cpp \
         aircraftManager/aircraftInitializer/aircraftinitializer.cpp \
         aircraftManager/aircraftInitializer/initairbus_a320_neo.cpp \

@@ -78,8 +78,6 @@ Item {
     Turnrate {}
 
     BackgroundCircle {
-        bearing1Mode: brg1FixedGroup.bearing1Mode
-        bearing2Mode: brg2FixedGroup.bearing2Mode
     }
 
 
@@ -105,10 +103,7 @@ Item {
         height: 138.40555302115993
         TapHandler {
             onTapped: {
-                if (dmeGroup.dmeMode >= 2)
-                    dmeGroup.dmeMode = 0;
-                else
-                    dmeGroup.dmeMode++;
+                dmeGroup.dmeMode = (dmeGroup.dmeMode + 1) % 3
             }
         }
     }
@@ -120,10 +115,7 @@ Item {
         height: 82.47521814639418
         TapHandler {
             onTapped: {
-                if (brg1FixedGroup.bearing1Mode >= 4)
-                    brg1FixedGroup.bearing1Mode = 0;
-                else
-                    brg1FixedGroup.bearing1Mode++;
+                hsiBrgInterface.brg1Mode = (hsiBrgInterface.brg1Mode + 1) % 5
             }
         }
     }
@@ -135,10 +127,7 @@ Item {
         height: 82.47521814639418
         TapHandler {
             onTapped: {
-                if (brg2FixedGroup.bearing2Mode >= 4)
-                    brg2FixedGroup.bearing2Mode = 0;
-                else
-                    brg2FixedGroup.bearing2Mode++;
+                hsiBrgInterface.brg2Mode = (hsiBrgInterface.brg2Mode + 1) % 5
             }
         }
     }

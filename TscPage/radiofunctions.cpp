@@ -1,5 +1,18 @@
-#include "../networkBackend/dataIdentifiers.h"
 #include "tscpagebackend.h"
+
+enum class CommandIds : uint8_t
+{
+    SET_COM1_FREQ,
+    SET_COM2_FREQ,
+    SET_NAV1_FREQ,
+    SET_NAV2_FREQ,
+    SWAP_COM1,
+    SWAP_COM2,
+    SWAP_NAV1,
+    SWAP_NAV2,
+    SET_XPDR_CODE,
+    SET_XPDR_STATE
+};
 
 int TscPageBackend::com1StbyHz() const
 {
@@ -43,7 +56,7 @@ int TscPageBackend::nav2ActiveHz() const
 
 void TscPageBackend::setCom1Freq(int32_t newFreq, bool swap)
 {
-    ClientToServerIds command_ids = ClientToServerIds::SET_COM1_FREQ;
+    CommandIds command_ids = CommandIds::SET_COM1_FREQ;
     QByteArray dataToSend(reinterpret_cast<const char *>(&command_ids), sizeof(command_ids));
     // format: 32 bit int for hz, bool for swap
     dataToSend.append(reinterpret_cast<const char *>(&newFreq), sizeof(newFreq));
@@ -54,7 +67,7 @@ void TscPageBackend::setCom1Freq(int32_t newFreq, bool swap)
 
 void TscPageBackend::setCom2Freq(int32_t newFreq, bool swap)
 {
-    ClientToServerIds command_ids = ClientToServerIds::SET_COM2_FREQ;
+    CommandIds command_ids = CommandIds::SET_COM2_FREQ;
     QByteArray dataToSend(reinterpret_cast<const char *>(&command_ids), sizeof(command_ids));
     // format: 32 bit int for hz, bool for swap
     dataToSend.append(reinterpret_cast<const char *>(&newFreq), sizeof(newFreq));
@@ -65,7 +78,7 @@ void TscPageBackend::setCom2Freq(int32_t newFreq, bool swap)
 
 void TscPageBackend::setNav1Freq(int32_t newFreq, bool swap)
 {
-    ClientToServerIds command_ids = ClientToServerIds::SET_NAV1_FREQ;
+    CommandIds command_ids = CommandIds::SET_NAV1_FREQ;
     QByteArray dataToSend(reinterpret_cast<const char *>(&command_ids), sizeof(command_ids));
     // format: 32 bit int for hz, bool for swap
     dataToSend.append(reinterpret_cast<const char *>(&newFreq), sizeof(newFreq));
@@ -76,7 +89,7 @@ void TscPageBackend::setNav1Freq(int32_t newFreq, bool swap)
 
 void TscPageBackend::setNav2Freq(int32_t newFreq, bool swap)
 {
-    ClientToServerIds command_ids = ClientToServerIds::SET_NAV2_FREQ;
+    CommandIds command_ids = CommandIds::SET_NAV2_FREQ;
     QByteArray dataToSend(reinterpret_cast<const char *>(&command_ids), sizeof(command_ids));
     // format: 32 bit int for hz, bool for swap
     dataToSend.append(reinterpret_cast<const char *>(&newFreq), sizeof(newFreq));
@@ -87,7 +100,7 @@ void TscPageBackend::setNav2Freq(int32_t newFreq, bool swap)
 
 void TscPageBackend::swapCom1()
 {
-    ClientToServerIds command_id = ClientToServerIds::SWAP_COM1;
+    CommandIds command_id = CommandIds::SWAP_COM1;
 
     emit sendCommandsToSim(
       QByteArray(reinterpret_cast<const char *>(&command_id), sizeof(command_id)));
@@ -95,7 +108,7 @@ void TscPageBackend::swapCom1()
 
 void TscPageBackend::swapCom2()
 {
-    ClientToServerIds command_id = ClientToServerIds::SWAP_COM2;
+    CommandIds command_id = CommandIds::SWAP_COM2;
 
     emit sendCommandsToSim(
       QByteArray(reinterpret_cast<const char *>(&command_id), sizeof(command_id)));
@@ -103,7 +116,7 @@ void TscPageBackend::swapCom2()
 
 void TscPageBackend::swapNav1()
 {
-    ClientToServerIds command_id = ClientToServerIds::SWAP_NAV1;
+    CommandIds command_id = CommandIds::SWAP_NAV1;
 
     emit sendCommandsToSim(
       QByteArray(reinterpret_cast<const char *>(&command_id), sizeof(command_id)));
@@ -111,7 +124,7 @@ void TscPageBackend::swapNav1()
 
 void TscPageBackend::swapNav2()
 {
-    ClientToServerIds command_id = ClientToServerIds::SWAP_NAV2;
+    CommandIds command_id = CommandIds::SWAP_NAV2;
 
     emit sendCommandsToSim(
       QByteArray(reinterpret_cast<const char *>(&command_id), sizeof(command_id)));
@@ -129,7 +142,7 @@ int TscPageBackend::xpdrState() const
 
 void TscPageBackend::setXpdrCode(int32_t newCode)
 {
-    ClientToServerIds command_id = ClientToServerIds::SET_XPDR_CODE;
+    CommandIds command_id = CommandIds::SET_XPDR_CODE;
     QByteArray dataToSend(reinterpret_cast<const char *>(&command_id), sizeof(command_id));
     dataToSend.append(reinterpret_cast<const char *>(&newCode), sizeof(newCode));
 
@@ -138,7 +151,7 @@ void TscPageBackend::setXpdrCode(int32_t newCode)
 
 void TscPageBackend::setXpdrState(int8_t newState)
 {
-    ClientToServerIds command_id = ClientToServerIds::SET_XPDR_STATE;
+    CommandIds command_id = CommandIds::SET_XPDR_STATE;
     QByteArray dataToSend(reinterpret_cast<const char *>(&command_id), sizeof(command_id));
     dataToSend.append(reinterpret_cast<const char *>(&newState), sizeof(newState));
 

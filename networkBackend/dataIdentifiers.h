@@ -98,6 +98,12 @@ enum class SimconnectIds : uint8_t
     COM2_FREQ,
     NAV1_FREQ,
     NAV2_FREQ,
+    COM1_STBY,
+    COM2_STBY,
+    NAV1_STBY,
+    NAV2_STBY,
+    XPDR_CODE,
+    XPDR_STATE,
     // wind
     WIND_DIRECTION,
     WIND_STRENGTH,
@@ -170,16 +176,7 @@ enum class ClientToServerIds : uint8_t
     QUIT,
     CHANGE_AIRCRAFT,
     START,
-    SET_COM1_FREQ,
-    SET_COM2_FREQ,
-    SET_NAV1_FREQ,
-    SET_NAV2_FREQ,
-    SWAP_COM1,
-    SWAP_COM2,
-    SWAP_NAV1,
-    SWAP_NAV2,
-    SET_XPDR_CODE,
-    SET_XPDR_STATE
+    SIM_COMMANDS
 };
 
 enum class ClientToDesignerIds : uint8_t

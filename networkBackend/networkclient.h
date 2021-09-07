@@ -32,6 +32,7 @@ public slots:
     void disconnectPressed();
     void startSim(const QByteArray &data);
     void changeAircraft(const QByteArray &data);
+    void sendCommands(const QByteArray &commandString);
 
     void sendAircraftToDesigner(const AircraftDefinition &aircraft);
     void sendAircraftKeys(const QStringList &keys);
@@ -168,6 +169,14 @@ signals:
     // flightplan
     void clear_flightplan_received();
     void received_flightplan(const QList<FlightPlanWaypoint> &wpList);
+
+    // tscPage
+    void com1_stbyChanged(float newFreq);
+    void com2_stbyChanged(float newFreq);
+    void nav1_stbyChanged(float newFreq);
+    void nav2_stbyChanged(float newFreq);
+    void xpdr_codeChanged(int newCode);
+    void xpdr_stateChanged(int newState);
 
     // simconnect server
     void sim_start_received();

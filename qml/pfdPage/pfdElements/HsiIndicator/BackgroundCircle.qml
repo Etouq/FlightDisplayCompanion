@@ -4,9 +4,6 @@ import QtQuick.Shapes 1.15
 Item {
     id: root
 
-    property int bearing1Mode: 0
-    property int bearing2Mode: 0
-
     transform: Rotation { angle: -hsiInterface.rotation; origin.x: 345.6; origin.y: 288 }
 
     Rectangle {
@@ -40,7 +37,7 @@ Item {
     }
 
     Rectangle {
-        visible: root.bearing1Mode != 0 || root.bearing2Mode != 0
+        visible: hsiBrgInterface.brg1Mode != 0 || hsiBrgInterface.brg2Mode != 0
         anchors.horizontalCenter: parent.left
         anchors.horizontalCenterOffset: 345.6
         anchors.verticalCenter: parent.top
@@ -80,7 +77,7 @@ Item {
         states: [
             State {
                 name: "nav1Mode"
-                when: root.bearing1Mode == 1
+                when: hsiBrgInterface.brg1Mode == 1
 
                 PropertyChanges {
                     target: bearing1Arrow
@@ -93,7 +90,7 @@ Item {
             },
             State {
                 name: "nav2Mode"
-                when: root.bearing1Mode == 2
+                when: hsiBrgInterface.brg1Mode == 2
 
                 PropertyChanges {
                     target: bearing1Arrow
@@ -106,7 +103,7 @@ Item {
             },
             State {
                 name: "gpsMode"
-                when: root.bearing1Mode == 3
+                when: hsiBrgInterface.brg1Mode == 3
 
                 PropertyChanges {
                     target: bearing1Arrow
@@ -119,7 +116,7 @@ Item {
             },
             State {
                 name: "adfMode"
-                when: root.bearing1Mode == 4
+                when: hsiBrgInterface.brg1Mode == 4
 
                 PropertyChanges {
                     target: bearing1Arrow
@@ -162,7 +159,7 @@ Item {
         states: [
             State {
                 name: "nav1Mode"
-                when: root.bearing2Mode == 1
+                when: hsiBrgInterface.brg2Mode == 1
 
                 PropertyChanges {
                     target: bearing2Arrow
@@ -175,7 +172,7 @@ Item {
             },
             State {
                 name: "nav2Mode"
-                when: root.bearing2Mode == 2
+                when: hsiBrgInterface.brg2Mode == 2
 
                 PropertyChanges {
                     target: bearing2Arrow
@@ -188,7 +185,7 @@ Item {
             },
             State {
                 name: "gpsMode"
-                when: root.bearing2Mode == 3
+                when: hsiBrgInterface.brg2Mode == 3
 
                 PropertyChanges {
                     target: bearing2Arrow
@@ -201,7 +198,7 @@ Item {
             },
             State {
                 name: "adfMode"
-                when: root.bearing2Mode == 4
+                when: hsiBrgInterface.brg2Mode == 4
 
                 PropertyChanges {
                     target: bearing2Arrow

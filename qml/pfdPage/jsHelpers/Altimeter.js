@@ -263,6 +263,22 @@ class Altimeter {
             'PathLine { x: ' + (0 * this.scaleFactor) + '; y: ' + (320 * this.scaleFactor) + ' } } }',
             graduationItem);
         graduationItem.data.push(selectedAltitudeBug);
+
+        let minimumAltitudeBug = Qt.createQmlObject(
+            'import QtQuick 2.15; import QtQuick.Shapes 1.15; Shape {' +
+            'visible: altInterface.minimumsState != 0;' +
+            'transform: Translate { y: (altInterface.altitude - altInterface.minimum_altitude) * ' + (1.6 * this.scaleFactor) + ' }' +
+            'ShapePath {' +
+            'fillColor: "transparent";' +
+            'strokeColor: "#36C8D2";' +
+            'strokeWidth: ' + (5 * this.scaleFactor) + ';' +//20,260 20,273 0,300 20,327 20,340
+            'PathMove { x: ' + (20 * this.scaleFactor) + '; y: ' + (260 * this.scaleFactor) + ' }' +
+            'PathLine { x: ' + (20 * this.scaleFactor) + '; y: ' + (273 * this.scaleFactor) + ' }' +
+            'PathLine { x: ' + (0 * this.scaleFactor) + '; y: ' + (300 * this.scaleFactor) + ' }' +
+            'PathLine { x: ' + (20 * this.scaleFactor) + '; y: ' + (327 * this.scaleFactor) + ' }' +
+            'PathLine { x: ' + (20 * this.scaleFactor) + '; y: ' + (340 * this.scaleFactor) + ' } } }',
+            graduationItem);
+        graduationItem.data.push(minimumAltitudeBug);
     }
 
     createGroundLine(_parent) {

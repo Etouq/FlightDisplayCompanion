@@ -31,6 +31,7 @@ class AirspeedIndicator {
         this.yellowEnd = _yellowEnd;
         this.minValue = _minValue;
         this.nocolor = _noColor;
+        this.currentCenterGrad = -10000;
     }
 
     updateMaxValue(_newMax)
@@ -82,6 +83,8 @@ class AirspeedIndicator {
             'PathLine { x: ' + (200 * this.scaleFactor) + '; y: ' + (320 * this.scaleFactor) + ' } } }',
             centerItem);
         centerItem.data.push(this.selectedSpeedBug);
+
+        this.createSpeedBugs(centerItem);
 
         let cursorParent = Qt.createQmlObject('import QtQuick 2.15; import QtQuick.Shapes 1.15; Shape {}', _parent);
         _parent.data.push(cursorParent);
@@ -467,6 +470,117 @@ class AirspeedIndicator {
             this.endDigits.push(digit);
             this.endDigitsGroup.data.push(digit);
         }
+    }
+
+    createSpeedBugs(_parent) {
+
+        let speedBugsGroup = Qt.createQmlObject('import QtQuick 2.15; Item {' +
+            'transform: Translate { y: Math.max(iasInterface.airspeed, 20) * ' + (10 * this.scaleFactor) + ' } }',
+            _parent);
+        _parent.data.push(speedBugsGroup);
+
+        let vrRefBug = Qt.createQmlObject(
+            'import QtQuick 2.15; import QtQuick.Shapes 1.15; Shape {' +
+            'visible: tscBackend.vrActive;' +
+            'transform: Translate { y: -tscBackend.vrSpeed * ' + (10 * this.scaleFactor) + ' }' +
+            'ShapePath { ' +
+            'fillColor: "#1A1D21";' +
+            'strokeColor: "transparent";' +
+            'PathMove { x: ' + (200 * this.scaleFactor) + '; y: ' + (300 * this.scaleFactor) + ' }' +
+            'PathLine { x: ' + (210 * this.scaleFactor) + '; y: ' + (315 * this.scaleFactor) + ' }' +
+            'PathLine { x: ' + (250 * this.scaleFactor) + '; y: ' + (315 * this.scaleFactor) + ' }' +
+            'PathLine { x: ' + (250 * this.scaleFactor) + '; y: ' + (285 * this.scaleFactor) + ' }' +
+            'PathLine { x: ' + (210 * this.scaleFactor) + '; y: ' + (285 * this.scaleFactor) + ' } }' +
+            'Text {' +
+            'anchors.horizontalCenter: parent.left;' +
+            'anchors.horizontalCenterOffset: ' + (230 * this.scaleFactor) + ';' +
+            'anchors.verticalCenter: parent.top;' +
+            'anchors.verticalCenterOffset: ' + (300 * this.scaleFactor) + ';' +
+            'color: "aqua";' +
+            'font.bold: true;' +
+            'font.family: "Roboto Mono";' +
+            'font.pixelSize: ' + (25 * this.scaleFactor).toFixed(0) + ';' +
+            'text: "R" } }',
+            speedBugsGroup);
+        speedBugsGroup.data.push(vrRefBug);
+
+        let vxRefBug = Qt.createQmlObject(
+            'import QtQuick 2.15; import QtQuick.Shapes 1.15; Shape {' +
+            'visible: tscBackend.vxActive;' +
+            'transform: Translate { y: -tscBackend.vxSpeed * ' + (10 * this.scaleFactor) + ' }' +
+            'ShapePath { ' +
+            'fillColor: "#1A1D21";' +
+            'strokeColor: "transparent";' +
+            'PathMove { x: ' + (200 * this.scaleFactor) + '; y: ' + (300 * this.scaleFactor) + ' }' +
+            'PathLine { x: ' + (210 * this.scaleFactor) + '; y: ' + (315 * this.scaleFactor) + ' }' +
+            'PathLine { x: ' + (250 * this.scaleFactor) + '; y: ' + (315 * this.scaleFactor) + ' }' +
+            'PathLine { x: ' + (250 * this.scaleFactor) + '; y: ' + (285 * this.scaleFactor) + ' }' +
+            'PathLine { x: ' + (210 * this.scaleFactor) + '; y: ' + (285 * this.scaleFactor) + ' } }' +
+            'Text {' +
+            'anchors.horizontalCenter: parent.left;' +
+            'anchors.horizontalCenterOffset: ' + (230 * this.scaleFactor) + ';' +
+            'anchors.verticalCenter: parent.top;' +
+            'anchors.verticalCenterOffset: ' + (300 * this.scaleFactor) + ';' +
+            'color: "aqua";' +
+            'font.bold: true;' +
+            'font.family: "Roboto Mono";' +
+            'font.pixelSize: ' + (25 * this.scaleFactor).toFixed(0) + ';' +
+            'text: "X" } }',
+            speedBugsGroup);
+        speedBugsGroup.data.push(vxRefBug);
+
+        let vyRefBug = Qt.createQmlObject(
+            'import QtQuick 2.15; import QtQuick.Shapes 1.15; Shape {' +
+            'visible: tscBackend.vyActive;' +
+            'transform: Translate { y: -tscBackend.vySpeed * ' + (10 * this.scaleFactor) + ' }' +
+            'ShapePath { ' +
+            'fillColor: "#1A1D21";' +
+            'strokeColor: "transparent";' +
+            'PathMove { x: ' + (200 * this.scaleFactor) + '; y: ' + (300 * this.scaleFactor) + ' }' +
+            'PathLine { x: ' + (210 * this.scaleFactor) + '; y: ' + (315 * this.scaleFactor) + ' }' +
+            'PathLine { x: ' + (250 * this.scaleFactor) + '; y: ' + (315 * this.scaleFactor) + ' }' +
+            'PathLine { x: ' + (250 * this.scaleFactor) + '; y: ' + (285 * this.scaleFactor) + ' }' +
+            'PathLine { x: ' + (210 * this.scaleFactor) + '; y: ' + (285 * this.scaleFactor) + ' } }' +
+            'Text {' +
+            'anchors.horizontalCenter: parent.left;' +
+            'anchors.horizontalCenterOffset: ' + (230 * this.scaleFactor) + ';' +
+            'anchors.verticalCenter: parent.top;' +
+            'anchors.verticalCenterOffset: ' + (300 * this.scaleFactor) + ';' +
+            'color: "aqua";' +
+            'font.bold: true;' +
+            'font.family: "Roboto Mono";' +
+            'font.pixelSize: ' + (25 * this.scaleFactor).toFixed(0) + ';' +
+            'text: "Y" } }',
+            speedBugsGroup);
+        speedBugsGroup.data.push(vyRefBug);
+
+        let vappRefBug = Qt.createQmlObject(
+            'import QtQuick 2.15; import QtQuick.Shapes 1.15; Shape {' +
+            'visible: tscBackend.vappActive;' +
+            'transform: Translate { y: -tscBackend.vappSpeed * ' + (10 * this.scaleFactor) + ' }' +
+            'ShapePath { ' +
+            'fillColor: "#1A1D21";' +
+            'strokeColor: "transparent";' +
+            'PathMove { x: ' + (200 * this.scaleFactor) + '; y: ' + (300 * this.scaleFactor) + ' }' +
+            'PathLine { x: ' + (210 * this.scaleFactor) + '; y: ' + (315 * this.scaleFactor) + ' }' +
+            'PathLine { x: ' + (250 * this.scaleFactor) + '; y: ' + (315 * this.scaleFactor) + ' }' +
+            'PathLine { x: ' + (250 * this.scaleFactor) + '; y: ' + (285 * this.scaleFactor) + ' }' +
+            'PathLine { x: ' + (210 * this.scaleFactor) + '; y: ' + (285 * this.scaleFactor) + ' } }' +
+            'Text {' +
+            'anchors.horizontalCenter: parent.left;' +
+            'anchors.horizontalCenterOffset: ' + (230 * this.scaleFactor) + ';' +
+            'anchors.verticalCenter: parent.top;' +
+            'anchors.verticalCenterOffset: ' + (300 * this.scaleFactor) + ';' +
+            'color: "aqua";' +
+            'font.bold: true;' +
+            'font.family: "Roboto Mono";' +
+            'font.pixelSize: ' + (25 * this.scaleFactor).toFixed(0) + ';' +
+            'text: "AP" } }',
+            speedBugsGroup);
+        speedBugsGroup.data.push(vappRefBug);
+
+
+
     }
 
     update(newValue, deltaTime) {

@@ -17,10 +17,30 @@ void AltimeterBackend::updateAltitude(double newValue)
     }
     d_altitude = newValue;
     emit altitudeChanged();
+
+    if (d_minimumsState == 2)
+    {
+        int newMinimum = static_cast<int>(static_cast<double>(d_minimumsValue) + d_altitude - d_realRadioAltitude);
+        if (d_minimumAltitude != newMinimum)
+        {
+            d_minimumAltitude = newMinimum;
+            emit minimum_altitudeChanged();
+        }
+    }
 }
 
 void AltimeterBackend::updateRadarAltitude(double newValue)
 {
+    if (d_minimumsState == 2)
+    {
+        int newMinimum = static_cast<int>(static_cast<double>(d_minimumsValue) + d_altitude - newValue);
+        if (d_minimumAltitude != newMinimum)
+        {
+            d_minimumAltitude = newMinimum;
+            emit minimum_altitudeChanged();
+        }
+    }
+    d_realRadioAltitude = newValue;
     if (newValue < 0.0 || newValue > 2500.0)
     {
         if (d_radarAltitudeTransformValue < 700.0)
@@ -147,4 +167,23 @@ double AltimeterBackend::verticalDeviationTransformValue() const
 double AltimeterBackend::altitudeTrendValue() const
 {
     return d_altitudeTrendValue;
+}
+
+int AltimeterBackend::minimum_altitude() const
+{
+    return d_minimumAltitude;
+}
+
+void AltimeterBackend::updateMinimumAlt()
+{
+    if (d_minimumsState == 1)
+    {
+        d_minimumAltitude = d_minimumsValue;
+        emit minimum_altitudeChanged();
+    }
+    else if (d_minimumsState == 2)
+    {
+        d_minimumAltitude = static_cast<int>(static_cast<double>(d_minimumsValue) + d_altitude - d_realRadioAltitude);
+        emit minimum_altitudeChanged();
+    }
 }

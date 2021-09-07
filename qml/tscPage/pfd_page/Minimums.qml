@@ -41,7 +41,7 @@ TscPageBase {
             writing.text = digits[digits.length - 1];
         }
         else {
-            initial.text = tscBackend.minimumsValue + "FT";
+            initial.text = altInterface.minimumsValue + "FT";
         }
     }
 
@@ -74,7 +74,7 @@ TscPageBase {
     }
 
     Component.onCompleted: {
-        let storedValue = tscBackend.minimumsValue;
+        let storedValue = altInterface.minimumsValue;
 
         for (let i = digits.length - 1; i >= 0; i--) {
             digits[i] = storedValue % 10;
@@ -92,7 +92,8 @@ TscPageBase {
             newValue += digits[i] * Math.pow(10, digits.length - i - 1);
         }
 
-        tscBackend.minimumsValue = newValue;
+        altInterface.minimumsValue = newValue;
+        altInterface.updateMinimumAlt();
         updateInput();
     }
 
@@ -108,7 +109,7 @@ TscPageBase {
         }
 
         LowerValue {
-            text: tscBackend.minimumsState === 0 ? "Off" : tscBackend.minimumsState === 1 ? "Baro" : "Radio Alt"
+            text: altInterface.minimumsState === 0 ? "Off" : altInterface.minimumsState === 1 ? "Baro" : "Radio Alt"
         }
 
         onReleased: minimumsPopup.visible = true

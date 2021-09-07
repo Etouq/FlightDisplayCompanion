@@ -27,11 +27,18 @@ class AltimeterBackend : public QObject
 
     Q_PROPERTY(double altitudeTrendValue READ altitudeTrendValue NOTIFY altitudeTrendValueChanged)
 
+    // minimums
+    Q_PROPERTY(
+      int minimumsValue MEMBER d_minimumsValue NOTIFY minimumsValueChanged)
+    Q_PROPERTY(
+      int minimumsState MEMBER d_minimumsState NOTIFY minimumsStateChanged)
+    Q_PROPERTY(int minimum_altitude READ minimum_altitude NOTIFY minimum_altitudeChanged)
+
     // exposed items
     int d_center = 0;
     double d_altitude = 0;
     int d_radarAltitude = 0;
-    double d_radarAltitudeTransformValue = 0;
+    double d_radarAltitudeTransformValue = 288;
     int d_reference_altitude = 0;
 
     double d_vspeedIndicatorTransformValue = 0;
@@ -45,10 +52,15 @@ class AltimeterBackend : public QObject
 
     double d_altitudeTrendValue = 250;
 
+    // minimums
+    int d_minimumsValue = 0; // set value
+    int d_minimumsState = 0;   // 0: off, 1: baro, 2: radio
+    int d_minimumAltitude = 0; // value transformed if mode is radio
 
     // variables for cdi source and vertical deviation mode/value are selected on server side
     // internal items
     double d_scaleFactor = 0.96;
+    double d_realRadioAltitude = 0;
 
 public:
     explicit AltimeterBackend(QObject *parent = nullptr);
@@ -70,6 +82,10 @@ public:
 
     double altitudeTrendValue() const;
 
+    int minimum_altitude() const;
+
+    Q_INVOKABLE void updateMinimumAlt();
+
 signals:
     void centerChanged();
     void altitudeChanged();
@@ -87,6 +103,10 @@ signals:
     void verticalDeviationTransformValueChanged();
 
     void altitudeTrendValueChanged();
+
+    void minimumsValueChanged();
+    void minimumsStateChanged();
+    void minimum_altitudeChanged();
 
 public slots:
     void updateAltitude(double newValue);

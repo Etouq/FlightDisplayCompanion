@@ -92,6 +92,17 @@ void NetworkClient::changeAircraft(const QByteArray &data)
     tcpSocket.write(msg);
 }
 
+void NetworkClient::sendCommands(const QByteArray &data)
+{
+    if (tcpSocket.state() == QAbstractSocket::ConnectedState && d_connectedToServer)
+    {
+        ClientToServerIds clientId = ClientToServerIds::SIM_COMMANDS;
+        QByteArray msg(reinterpret_cast<char *>(&clientId), sizeof(clientId));
+        msg += data;
+        tcpSocket.write(msg);
+    }
+}
+
 void NetworkClient::sendAircraftToDesigner(const AircraftDefinition &aircraft)
 {
     QString imagePath = AircraftFile::getImagePath(aircraft.name);

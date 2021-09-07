@@ -58,7 +58,7 @@ Rectangle {
                 }
 
                 onReleased: {
-                    tscBackend.minimumsState = 0;
+                    altInterface.minimumsState = 0;
                     popupRoot.visible = false;
                 }
             }
@@ -78,7 +78,8 @@ Rectangle {
                 }
 
                 onReleased: {
-                    tscBackend.minimumsState = 1;
+                    altInterface.minimumsState = 1;
+                    altInterface.updateMinimumAlt();
                     popupRoot.visible = false;
                 }
             }
@@ -90,7 +91,7 @@ Rectangle {
                 Text {
                     y: 44.928
                     anchors.horizontalCenter: parent.horizontalCenter
-                    font.pixelSize: 600
+                    font.pixelSize: 60
                     font.family: "Roboto Mono"
                     font.bold: true
                     color: "white"
@@ -98,7 +99,8 @@ Rectangle {
                 }
 
                 onReleased: {
-                    tscBackend.minimumsState = 2;
+                    altInterface.minimumsState = 2;
+                    altInterface.updateMinimumAlt();
                     popupRoot.visible = false;
                 }
             }

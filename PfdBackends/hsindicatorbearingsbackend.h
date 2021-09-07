@@ -32,6 +32,9 @@ class HSIndicatorBearingsBackend : public QObject
     Q_PROPERTY(QString nav2Freq READ nav2Freq NOTIFY nav2FreqChanged)
     Q_PROPERTY(QString nav2Dme READ nav2Dme NOTIFY nav2DmeChanged)
 
+    Q_PROPERTY(int brg1Mode MEMBER d_brg1Mode NOTIFY brg1ModeChanged)
+    Q_PROPERTY(int brg2Mode MEMBER d_brg2Mode NOTIFY brg2ModeChanged)
+
     // exposed items
     QString d_nav1Ident = "";
     QString d_nav1Distance = "";
@@ -54,6 +57,9 @@ class HSIndicatorBearingsBackend : public QObject
     QString d_nav2Freq = "";
     QString d_nav2Dme = "";
 
+
+    int d_brg1Mode = 0;
+    int d_brg2Mode = 0;
 
     // internal items
     bool d_nav1HasNav = false;
@@ -127,6 +133,9 @@ signals:
 
     void nav2FreqChanged();
     void nav2DmeChanged();
+
+    void brg1ModeChanged();
+    void brg2ModeChanged();
 
 public slots:
     void updateNav1Ident(QString const &newValue);

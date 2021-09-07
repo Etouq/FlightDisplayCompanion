@@ -1151,7 +1151,7 @@ void NetworkClient::readSimconnectData()
             }
             case SimconnectIds::COM1_FREQ:
             {
-                double newValue = 0;
+                float newValue = 0;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
@@ -1165,7 +1165,7 @@ void NetworkClient::readSimconnectData()
             }
             case SimconnectIds::COM2_FREQ:
             {
-                double newValue = 0;
+                float newValue = 0;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
@@ -1179,7 +1179,7 @@ void NetworkClient::readSimconnectData()
             }
             case SimconnectIds::NAV1_FREQ:
             {
-                double newValue = 0;
+                float newValue = 0;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
@@ -1193,7 +1193,7 @@ void NetworkClient::readSimconnectData()
             }
             case SimconnectIds::NAV2_FREQ:
             {
-                double newValue = 0;
+                float newValue = 0;
                 if (tcpSocket.bytesAvailable() < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
@@ -1203,6 +1203,90 @@ void NetworkClient::readSimconnectData()
                 tcpSocket.read(reinterpret_cast<char *>(&newValue), sizeof(newValue));
                 tcpSocket.commitTransaction();
                 emit nav2_freqChanged(newValue);
+                break;
+            }
+            case SimconnectIds::COM1_STBY:
+            {
+                float newValue = 0;
+                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                {
+                    tcpSocket.rollbackTransaction();
+                    reading = false;
+                    break;
+                }
+                tcpSocket.read(reinterpret_cast<char *>(&newValue), sizeof(newValue));
+                tcpSocket.commitTransaction();
+                emit com1_stbyChanged(newValue);
+                break;
+            }
+            case SimconnectIds::COM2_STBY:
+            {
+                float newValue = 0;
+                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                {
+                    tcpSocket.rollbackTransaction();
+                    reading = false;
+                    break;
+                }
+                tcpSocket.read(reinterpret_cast<char *>(&newValue), sizeof(newValue));
+                tcpSocket.commitTransaction();
+                emit com2_stbyChanged(newValue);
+                break;
+            }
+            case SimconnectIds::NAV1_STBY:
+            {
+                float newValue = 0;
+                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                {
+                    tcpSocket.rollbackTransaction();
+                    reading = false;
+                    break;
+                }
+                tcpSocket.read(reinterpret_cast<char *>(&newValue), sizeof(newValue));
+                tcpSocket.commitTransaction();
+                emit nav1_stbyChanged(newValue);
+                break;
+            }
+            case SimconnectIds::NAV2_STBY:
+            {
+                float newValue = 0;
+                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                {
+                    tcpSocket.rollbackTransaction();
+                    reading = false;
+                    break;
+                }
+                tcpSocket.read(reinterpret_cast<char *>(&newValue), sizeof(newValue));
+                tcpSocket.commitTransaction();
+                emit nav2_stbyChanged(newValue);
+                break;
+            }
+            case SimconnectIds::XPDR_CODE:
+            {
+                int32_t newValue = 0;
+                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                {
+                    tcpSocket.rollbackTransaction();
+                    reading = false;
+                    break;
+                }
+                tcpSocket.read(reinterpret_cast<char *>(&newValue), sizeof(newValue));
+                tcpSocket.commitTransaction();
+                emit xpdr_codeChanged(newValue);
+                break;
+            }
+            case SimconnectIds::XPDR_STATE:
+            {
+                int32_t newValue = 0;
+                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                {
+                    tcpSocket.rollbackTransaction();
+                    reading = false;
+                    break;
+                }
+                tcpSocket.read(reinterpret_cast<char *>(&newValue), sizeof(newValue));
+                tcpSocket.commitTransaction();
+                emit xpdr_stateChanged(newValue);
                 break;
             }
 
