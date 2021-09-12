@@ -5,10 +5,51 @@ AirspeedIndicatorBackend::AirspeedIndicatorBackend(QObject *parent) : QObject(pa
 {
 }
 
+void AirspeedIndicatorBackend::updateColorElements()
+{
+    double dCenter = static_cast<double>(d_center);
+
+    if (d_min_speed > 0)
+        d_minTransform = 1185.6 + 9.6 * (dCenter - d_min_speed);
+    if (d_max_speed > 0)
+    {
+        d_maxTransform = fmin(fmax((dCenter * d_max_speed) * 9.6 + 384.0, -96.0), 768.0);
+        emit maxTransformChanged();
+    }
+
+    d_greenY = fmin(fmax(-96.0, 288.0 + 9.6 * (dCenter - d_green_end)), 672.0);
+    d_greenHeight = fmin(fmax(-96.0, 288.0 + 9.6 * (dCenter - d_green_begin)), 672.0) - d_greenY;
+    d_yellowY = fmin(fmax(-96.0, 288.0 + 9.6 * (dCenter - d_yellow_end)), 672.0);
+    d_yellowHeight = fmin(fmax(-96.0, 288.0 + 9.6 * (dCenter - d_yellow_begin)), 672.0) - d_yellowY;
+    d_redY = fmin(fmax(-96.0, 288.0 + 9.6 * (dCenter - d_red_end)), 672.0);
+    d_redHeight = fmin(fmax(-96.0, 288.0 + 9.6 * (dCenter - d_red_begin)), 672.0) - d_redY;
+    d_flapsY = fmin(fmax(-96.0, 288.0 + 9.6 * (dCenter - d_flaps_end)), 672.0);
+    d_flapsHeight = fmin(fmax(-96.0, 288.0 + 9.6 * (dCenter - d_flaps_begin)), 672.0) - d_flapsY;
+
+}
+
 void AirspeedIndicatorBackend::updateAirspeed(double newValue)
 {
-    d_airspeed = newValue;
+    d_rawAirspeed = newValue;
+
+    d_airspeed = fmax(newValue, 20.0);
     emit airspeedChanged();
+
+    int newCenter = std::max(lround(newValue / 10.0) * 10, 60l);
+    if (d_center != newCenter)
+    {
+        d_center = newCenter;
+        if (!d_noColor)
+            updateColorElements();
+        emit centerChanged();
+    }
+
+    bool newRedCursor = !d_noColor && (d_airspeed < d_min_speed || (d_max_speed > 0 && d_airspeed > d_max_speed));
+    if (d_redCursor != newRedCursor)
+    {
+        d_redCursor = newRedCursor;
+        emit redCursorChanged();
+    }
 }
 
 void AirspeedIndicatorBackend::updateMaxSpeed(double newValue)
@@ -22,6 +63,12 @@ void AirspeedIndicatorBackend::updateDynamicMaxSpeed(double newValue)
     if (!d_dynamic_max)
         return;
     d_max_speed = newValue;
+    if (!d_noColor)
+        if (d_max_speed > 0)
+        {
+            d_maxTransform = fmin(fmax((static_cast<double>(d_center) * d_max_speed) * 9.6 + 384.0, -96.0), 768.0);
+            emit maxTransformChanged();
+        }
     emit maxSpeedChanged();
 }
 
@@ -63,11 +110,13 @@ void AirspeedIndicatorBackend::updateColors(double minSpeed,
 
     d_noColor = noColor;
     d_dynamic_max = dynamicMax;
+    emit noColorChanged();
+    emit minSpeedChanged();
     emit colorsChanged();
 }
 
 
-double AirspeedIndicatorBackend::getMinSpeed() const
+double AirspeedIndicatorBackend::minSpeed() const
 {
     return d_min_speed;
 }
@@ -108,7 +157,7 @@ double AirspeedIndicatorBackend::getMaxSpeed() const
     return d_max_speed;
 }
 
-bool AirspeedIndicatorBackend::getNoColor() const
+bool AirspeedIndicatorBackend::noColor() const
 {
     return d_noColor;
 }
@@ -116,6 +165,72 @@ bool AirspeedIndicatorBackend::getNoColor() const
 double AirspeedIndicatorBackend::airspeed() const
 {
     return d_airspeed;
+}
+
+int AirspeedIndicatorBackend::center() const
+{
+    return d_center;
+}
+
+double AirspeedIndicatorBackend::rawAirspeed() const
+{
+    return d_rawAirspeed;
+}
+
+double AirspeedIndicatorBackend::minTransform() const
+{
+    return d_minTransform;
+}
+
+double AirspeedIndicatorBackend::greenY() const
+{
+    return d_greenY;
+}
+
+double AirspeedIndicatorBackend::greenHeight() const
+{
+    return d_greenHeight;
+}
+
+double AirspeedIndicatorBackend::yellowY() const
+{
+    return d_yellowY;
+}
+
+double AirspeedIndicatorBackend::yellowHeight() const
+{
+    return d_yellowHeight;
+}
+
+double AirspeedIndicatorBackend::redY() const
+{
+    return d_redY;
+}
+
+double AirspeedIndicatorBackend::redHeight() const
+{
+    return d_redHeight;
+}
+
+double AirspeedIndicatorBackend::flapsY() const
+{
+    return d_flapsY;
+}
+
+double AirspeedIndicatorBackend::flapsHeight() const
+{
+    return d_flapsHeight;
+}
+
+double AirspeedIndicatorBackend::maxTransform() const
+{
+    return d_maxTransform;
+}
+
+
+bool AirspeedIndicatorBackend::redCursor() const
+{
+    return d_redCursor;
 }
 
 double AirspeedIndicatorBackend::maxSpeed() const

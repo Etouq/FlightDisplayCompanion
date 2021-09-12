@@ -3,7 +3,29 @@ import QtLocation 5.15
 import QtPositioning 5.15
 
 MapItemGroup {
+    id: circleRoot
     property real smallRadius: zoomLevels[zoomLevelIdx] * 1852
+    property real textAzimuth: 90
+
+    states: [
+        State {
+            name: "northUpState"
+            when: mfdInterface.mapOrientationMode == 0
+            PropertyChanges { target: circleRoot; textAzimuth: 90 }
+        },
+        State {
+            name: "headingUpState"
+            when: mfdInterface.mapOrientationMode == 1
+            PropertyChanges { target: circleRoot; textAzimuth: 90 + mfdInterface.planeTrueHdg }
+        },
+        State {
+            name: "trackUpState"
+            when: mfdInterface.mapOrientationMode == 2
+            PropertyChanges { target: circleRoot; textAzimuth: 90 + hsiInterface.currentTrackAngle }
+        }
+    ]
+
+
     MapCircle
     {
         center: mfdInterface.currCoordinates
@@ -51,7 +73,7 @@ MapItemGroup {
     MapQuickItem {
         anchorPoint.x: firstText.width + 5
         anchorPoint.y: firstText.height / 2
-        coordinate: mfdInterface.currCoordinates.atDistanceAndAzimuth(smallRadius, 90);
+        coordinate: mfdInterface.currCoordinates.atDistanceAndAzimuth(smallRadius, textAzimuth);
 
         sourceItem: Text {
             id: firstText
@@ -65,7 +87,7 @@ MapItemGroup {
     MapQuickItem {
         anchorPoint.x: secondText.width + 5
         anchorPoint.y: secondText.height / 2
-        coordinate: mfdInterface.currCoordinates.atDistanceAndAzimuth(smallRadius * 2, 90);
+        coordinate: mfdInterface.currCoordinates.atDistanceAndAzimuth(smallRadius * 2, textAzimuth);
 
         sourceItem: Text {
             id: secondText
@@ -79,7 +101,7 @@ MapItemGroup {
     MapQuickItem {
         anchorPoint.x: thirdText.width + 5
         anchorPoint.y: thirdText.height / 2
-        coordinate: mfdInterface.currCoordinates.atDistanceAndAzimuth(smallRadius * 3, 90);
+        coordinate: mfdInterface.currCoordinates.atDistanceAndAzimuth(smallRadius * 3, textAzimuth);
 
         sourceItem: Text {
             id: thirdText
@@ -93,7 +115,7 @@ MapItemGroup {
     MapQuickItem {
         anchorPoint.x: fourthText.width + 5
         anchorPoint.y: fourthText.height / 2
-        coordinate: mfdInterface.currCoordinates.atDistanceAndAzimuth(smallRadius * 4, 90);
+        coordinate: mfdInterface.currCoordinates.atDistanceAndAzimuth(smallRadius * 4, textAzimuth);
 
         sourceItem: Text {
             id: fourthText

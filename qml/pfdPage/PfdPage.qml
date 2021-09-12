@@ -8,6 +8,7 @@ import "jsHelpers/Altimeter.js" as AltimeterJs
 import "pfdElements"
 import "pfdElements/AttitudeIndicator"
 import "pfdElements/HsiIndicator"
+import "pfdElements/AirspeedIndicator"
 
 Item {
 
@@ -22,7 +23,7 @@ Item {
         airspeedLastCallTime = new Date().getTime();
     }
 
-    Connections
+    /*Connections
     {
         target: iasInterface
         function onAirspeedChanged() {
@@ -50,7 +51,7 @@ Item {
                                  iasInterface.getNoColor());
             iasItem.update(iasInterface.airspeed);
         }
-    }
+    }*/
 
     Connections
     {
@@ -91,7 +92,7 @@ Item {
         }
     }
 
-    Item {
+    /*Item {
         id: iasParent
         width: 250 * 0.96
         height: 700 * 0.96
@@ -106,6 +107,15 @@ Item {
             pfdPageId.iasItem.updateColors(iasInterface.getRedBegin(), iasInterface.getRedEnd(), iasInterface.getGreenBegin(), iasInterface.getGreenEnd(), iasInterface.getFlapsBegin(), iasInterface.getFlapsEnd(), iasInterface.getYellowBegin(), iasInterface.getYellowEnd(), iasInterface.getMinSpeed(), iasInterface.getNoColor());
             pfdPageId.iasItem.update(20);
         }
+    }*/
+
+    AirspeedIndicator {
+        width: 240
+        height: 670
+        anchors.right: parent.right
+        anchors.rightMargin: 1344
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 432
     }
 
     BottomBar {

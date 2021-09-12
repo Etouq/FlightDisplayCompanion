@@ -33,6 +33,24 @@ Item {
     NavTopBar {}
 
     Rectangle {
+        x: 420
+        y: 48
+        width: 195
+        height: 40
+        color: "#1A1D21"
+
+        Text {
+            property var orientationStrings: ["NORTH UP", "HEADING UP", "TRACK UP"]
+            anchors.centerIn: parent
+            font.pixelSize: 31
+            font.bold: true
+            font.family: "Roboto Mono"
+            color: "white"
+            text: orientationStrings[mfdInterface.mapOrientationMode]
+        }
+    }
+
+    Rectangle {
         x: 0
         y: 0
         width: 420
@@ -44,8 +62,6 @@ Item {
             asynchronous: true
             anchors.fill: parent
         }
-
-
 
     }
 

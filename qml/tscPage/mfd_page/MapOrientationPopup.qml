@@ -25,87 +25,74 @@ Rectangle {
             font.bold: true
             font.pixelSize: 60
             color: "white"
-            text: "Minimum Source"
+            text: "Map Orientation"
         }
     }
 
     Rectangle {
-        x: 604.8
+        x: 379.2
         y: 180
-        width: 518.4
-        height: 724.992
+        width: 969.6
+        height: 819.6
         border.width: 4.8
         border.color: "white"
         color: "black"
 
         Column {
-            x: 15.168
-            y: 15.168
-            spacing: 10.368
+            x: 24
+            y: 24
+            width: 921.6
+            height: 768
+            spacing: 6
 
             GradientButton {
-                width: 488.064
-                height: 224.64
+                width: 921.6
 
                 Text {
-                    y: 44.928
                     anchors.horizontalCenter: parent.horizontalCenter
+                    y: 50.4
                     font.pixelSize: 60
                     font.family: "Roboto Mono"
                     font.bold: true
                     color: "white"
-                    text: "Off"
+                    text: "North Up"
                 }
 
-                onReleased: {
-                    altInterface.minimumsState = 0;
-                    popupRoot.visible = false;
-                }
+                onReleased: { mfdInterface.mapOrientationMode = 0; popupRoot.visible = false; }
             }
 
             GradientButton {
-                width: 488.064
-                height: 224.64
+                width: 921.6
 
                 Text {
-                    y: 44.928
                     anchors.horizontalCenter: parent.horizontalCenter
+                    y: 50.4
                     font.pixelSize: 60
                     font.family: "Roboto Mono"
                     font.bold: true
                     color: "white"
-                    text: "Baro"
+                    text: "Heading Up"
                 }
 
-                onReleased: {
-                    altInterface.minimumsState = 1;
-                    altInterface.updateMinimumAlt();
-                    popupRoot.visible = false;
-                }
+                onReleased: { mfdInterface.mapOrientationMode = 1; popupRoot.visible = false; }
             }
 
             GradientButton {
-                width: 488.064
-                height: 224.64
+                width: 921.6
 
                 Text {
-                    y: 44.928
                     anchors.horizontalCenter: parent.horizontalCenter
+                    y: 50.4
                     font.pixelSize: 60
                     font.family: "Roboto Mono"
                     font.bold: true
                     color: "white"
-                    text: "Radio Alt"
+                    text: "Track Up"
                 }
 
-                onReleased: {
-                    altInterface.minimumsState = 2;
-                    altInterface.updateMinimumAlt();
-                    popupRoot.visible = false;
-                }
+                onReleased: { mfdInterface.mapOrientationMode = 2; popupRoot.visible = false; }
             }
         }
     }
-
 
 }

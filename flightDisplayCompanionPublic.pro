@@ -141,8 +141,15 @@ DISTFILES += \
     qml/mfdPage/MfdPage.qml \
     qml/mfdPage/NavTopBar.qml \
     qml/pfdPage/PfdPage.qml \
+    qml/pfdPage/pfdElements/AirspeedIndicator/AirspeedIndicator.qml \
+    qml/pfdPage/pfdElements/AirspeedIndicator/AirspeedReferenceGroup.qml \
     qml/pfdPage/pfdElements/AirspeedIndicator/AirspeedReferenceGroup.qml \
     qml/pfdPage/pfdElements/AirspeedIndicator/CenterGroup.qml \
+    qml/pfdPage/pfdElements/AirspeedIndicator/CenterItem.qml \
+    qml/pfdPage/pfdElements/AirspeedIndicator/Cursor.qml \
+    qml/pfdPage/pfdElements/AirspeedIndicator/EndElement.qml \
+    qml/pfdPage/pfdElements/AirspeedIndicator/GradGroup.qml \
+    qml/pfdPage/pfdElements/AirspeedIndicator/StartElement.qml \
     qml/pfdPage/pfdElements/AngleOfAttackIndicator.qml \
     qml/pfdPage/pfdElements/AttitudeIndicator/AttitudeBackground.qml \
     qml/pfdPage/pfdElements/AttitudeIndicator/AttitudeBank.qml \
@@ -191,6 +198,11 @@ DISTFILES += \
     qml/tscPage/images/ICON_MAP_SMALL_BEARING_2_1.png \
     qml/tscPage/images/ICON_MAP_SMALL_TIMERS.png \
     qml/tscPage/images/ICON_MAP_SPEED_BUG.png \
+    qml/tscPage/mfd_page/ColorPopup.qml \
+    qml/tscPage/mfd_page/MapOrientationPopup.qml \
+    qml/tscPage/mfd_page/MapSettingsPage.qml \
+    qml/tscPage/mfd_page/PlaneIconPage.qml \
+    qml/tscPage/mfd_page/SizePopup.qml \
     qml/tscPage/navcom_page/FrequencyKeyboard.qml \
     qml/tscPage/navcom_page/NavComHome.qml \
     qml/tscPage/navcom_page/RadioRow.qml \

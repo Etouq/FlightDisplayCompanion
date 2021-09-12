@@ -4,6 +4,7 @@
 #include <QGeoCoordinate>
 #include <QObject>
 #include <QVector>
+#include <QColor>
 
 struct FlightPlanWaypoint
 {
@@ -36,6 +37,11 @@ class MfdBackend : public QObject
     Q_PROPERTY(QString ete READ ete NOTIFY eteChanged)
     Q_PROPERTY(QString eta READ eta NOTIFY etaChanged)
 
+    Q_PROPERTY(double planeIconScaleFactor MEMBER d_planeIconScaleFactor NOTIFY planeIconScaleFactorChanged)
+    Q_PROPERTY(QColor planeIconColor MEMBER d_planeIconColor NOTIFY planeIconColorChanged)
+    Q_PROPERTY(QColor planeIconBorderColor MEMBER d_planeIconBorderColor NOTIFY planeIconBorderColorChanged)
+    Q_PROPERTY(int mapOrientationMode MEMBER d_mapOrientationMode NOTIFY mapOrientationModeChanged)
+
 
     double plane_hdg_degrees_true = 0;
 
@@ -53,6 +59,13 @@ class MfdBackend : public QObject
 
 
     QVector<FlightPlanWaypoint> flightPlanVec;
+
+
+    double d_planeIconScaleFactor = 1;
+    QColor d_planeIconColor = "white";
+    QColor d_planeIconBorderColor = "black";
+
+    int d_mapOrientationMode = 0;   // 0: north up, 1: heading up, 2: track up
 
 
 public:
@@ -105,6 +118,11 @@ signals:
     void gps_dtkChanged();
     void eteChanged();
     void etaChanged();
+
+    void planeIconScaleFactorChanged();
+    void planeIconColorChanged();
+    void planeIconBorderColorChanged();
+    void mapOrientationModeChanged();
 
 public slots:
     void updatePlaneTrueHdg(double newValue);

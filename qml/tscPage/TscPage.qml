@@ -6,6 +6,7 @@ import "styled_controls"
 import "styled_controls/gradientButtonElements"
 import "pfd_page"
 import "navcom_page"
+import "mfd_page"
 
 Rectangle {
     id: tscRoot
@@ -26,6 +27,14 @@ Rectangle {
             }
             onMinimumsClicked: {
                 minimumsLoader.active = true;
+                homeLoader.active = false;
+            }
+            onMapSettingsClicked: {
+                mapSettingsLoader.active = true;
+                homeLoader.active = false;
+            }
+            onPlaneIconClicked: {
+                planeIconLoader.active = true;
                 homeLoader.active = false;
             }
             onRadiosClicked: {
@@ -88,6 +97,36 @@ Rectangle {
             onHomeClicked: {
                 homeLoader.active = true;
                 minimumsLoader.active = false;
+            }
+        }
+    }
+
+    Loader {
+        id: mapSettingsLoader
+        active: false
+        sourceComponent: MapSettingsPage {
+            onBackClicked: {
+                homeLoader.active = true;
+                mapSettingsLoader.active = false;
+            }
+            onHomeClicked: {
+                homeLoader.active = true;
+                mapSettingsLoader.active = false;
+            }
+        }
+    }
+
+    Loader {
+        id: planeIconLoader
+        active: false
+        sourceComponent: PlaneIconPage {
+            onBackClicked: {
+                homeLoader.active = true;
+                planeIconLoader.active = false;
+            }
+            onHomeClicked: {
+                homeLoader.active = true;
+                planeIconLoader.active = false;
             }
         }
     }

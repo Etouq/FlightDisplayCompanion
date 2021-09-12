@@ -11,7 +11,10 @@ TscPageBase {
     signal timersClicked()
     signal minimumsClicked()
     signal mapSettingsClicked()
+    signal planeIconClicked()
     signal radiosClicked()
+
+
 
 
     Column {
@@ -104,6 +107,36 @@ TscPageBase {
             }
         }
 
+        Row {
+            anchors.horizontalCenter: parent.horizontalCenter
+            spacing: 6
+
+            GradientButton {
+                Img {
+                    source: "qrc:/images/buttonImages/ICON_MAP_SETTINGS_1.png"
+                }
+
+                Title {
+                    text: "Map"
+                }
+
+                onReleased: root.mapSettingsClicked()
+            }
+
+            GradientButton {
+
+                Img {
+                    source: "qrc:/images/mapImages/planeIconOutligned.svg"
+                }
+
+                Title {
+                    text: "Plane\nIcon"
+                }
+
+                onReleased: root.planeIconClicked()
+            }
+        }
+
         GradientButton {
             anchors.horizontalCenter: parent.horizontalCenter
 
@@ -115,4 +148,7 @@ TscPageBase {
         }
 
     }
+
+
+
 }
