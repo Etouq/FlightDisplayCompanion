@@ -29,7 +29,7 @@ Item {
         x: 192
         y: 47.04
         width: 7.68
-        height: 50
+        height: 0
         color: "#d12bc7"
     }
 
