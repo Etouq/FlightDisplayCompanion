@@ -1,11 +1,13 @@
 import QtQuick 2.15
 
-Rectangle {
-    y: -64
-    width: 24
-    height: 768
-    color: "white"
-    clip: true
+Item {
+
+    Rectangle {
+        y: -864
+        width: 24
+        height: 768
+        color: "white"
+    }
 
     Rectangle {
         y: -120

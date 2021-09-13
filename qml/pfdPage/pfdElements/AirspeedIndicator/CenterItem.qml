@@ -52,6 +52,7 @@ Item {
         Loader {
             active: !iasInterface.noColor && iasInterface.minSpeed > 0
             sourceComponent: StartElement {
+                x: 168
                 transform: Translate {
                     y: iasInterface.minTransform
                 }
@@ -59,8 +60,9 @@ Item {
         }
 
         Loader {
-            active: !iasInterface.noColor && iasInterface.maxSpeed > 0
+            active: !iasInterface.noColor && iasInterface.maxSpeed > 0.1
             sourceComponent: EndElement {
+                x: 168
                 transform: Translate {
                     y: iasInterface.maxTransform
                 }

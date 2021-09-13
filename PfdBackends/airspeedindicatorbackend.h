@@ -34,7 +34,7 @@ class AirspeedIndicatorBackend : public QObject
 
     // exposed items
     double d_airspeed = 20;
-    int d_center = 60;
+    int d_center = -10000;
     double d_rawAirspeed = 0;
 
     bool d_redCursor = false;

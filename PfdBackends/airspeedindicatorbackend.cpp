@@ -13,7 +13,7 @@ void AirspeedIndicatorBackend::updateColorElements()
         d_minTransform = 1185.6 + 9.6 * (dCenter - d_min_speed);
     if (d_max_speed > 0)
     {
-        d_maxTransform = fmin(fmax((dCenter * d_max_speed) * 9.6 + 384.0, -96.0), 768.0);
+        d_maxTransform = fmin(fmax((dCenter - d_max_speed) * 9.6 + 384.0, -96.0), 768.0);
         emit maxTransformChanged();
     }
 
@@ -97,6 +97,7 @@ void AirspeedIndicatorBackend::updateColors(double minSpeed,
                                             bool noColor,
                                             bool dynamicMax)
 {
+    d_center = std::max(lround(d_rawAirspeed / 10.0) * 10, 60l);;
     d_min_speed = minSpeed;
     d_flaps_begin = flapsBegin;
     d_flaps_end = flapsEnd;
@@ -113,6 +114,9 @@ void AirspeedIndicatorBackend::updateColors(double minSpeed,
     emit noColorChanged();
     emit minSpeedChanged();
     emit colorsChanged();
+
+    updateColorElements();
+    emit centerChanged();
 }
 
 
