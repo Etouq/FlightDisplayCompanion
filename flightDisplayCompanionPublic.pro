@@ -150,6 +150,14 @@ DISTFILES += \
     qml/pfdPage/pfdElements/AirspeedIndicator/EndElement.qml \
     qml/pfdPage/pfdElements/AirspeedIndicator/GradGroup.qml \
     qml/pfdPage/pfdElements/AirspeedIndicator/StartElement.qml \
+    qml/pfdPage/pfdElements/Altimeter/Altimeter.qml \
+    qml/pfdPage/pfdElements/Altimeter/DigitsGroup.qml \
+    qml/pfdPage/pfdElements/Altimeter/GraduationGroup.qml \
+    qml/pfdPage/pfdElements/Altimeter/GraduationItem.qml \
+    qml/pfdPage/pfdElements/Altimeter/GroundLine.qml \
+    qml/pfdPage/pfdElements/Altimeter/SelectedAltitudeGroup.qml \
+    qml/pfdPage/pfdElements/Altimeter/VerticalDeviationGroup.qml \
+    qml/pfdPage/pfdElements/Altimeter/VerticalSpeedGroup.qml \
     qml/pfdPage/pfdElements/AngleOfAttackIndicator.qml \
     qml/pfdPage/pfdElements/AttitudeIndicator/AttitudeBackground.qml \
     qml/pfdPage/pfdElements/AttitudeIndicator/AttitudeBank.qml \

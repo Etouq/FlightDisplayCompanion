@@ -8,7 +8,7 @@ import "pfdPage"
 import "settingsPage"
 import "tscPage"
 
-Window {
+ApplicationWindow {
     id: bgRect
     color: "black"
     visible: true
