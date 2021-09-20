@@ -49,7 +49,7 @@ GaugeDefinition GaugeDefinition::fromBinary(QIODevice &data, FileVersion version
     switch (version)
     {
         case FileVersion::V1:
-        default:
+        case FileVersion::V2:
             return fromBinaryV1(data);
             break;
     }
@@ -113,5 +113,5 @@ double GaugeDefinition::getEpsilon(bool isCircular) const
     else
         eps = baseUnitRange / 500.0;
 
-    return fmin(baseUnitRange, textIncrementBaseValue / 2);
+    return fmin(eps, textIncrementBaseValue / 2);
 }

@@ -15,7 +15,7 @@ class QImage;
 class AircraftFile
 {
 
-    inline static const FileVersion latestVersion = FileVersion::V1;
+    inline static const FileVersion latestVersion = FileVersion::V2;
 
     inline static QString dataPath = "";
 

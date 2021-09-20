@@ -53,6 +53,11 @@ struct AircraftDefinition
     bool noColors = false;
     bool dynamicBarberpole = false;
 
+    uint16_t defaultVr = 85;
+    uint16_t defaultVx = 100;
+    uint16_t defaultVy = 124;
+    uint16_t defaultVapp = 85;
+
     QByteArray toBinary() const;
 
     QByteArray toNetworkData() const;
@@ -86,6 +91,7 @@ struct AircraftDefinition
 
 private:
     static AircraftDefinition fromBinaryV1(QIODevice &data, FileVersion version);
+    static AircraftDefinition fromBinaryV2(QIODevice &data, FileVersion version);
 };
 
 #endif   // AIRCRAFTDEFINITION_H

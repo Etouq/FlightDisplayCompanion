@@ -108,6 +108,22 @@ void AircraftManager::startupSim()
     emit startSim(currentAircraft.toNetworkData());
 }
 
+void AircraftManager::updateDefaultSpeedbugs(int vr, int vx, int vy, int vapp)
+{
+    currentAircraft.defaultVr = vr;
+    currentAircraft.defaultVx = vx;
+    currentAircraft.defaultVy = vy;
+    currentAircraft.defaultVapp = vapp;
+
+    allAircraft[currentAircraft.name].defaultVr = vr;
+    allAircraft[currentAircraft.name].defaultVx = vx;
+    allAircraft[currentAircraft.name].defaultVy = vy;
+    allAircraft[currentAircraft.name].defaultVapp = vapp;
+
+    AircraftFile::saveAircraftToFile(currentAircraft);
+    emit updateAircraft(currentAircraft);
+}
+
 QString AircraftManager::getImagePath(const QString &name) const
 {
     return "file:/" + AircraftFile::getImagePath(name);

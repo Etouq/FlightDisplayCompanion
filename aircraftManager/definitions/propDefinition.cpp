@@ -28,7 +28,7 @@ PropDefinition PropDefinition::fromBinary(QIODevice &data, FileVersion version)
     switch (version)
     {
         case FileVersion::V1:
-        default:
+        case FileVersion::V2:
             return fromBinaryV1(data, version);
             break;
     }

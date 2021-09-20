@@ -47,19 +47,21 @@ int main(int argc, char *argv[])
     QGuiApplication app(argc, argv);
     QLocale::setDefault(QLocale::c());
     app.setOrganizationName("MKootstra");
+    app.setApplicationName("FlightDisplayCompanion");
+    app.setApplicationDisplayName("Flight Display Companion");
 
 
     QSurfaceFormat format;
     format.setSamples(8);
     QSurfaceFormat::setDefaultFormat(format);
 
-    QQmlApplicationEngine engine;
 
-    QtAndroid::requestPermissionsSync({ "android.permission.WRITE_EXTERNAL_STORAGE", "android.permission.READ_EXTERNAL_STORAGE", "android.permission.WAKE_LOCK" });
+    QtAndroid::requestPermissionsSync({ "android.permission.WRITE_EXTERNAL_STORAGE", "android.permission.READ_EXTERNAL_STORAGE" });
 
     if (QtAndroid::checkPermission("android.permission.WRITE_EXTERNAL_STORAGE") == QtAndroid::PermissionResult::Denied
         || QtAndroid::checkPermission("android.permission.READ_EXTERNAL_STORAGE") == QtAndroid::PermissionResult::Denied)
     {
+        QQmlApplicationEngine engine;
         QObject::connect(&engine, &QQmlEngine::quit, &app, &QGuiApplication::quit);
         engine.load("qrc:/deniedAccessDialog.qml");
         app.exec();
@@ -86,6 +88,7 @@ int main(int argc, char *argv[])
     planeManager.connectSlots(&netClient);
     QObject::connect(&planeManager, &AircraftManager::updateAircraft, &gaugeManager, &GaugeManager::changeAircraft);
     QObject::connect(&planeManager, &AircraftManager::updateAircraft, &pfdInterfaceManager, &PfdManager::changeAircraft);
+    QObject::connect(&planeManager, &AircraftManager::updateAircraft, &tscBackend, &TscPageBackend::changeAircraft);
     netClient.connectInterfaceSignals(&netInterface);
     tscBackend.connectTscSlots(&netClient);
 
@@ -94,6 +97,9 @@ int main(int argc, char *argv[])
 
     planeManager.initialize();
     mfdInterface.loadFlightplan();
+
+
+    QQmlApplicationEngine engine;
 
 
     gaugeManager.addGaugesToContext(engine.rootContext());
@@ -110,5 +116,6 @@ int main(int argc, char *argv[])
 
     int ret = app.exec();
     mfdInterface.saveFlightplan();
+
     return ret;
 }

@@ -67,6 +67,11 @@ QByteArray AircraftDefinition::toBinary() const
     ret += BinaryUtil::toBinary(noColors);
     ret += BinaryUtil::toBinary(dynamicBarberpole);
 
+    ret += BinaryUtil::toBinary(defaultVr);
+    ret += BinaryUtil::toBinary(defaultVx);
+    ret += BinaryUtil::toBinary(defaultVy);
+    ret += BinaryUtil::toBinary(defaultVapp);
+
     return ret;
 }
 
@@ -137,6 +142,18 @@ AircraftDefinition AircraftDefinition::fromBinaryV1(QIODevice &data, FileVersion
     return ret;
 }
 
+AircraftDefinition AircraftDefinition::fromBinaryV2(QIODevice &data, FileVersion version)
+{
+    AircraftDefinition ret = fromBinaryV1(data, version);
+
+    ret.defaultVr = BinaryUtil::readUint16_t(data);
+    ret.defaultVx = BinaryUtil::readUint16_t(data);
+    ret.defaultVy = BinaryUtil::readUint16_t(data);
+    ret.defaultVapp = BinaryUtil::readUint16_t(data);
+
+    return ret;
+}
+
 struct ActiveAirplaneSettings
 {
     double secondDivFactor = 1;
@@ -191,6 +208,8 @@ QByteArray AircraftDefinition::toNetworkData() const
 
     if (!fuelFlowByVolume)
         temp.fuelFlowEpsilon /= 3600.0;
+    else
+        temp.fuelFlowEpsilon *= 0.2641720523; // placeholder until liters per hour is fixed
 
     switch (type)
     {
@@ -284,8 +303,10 @@ AircraftDefinition AircraftDefinition::fromBinary(QIODevice &data, FileVersion v
     switch (version)
     {
         case FileVersion::V1:
-        default:
             return fromBinaryV1(data, version);
+            break;
+        case FileVersion::V2:
+            return fromBinaryV2(data, version);
             break;
     }
 }

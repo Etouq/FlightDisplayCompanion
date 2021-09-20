@@ -14,9 +14,13 @@ class AircraftManager : public QObject
 {
     Q_OBJECT
 
+    Q_PROPERTY(bool aircraftLoaded MEMBER d_aircraftLoaded NOTIFY aircraftLoadedChanged)
+
     QMap<QString, AircraftDefinition> allAircraft;
 
     AircraftDefinition currentAircraft;
+
+    bool d_aircraftLoaded = false; // indicates whether an aircraft is currently loaded
 
 public:
     explicit AircraftManager(QObject *parent = nullptr);
@@ -44,6 +48,9 @@ public:
     Q_INVOKABLE void sendSelectedAircraftToSim();
     Q_INVOKABLE void startupSim();
 
+    // used to update default speedbugs, updates saved file too
+    Q_INVOKABLE void updateDefaultSpeedbugs(int vr, int vx, int vy, int vapp);
+
 signals:
     void updateAircraft(const AircraftDefinition &aircraft);   // tell gauge backend to update
     void updateAircraftList();                                 // tell qml to update the aircraftlist
@@ -55,6 +62,8 @@ signals:
     // signals to send data to the gauge designer
     void sendAircraftToDesigner(const AircraftDefinition &aircraft);
     void sendAircraftKeys(const QStringList &keys);
+
+    void aircraftLoadedChanged();
 
 public slots:
     void removeAircraftList(const QStringList &keys); // remove all aircraft with names in keys
