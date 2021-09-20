@@ -56,6 +56,26 @@ bool SettingsController::showRangeRingText()
     return d_showRangeRingText;
 }
 
+int SettingsController::iconIdx()
+{
+    return d_iconIdx;
+}
+
+double SettingsController::iconSize()
+{
+    return d_iconSize;
+}
+
+QString SettingsController::iconColor()
+{
+    return d_iconColor;
+}
+
+QString SettingsController::iconBorderColor()
+{
+    return d_iconBorderColor;
+}
+
 void SettingsController::setFirstTimeSetupCompleted(bool newValue)
 {
     settings->setValue("firstTimeSetupCompleted", newValue);
@@ -110,6 +130,30 @@ void SettingsController::setShowRangeRingText(bool show)
     d_showRangeRingText = show;
 }
 
+void SettingsController::setIconIdx(int idx)
+{
+    settings->setValue("iconIdx", idx);
+    d_iconIdx = idx;
+}
+
+void SettingsController::setIconSize(double size)
+{
+    settings->setValue("iconSize", size);
+    d_iconSize = size;
+}
+
+void SettingsController::setIconColor(const QString &color)
+{
+    settings->setValue("iconColor", color);
+    d_iconColor = color;
+}
+
+void SettingsController::setIconBorderColor(const QString &color)
+{
+    settings->setValue("iconBorderColor", color);
+    d_iconBorderColor = color;
+}
+
 void SettingsController::clearSettings()
 {
     setFirstTimeSetupCompleted(false);
@@ -124,6 +168,11 @@ void SettingsController::clearSettings()
     setShowMapFuelRange(true);
     setShowRangeRings(true);
     setShowRangeRingText(true);
+
+    setIconIdx(0);
+    setIconSize(1);
+    setIconColor("white");
+    setIconBorderColor("black");
 }
 
 void SettingsController::init()
@@ -144,6 +193,11 @@ void SettingsController::init()
     d_showRangeRings = settings->value("showRangeRings", true).toBool();
     d_showRangeRingText = settings->value("showRangeRingText", true).toBool();
 
+    d_iconIdx = settings->value("iconIdx", 0).toInt();
+    d_iconSize = settings->value("iconSize", 1).toDouble();
+    d_iconColor = settings->value("iconColor", "white").toString();
+    d_iconBorderColor = settings->value("iconBorderColor", "black").toString();
+
 
     settings->setValue("firstTimeSetupCompleted", d_firstTimeSetupCompleted);
     settings->setValue("dataPath", d_dataPath);
@@ -157,4 +211,9 @@ void SettingsController::init()
     settings->setValue("showMapFuelRange", d_showMapFuelRange);
     settings->setValue("showRangeRings", d_showRangeRings);
     settings->setValue("showRangeRingText", d_showRangeRingText);
+
+    settings->setValue("iconIdx", d_iconIdx);
+    settings->setValue("iconSize", d_iconSize);
+    settings->setValue("iconColor", d_iconColor);
+    settings->setValue("iconBorderColor", d_iconBorderColor);
 }

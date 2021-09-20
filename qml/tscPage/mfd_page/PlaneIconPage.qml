@@ -24,6 +24,18 @@ TscPageBase {
 
             MainText {
                 y: 50
+                text: "Icon"
+            }
+
+            onReleased: iconPopup.visible = true
+        }
+
+        GradientButton {
+            anchors.horizontalCenter: parent.horizontalCenter
+            width: 504
+
+            MainText {
+                y: 50
                 text: "Icon Size"
             }
 
@@ -75,6 +87,10 @@ TscPageBase {
 
     SizePopup {
         id: iconSizePopup
+    }
+
+    IconPopup {
+        id: iconPopup
     }
 
 

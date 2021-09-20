@@ -37,9 +37,10 @@ class MfdBackend : public QObject
     Q_PROPERTY(QString ete READ ete NOTIFY eteChanged)
     Q_PROPERTY(QString eta READ eta NOTIFY etaChanged)
 
-    Q_PROPERTY(double planeIconScaleFactor MEMBER d_planeIconScaleFactor NOTIFY planeIconScaleFactorChanged)
-    Q_PROPERTY(QColor planeIconColor MEMBER d_planeIconColor NOTIFY planeIconColorChanged)
-    Q_PROPERTY(QColor planeIconBorderColor MEMBER d_planeIconBorderColor NOTIFY planeIconBorderColorChanged)
+    Q_PROPERTY(QString planeIconPath READ planeIconPath NOTIFY planeIconPathChanged)
+    Q_PROPERTY(double planeIconScaleFactor READ planeIconScaleFactor WRITE setPlaneIconScaleFactor NOTIFY planeIconScaleFactorChanged)
+    Q_PROPERTY(QColor planeIconColor READ planeIconColor WRITE setPlaneIconColor NOTIFY planeIconColorChanged)
+    Q_PROPERTY(QColor planeIconBorderColor READ planeIconBorderColor WRITE setPlaneIconBorderColor NOTIFY planeIconBorderColorChanged)
     Q_PROPERTY(int mapOrientationMode MEMBER d_mapOrientationMode NOTIFY mapOrientationModeChanged)
 
 
@@ -61,11 +62,26 @@ class MfdBackend : public QObject
     QVector<FlightPlanWaypoint> flightPlanVec;
 
 
+    QString d_planeIconPath = d_defaultPlanePath;
     double d_planeIconScaleFactor = 1;
     QColor d_planeIconColor = "white";
     QColor d_planeIconBorderColor = "black";
 
     int d_mapOrientationMode = 0;   // 0: north up, 1: heading up, 2: track up
+
+
+    static const QString d_defaultPlanePath;
+    static const QString d_cursorIconPath;
+    static const QString d_triangleIconPath;
+    static const QString d_airlinerIconPath;
+    static const QString d_gliderIconPath;
+    static const QString d_glider2IconPath;
+    static const QString d_jetIconPath;
+    static const QString d_propIconPath;
+    static const QString d_turbopropIconPath;
+    static const QString d_heliIconPath;
+
+
 
 
 public:
@@ -106,6 +122,19 @@ public:
 
     Q_INVOKABLE void qmlDirectTo(double lat, double lon, QString ident, int wpType, int alt1, int alt2, int altType, int currAlt);
 
+    Q_INVOKABLE const QString getIconPathAt(int idx) const;
+    Q_INVOKABLE void selectIcon(int idx);
+
+    const QString &planeIconPath() const;
+    double planeIconScaleFactor() const;
+    const QColor &planeIconColor() const;
+    const QColor &planeIconBorderColor() const;
+
+    void setPlaneIconScaleFactor(double scalefactor);
+    void setPlaneIconColor(QColor iconColor);
+    void setPlaneIconBorderColor(QColor borderColor);
+
+
     QGeoCoordinate currCoordinates() const;
 
     bool simRunning() const;
@@ -119,6 +148,7 @@ signals:
     void eteChanged();
     void etaChanged();
 
+    void planeIconPathChanged();
     void planeIconScaleFactorChanged();
     void planeIconColorChanged();
     void planeIconBorderColorChanged();

@@ -22,6 +22,11 @@ class SettingsController
     inline static bool d_showRangeRings = true;
     inline static bool d_showRangeRingText = true;
 
+    inline static int d_iconIdx = 0;
+    inline static double d_iconSize = 1;
+    inline static QString d_iconColor = "white";
+    inline static QString d_iconBorderColor = "black";
+
 public:
     static bool firstTimeSetupCompleted();
     static QString dataPath();
@@ -36,6 +41,11 @@ public:
     static bool showRangeRings();
     static bool showRangeRingText();
 
+    static int iconIdx();
+    static double iconSize();
+    static QString iconColor();
+    static QString iconBorderColor();
+
     static void setFirstTimeSetupCompleted(bool newValue);
     static void setDataPath(const QString &newValue);
 
@@ -48,6 +58,11 @@ public:
     static void setShowMapFuelRange(bool show);
     static void setShowRangeRings(bool show);
     static void setShowRangeRingText(bool show);
+
+    static void setIconIdx(int idx);
+    static void setIconSize(double size);
+    static void setIconColor(const QString &color);
+    static void setIconBorderColor(const QString &color);
 
     static void clearSettings();
 

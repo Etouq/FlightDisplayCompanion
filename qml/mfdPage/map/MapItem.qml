@@ -322,33 +322,7 @@ Item {
                     strokeWidth: 1.5 * mfdInterface.planeIconScaleFactor
 
                     scale: Qt.size(mfdInterface.planeIconScaleFactor, mfdInterface.planeIconScaleFactor)
-                    PathMove { x: 37.759575; y: 88.151385 }
-                    PathArc { radiusX: 12.222; radiusY: 12.222; xAxisRotation: 90; useLargeArc: false; direction: PathArc.Clockwise; x: 38.221575; y: 85.463385 }
-                    PathArc { radiusX: 4.011; radiusY: 4.011; xAxisRotation: 90; useLargeArc: false; direction: PathArc.Clockwise; x: 40.111575; y: 83.363385 }
-                    PathLine { x: 47.608575; y: 80.549385 }
-                    PathArc { radiusX: 2.247; radiusY: 2.247; xAxisRotation: 90; useLargeArc: false; direction: PathArc.Counterclockwise; x: 48.259575; y: 78.806385 }
-                    PathLine { x: 47.251575; y: 62.132385 }
-                    PathLine { x: 20.959575; y: 70.007385 }
-                    PathArc { radiusX: 0.756; radiusY: 0.756; xAxisRotation: 90; useLargeArc: false; direction: PathArc.Clockwise; x: 19.972575; y: 69.335385 }
-                    PathCubic { control1X: 19.783575; control1Y: 67.235385; control2X: 19.804575; control2Y: 65.723385; x: 21.484575; y: 64.484385 }
-                    PathLine { x: 46.726575; y: 46.151385 }
-                    PathArc { radiusX: 0.924; radiusY: 0.924; xAxisRotation: 90; useLargeArc: false; direction: PathArc.Counterclockwise; x: 47.062575; y: 45.458385 }
-                    PathCubic { control1X: 47.188575; control1Y: 42.728385; control2X: 47.776575; control2Y: 27.629385; x: 48.196575; y: 24.458385 }
-                    PathArc { radiusX: 12.6; radiusY: 12.6; xAxisRotation: 90; useLargeArc: false; direction: PathArc.Clockwise; x: 50.548575; y: 17.549385 }
-                    PathArc { radiusX: 2.415; radiusY: 2.415; xAxisRotation: 90; useLargeArc: false; direction: PathArc.Clockwise; x: 53.950575; y: 17.549385 }
-                    PathArc { radiusX: 12.768; radiusY: 12.768; xAxisRotation: 90; useLargeArc: false; direction: PathArc.Clockwise; x: 56.365575; y: 24.437385 }
-                    PathCubic { control1X: 56.806575; control1Y: 27.692385; control2X: 57.520575; control2Y: 42.791385; x: 57.667575; y: 45.437385 }
-                    PathArc { radiusX: 0.84; radiusY: 0.84; xAxisRotation: 90; useLargeArc: false; direction: PathArc.Counterclockwise; x: 58.003575; y: 46.109385 }
-                    PathLine { x: 83.497575; y: 64.253385 }
-                    PathCubic { control1X: 85.177575; control1Y: 65.471385; control2X: 85.219575; control2Y: 67.004385; x: 85.030575; y: 69.083385 }
-                    PathArc { radiusX: 0.735; radiusY: 0.735; xAxisRotation: 90; useLargeArc: false; direction: PathArc.Clockwise; x: 84.064575; y: 69.755385 }
-                    PathLine { x: 57.709575; y: 62.153385 }
-                    PathLine { x: 56.848575; y: 78.953385 }
-                    PathArc { radiusX: 2.1; radiusY: 2.1; xAxisRotation: 90; useLargeArc: false; direction: PathArc.Counterclockwise; x: 57.499575; y: 80.675385 }
-                    PathLine { x: 65.059575; y: 83.321385 }
-                    PathArc { radiusX: 4.2; radiusY: 4.2; xAxisRotation: 90; useLargeArc: false; direction: PathArc.Clockwise; x: 66.949575; y: 85.421385 }
-                    PathArc { radiusX: 13.944; radiusY: 13.944; xAxisRotation: 90; useLargeArc: false; direction: PathArc.Clockwise; x: 67.432575; y: 88.109385 }
-                    PathLine { x: 37.759575; y: 88.151385 }
+                    PathSvg { path: mfdInterface.planeIconPath }
                 }
 
                 transform: Rotation

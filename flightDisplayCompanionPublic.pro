@@ -206,6 +206,7 @@ DISTFILES += \
     qml/tscPage/images/ICON_MAP_SMALL_TIMERS.png \
     qml/tscPage/images/ICON_MAP_SPEED_BUG.png \
     qml/tscPage/mfd_page/ColorPopup.qml \
+    qml/tscPage/mfd_page/IconPopup.qml \
     qml/tscPage/mfd_page/MapOrientationPopup.qml \
     qml/tscPage/mfd_page/MapSettingsPage.qml \
     qml/tscPage/mfd_page/PlaneIconPage.qml \
