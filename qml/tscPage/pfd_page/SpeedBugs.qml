@@ -300,10 +300,25 @@ TscPageBase {
 
     }
 
+    GradientButton {
+        x: 86.4
+        anchors.bottom: resetButton.top
+        anchors.bottomMargin: 10
+        width: 437.76
+        enabled: aircraftInterface.aircraftLoaded
+
+        MainText {
+            text: "Set As Defaults"
+        }
+
+        onReleased: {
+            aircraftInterface.updateDefaultSpeedbugs(tscBackend.vrSpeed, tscBackend.vxSpeed, tscBackend.vySpeed, tscBackend.vappSpeed);
+        }
+    }
 
     GradientButton {
-        anchors.left: parent.left
-        anchors.leftMargin: 86.4
+        id: resetButton
+        x: 86.4
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 54
         width: 437.76
@@ -313,10 +328,14 @@ TscPageBase {
         }
 
         onReleased: {
-            tscBackend.vrSpeed = 85;
-            tscBackend.vxSpeed = 100;
-            tscBackend.vySpeed = 124;
-            tscBackend.vappSpeed = 85;
+            if (aircraftInterface.aircraftLoaded)
+                tscBackend.resetSpeedBugs();
+            else {
+                tscBackend.vrSpeed = 85;
+                tscBackend.vxSpeed = 100;
+                tscBackend.vySpeed = 124;
+                tscBackend.vappSpeed = 85;
+            }
         }
     }
 

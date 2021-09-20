@@ -5,6 +5,7 @@
 #include <QString>
 
 class NetworkClient;
+struct AircraftDefinition;
 
 class TscPageBackend : public QObject
 {
@@ -52,6 +53,11 @@ class TscPageBackend : public QObject
     bool d_vyActive = false;
     bool d_vappActive = false;
 
+    int d_defaultVrSpeed = 85;
+    int d_defaultVxSpeed = 100;
+    int d_defaultVySpeed = 124;
+    int d_defaultVappSpeed = 85;
+
     // timer
     int d_baseTime = 0;    // number of seconds entered
     int d_beginTime = 0;   // time when counting started
@@ -78,6 +84,9 @@ public:
     explicit TscPageBackend(QObject *parent = nullptr);
 
     void connectTscSlots(NetworkClient *netClient);
+
+    //speedbugs
+    Q_INVOKABLE void resetSpeedBugs();
 
     // timer
     QString timeString() const;
@@ -161,6 +170,8 @@ public slots:
 
     void updateXpdrCode(int newCode);
     void updateXpdrState(int newState);
+
+    void changeAircraft(const AircraftDefinition &aircraft);
 };
 
 #endif   // TSCPAGEBACKEND_H

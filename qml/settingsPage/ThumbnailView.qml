@@ -119,10 +119,12 @@ ListView {
                 if (selectedAircraftName == name)
                 {
                     selectedAircraftName = "";
+                    aircraftInterface.aircraftLoaded = false;
                 }
                 else
                 {
                     selectedAircraftName = name;
+                    aircraftInterface.aircraftLoaded = true;
                     aircraftInterface.loadAircraft(name);
                 }
             }

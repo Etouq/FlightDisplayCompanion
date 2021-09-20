@@ -1,6 +1,7 @@
 #include "tscpagebackend.h"
 
 #include "../networkBackend/networkclient.h"
+#include "../aircraftManager/definitions/aircraftDefinition.h"
 
 TscPageBackend::TscPageBackend(QObject *parent) : QObject(parent) {}
 
@@ -20,3 +21,28 @@ void TscPageBackend::connectTscSlots(NetworkClient *netClient)
 
     connect(this, &TscPageBackend::sendCommandsToSim, netClient, &NetworkClient::sendCommands);
 }
+
+void TscPageBackend::resetSpeedBugs()
+{
+    d_vrSpeed = d_defaultVrSpeed;
+    d_vxSpeed = d_defaultVxSpeed;
+    d_vySpeed = d_defaultVySpeed;
+    d_vappSpeed = d_defaultVappSpeed;
+
+    emit vrSpeedChanged();
+    emit vxSpeedChanged();
+    emit vySpeedChanged();
+    emit vappSpeedChanged();
+}
+
+
+void TscPageBackend::changeAircraft(const AircraftDefinition &aircraft)
+{
+    d_defaultVrSpeed = aircraft.defaultVr;
+    d_defaultVxSpeed = aircraft.defaultVx;
+    d_defaultVySpeed = aircraft.defaultVy;
+    d_defaultVappSpeed = aircraft.defaultVapp;
+
+    resetSpeedBugs();
+}
+
