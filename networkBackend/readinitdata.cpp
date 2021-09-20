@@ -5,7 +5,7 @@ void NetworkClient::readInitData()
 {
     SharedServerIds identifier = SharedServerIds::GAUGE_DESIGNER_SERVER;
     uint8_t serverVersion = 0;
-    if (tcpSocket.bytesAvailable() < sizeof(identifier) + sizeof(serverVersion))
+    if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(identifier) + sizeof(serverVersion))
         return;
 
     tcpSocket.read(reinterpret_cast<char *>(&identifier), sizeof(identifier));

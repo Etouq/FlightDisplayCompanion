@@ -23,7 +23,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::AIRSPEED:
             {
                 double newValue = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -37,7 +37,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::MAX_SPEED:
             {
                 double newValue = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -51,7 +51,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::TRUE_AIRSPEED:
             {
                 int32_t newValue = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -65,7 +65,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::REF_SPEED:
             {
                 int32_t newValue = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -79,7 +79,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::AP_FLC:
             {
                 bool newValue = false;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -95,7 +95,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::ALTITUDE:
             {
                 double newValue = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -109,7 +109,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::RADAR_ALTITUDE:
             {
                 double newValue = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -123,7 +123,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::REF_ALTITUDE:
             {
                 int32_t newValue = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -137,7 +137,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::PRESSURE:
             {
                 double newValue = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -153,7 +153,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::VSPEED:
             {
                 double newValue = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -167,7 +167,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::REF_VSPEED:
             {
                 int32_t newValue = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -183,7 +183,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::VERT_DEV_MODE:
             {
                 int32_t newValue = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -197,7 +197,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::VERT_DEV_VALUE:
             {
                 double newValue = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -213,7 +213,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::ANGLE_OF_ATTACK:
             {
                 double newValue = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -229,7 +229,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::AP_LATERAL_ACTIVE:
             {
                 uint8_t size = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(size))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(size))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -243,7 +243,7 @@ void NetworkClient::readSimconnectData()
                     emit ap_lateral_activeChanged(newValue);
                     break;
                 }
-                if (tcpSocket.bytesAvailable() < size)
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < size)
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -258,7 +258,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::AP_LATERAL_ARMED:
             {
                 uint8_t size = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(size))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(size))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -272,7 +272,7 @@ void NetworkClient::readSimconnectData()
                     emit ap_lateral_armedChanged(newValue);
                     break;
                 }
-                if (tcpSocket.bytesAvailable() < size)
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < size)
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -286,7 +286,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::AP_AVAILABLE:
             {
                 bool newValue = false;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -300,7 +300,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::AP_STATUS:
             {
                 bool newValue = false;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -314,7 +314,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::AP_YD_STATUS:
             {
                 bool newValue = false;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -328,7 +328,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::AP_FD_STATUS:
             {
                 bool newValue = false;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -342,7 +342,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::AP_VERTICAL_ACTIVE:
             {
                 uint8_t size = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(size))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(size))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -356,7 +356,7 @@ void NetworkClient::readSimconnectData()
                     emit ap_vertical_activeChanged(newValue);
                     break;
                 }
-                if (tcpSocket.bytesAvailable() < size)
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < size)
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -370,7 +370,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::AP_MODE_REFERENCE:
             {
                 uint8_t size = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(size))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(size))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -384,7 +384,7 @@ void NetworkClient::readSimconnectData()
                     emit ap_mode_referenceChanged(newValue);
                     break;
                 }
-                if (tcpSocket.bytesAvailable() < size)
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < size)
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -398,7 +398,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::AP_ARMED:
             {
                 uint8_t size = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(size))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(size))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -412,7 +412,7 @@ void NetworkClient::readSimconnectData()
                     emit ap_armedChanged(newValue);
                     break;
                 }
-                if (tcpSocket.bytesAvailable() < size)
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < size)
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -426,7 +426,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::AP_ARMED_REFERENCE:
             {
                 uint8_t size = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(size))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(size))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -440,7 +440,7 @@ void NetworkClient::readSimconnectData()
                     emit ap_armed_referenceChanged(newValue);
                     break;
                 }
-                if (tcpSocket.bytesAvailable() < size)
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < size)
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -456,7 +456,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::BANK:
             {
                 double newValue = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -470,7 +470,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::PITCH:
             {
                 double newValue = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -484,7 +484,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::SLIPSKID:
             {
                 double newValue = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -498,7 +498,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::FD_BANK:
             {
                 double newValue = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -512,7 +512,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::FD_PITCH:
             {
                 double newValue = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -528,7 +528,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::ZULU_SECONDS:
             {
                 int32_t newValue = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -542,7 +542,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::LOCAL_SECONDS:
             {
                 int32_t newValue = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -556,7 +556,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::GROUND_SPEED:
             {
                 int32_t newValue = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -570,7 +570,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::TOTAL_AIR_TEMP:
             {
                 float newValue = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -586,7 +586,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::ROTATION:
             {
                 double newValue = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -600,7 +600,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::HEADING:   // might be int
             {
                 double newValue = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -614,7 +614,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::COURSE:   // might be int
             {
                 double newValue = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -628,7 +628,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::COURSE_DEVIATION:
             {
                 double newValue = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -642,7 +642,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::DISPLAY_DEVIATION:
             {
                 bool newValue = false;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -656,7 +656,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::TURN_RATE:
             {
                 double newValue = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -670,7 +670,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::NAV_SOURCE:
             {
                 int32_t newValue = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -684,7 +684,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::CURRENT_TRACK:
             {
                 double newValue = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -698,7 +698,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::TO_FROM:
             {
                 int32_t newValue = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -714,7 +714,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::NAV1_IDENT:
             {
                 uint8_t size = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(size))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(size))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -728,7 +728,7 @@ void NetworkClient::readSimconnectData()
                     emit nav1_identChanged(newValue);
                     break;
                 }
-                if (tcpSocket.bytesAvailable() < size)
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < size)
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -742,7 +742,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::NAV1_DME:
             {
                 double newValue = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -756,7 +756,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::NAV1_BEARING:
             {
                 double newValue = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -770,7 +770,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::NAV1_HAS_NAV:
             {
                 bool newValue = false;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -784,7 +784,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::NAV1_HAS_SIGNAL:
             {
                 bool newValue = false;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -798,7 +798,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::NAV1_HAS_DME:
             {
                 bool newValue = false;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -812,7 +812,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::NAV2_IDENT:
             {
                 uint8_t size = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(size))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(size))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -826,7 +826,7 @@ void NetworkClient::readSimconnectData()
                     emit nav2_identChanged(newValue);
                     break;
                 }
-                if (tcpSocket.bytesAvailable() < size)
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < size)
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -840,7 +840,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::NAV2_DME:
             {
                 double newValue = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -854,7 +854,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::NAV2_BEARING:
             {
                 double newValue = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -868,7 +868,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::NAV2_HAS_NAV:
             {
                 bool newValue = false;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -882,7 +882,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::NAV2_HAS_SIGNAL:
             {
                 bool newValue = false;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -896,7 +896,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::NAV2_HAS_DME:
             {
                 bool newValue = false;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -910,7 +910,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::GPS_DISTANCE:
             {
                 double newValue = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -924,7 +924,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::GPS_BEARING:
             {
                 double newValue = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -938,7 +938,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::ADF_HAS_SIGNAL:
             {
                 bool newValue = false;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -952,7 +952,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::ADF_FREQ:
             {
                 double newValue = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -966,7 +966,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::ADF_RADIAL:
             {
                 double newValue = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -982,7 +982,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::GPS_IS_ACTIVE_FLIGHTPLAN:
             {
                 bool newValue = false;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -996,7 +996,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::CURRENT_LEG_TO:
             {
                 uint8_t size = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(size))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(size))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -1010,7 +1010,7 @@ void NetworkClient::readSimconnectData()
                     emit current_leg_toChanged(newValue);
                     break;
                 }
-                if (tcpSocket.bytesAvailable() < size)
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < size)
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -1024,7 +1024,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::CURRENT_LEG_FROM:
             {
                 uint8_t size = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(size))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(size))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -1038,7 +1038,7 @@ void NetworkClient::readSimconnectData()
                     emit current_leg_fromChanged(newValue);
                     break;
                 }
-                if (tcpSocket.bytesAvailable() < size)
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < size)
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -1052,7 +1052,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::LEG_IS_DIRECT_TO:
             {
                 bool newValue = false;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -1066,7 +1066,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::CURRENT_LEG_DISTANCE:
             {
                 double newValue = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -1080,7 +1080,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::CURRENT_LEG_BEARING:
             {
                 double newValue = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -1096,7 +1096,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::HAS_COM1:
             {
                 bool newValue = false;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -1110,7 +1110,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::HAS_COM2:
             {
                 bool newValue = false;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -1124,7 +1124,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::HAS_NAV1:
             {
                 bool newValue = false;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -1138,7 +1138,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::HAS_NAV2:
             {
                 bool newValue = false;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -1152,7 +1152,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::COM1_FREQ:
             {
                 float newValue = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -1166,7 +1166,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::COM2_FREQ:
             {
                 float newValue = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -1180,7 +1180,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::NAV1_FREQ:
             {
                 float newValue = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -1194,7 +1194,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::NAV2_FREQ:
             {
                 float newValue = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -1208,7 +1208,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::COM1_STBY:
             {
                 float newValue = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -1222,7 +1222,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::COM2_STBY:
             {
                 float newValue = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -1236,7 +1236,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::NAV1_STBY:
             {
                 float newValue = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -1250,7 +1250,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::NAV2_STBY:
             {
                 float newValue = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -1264,7 +1264,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::XPDR_CODE:
             {
                 int32_t newValue = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -1278,7 +1278,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::XPDR_STATE:
             {
                 int32_t newValue = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -1294,7 +1294,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::WIND_DIRECTION:
             {
                 double newValue = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -1308,7 +1308,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::WIND_STRENGTH:
             {
                 double newValue = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -1322,7 +1322,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::WIND_TRUE_DIRECTION:
             {
                 double newValue = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -1339,7 +1339,7 @@ void NetworkClient::readSimconnectData()
             {
                 double newLat = 0;
                 double newLon = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(newLat) + sizeof(newLon))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newLat) + sizeof(newLon))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -1354,7 +1354,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::TRUE_HEADING:
             {
                 double newValue = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -1368,7 +1368,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::GPS_WP_DTK:
             {
                 double newValue = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -1382,7 +1382,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::GPS_WP_ETE:
             {
                 int32_t newValue = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -1396,7 +1396,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::GPS_ETE:
             {
                 int32_t newValue = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -1418,7 +1418,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::FLIGHTPLAN_LIST:
             {
                 int64_t byteSize = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(byteSize))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(byteSize))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -1467,7 +1467,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::ERROR_STRING:
             {
                 uint8_t size = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(size))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(size))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -1480,7 +1480,7 @@ void NetworkClient::readSimconnectData()
                     tcpSocket.commitTransaction();
                     break;
                 }
-                if (tcpSocket.bytesAvailable() < size)
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < size)
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -1496,7 +1496,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::ENGINE1_N1:
             {
                 double newValue = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -1510,7 +1510,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::ENGINE2_N1:
             {
                 double newValue = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -1524,7 +1524,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::ENGINE3_N1:
             {
                 double newValue = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -1538,7 +1538,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::ENGINE4_N1:
             {
                 double newValue = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -1552,7 +1552,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::ENGINE1_N2:
             {
                 double newValue = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -1566,7 +1566,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::ENGINE2_N2:
             {
                 double newValue = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -1580,7 +1580,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::ENGINE3_N2:
             {
                 double newValue = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -1594,7 +1594,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::ENGINE4_N2:
             {
                 double newValue = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -1608,7 +1608,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::ENGINE1_ITT:
             {
                 double newValue = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -1622,7 +1622,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::ENGINE2_ITT:
             {
                 double newValue = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -1636,7 +1636,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::ENGINE3_ITT:
             {
                 double newValue = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -1650,7 +1650,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::ENGINE4_ITT:
             {
                 double newValue = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -1664,7 +1664,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::ENGINE1_RPM:
             {
                 double newValue = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -1678,7 +1678,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::ENGINE2_RPM:
             {
                 double newValue = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -1692,7 +1692,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::ENGINE1_SECOND:
             {
                 double newValue = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -1706,7 +1706,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::ENGINE2_SECOND:
             {
                 double newValue = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -1720,7 +1720,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::ENGINE1_TRQ:
             {
                 double newValue = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -1734,7 +1734,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::ENGINE2_TRQ:
             {
                 double newValue = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -1748,7 +1748,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::ENGINE1_FUEL_QTY:
             {
                 double newValue = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -1762,7 +1762,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::ENGINE2_FUEL_QTY:
             {
                 double newValue = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -1776,7 +1776,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::ENGINE1_FUEL_FLOW:
             {
                 double newValue = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -1790,7 +1790,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::ENGINE2_FUEL_FLOW:
             {
                 double newValue = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -1804,7 +1804,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::ENGINE1_OIL_PRESS:
             {
                 double newValue = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -1818,7 +1818,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::ENGINE2_OIL_PRESS:
             {
                 double newValue = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -1832,7 +1832,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::ENGINE1_OIL_TEMP:
             {
                 double newValue = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -1846,7 +1846,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::ENGINE2_OIL_TEMP:
             {
                 double newValue = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -1860,7 +1860,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::ENGINE1_EGT:
             {
                 double newValue = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -1874,7 +1874,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::ENGINE2_EGT:
             {
                 double newValue = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -1888,7 +1888,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::APU_RPM_PCT:
             {
                 int32_t newValue = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -1905,7 +1905,7 @@ void NetworkClient::readSimconnectData()
                 float fuelQty = 0;
                 float fuelFlow = 0;
                 float groundSpeed = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(fuelQty) + sizeof(fuelFlow) + sizeof(groundSpeed))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(fuelQty) + sizeof(fuelFlow) + sizeof(groundSpeed))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -1921,7 +1921,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::SPOILERS_PCT:
             {
                 double newValue = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -1935,7 +1935,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::FLAPS_ANGLE:
             {
                 double newValue = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -1949,7 +1949,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::ELEV_TRIM_PCT:
             {
                 double newValue = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -1963,7 +1963,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::RUDD_TRIM_PCT:
             {
                 double newValue = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;
@@ -1977,7 +1977,7 @@ void NetworkClient::readSimconnectData()
             case SimconnectIds::AIL_TRIM_PCT:
             {
                 double newValue = 0;
-                if (tcpSocket.bytesAvailable() < sizeof(newValue))
+                if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(newValue))
                 {
                     tcpSocket.rollbackTransaction();
                     reading = false;

@@ -16,7 +16,7 @@ void NetworkClient::readDesignerData()
         // they all start with bytesize check so it can be moved out of the switch
         // we break if there is not enough data ready
         int64_t byteSize = 0;
-        if (tcpSocket.bytesAvailable() < sizeof(byteSize))
+        if (static_cast<uint64_t>(tcpSocket.bytesAvailable()) < sizeof(byteSize))
         {
             tcpSocket.rollbackTransaction();
             break;
