@@ -1,4 +1,4 @@
-#include "aircraftfile.h"
+#include "aircraftfile.hpp"
 
 #include <QBuffer>
 #include <QCoreApplication>
@@ -9,7 +9,7 @@
 #include <QImage>
 #include <QStandardPaths>
 
-#include "settings/settingscontroller.h"
+#include "settings/settingscontroller.hpp"
 
 
 QString AircraftFile::createFileName(const AircraftDefinition &aircraft)

@@ -4,10 +4,10 @@
 #include <QMap>
 #include <QObject>
 
-#include "../definitions/aircraftDefinition.h"
-#include "../definitions/jetDefinition.h"
-#include "../definitions/propDefinition.h"
-#include "../definitions/turbopropDefinition.h"
+#include "../definitions/aircraftDefinition.hpp"
+#include "../definitions/jetDefinition.hpp"
+#include "../definitions/propDefinition.hpp"
+#include "../definitions/turbopropDefinition.hpp"
 
 
 // manages creation of default aircraft on first time setup

@@ -1,12 +1,12 @@
-#include "binaryutil.h"
+#include "binaryutil.hpp"
 
 #include <QByteArray>
 #include <QColor>
 #include <QIODevice>
 #include <QString>
 
-#include "aircraftManager/definitions/basetypes.h"
-#include "mfdbackend.h"
+#include "aircraftManager/definitions/basetypes.hpp"
+#include "mfdbackend.hpp"
 
 QByteArray BinaryUtil::toBinary(int8_t val)
 {

@@ -1,4 +1,4 @@
-#include "attitudeindicatorbackend.h"
+#include "attitudeindicatorbackend.hpp"
 
 AttitudeIndicatorBackend::AttitudeIndicatorBackend(QObject *parent) : QObject(parent)
 {

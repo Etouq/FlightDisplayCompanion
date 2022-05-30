@@ -4,7 +4,7 @@
 #include <QMap>
 #include <QObject>
 
-#include "definitions/aircraftDefinition.h"
+#include "definitions/aircraftDefinition.hpp"
 
 class NetworkClient;
 class QStringList;

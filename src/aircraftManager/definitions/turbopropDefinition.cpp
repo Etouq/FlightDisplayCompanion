@@ -1,4 +1,4 @@
-#include "turbopropDefinition.h"
+#include "turbopropDefinition.hpp"
 
 TurbopropDefinition::TurbopropDefinition(const RawTurbopropDefinition &rhs)
 {

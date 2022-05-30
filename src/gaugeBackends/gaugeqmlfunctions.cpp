@@ -1,4 +1,4 @@
-#include "gaugebase.h"
+#include "gaugebase.hpp"
 
 // basic gauge info
 QString GaugeBase::getName() const

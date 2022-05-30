@@ -7,15 +7,15 @@
 #include <QQmlApplicationEngine>
 #include <QAndroidJniEnvironment>
 
-#include "PfdBackends/pfdmanager.h"
-#include "aircraftManager/aircraftmanager.h"
-#include "gaugeBackends/gaugemanager.h"
-#include "mfdbackend.h"
-#include "networkBackend/networkclient.h"
-#include "networkBackend/networkinterface.h"
-#include "settings/settingscontroller.h"
-#include "settings/settingsinterface.h"
-#include "TscPage/tscpagebackend.h"
+#include "PfdBackends/pfdmanager.hpp"
+#include "aircraftManager/aircraftmanager.hpp"
+#include "gaugeBackends/gaugemanager.hpp"
+#include "mfdbackend.hpp"
+#include "networkBackend/networkclient.hpp"
+#include "networkBackend/networkinterface.hpp"
+#include "settings/settingscontroller.hpp"
+#include "settings/settingsinterface.hpp"
+#include "TscPage/tscpagebackend.hpp"
 
 void keep_screen_on(bool on) {
     QtAndroid::runOnAndroidThread([on]{

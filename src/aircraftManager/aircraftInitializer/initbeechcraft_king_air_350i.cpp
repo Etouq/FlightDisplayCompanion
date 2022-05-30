@@ -1,4 +1,4 @@
-#include "aircraftinitializer.h"
+#include "aircraftinitializer.hpp"
 
 AircraftDefinition AircraftInitializer::initBEECHCRAFT_KING_AIR_350I()
 {

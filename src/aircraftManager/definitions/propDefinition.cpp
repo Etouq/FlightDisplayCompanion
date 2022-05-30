@@ -1,4 +1,4 @@
-#include "propDefinition.h"
+#include "propDefinition.hpp"
 
 PropDefinition::PropDefinition(const RawPropDefinition &rhs)
 {

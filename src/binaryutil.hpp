@@ -5,7 +5,7 @@
 #include <QVector>
 #include <cstdint>
 
-#include "unitConverter/units.h"
+#include "unitConverter/units.hpp"
 
 class QByteArray;
 class QString;

@@ -1,11 +1,11 @@
-#include "aircraftmanager.h"
+#include "aircraftmanager.hpp"
 
 #include <QStringList>
 
-#include "aircraftInitializer/aircraftinitializer.h"
-#include "aircraftfile.h"
-#include "networkBackend/networkclient.h"
-#include "settings/settingscontroller.h"
+#include "aircraftInitializer/aircraftinitializer.hpp"
+#include "aircraftfile.hpp"
+#include "networkBackend/networkclient.hpp"
+#include "settings/settingscontroller.hpp"
 
 
 AircraftManager::AircraftManager(QObject *parent) : QObject(parent)

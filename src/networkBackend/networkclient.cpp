@@ -1,12 +1,12 @@
-#include "networkclient.h"
+#include "networkclient.hpp"
 
 #include <QFile>
 #include <QImage>
 #include <QString>
 
-#include "aircraftManager/aircraftfile.h"
-#include "dataIdentifiers.h"
-#include "networkinterface.h"
+#include "aircraftManager/aircraftfile.hpp"
+#include "dataIdentifiers.hpp"
+#include "networkinterface.hpp"
 
 NetworkClient::NetworkClient(QObject *parent) : QObject(parent)
 {

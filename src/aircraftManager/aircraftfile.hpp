@@ -5,7 +5,7 @@
 #include <QMap>
 #include <QString>
 
-#include "definitions/aircraftDefinition.h"
+#include "definitions/aircraftDefinition.hpp"
 
 class QIODevice;
 class QImage;

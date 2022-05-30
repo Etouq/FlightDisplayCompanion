@@ -1,4 +1,4 @@
-#include "winddatabackend.h"
+#include "winddatabackend.hpp"
 
 #include <cmath>
 

@@ -8,9 +8,9 @@
 #include <QString>
 #include <QVector>
 #include <cstdint>
-#include "basetypes.h"
-#include "binaryutil.h"
-#include "unitConverter/units.h"
+#include "basetypes.hpp"
+#include "binaryutil.hpp"
+#include "unitConverter/units.hpp"
 
 
 // used to allow for designated initialization

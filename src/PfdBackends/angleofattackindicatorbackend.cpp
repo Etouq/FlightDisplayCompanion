@@ -1,4 +1,4 @@
-#include "angleofattackindicatorbackend.h"
+#include "angleofattackindicatorbackend.hpp"
 
 AngleOfAttackIndicatorBackend::AngleOfAttackIndicatorBackend(QObject *parent) : QObject(parent)
 {

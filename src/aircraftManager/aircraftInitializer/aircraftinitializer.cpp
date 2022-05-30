@@ -1,5 +1,5 @@
-#include "aircraftinitializer.h"
-#include "../aircraftfile.h"
+#include "aircraftinitializer.hpp"
+#include "../aircraftfile.hpp"
 #include <QImage>
 
 AircraftInitializer::AircraftInitializer(QObject *parent) : QObject(parent)

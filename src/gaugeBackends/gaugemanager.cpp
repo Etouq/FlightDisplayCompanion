@@ -1,10 +1,10 @@
-#include "gaugemanager.h"
-#include "networkBackend/networkclient.h"
-#include "aircraftManager/definitions/aircraftDefinition.h"
+#include "gaugemanager.hpp"
+#include "networkBackend/networkclient.hpp"
+#include "aircraftManager/definitions/aircraftDefinition.hpp"
 #include <QQmlContext>
-#include "aircraftManager/definitions/jetDefinition.h"
-#include "aircraftManager/definitions/propDefinition.h"
-#include "aircraftManager/definitions/turbopropDefinition.h"
+#include "aircraftManager/definitions/jetDefinition.hpp"
+#include "aircraftManager/definitions/propDefinition.hpp"
+#include "aircraftManager/definitions/turbopropDefinition.hpp"
 
 GaugeManager::GaugeManager(QObject *parent) : QObject(parent)
 {

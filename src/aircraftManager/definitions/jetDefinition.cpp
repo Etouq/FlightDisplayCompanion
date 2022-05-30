@@ -1,4 +1,4 @@
-#include "jetDefinition.h"
+#include "jetDefinition.hpp"
 
 JetDefinition::JetDefinition(const RawJetDefinition &rhs)
 {

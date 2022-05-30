@@ -1,8 +1,8 @@
-#include "pfdmanager.h"
+#include "pfdmanager.hpp"
 
 #include <QQmlContext>
 
-#include "aircraftManager/definitions/aircraftDefinition.h"
+#include "aircraftManager/definitions/aircraftDefinition.hpp"
 
 
 PfdManager::PfdManager(QObject *parent) : QObject(parent)

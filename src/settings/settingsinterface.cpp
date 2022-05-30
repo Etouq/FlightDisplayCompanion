@@ -1,5 +1,5 @@
-#include "settingsinterface.h"
-#include "settingscontroller.h"
+#include "settingsinterface.hpp"
+#include "settingscontroller.hpp"
 
 SettingsInterface::SettingsInterface(QObject *parent) : QObject(parent)
 {

@@ -1,6 +1,6 @@
-#include "networkinterface.h"
+#include "networkinterface.hpp"
 
-#include "settings/settingscontroller.h"
+#include "settings/settingscontroller.hpp"
 
 
 NetworkInterface::NetworkInterface(QObject *parent) : QObject(parent)

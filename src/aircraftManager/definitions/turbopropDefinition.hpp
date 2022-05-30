@@ -1,7 +1,7 @@
 #ifndef TURBOPROPDEFINITION_H
 #define TURBOPROPDEFINITION_H
 
-#include "gaugeDefinition.h"
+#include "gaugeDefinition.hpp"
 
 // used to allow for designated initialization
 struct RawTurbopropDefinition

@@ -1,7 +1,7 @@
 #ifndef JETDEFINITION_H
 #define JETDEFINITION_H
 
-#include "gaugeDefinition.h"
+#include "gaugeDefinition.hpp"
 
 // used to allow for designated initialization
 struct RawJetDefinition

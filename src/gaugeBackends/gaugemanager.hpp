@@ -3,8 +3,8 @@
 
 #include <QObject>
 
-#include "gaugebase.h"
-#include "miscedbase.h"
+#include "gaugebase.hpp"
+#include "miscedbase.hpp"
 
 class NetworkClient;
 struct AircraftDefinition;

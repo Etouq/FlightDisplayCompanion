@@ -2,10 +2,10 @@
 #include <QImage>
 #include <QString>
 
-#include "networkclient.h"
-#include "aircraftManager/aircraftfile.h"
-#include "dataIdentifiers.h"
-#include "mfdbackend.h"
+#include "networkclient.hpp"
+#include "aircraftManager/aircraftfile.hpp"
+#include "dataIdentifiers.hpp"
+#include "mfdbackend.hpp"
 
 void NetworkClient::readSimconnectData()
 {

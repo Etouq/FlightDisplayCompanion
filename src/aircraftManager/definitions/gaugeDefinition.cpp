@@ -1,5 +1,5 @@
-#include "gaugeDefinition.h"
-#include "unitConverter/unitconverter.h"
+#include "gaugeDefinition.hpp"
+#include "unitConverter/unitconverter.hpp"
 
 GaugeDefinition::GaugeDefinition(const RawGaugeDefinition &rhs)
 {

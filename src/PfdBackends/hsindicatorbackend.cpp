@@ -1,4 +1,4 @@
-#include "hsindicatorbackend.h"
+#include "hsindicatorbackend.hpp"
 
 #include <cmath>
 

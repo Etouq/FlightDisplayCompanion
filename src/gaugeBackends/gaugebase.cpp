@@ -1,8 +1,8 @@
-#include "gaugebase.h"
+#include "gaugebase.hpp"
 
 #include <cmath>
 
-#include "unitConverter/unitconverter.h"
+#include "unitConverter/unitconverter.hpp"
 using namespace std;
 
 GaugeBase::GaugeBase(QObject *parent) : QObject(parent)

@@ -1,4 +1,4 @@
-#include "aircraftinitializer.h"
+#include "aircraftinitializer.hpp"
 
 AircraftDefinition AircraftInitializer::initCESSNA_208B_GRAND_CARAVAN_EX()
 {

@@ -1,4 +1,4 @@
-#include "unitconverter.h"
+#include "unitconverter.hpp"
 
 
 void UnitConverter::setConversionFunction(void (*&convertValue)(double *), Units unit)

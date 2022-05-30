@@ -1,4 +1,4 @@
-#include "airspeedindicatorbackend.h"
+#include "airspeedindicatorbackend.hpp"
 #include <cmath>
 
 AirspeedIndicatorBackend::AirspeedIndicatorBackend(QObject *parent) : QObject(parent)

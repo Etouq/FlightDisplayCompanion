@@ -1,4 +1,4 @@
-#include "hsindicatorbearingsbackend.h"
+#include "hsindicatorbearingsbackend.hpp"
 
 #include <cmath>
 

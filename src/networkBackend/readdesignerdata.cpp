@@ -1,9 +1,9 @@
 #include <QImage>
 #include <QString>
 
-#include "networkclient.h"
-#include "aircraftManager/aircraftfile.h"
-#include "dataIdentifiers.h"
+#include "networkclient.hpp"
+#include "aircraftManager/aircraftfile.hpp"
+#include "dataIdentifiers.hpp"
 
 void NetworkClient::readDesignerData()
 {

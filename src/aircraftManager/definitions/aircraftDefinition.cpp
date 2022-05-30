@@ -1,8 +1,8 @@
-#include "aircraftDefinition.h"
+#include "aircraftDefinition.hpp"
 
-#include "jetDefinition.h"
-#include "propDefinition.h"
-#include "turbopropDefinition.h"
+#include "jetDefinition.hpp"
+#include "propDefinition.hpp"
+#include "turbopropDefinition.hpp"
 
 QByteArray AircraftDefinition::toBinary() const
 {

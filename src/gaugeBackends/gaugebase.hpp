@@ -5,7 +5,7 @@
 #include <QObject>
 #include <QString>
 
-#include "aircraftManager/definitions/gaugeDefinition.h"
+#include "aircraftManager/definitions/gaugeDefinition.hpp"
 
 // interface class for qml to obtain values to display the gauges
 class GaugeBase : public QObject

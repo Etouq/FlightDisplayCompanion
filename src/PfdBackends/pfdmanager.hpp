@@ -3,18 +3,18 @@
 
 #include <QObject>
 
-#include "airspeedindicatorbackend.h"
-#include "altimeterbackend.h"
-#include "angleofattackindicatorbackend.h"
-#include "apinfobackend.h"
-#include "attitudeindicatorbackend.h"
-#include "bottombarbackend.h"
-#include "hsindicatorbackend.h"
-#include "hsindicatorbearingsbackend.h"
-#include "navinfobackend.h"
-#include "networkBackend/networkclient.h"
-#include "radioinfobackend.h"
-#include "winddatabackend.h"
+#include "airspeedindicatorbackend.hpp"
+#include "altimeterbackend.hpp"
+#include "angleofattackindicatorbackend.hpp"
+#include "apinfobackend.hpp"
+#include "attitudeindicatorbackend.hpp"
+#include "bottombarbackend.hpp"
+#include "hsindicatorbackend.hpp"
+#include "hsindicatorbearingsbackend.hpp"
+#include "navinfobackend.hpp"
+#include "networkBackend/networkclient.hpp"
+#include "radioinfobackend.hpp"
+#include "winddatabackend.hpp"
 
 class QQmlContext;
 

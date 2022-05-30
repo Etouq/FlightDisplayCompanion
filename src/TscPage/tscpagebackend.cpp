@@ -1,7 +1,7 @@
-#include "tscpagebackend.h"
+#include "tscpagebackend.hpp"
 
-#include "../networkBackend/networkclient.h"
-#include "../aircraftManager/definitions/aircraftDefinition.h"
+#include "../networkBackend/networkclient.hpp"
+#include "../aircraftManager/definitions/aircraftDefinition.hpp"
 
 TscPageBackend::TscPageBackend(QObject *parent) : QObject(parent) {}
 

@@ -1,7 +1,7 @@
 #ifndef PROPDEFINITION_H
 #define PROPDEFINITION_H
 
-#include "gaugeDefinition.h"
+#include "gaugeDefinition.hpp"
 
 // used to allow for designated initialization
 struct RawPropDefinition

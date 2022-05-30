@@ -3,7 +3,7 @@
 
 #include <QVariant>
 
-#include "gaugeDefinition.h"
+#include "gaugeDefinition.hpp"
 
 // definition containing all parameters used to display engine data of an aircraft
 struct AircraftDefinition

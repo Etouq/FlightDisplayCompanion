@@ -1,4 +1,4 @@
-#include "settingscontroller.h"
+#include "settingscontroller.hpp"
 
 SettingsController::SettingsController()
 {

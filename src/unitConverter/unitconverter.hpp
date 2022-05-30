@@ -1,7 +1,7 @@
 #ifndef UNITCONVERTER_H
 #define UNITCONVERTER_H
 
-#include "units.h"
+#include "units.hpp"
 
 // provides conversion functions to allow for custom units
 class UnitConverter

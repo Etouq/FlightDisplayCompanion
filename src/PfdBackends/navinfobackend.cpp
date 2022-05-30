@@ -1,4 +1,4 @@
-#include "navinfobackend.h"
+#include "navinfobackend.hpp"
 
 navInfoBackend::navInfoBackend(QObject *parent) : QObject(parent)
 {

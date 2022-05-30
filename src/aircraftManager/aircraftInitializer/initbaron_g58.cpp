@@ -1,4 +1,4 @@
-#include "aircraftinitializer.h"
+#include "aircraftinitializer.hpp"
 
 AircraftDefinition AircraftInitializer::initBARON_G58()
 {

@@ -1,4 +1,4 @@
-#include "unitconverter.h"
+#include "unitconverter.hpp"
 
 void UnitConverter::convertToKgPerMin(double *value)
 {

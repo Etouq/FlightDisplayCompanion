@@ -1,5 +1,5 @@
-#include "dataIdentifiers.h"
-#include "networkclient.h"
+#include "dataIdentifiers.hpp"
+#include "networkclient.hpp"
 
 void NetworkClient::readInitData()
 {
