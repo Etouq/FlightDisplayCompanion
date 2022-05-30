@@ -31,5 +31,9 @@
 *.out
 *.app
 
-*.pro.user
+*.user
 *.qrc
+
+# output directories
+build/
+.cache/

@@ -1,0 +1,13 @@
+set(QT_MODULES
+    Qml
+    Quick
+    AndroidExtras
+    Network
+    Positioning
+    Location
+    Svg
+    Gui
+    Sql
+    QuickControls2
+    Concurrent
+)

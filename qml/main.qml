@@ -17,11 +17,11 @@ ApplicationWindow {
     property real scaleFactor: Math.min(Screen.width / 1920, Screen.height / 1200)
 
     FontLoader {
-        source: "qrc:/RobotoMono-VariableFont_wght.ttf"
+        source: "qrc:/fonts/RobotoMono-VariableFont_wght.ttf"
     }
 
     FontLoader {
-        source: "qrc:/RobotoMono-Bold.ttf"
+        source: "qrc:/fonts/RobotoMono-Bold.ttf"
     }
 
     SwipeView {

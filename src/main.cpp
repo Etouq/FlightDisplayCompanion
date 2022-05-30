@@ -47,7 +47,7 @@ int main(int argc, char *argv[])
     QGuiApplication app(argc, argv);
     QLocale::setDefault(QLocale::c());
     app.setOrganizationName("MKootstra");
-    app.setApplicationName("FlightDisplayCompanion");
+    //app.setApplicationName("FlightDisplayCompanion");
     app.setApplicationDisplayName("Flight Display Companion");
 
 
