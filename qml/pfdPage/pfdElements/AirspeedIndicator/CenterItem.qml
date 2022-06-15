@@ -50,7 +50,7 @@ Item {
         }
 
         Loader {
-            active: !iasInterface.noColor && iasInterface.minSpeed > 0
+            active: !iasInterface.noColor && iasInterface.minSpeed > 0.1
             sourceComponent: StartElement {
                 x: 168
                 transform: Translate {

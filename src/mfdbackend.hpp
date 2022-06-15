@@ -1,10 +1,11 @@
 #ifndef MFDBACKEND_H
 #define MFDBACKEND_H
 
+#include <QColor>
 #include <QGeoCoordinate>
 #include <QObject>
 #include <QVector>
-#include <QColor>
+
 
 struct FlightPlanWaypoint
 {
@@ -12,8 +13,9 @@ struct FlightPlanWaypoint
     int32_t alt1 = 0;
     int32_t alt2 = 0;
     QString ident = "";
-    int8_t wpType = 0;    // 0: airport, 1: intersection, 2: ndb, 3: user, 4: vor TODO: look into more types such as vor-dme etc
-    int8_t altType = 0;   // -1: none/invalid, 0: at, 1: at or below, 2: at or above, 3: between
+    int8_t wpType = 0;   // 0: airport, 1: intersection, 2: ndb, 3: user, 4: vor TODO: look into
+                         // more types such as vor-dme etc
+    int8_t altType = 0;  // -1: none/invalid, 0: at, 1: at or below, 2: at or above, 3: between
 };
 
 class NetworkClient;
@@ -38,9 +40,11 @@ class MfdBackend : public QObject
     Q_PROPERTY(QString eta READ eta NOTIFY etaChanged)
 
     Q_PROPERTY(QString planeIconPath READ planeIconPath NOTIFY planeIconPathChanged)
-    Q_PROPERTY(double planeIconScaleFactor READ planeIconScaleFactor WRITE setPlaneIconScaleFactor NOTIFY planeIconScaleFactorChanged)
+    Q_PROPERTY(double planeIconScaleFactor READ planeIconScaleFactor WRITE setPlaneIconScaleFactor NOTIFY
+                 planeIconScaleFactorChanged)
     Q_PROPERTY(QColor planeIconColor READ planeIconColor WRITE setPlaneIconColor NOTIFY planeIconColorChanged)
-    Q_PROPERTY(QColor planeIconBorderColor READ planeIconBorderColor WRITE setPlaneIconBorderColor NOTIFY planeIconBorderColorChanged)
+    Q_PROPERTY(QColor planeIconBorderColor READ planeIconBorderColor WRITE setPlaneIconBorderColor NOTIFY
+                 planeIconBorderColorChanged)
     Q_PROPERTY(int mapOrientationMode MEMBER d_mapOrientationMode NOTIFY mapOrientationModeChanged)
 
 
@@ -67,7 +71,7 @@ class MfdBackend : public QObject
     QColor d_planeIconColor = "white";
     QColor d_planeIconBorderColor = "black";
 
-    int d_mapOrientationMode = 0;   // 0: north up, 1: heading up, 2: track up
+    int d_mapOrientationMode = 0;  // 0: north up, 1: heading up, 2: track up
 
 
     static const QString d_defaultPlanePath;
@@ -82,9 +86,8 @@ class MfdBackend : public QObject
     static const QString d_heliIconPath;
 
 
-
-
 public:
+
     explicit MfdBackend(QObject *parent = nullptr);
 
     void connectSlots(NetworkClient *netClient);
@@ -112,15 +115,42 @@ public:
 
     Q_INVOKABLE void qmlClearFlightPlan();
 
-    Q_INVOKABLE void qmlAppendFpWaypoint(double lat, double lon, QString ident, int wpType, int alt1, int alt2, int altType);
+    Q_INVOKABLE void qmlAppendFpWaypoint(double lat,
+                                         double lon,
+                                         QString ident,
+                                         int wpType,
+                                         int alt1,
+                                         int alt2,
+                                         int altType);
 
-    Q_INVOKABLE void qmlInsertFpWaypoint(int idx, double lat, double lon, QString ident, int wpType, int alt1, int alt2, int altType);
+    Q_INVOKABLE void qmlInsertFpWaypoint(int idx,
+                                         double lat,
+                                         double lon,
+                                         QString ident,
+                                         int wpType,
+                                         int alt1,
+                                         int alt2,
+                                         int altType);
 
     Q_INVOKABLE void qmlDeleteFpWaypoint(int idx);
 
-    Q_INVOKABLE void qmlEditFpWaypoint(int idx, double lat, double lon, QString ident, int wpType, int alt1, int alt2, int altType);
+    Q_INVOKABLE void qmlEditFpWaypoint(int idx,
+                                       double lat,
+                                       double lon,
+                                       QString ident,
+                                       int wpType,
+                                       int alt1,
+                                       int alt2,
+                                       int altType);
 
-    Q_INVOKABLE void qmlDirectTo(double lat, double lon, QString ident, int wpType, int alt1, int alt2, int altType, int currAlt);
+    Q_INVOKABLE void qmlDirectTo(double lat,
+                                 double lon,
+                                 QString ident,
+                                 int wpType,
+                                 int alt1,
+                                 int alt2,
+                                 int altType,
+                                 int currAlt);
 
     Q_INVOKABLE const QString getIconPathAt(int idx) const;
     Q_INVOKABLE void selectIcon(int idx);
@@ -167,4 +197,4 @@ public slots:
     void updateZulu(int newValue);
 };
 
-#endif   // MFDBACKEND_H
+#endif  // MFDBACKEND_H

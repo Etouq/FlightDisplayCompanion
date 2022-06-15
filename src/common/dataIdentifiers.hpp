@@ -3,22 +3,23 @@
 
 #include <cstdint>
 
-enum class SharedServerIds : uint8_t
-{
-    // server identifier
-    SIMCONNECT_SERVER,
-    GAUGE_DESIGNER_SERVER,
-};
-
 enum class SimconnectIds : uint8_t
 {
+    // flightplan
+    CLEAR_FLIGHTPLAN,
+    FLIGHTPLAN_LIST,
+    // simconnect server
+    QUIT,
+    SIM_START_EVENT,
+    SIM_STOP_EVENT,
+    SIM_STARTUP_FAILED,
+    ERROR_MSG,
     // pfd
     // airspeed
     AIRSPEED,
     MAX_SPEED,
     TRUE_AIRSPEED,
     REF_SPEED,
-    AP_FLC,
     // altimeter
     ALTITUDE,
     RADAR_ALTITUDE,
@@ -30,25 +31,11 @@ enum class SimconnectIds : uint8_t
     // vert dev
     VERT_DEV_MODE,
     VERT_DEV_VALUE,
+    // attitude
+    ATTITUDE,
+    FD_ATTITUDE,
     // aoa
     ANGLE_OF_ATTACK,
-    // ap info
-    AP_AVAILABLE,
-    AP_LATERAL_ACTIVE,
-    AP_LATERAL_ARMED,
-    AP_STATUS,
-    AP_YD_STATUS,
-    AP_FD_STATUS,
-    AP_VERTICAL_ACTIVE,
-    AP_MODE_REFERENCE,
-    AP_ARMED,
-    AP_ARMED_REFERENCE,
-    // attitude
-    BANK,
-    PITCH,
-    SLIPSKID,
-    FD_BANK,
-    FD_PITCH,
     // bottombar
     ZULU_SECONDS,
     LOCAL_SECONDS,
@@ -86,16 +73,14 @@ enum class SimconnectIds : uint8_t
     ADF_RADIAL,
     // nav info
     GPS_IS_ACTIVE_FLIGHTPLAN,
+    LEG_IS_DIRECT_TO,
     CURRENT_LEG_TO,
     CURRENT_LEG_FROM,
-    LEG_IS_DIRECT_TO,
-    CURRENT_LEG_DISTANCE,
-    CURRENT_LEG_BEARING,
     // radio info
-    HAS_COM1,
-    HAS_COM2,
-    HAS_NAV1,
-    HAS_NAV2,
+    COM1_AVAIL,
+    COM2_AVAIL,
+    NAV1_AVAIL,
+    NAV2_AVAIL,
     COM1_FREQ,
     COM2_FREQ,
     NAV1_FREQ,
@@ -110,21 +95,26 @@ enum class SimconnectIds : uint8_t
     WIND_DIRECTION,
     WIND_STRENGTH,
     WIND_TRUE_DIRECTION,
+    // ap info
+    AP_AVAILABLE,
+    AP_LATERAL_ACTIVE,
+    AP_LATERAL_ARMED,
+    AP_STATUS,
+    AP_YD_STATUS,
+    AP_FD_STATUS,
+    AP_FLC,
+    AP_VERTICAL_ACTIVE,
+    AP_MODE_REFERENCE,
+    AP_ARMED,
+    AP_ARMED_REFERENCE,
     // mfd
     COORDINATES,
     TRUE_HEADING,
     GPS_WP_DTK,
     GPS_WP_ETE,
     GPS_ETE,
-    // flightplan
-    CLEAR_FLIGHTPLAN,
-    FLIGHTPLAN_LIST,
-    // simconnect server
-    QUIT,
-    SIM_START_EVENT,
-    SIM_STOP_EVENT,
-    SIM_STARTUP_FAILED,
-    ERROR_STRING,
+    FUEL_LEFT_QTY,
+    FUEL_RIGHT_QTY,
     // engine (indexed)
     ENGINE_N1,
     ENGINE_N2,
@@ -138,13 +128,11 @@ enum class SimconnectIds : uint8_t
     ENGINE_EGT,
     ENGINE_OIL_TEMP,
     ENGINE_OIL_PRESS,
-    FUEL_LEFT_QTY,
-    FUEL_RIGHT_QTY,
-    // misc ed
-    APU_RPM_PCT,
+    // misc engine display
+    APU_N1,
     FUEL_TEXT_DATA,
-    SPOILERS_PCT,
     FLAPS_ANGLE,
+    SPOILERS_PCT,
     ELEV_TRIM_PCT,
     RUDD_TRIM_PCT,
     AIL_TRIM_PCT,
@@ -161,40 +149,20 @@ enum class ClientToServerIds : uint8_t
     SIM_COMMANDS
 };
 
-
-enum class HsiNavSource : uint8_t
+enum class SimCommandId : uint8_t
 {
-    NONE,
-    GPS,
-    VOR1,
-    LOC1,
-    TCN1,
-    VOR2,
-    LOC2,
-    TCN2
-};
-
-enum class VerticalDeviationMode : uint8_t
-{
-    NONE,
-    VDI,
-    GS,
-    GP,
-    GSPREVIEW
-};
-
-enum AircraftType : uint8_t
-{
-    JET,
-    PROP,
-    TURBOPROP
-};
-
-enum TemperatureGaugeType : uint8_t
-{
-    EGT,
-    ITT,
-    CHT
+    SET_COM1_FREQ,
+    SET_COM2_FREQ,
+    SET_COM3_FREQ,
+    SWAP_COM1,
+    SWAP_COM2,
+    SWAP_COM3,
+    SET_NAV1_FREQ,
+    SET_NAV2_FREQ,
+    SWAP_NAV1,
+    SWAP_NAV2,
+    SET_XPDR_STATE,
+    SET_XPDR_CODE
 };
 
 

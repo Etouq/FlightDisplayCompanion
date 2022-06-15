@@ -6,6 +6,8 @@
 #include <QtAndroid>
 #include <QQmlApplicationEngine>
 #include <QAndroidJniEnvironment>
+#include <qqml.h>
+#include <qqmlengine.h>
 
 #include "PfdBackends/pfdmanager.hpp"
 #include "aircraftManager/aircraftmanager.hpp"
@@ -16,6 +18,9 @@
 #include "settings/settingscontroller.hpp"
 #include "settings/settingsinterface.hpp"
 #include "TscPage/tscpagebackend.hpp"
+
+#include "pages/PfdPage/AirspeedIndicator/AirspeedIndicator.hpp"
+#include "io/NetworkClient/NetworkClient.hpp"
 
 void keep_screen_on(bool on) {
     QtAndroid::runOnAndroidThread([on]{
@@ -71,6 +76,24 @@ int main(int argc, char *argv[])
     keep_screen_on(true);
 
     SettingsController::init();
+
+
+    io::network::NetworkClient networkClient;
+
+    pages::pfd::AirspeedIndicator airspeedIndicator(&networkClient);
+
+    qmlRegisterSingletonInstance("Pfd.Airspeed", 1, 0, "AirspeedIndicator", &airspeedIndicator);
+
+
+
+
+
+
+
+
+
+
+
 
     PfdManager pfdInterfaceManager;
     GaugeManager gaugeManager;

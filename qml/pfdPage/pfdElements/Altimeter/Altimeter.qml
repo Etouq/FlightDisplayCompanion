@@ -33,9 +33,9 @@ Item {
 
     Rectangle {
         x: 48
-        y: Math.min(altInterface.altitudeTrendValue * 0.96 + 96, 336)
+        y: Math.min(altInterface.altitudeTrendValue, 240)
         width: 7.68
-        height: Math.abs(altInterface.altitudeTrendValue * 0.96 - 240)
+        height: Math.abs(altInterface.altitudeTrendValue - 240)
         color: "#d12bc7"
     }
 
