@@ -5,8 +5,6 @@
 #include <QObject>
 #include <QString>
 #include <QTimer>
-#include <qtimer.h>
-
 
 namespace pages::tsc
 {
@@ -23,7 +21,9 @@ public:
     explicit FlightTmr(QObject *parent = nullptr)
       : QObject(parent)
     {
-        d_timer.setInterval(1000);
+        // set interval too fast to account for 5% interval inaccuracy in QTimer (so we don't miss an update one second
+        // because we are a little too early)
+        d_timer.setInterval(200);
         connect(&d_timer, &QTimer::interval, this, &FlightTmr::update);
     }
 
@@ -49,34 +49,43 @@ public:
 
     Q_INVOKABLE void start()
     {
+        d_running = true;
+
         // reset last measured time so it doesn't include any paused time
-        d_lastMeasuredTime =
-          duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now().time_since_epoch()).count();
+        d_lastStartTime = std::chrono::steady_clock::now();
 
-        // start on the next whole second
-        QTimer::singleShot(std::abs(d_currentValue % 1000), &d_timer, qOverload<>(&QTimer::start));
-        QTimer::singleShot(std::abs(d_currentValue % 1000), this, &FlightTmr::update);
+        // start on next whole 200ms portion to align update timer with when next second occurs (+5% inaccuracy)
+        QTimer::singleShot(std::abs((d_currentValue + 10) % 200), this, &FlightTmr::startTimer);
     }
 
-    // for when the timer has been offscreen but not paused/stopped
-    Q_INVOKABLE void startWithoutTimerReset()
+    // called when the timer has been offscreen but not paused/stopped
+    Q_INVOKABLE void movedOnscreen()
     {
-        // start on the next whole second
-        QTimer::singleShot(std::abs(d_currentValue % 1000), &d_timer, qOverload<>(&QTimer::start));
-        QTimer::singleShot(std::abs(d_currentValue % 1000), this, &FlightTmr::update);
+        d_onscreen = true;
+
+        if (d_running)
+        {
+            // start on next whole 200ms portion to align update timer with when next second occurs (+5% inaccuracy)
+            QTimer::singleShot(std::abs((d_currentValue + 10) % 200), this, &FlightTmr::startTimer);
+
+            update();  // just make sure we update right away for up to date ui
+        }
     }
 
-    // for when the timer is only moved offscreen (used so we don't update the timer unnecessarily)
-    Q_INVOKABLE void stopWithoutTimerReset()
+    // called when the timer is moved offscreen so we don't update the timer when it's not visible
+    Q_INVOKABLE void movedOffscreen()
     {
+        d_onscreen = false;
         d_timer.stop();
     }
 
+    // called when user explicitly presses stop
     Q_INVOKABLE void stop()
     {
+        d_running = false;
         d_timer.stop();
 
-        update(); // to deal with fractional seconds etc
+        update();  // deal with partial seconds (for when some smartass keeps pushing start and stop quickly)
     }
 
     Q_INVOKABLE void reset()
@@ -99,15 +108,21 @@ private slots:
 
     void update();
 
-private:
+    void startTimer()
+    {
+        if (d_running && d_onscreen)
+        {
+            d_timer.start();
+            update();
+        }
+    }
 
-    int d_baseTime = 0;   // number of seconds entered
-    int d_beginTime = 0;  // time when counting started
-    int d_initialValue = 0;
+private:
 
     int64_t d_inputTime = 0;  // originally input time, negative for counting down, positive for counting up
 
-    int64_t d_lastMeasuredTime = 0;  // used to measure elapsed time to account for inaccuracy in QTimer
+    // used to measure time since timer was last started to account for inaccuracies
+    std::chrono::time_point<std::chrono::steady_clock> d_lastStartTime;
 
     int64_t d_currentValue = 0;  // number of ms, negative for counting down, positive for counting up
 
@@ -115,6 +130,9 @@ private:
 
     QString d_timeString = "00:00:00";
     bool d_countingDown = false;
+
+    bool d_running = false;
+    bool d_onscreen = false;
 };
 
 }  // namespace pages::tsc

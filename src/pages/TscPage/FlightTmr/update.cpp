@@ -1,15 +1,13 @@
 #include "FlightTmr.hpp"
 
+using namespace std::chrono;
+
 namespace pages::tsc
 {
 
 void FlightTmr::update()
 {
-    uint64_t currTime =
-      duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now().time_since_epoch()).count();
-
-    d_currentValue += currTime - d_lastMeasuredTime;
-    d_lastMeasuredTime = currTime;
+    d_currentValue = duration_cast<milliseconds>(steady_clock::now() - d_lastStartTime).count();
 
     if (d_currentValue >= 0 && d_countingDown)
     {
