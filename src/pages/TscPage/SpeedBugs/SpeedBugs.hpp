@@ -6,11 +6,6 @@
 #include <QSet>
 #include "common/definitions/baseTypes.hpp"
 
-namespace io::network
-{
-class NetworkClient;
-}
-
 namespace pages::tsc
 {
 
@@ -61,6 +56,26 @@ public:
     {
         d_speedBugs.append({ speed, designator });
         emit speedBugsChanged();
+    }
+    Q_INVOKABLE void removeSpeedBug(int idx)
+    {
+        d_speedBugs.removeAt(idx);
+
+        QList<int> activeIds(d_activeSpeedBugIds.constBegin(), d_activeSpeedBugIds.constEnd());
+
+        d_activeSpeedBugIds.clear();
+
+        for (int index : activeIds)
+        {
+            if (index < idx)
+                d_activeSpeedBugIds.insert(index);
+            else if (index > idx)
+                d_activeSpeedBugIds.insert(index - 1);
+
+        }
+
+        emit speedBugsChanged();
+        emit activeSpeedBugsChanged();
     }
 
     Q_INVOKABLE QList<int> getActiveIds() const
