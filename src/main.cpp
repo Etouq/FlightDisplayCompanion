@@ -22,6 +22,8 @@
 #include "pages/PfdPage/AirspeedIndicator/AirspeedIndicator.hpp"
 #include "io/NetworkClient/NetworkClient.hpp"
 
+#include "common/typeEnums.hpp"
+
 void keep_screen_on(bool on) {
     QtAndroid::runOnAndroidThread([on]{
         QAndroidJniObject activity = QtAndroid::androidActivity();
@@ -84,11 +86,12 @@ int main(int argc, char *argv[])
 
     qmlRegisterSingletonInstance("Pfd.Airspeed", 1, 0, "AirspeedIndicator", &airspeedIndicator);
 
-
-
-
-
-
+    qRegisterMetaType<QmlHsiNavSource>("QmlHsiNavSource");
+    qRegisterMetaType<QmlVerticalDeviationMode>("QmlVerticalDeviationMode");
+    qRegisterMetaType<QmlTransponderState>("QmlTransponderState");
+    qmlRegisterUncreatableType<QmlHsiNavSourceClass>("TypeEnums", 1, 0, "HsiNavSource", "Not creatable as it is an enum type");
+    qmlRegisterUncreatableType<QmlVerticalDeviationModeClass>("TypeEnums", 1, 0, "VerticalDeviationMode", "Not creatable as it is an enum type");
+    qmlRegisterUncreatableType<QmlTransponderStateClass>("TypeEnums", 1, 0, "TransponderState", "Not creatable as it is an enum type");
 
 
 

@@ -31,7 +31,7 @@ class HSIndicator : public QObject
     Q_PROPERTY(double crossTrackError READ crossTrackError NOTIFY crossTrackErrorChanged)
 
     Q_PROPERTY(bool displayDeviation READ displayDeviation NOTIFY displayDeviationChanged)
-    Q_PROPERTY(HsiNavSource navSource READ navSource NOTIFY navSourceChanged)
+    Q_PROPERTY(QmlHsiNavSource navSource READ navSource NOTIFY navSourceChanged)
     Q_PROPERTY(double currentTrackAngle READ currentTrackAngle NOTIFY currentTrackAngleChanged)
 
     Q_PROPERTY(int toFrom READ toFrom NOTIFY toFromChanged)
@@ -90,9 +90,9 @@ public:
         return d_displayDeviation;
     }
 
-    HsiNavSource navSource() const
+    QmlHsiNavSource navSource() const
     {
-        return d_navSource;
+        return static_cast<QmlHsiNavSource>(d_navSource);
     }
 
     double currentTrackAngle() const

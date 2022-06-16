@@ -32,7 +32,7 @@ class Altimeter : public QObject
 
     Q_PROPERTY(double pressure READ pressure NOTIFY pressureChanged)
 
-    Q_PROPERTY(VerticalDeviationMode vertDevMode READ vertDevMode NOTIFY vertDevModeChanged)
+    Q_PROPERTY(QmlVerticalDeviationMode vertDevMode READ vertDevMode NOTIFY vertDevModeChanged)
     Q_PROPERTY(double vertDevTransformValue READ vertDevTransformValue NOTIFY vertDevTransformValueChanged)
 
     Q_PROPERTY(double altitudeTrendValue READ altitudeTrendValue NOTIFY altitudeTrendValueChanged)
@@ -91,9 +91,9 @@ public:
         return d_pressure;
     }
 
-    VerticalDeviationMode vertDevMode() const
+    QmlVerticalDeviationMode vertDevMode() const
     {
-        return d_vertDevMode;
+        return static_cast<QmlVerticalDeviationMode>(d_vertDevMode);
     }
 
     double vertDevTransformValue() const

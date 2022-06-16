@@ -38,7 +38,7 @@ class NavCom : public QObject
 
     // Q_PROPERTY(bool xpdrAvail READ xpdrAvail NOTIFY xpdrAvailChanged)
     Q_PROPERTY(int xpdrCode READ xpdrCode WRITE setXpdrCode NOTIFY xpdrCodeChanged)
-    Q_PROPERTY(TransponderState xpdrState READ xpdrState WRITE setXpdrState NOTIFY xpdrStateChanged)
+    Q_PROPERTY(QmlTransponderState xpdrState READ xpdrState WRITE setXpdrState NOTIFY xpdrStateChanged)
 
 public:
 
@@ -80,7 +80,7 @@ public:
     }
 
     void setXpdrCode(int newCode);
-    void setXpdrState(TransponderState newState);
+    void setXpdrState(QmlTransponderState newState);
 
     bool com1Avail() const
     {
@@ -162,9 +162,9 @@ public:
         return d_xpdrCode;
     }
 
-    TransponderState xpdrState() const
+    QmlTransponderState xpdrState() const
     {
-        return d_xpdrState;
+        return static_cast<QmlTransponderState>(d_xpdrState);
     }
 
 signals:
