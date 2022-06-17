@@ -35,7 +35,7 @@ private:
     {}
 };
 
-using ConnectionState = ConnectionStateClass::ConnectionStateEnum;
+typedef ConnectionStateClass::ConnectionStateEnum ConnectionState;
 
 class NetworkClient : public QObject
 {
@@ -43,10 +43,8 @@ class NetworkClient : public QObject
 
     QTcpSocket d_socket;
 
-    const uint8_t c_simCommunicationVersion = 3;
-    const uint8_t c_designerCommunicationVersion = 3;
+    static constexpr uint8_t s_communicationVersion = 3;
 
-    bool d_serverIsSim = false;
 
     // qml
     QString d_address = "";
@@ -78,34 +76,31 @@ public:
     {
         return d_connectionState;
     }
-    Q_INVOKABLE bool serverIsSim() const
-    {
-        return d_serverIsSim;
-    }
 
     Q_INVOKABLE void connectToServer(const QString &address, uint port);
 
     Q_INVOKABLE void disconnectFromServer();
 
 public slots:
-    // sim
+
     void startSim(const QByteArray &data);
-    void changeAircraft(const QByteArray &data);
+    void loadAircraft(const QByteArray &data);
     void sendCommandString(const QByteArray &commandString);
 
 
 private slots:
-    void readInitData();
-    void readDesignerData();
+
+    void verifyConnectionVersion();
+
     void readSimData();
 
     void socketStateChanged(QAbstractSocket::SocketState state);
     void socketErrorOccurred(QAbstractSocket::SocketError error);
 
 signals:
+
     // qml
     void connectionStateChanged(ConnectionState state);
-    void serverIsSimChanged(bool serverIsSim);
 
     void newErrorMessage(const QString &msg);
 
