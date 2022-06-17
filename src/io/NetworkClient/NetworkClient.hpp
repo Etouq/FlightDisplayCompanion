@@ -93,7 +93,6 @@ public slots:
     void changeAircraft(const QByteArray &data);
     void sendCommandString(const QByteArray &commandString);
 
-    // designer
 
 private slots:
     void readInitData();
@@ -119,9 +118,6 @@ signals:
     void clearFlightplanReceived();
     void receivedFlightplan(const QList<FlightPlanWaypoint> &wpList);
 
-    // designer
-
-
 
     // mfd
     void coordinatesChanged(const QGeoCoordinate &newCoord);
@@ -129,6 +125,7 @@ signals:
     void gpsWpDtkChanged(double newValue);
     void gpsWpEteChanged(int newValue);
     void gpsEteChanged(int newValue);
+
     void fuelLeftQtyChanged(double newValue);
     void fuelRightQtyChanged(double newValue);
 

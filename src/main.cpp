@@ -1,147 +1,54 @@
+#include "main.hpp"
+
+#include "io/NetworkClient/NetworkClient.hpp"
+#include "pages/MfdPage/MfdPage.hpp"
+#include "pages/PfdPage/PfdPage.hpp"
+#include "pages/TscPage/TscPage.hpp"
+
 #include <QGuiApplication>
 #include <QLocale>
-#include <QQmlContext>
-#include <QQuickView>
 #include <QSurfaceFormat>
-#include <QtAndroid>
-#include <QQmlApplicationEngine>
-#include <QAndroidJniEnvironment>
-#include <qqml.h>
-#include <qqmlengine.h>
+#include <QFontDatabase>
 
-#include "PfdBackends/pfdmanager.hpp"
-#include "aircraftManager/aircraftmanager.hpp"
-#include "gaugeBackends/gaugemanager.hpp"
-#include "mfdbackend.hpp"
-#include "networkBackend/networkclient.hpp"
-#include "networkBackend/networkinterface.hpp"
-#include "settings/settingscontroller.hpp"
-#include "settings/settingsinterface.hpp"
-#include "TscPage/tscpagebackend.hpp"
-
-#include "pages/PfdPage/AirspeedIndicator/AirspeedIndicator.hpp"
-#include "io/NetworkClient/NetworkClient.hpp"
-
-#include "common/typeEnums.hpp"
-
-void keep_screen_on(bool on) {
-    QtAndroid::runOnAndroidThread([on]{
-        QAndroidJniObject activity = QtAndroid::androidActivity();
-        if (activity.isValid()) {
-            QAndroidJniObject window =
-              activity.callObjectMethod("getWindow", "()Landroid/view/Window;");
-
-            if (window.isValid()) {
-                const int FLAG_KEEP_SCREEN_ON = 128;
-                if (on) {
-                    window.callMethod<void>("addFlags", "(I)V", FLAG_KEEP_SCREEN_ON);
-                } else {
-                    window.callMethod<void>("clearFlags", "(I)V", FLAG_KEEP_SCREEN_ON);
-                }
-            }
-        }
-        QAndroidJniEnvironment env;
-        if (env->ExceptionCheck()) {
-            env->ExceptionClear();
-        }
-    });
-}
 
 int main(int argc, char *argv[])
 {
-
-
+    // initialize application
     QGuiApplication app(argc, argv);
-    QLocale::setDefault(QLocale::c());
-    app.setOrganizationName("MKootstra");
-    //app.setApplicationName("FlightDisplayCompanion");
-    app.setApplicationDisplayName("Flight Display Companion");
+    QGuiApplication::setOrganizationName("nl.Etouq");
+    QGuiApplication::setApplicationName("FlightDisplayCompanion");
+    QGuiApplication::setApplicationDisplayName("Flight Display Companion");
 
+    QLocale::setDefault(QLocale::c());
+
+    // add roboto font
+    QFontDatabase::addApplicationFont("qrc:/fonts/RobotoMono-VariableFont_wght.ttf");
 
     QSurfaceFormat format;
     format.setSamples(8);
     QSurfaceFormat::setDefaultFormat(format);
 
+    // prevent screen from turning off
+    keepScreenOn(true);
 
-    QtAndroid::requestPermissionsSync({ "android.permission.WRITE_EXTERNAL_STORAGE", "android.permission.READ_EXTERNAL_STORAGE" });
+    // register enums so they can be used in qml
+    registerQmlEnums();
 
-    if (QtAndroid::checkPermission("android.permission.WRITE_EXTERNAL_STORAGE") == QtAndroid::PermissionResult::Denied
-        || QtAndroid::checkPermission("android.permission.READ_EXTERNAL_STORAGE") == QtAndroid::PermissionResult::Denied)
-    {
-        QQmlApplicationEngine engine;
-        QObject::connect(&engine, &QQmlEngine::quit, &app, &QGuiApplication::quit);
-        engine.load("qrc:/deniedAccessDialog.qml");
-        app.exec();
-        return -1;
-    }
-
-    keep_screen_on(true);
-
-    SettingsController::init();
-
-
+    // create data managers before the engine (so they outlive it)
     io::network::NetworkClient networkClient;
 
-    pages::pfd::AirspeedIndicator airspeedIndicator(&networkClient);
+    // initialize pages
+    pages::mfd::MfdPage mfdPage(&networkClient);
+    pages::pfd::PfdPage pfdPage(&networkClient);
+    pages::tsc::TscPage tscPage(&networkClient);
 
-    qmlRegisterSingletonInstance("Pfd.Airspeed", 1, 0, "AirspeedIndicator", &airspeedIndicator);
-
-    qRegisterMetaType<QmlHsiNavSource>("QmlHsiNavSource");
-    qRegisterMetaType<QmlVerticalDeviationMode>("QmlVerticalDeviationMode");
-    qRegisterMetaType<QmlTransponderState>("QmlTransponderState");
-    qmlRegisterUncreatableType<QmlHsiNavSourceClass>("TypeEnums", 1, 0, "HsiNavSource", "Not creatable as it is an enum type");
-    qmlRegisterUncreatableType<QmlVerticalDeviationModeClass>("TypeEnums", 1, 0, "VerticalDeviationMode", "Not creatable as it is an enum type");
-    qmlRegisterUncreatableType<QmlTransponderStateClass>("TypeEnums", 1, 0, "TransponderState", "Not creatable as it is an enum type");
-
-
-
-
-
-
-    PfdManager pfdInterfaceManager;
-    GaugeManager gaugeManager;
-    MfdBackend mfdInterface;
-    AircraftManager planeManager;
-    NetworkClient netClient;
-    NetworkInterface netInterface;
-    SettingsInterface settingsInterface;
-    TscPageBackend tscBackend;
-
-
-    pfdInterfaceManager.connectPfdSlots(&netClient);
-    gaugeManager.connectSlots(&netClient);
-    mfdInterface.connectSlots(&netClient);
-    planeManager.connectSlots(&netClient);
-    QObject::connect(&planeManager, &AircraftManager::updateAircraft, &gaugeManager, &GaugeManager::changeAircraft);
-    QObject::connect(&planeManager, &AircraftManager::updateAircraft, &pfdInterfaceManager, &PfdManager::changeAircraft);
-    QObject::connect(&planeManager, &AircraftManager::updateAircraft, &tscBackend, &TscPageBackend::changeAircraft);
-    netClient.connectInterfaceSignals(&netInterface);
-    tscBackend.connectTscSlots(&netClient);
-
-    QObject::connect(&settingsInterface, &SettingsInterface::temperatureUnitChanged, pfdInterfaceManager.getBottomInterface(), &BottombarBackend::updateTemperatureUnit);
-
-
-    planeManager.initialize();
-    mfdInterface.loadFlightplan();
+    // add networkclient to qml as singleton
+    qmlRegisterSingletonInstance("IO.Network", 1, 0, "NetworkClient", &networkClient);
 
 
     QQmlApplicationEngine engine;
 
-
-    gaugeManager.addGaugesToContext(engine.rootContext());
-    pfdInterfaceManager.addPfdToContext(engine.rootContext());
-
-    engine.rootContext()->setContextProperty("aircraftInterface", &planeManager);
-    engine.rootContext()->setContextProperty("netInterface", &netInterface);
-    engine.rootContext()->setContextProperty("mfdInterface", &mfdInterface);
-    engine.rootContext()->setContextProperty("settingsInterface", &settingsInterface);
-    engine.rootContext()->setContextProperty("tscBackend", &tscBackend);
-
-
     engine.load("qrc:/main.qml");
 
-    int ret = app.exec();
-    mfdInterface.saveFlightplan();
-
-    return ret;
+    return app.exec();
 }
