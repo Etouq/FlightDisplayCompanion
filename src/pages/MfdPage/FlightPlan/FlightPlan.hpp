@@ -149,11 +149,9 @@ public slots:
         emit flightplanChanged();
     }
 
-    void receivedFlightplan(const QList<FlightPlanWaypoint> &wpList);
-
-    void addWaypoint(const FlightPlanWaypoint &wp)
+    void receivedFlightplan(const QList<FlightPlanWaypoint> &wpList)
     {
-        d_waypoints.append(wp);
+        d_waypoints = wpList;
         emit flightplanChanged();
     }
 

@@ -6,10 +6,10 @@
 #include "mfdbackend.hpp"
 #include "../AircraftConfig.hpp"
 #include "../definitions/baseTypes.hpp"
+#include "pages/MfdPage/FlightPlan/FlightPlanWaypoint.hpp"
 
 #include <QByteArray>
 #include <QIODevice>
-#include <stdint.h>
 
 #include <type_traits>
 
@@ -39,6 +39,12 @@ namespace Converters
 }
 
 [[nodiscard]] inline QByteArray convert(const FlightPlanWaypoint &wp)
+{
+    return convert(wp.position.latitude()) + convert(wp.position.longitude()) + convert(wp.alt1) + convert(wp.alt2)
+      + convert(wp.ident) + convert(wp.wpType) + convert(wp.altType);
+}
+
+[[nodiscard]] inline QByteArray convert(const pages::mfd::FlightPlanWaypoint &wp)
 {
     return convert(wp.position.latitude()) + convert(wp.position.longitude()) + convert(wp.alt1) + convert(wp.alt2)
       + convert(wp.ident) + convert(wp.wpType) + convert(wp.altType);
@@ -126,17 +132,36 @@ inline void convert(QIODevice &data, FlightPlanWaypoint &val)
     val.position = QGeoCoordinate(convert<double>(data), convert<double>(data));
     convert(data, val.alt1);
     convert(data, val.alt2);
+    val.ident = convert<QString>(data);
     convert(data, val.wpType);
     convert(data, val.altType);
-    val.ident = convert<QString>(data);
 }
 
 template<class T>
 requires std::is_same_v<T, FlightPlanWaypoint>
-
 [[nodiscard]] inline FlightPlanWaypoint convert(QIODevice &data)
 {
     FlightPlanWaypoint ret;
+    convert(data, ret);
+    return ret;
+}
+
+
+inline void convert(QIODevice &data, pages::mfd::FlightPlanWaypoint &val)
+{
+    val.position = QGeoCoordinate(convert<double>(data), convert<double>(data));
+    convert(data, val.alt1);
+    convert(data, val.alt2);
+    val.ident = convert<QString>(data);
+    convert(data, val.wpType);
+    convert(data, val.altType);
+}
+
+template<class T>
+requires std::is_same_v<T, pages::mfd::FlightPlanWaypoint>
+[[nodiscard]] inline pages::mfd::FlightPlanWaypoint convert(QIODevice &data)
+{
+    pages::mfd::FlightPlanWaypoint ret;
     convert(data, ret);
     return ret;
 }
