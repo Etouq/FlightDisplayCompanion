@@ -25,8 +25,11 @@ class MiscEngineDataElement : public QObject
     Q_PROPERTY(bool showFlapsText READ showFlapsText NOTIFY showFlapsTextChanged)
 
     Q_PROPERTY(double elevTrimTransformValue READ elevTrimTransformValue NOTIFY elevTrimTransformValueChanged)
+    Q_PROPERTY(double elevTrimValue READ elevTrimValue NOTIFY elevTrimValueChanged)
     Q_PROPERTY(double rudderTrimTransformValue READ rudderTrimTransformValue NOTIFY rudderTrimTransformValueChanged)
+    Q_PROPERTY(double rudderValue READ rudderValue NOTIFY rudderValueChanged)
     Q_PROPERTY(double aileronTrimTransformValue READ aileronTrimTransformValue NOTIFY aileronTrimTransformValueChanged)
+    Q_PROPERTY(double aileronValue READ aileronValue NOTIFY aileronValueChanged)
 
     // fuel text
     float d_fuelRange = -1;
@@ -36,6 +39,7 @@ class MiscEngineDataElement : public QObject
     bool d_hasApu = false;
 
     bool d_hasEgt = false;
+    bool d_hasSingleTank = false;
 
     // flaps\spoilers
     static constexpr double d_spoilersMaxAngle = -60;
@@ -51,10 +55,13 @@ class MiscEngineDataElement : public QObject
     // trims
     bool d_hasElevatorTrim = false;
     double d_elevTrimTransformValue = 0;
+    double d_elevTrimValue = 0;
     bool d_hasRudderTrim = false;
     double d_rudderTrimTransformValue = 0;
+    double d_rudderTrimValue = 0;
     bool d_hasAileronTrim = false;
     double d_aileronTrimTransformValue = 0;
+    double d_aileronTrimValue = 0;
 
     // private
     double d_smoothedSpeed = 0;
@@ -103,6 +110,11 @@ public:
     Q_INVOKABLE bool hasEgt() const
     {
         return d_hasEgt;
+    }
+
+    Q_INVOKABLE bool hasSingleTank() const
+    {
+        return d_hasSingleTank;
     }
 
     Q_INVOKABLE bool hasSpoilers() const
@@ -188,14 +200,29 @@ public:
         return d_elevTrimTransformValue;
     }
 
+    double elevTrimValue() const
+    {
+        return d_elevTrimValue;
+    }
+
     double rudderTrimTransformValue() const
     {
         return d_rudderTrimTransformValue;
     }
 
+    double rudderTrimValue() const
+    {
+        return d_rudderTrimValue;
+    }
+
     double aileronTrimTransformValue() const
     {
         return d_aileronTrimTransformValue;
+    }
+
+    double aileronTrimValue() const
+    {
+        return d_aileronTrimValue;
     }
 
 signals:
@@ -214,8 +241,11 @@ signals:
     void showFlapsTextChanged();
 
     void elevTrimTransformValueChanged();
+    void elevTrimValueChanged();
     void rudderTrimTransformValueChanged();
+    void rudderTrimValueChanged();
     void aileronTrimTransformValueChanged();
+    void aileronTrimValueChanged();
 
     void redrawNeeded();
 

@@ -1,6 +1,7 @@
 #include "MfdPage.hpp"
 #include "io/NetworkClient/NetworkClient.hpp"
-#include "pages/MfdPage/GaugeElement/GaugeElement.hpp"
+#include "GaugeElement/GaugeElement.hpp"
+#include <QQmlEngine>
 
 using io::network::NetworkClient;
 
@@ -9,8 +10,28 @@ namespace pages::mfd
 
 MfdPage::MfdPage(NetworkClient *networkClient, QObject *parent)
   : QObject(parent),
-    d_networkClient(networkClient)
+    d_networkClient(networkClient),
+    d_geoMap(networkClient),
+    d_fpl(networkClient)
 {
+    qmlRegisterSingletonInstance("Mfd.GeoMap", 1, 0, "GeoMap", &d_geoMap);
+    qmlRegisterSingletonInstance("Mfd.Flightplan", 1, 0, "Flightplan", &d_fpl);
+    qmlRegisterSingletonInstance("Mfd.Engine", 1, 0, "EngineMisc", &d_miscEngineData);
+    qmlRegisterUncreatableType<GaugeElement>("Mfd.Engine", 1, 0, "GaugeData", "Bad Boy");
+    qmlRegisterUncreatableType<GaugeEngine>("Mfd.Engine", 1, 0, "GaugeEngine", "Bad Boy");
+    qmlRegisterSingletonInstance("Mfd", 1, 0, "MfdRoot", this);
+
+    QQmlEngine::setObjectOwnership(&d_gauge1, QQmlEngine::CppOwnership);
+    QQmlEngine::setObjectOwnership(&d_gauge2, QQmlEngine::CppOwnership);
+    QQmlEngine::setObjectOwnership(&d_gauge3, QQmlEngine::CppOwnership);
+    QQmlEngine::setObjectOwnership(&d_gauge4, QQmlEngine::CppOwnership);
+    QQmlEngine::setObjectOwnership(&d_fuelQtyGauge, QQmlEngine::CppOwnership);
+    QQmlEngine::setObjectOwnership(&d_fuelFlowGauge, QQmlEngine::CppOwnership);
+    QQmlEngine::setObjectOwnership(&d_oilTempGauge, QQmlEngine::CppOwnership);
+    QQmlEngine::setObjectOwnership(&d_egtGauge, QQmlEngine::CppOwnership);
+    QQmlEngine::setObjectOwnership(&d_oilPressGauge, QQmlEngine::CppOwnership);
+    QQmlEngine::setObjectOwnership(&d_miscEngineData, QQmlEngine::CppOwnership);
+
     // connect signals and slots
     connect(d_networkClient,
             &NetworkClient::fuelLeftQtyChanged,

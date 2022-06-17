@@ -8,16 +8,16 @@ void Bottombar::createTempString(QString &str, float temperature) const
 {
     switch (d_tempUnit)
     {
-        case 1:
+        case Units::FAHRENHEIT:
             str = QString::number(std::lround(temperature * 1.8 + 32.0)) + "ºF";
             break;
-        case 2:
+        case Units::KELVIN:
             str = QString::number(std::lround(temperature + 273.15)) + "K";
             break;
-        case 3:
+        case Units::RANKINE:
             str = QString::number(std::lround((temperature + 273.15) * 1.8)) + "ºR";
             break;
-        case 0: [[likely]]
+        case Units::CELSIUS: [[likely]]
         default:
             str = QString::number(std::lround(temperature)) + "ºC";
             break;

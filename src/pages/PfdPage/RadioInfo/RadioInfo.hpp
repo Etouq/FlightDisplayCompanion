@@ -17,10 +17,10 @@ class RadioInfo : public QObject
 
     Q_PROPERTY(bool com1Avail READ com1Avail NOTIFY com1AvailChanged)
     Q_PROPERTY(bool com2Avail READ com2Avail NOTIFY com2AvailChanged)
-    // Q_PROPERTY(bool com3Avail READ com3Avail NOTIFY com3AvailChanged)
+    Q_PROPERTY(bool com3Avail READ com3Avail NOTIFY com3AvailChanged)
     Q_PROPERTY(float com1Freq READ com1Freq NOTIFY com1FreqChanged)
     Q_PROPERTY(float com2Freq READ com2Freq NOTIFY com2FreqChanged)
-    // Q_PROPERTY(float com3Freq READ com3Freq NOTIFY com3FreqChanged)
+    Q_PROPERTY(float com3Freq READ com3Freq NOTIFY com3FreqChanged)
 
     Q_PROPERTY(bool nav1Avail READ nav1Avail NOTIFY nav1AvailChanged)
     Q_PROPERTY(bool nav2Avail READ nav2Avail NOTIFY nav2AvailChanged)

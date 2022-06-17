@@ -1,12 +1,12 @@
 #ifndef __MFD_PAGE_HPP__
 #define __MFD_PAGE_HPP__
 
+#include "FlightPlan/FlightPlan.hpp"
 #include "GaugeElement/GaugeElement.hpp"
+#include "GeoMap/GeoMap.hpp"
 #include "MiscEngineDataElement/MiscEngineDataElement.hpp"
-#include "pages/MfdPage/GaugeElement/GaugeEngine/GaugeEngine.hpp"
 
 #include <QObject>
-#include <QQmlContext>
 
 namespace io::network
 {
@@ -25,6 +25,67 @@ class MfdPage : public QObject
 {
     Q_OBJECT
 
+public:
+
+    explicit MfdPage(io::network::NetworkClient *networkClient, QObject *parent = nullptr);
+
+signals:
+
+    void gaugesLoaded();
+
+public slots:
+
+    void loadAircraft(const definitions::AircraftDefinition &aircraft);
+
+    GaugeElement *gauge1()
+    {
+        return &d_gauge1;
+    }
+
+    GaugeElement *gauge2()
+    {
+        return &d_gauge2;
+    }
+
+    GaugeElement *gauge3()
+    {
+        return &d_gauge3;
+    }
+
+    GaugeElement *gauge4()
+    {
+        return &d_gauge4;
+    }
+
+    GaugeElement *fuelQtyGauge()
+    {
+        return &d_fuelQtyGauge;
+    }
+
+    GaugeElement *fuelFlowGauge()
+    {
+        return &d_fuelFlowGauge;
+    }
+
+    GaugeElement *oilTempGauge()
+    {
+        return &d_oilTempGauge;
+    }
+
+    GaugeElement *egtGauge()
+    {
+        return &d_egtGauge;
+    }
+
+    GaugeElement *oilPressGauge()
+    {
+        return &d_oilPressGauge;
+    }
+
+private:
+
+    void updateChangingGaugeConnections(const definitions::AircraftDefinition &aircraft);
+
     // changing gauges
     GaugeElement d_gauge1;
     GaugeElement d_gauge2;
@@ -41,51 +102,11 @@ class MfdPage : public QObject
 
     MiscEngineDataElement d_miscEngineData;
 
+    GeoMap d_geoMap;
+    FlightPlan d_fpl;
+
 
     io::network::NetworkClient *d_networkClient;
-
-public:
-
-    explicit MfdPage(io::network::NetworkClient *networkClient, QObject *parent = nullptr);
-
-    void setContext(QQmlContext *context)
-    {
-        GaugeElement *gauges[4] = { &d_gauge1, &d_gauge2, &d_gauge3, &d_gauge4 };
-        for (size_t gaugeIdx = 0; gaugeIdx <= 3; ++gaugeIdx)
-        {
-            QString gaugeStr = "gauge" + QString::number(gaugeIdx + 1);
-            GaugeElement *gauge = gauges[gaugeIdx];
-            GaugeEngine *engines[4] = { gauge->engine1(), gauge->engine2(), gauge->engine3(), gauge->engine4() };
-            for (size_t engineIdx = 0; engineIdx <= 3; ++engineIdx)
-            {
-                QString propertyName = gaugeStr + "Engine" + QString::number(engineIdx + 1);
-                context->setContextProperty(propertyName, engines[engineIdx]);
-            }
-        }
-
-        context->setContextProperty("fuelQtyGauge", &d_fuelQtyGauge);
-        context->setContextProperty("fuelFlowGauge", &d_fuelFlowGauge);
-
-        context->setContextProperty("oilTempGauge", &d_oilTempGauge);
-        context->setContextProperty("egtGauge", &d_egtGauge);
-        context->setContextProperty("oilPressGauge", &d_oilPressGauge);
-
-        context->setContextProperty("miscEngineData", &d_miscEngineData);
-
-        context->setContextProperty("gaugeInterface", this);
-    }
-
-private:
-    void updateChangingGaugeConnections(const definitions::AircraftDefinition &aircraft);
-
-signals:
-
-    void gaugesLoaded();
-
-public slots:
-
-    void loadAircraft(const definitions::AircraftDefinition &aircraft);
-
 };
 
 }  // namespace pages::mfd

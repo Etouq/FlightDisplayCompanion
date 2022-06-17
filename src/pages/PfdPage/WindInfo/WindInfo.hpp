@@ -18,7 +18,7 @@ class WindInfo : public QObject
 
 public:
 
-    explicit WindInfo(io::network::NetworkClient *netClient, QObject *parent)
+    explicit WindInfo(io::network::NetworkClient *netClient, QObject *parent = nullptr)
       : QObject(parent)
     {
         using io::network::NetworkClient;

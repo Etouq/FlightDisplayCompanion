@@ -49,7 +49,7 @@ private:
     QColor d_cursorColor = "white";
 
     // internal items
-    double d_redPercent = 17;
+    static constexpr double d_redPercent = 17;
 };
 
 }  // namespace pages::pfd

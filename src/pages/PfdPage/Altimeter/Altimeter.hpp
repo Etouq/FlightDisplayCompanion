@@ -188,7 +188,7 @@ private:
 
     double d_pressure = 29.92;
 
-    VerticalDeviationMode d_vertDevMode = VerticalDeviationMode::NONE;
+    VerticalDeviationMode d_vertDevMode = VerticalDeviationMode::NONE;   // 0: none, 1: vdi, 2: gs, 3: gp, 4: gspreview
     double d_vertDevTransformValue = 0;
 
     double d_altitudeTrendValue = 250;

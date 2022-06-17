@@ -4,7 +4,7 @@
 #include <QDateTime>
 #include <QObject>
 #include <QString>
-
+#include "unitConverter/units.hpp"
 
 namespace io::network
 {
@@ -108,7 +108,7 @@ public slots:
         emit stdAtmAirTempChanged();
     }
 
-    void updateTemperatureUnit(int unit)
+    void updateTemperatureUnit(Units unit)
     {
         d_tempUnit = unit;
         updateTotalAirTemp(d_tatValue);
@@ -130,7 +130,7 @@ private:
     double d_oatValue = 0;
     double d_isaValue = 0;
 
-    int d_tempUnit = 0;  // 0: Celsius, 1: fahrenheit, 2: kelvin, 3: rankine
+    Units d_tempUnit = Units::CELSIUS;  // 0: Celsius, 1: fahrenheit, 2: kelvin, 3: rankine
 };
 
 }  // namespace pages::pfd

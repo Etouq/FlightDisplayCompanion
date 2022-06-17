@@ -21,13 +21,13 @@ class NavCom : public QObject
 
     Q_PROPERTY(bool com1Avail READ com1Avail NOTIFY com1AvailChanged)
     Q_PROPERTY(bool com2Avail READ com2Avail NOTIFY com2AvailChanged)
-    // Q_PROPERTY(bool com3Avail READ com3Avail NOTIFY com3AvailChanged)
+    Q_PROPERTY(bool com3Avail READ com3Avail NOTIFY com3AvailChanged)
     Q_PROPERTY(float com1Freq READ com1Freq NOTIFY com1FreqChanged)
     Q_PROPERTY(float com2Freq READ com2Freq NOTIFY com2FreqChanged)
-    // Q_PROPERTY(float com3Freq READ com3Freq NOTIFY com3FreqChanged)
+    Q_PROPERTY(float com3Freq READ com3Freq NOTIFY com3FreqChanged)
     Q_PROPERTY(float com1StbyFreq READ com1StbyFreq NOTIFY com1StbyFreqChanged)
     Q_PROPERTY(float com2StbyFreq READ com2StbyFreq NOTIFY com2StbyFreqChanged)
-    // Q_PROPERTY(float com3StbyFreq READ com3StbyFreq NOTIFY com3StbyFreqChanged)
+    Q_PROPERTY(float com3StbyFreq READ com3StbyFreq NOTIFY com3StbyFreqChanged)
 
     Q_PROPERTY(bool nav1Avail READ nav1Avail NOTIFY nav1AvailChanged)
     Q_PROPERTY(bool nav2Avail READ nav2Avail NOTIFY nav2AvailChanged)
@@ -36,17 +36,17 @@ class NavCom : public QObject
     Q_PROPERTY(float nav1StbyFreq READ nav1StbyFreq NOTIFY nav1StbyFreqChanged)
     Q_PROPERTY(float nav2StbyFreq READ nav2StbyFreq NOTIFY nav2StbyFreqChanged)
 
-    // Q_PROPERTY(bool xpdrAvail READ xpdrAvail NOTIFY xpdrAvailChanged)
+    Q_PROPERTY(bool xpdrAvail READ xpdrAvail NOTIFY xpdrAvailChanged)
     Q_PROPERTY(int xpdrCode READ xpdrCode WRITE setXpdrCode NOTIFY xpdrCodeChanged)
     Q_PROPERTY(QmlTransponderState xpdrState READ xpdrState WRITE setXpdrState NOTIFY xpdrStateChanged)
 
 public:
 
-    explicit NavCom(io::network::NetworkClient *netClient, QObject *parent);
+    explicit NavCom(io::network::NetworkClient *netClient, QObject *parent = nullptr);
 
     Q_INVOKABLE void setCom1Freq(int newFreq, bool swap);
     Q_INVOKABLE void setCom2Freq(int newFreq, bool swap);
-    // Q_INVOKABLE void setCom3Freq(int newFreq, bool swap);
+    Q_INVOKABLE void setCom3Freq(int newFreq, bool swap);
     Q_INVOKABLE void setNav1Freq(int newFreq, bool swap);
     Q_INVOKABLE void setNav2Freq(int newFreq, bool swap);
 
@@ -64,7 +64,13 @@ public:
         emit sendCommandsToSim(QByteArray(reinterpret_cast<const char *>(&cmdId), sizeof(cmdId)));
     }
 
-    // Q_INVOKABLE void swapCom3();
+    Q_INVOKABLE void swapCom3()
+    {
+        SimCommandId cmdId = SimCommandId::SWAP_COM3;
+
+        emit sendCommandsToSim(QByteArray(reinterpret_cast<const char *>(&cmdId), sizeof(cmdId)));
+    }
+
     Q_INVOKABLE void swapNav1()
     {
         SimCommandId cmdId = SimCommandId::SWAP_NAV1;
@@ -157,6 +163,11 @@ public:
         return d_nav2StbyFreq;
     }
 
+    bool xpdrAvail() const
+    {
+        return d_xpdrAvail;
+    }
+
     int xpdrCode() const
     {
         return d_xpdrCode;
@@ -186,6 +197,7 @@ signals:
     void nav1StbyFreqChanged();
     void nav2StbyFreqChanged();
 
+    void xpdrAvailChanged();
     void xpdrCodeChanged();
     void xpdrStateChanged();
 
@@ -294,6 +306,12 @@ public slots:
             emit nav2StbyFreqChanged();
     }
 
+    void updateXpdrAvail(bool newValue)
+    {
+        d_xpdrAvail = newValue;
+        emit xpdrAvailChanged();
+    }
+
     void updateXprdCode(int newValue)
     {
         d_xpdrCode = newValue;
@@ -325,6 +343,7 @@ private:
     float d_nav1StbyFreq = 0;
     float d_nav2StbyFreq = 0;
 
+    bool d_xpdrAvail = true;
     int d_xpdrCode = 7000;
     TransponderState d_xpdrState = TransponderState::OFF;
 };

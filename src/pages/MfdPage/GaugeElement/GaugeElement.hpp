@@ -5,6 +5,8 @@
 #include "common/definitions/gaugeDefinition/gaugeDefinition.hpp"
 
 #include <QObject>
+#include <QFont>
+#include <QFontMetrics>
 
 namespace pages::mfd
 {
@@ -55,60 +57,93 @@ public:
         d_engine4.setGaugeParameters(gaugeDef, length);
     }
 
-    GaugeEngine *engine1()
+    Q_INVOKABLE GaugeEngine *engine1()
     {
         return &d_engine1;
     }
 
-    GaugeEngine *engine2()
+    Q_INVOKABLE GaugeEngine *engine2()
     {
         return &d_engine2;
     }
 
-    GaugeEngine *engine3()
+    Q_INVOKABLE GaugeEngine *engine3()
     {
         return &d_engine3;
     }
 
-    GaugeEngine *engine4()
+    Q_INVOKABLE GaugeEngine *engine4()
     {
         return &d_engine4;
     }
 
     // basic gauge info
-    Q_INVOKABLE QString title() const
+    Q_INVOKABLE QString getTitle() const
     {
         return d_def.title;
     }
-
-    Q_INVOKABLE QString unit() const
+    Q_INVOKABLE int getUnit() const
+    {
+        return static_cast<int>(d_def.unit);
+    }
+    Q_INVOKABLE QString getUnitString() const
     {
         return d_def.unitString;
     }
+    Q_INVOKABLE double getMinValue() const
+    {
+        return d_def.minValue;
+    }
+    Q_INVOKABLE double getMaxValue() const
+    {
+        return d_def.maxValue;
+    }
+    Q_INVOKABLE double getRange() const
+    {
+        return d_def.maxValue - d_def.minValue;
+    }
 
-    Q_INVOKABLE double startAngle() const
+    Q_INVOKABLE double getStartAngle() const
     {
         return d_startAngle;
     }
-
-    Q_INVOKABLE double endAngle() const
+    Q_INVOKABLE double getEndAngle() const
     {
         return d_endAngle;
     }
-
-    Q_INVOKABLE double length() const
+    Q_INVOKABLE double getLength() const
     {
         return d_length;
     }
 
-    Q_INVOKABLE double minValue() const
+    Q_INVOKABLE double valueToAngle(double value) const
     {
-        return d_def.minValue;
+        return d_engine1.valueToAngle(value);
     }
-
-    Q_INVOKABLE double maxValue() const
+    Q_INVOKABLE int valueMaxSize() const
     {
-        return d_def.maxValue;
+        if (d_def.noText)
+            return 0;
+
+        QString text = QString::number(round(d_def.minValue / d_def.textIncrement) * d_def.textIncrement, 'f', d_def.textNumDigits);
+        QFont robotoFont("Roboto Mono", -1, QFont::Bold);
+        robotoFont.setPixelSize(18);
+        QFontMetrics metrics(robotoFont);
+
+        int minValueWidth = metrics.horizontalAdvance(text);
+        text = QString::number(round(d_def.maxValue / d_def.textIncrement) * d_def.textIncrement, 'f', d_def.textNumDigits);
+        int maxValueWidth = metrics.horizontalAdvance(text);
+
+        return std::max(minValueWidth, maxValueWidth);
+    }
+    Q_INVOKABLE int unitWidth() const
+    {
+
+        QFont robotoFont("Roboto Mono", -1, QFont::Bold);
+        robotoFont.setPixelSize(18);
+        QFontMetrics metrics(robotoFont);
+
+        return metrics.horizontalAdvance(d_def.unitString);
     }
 
     // colorzones

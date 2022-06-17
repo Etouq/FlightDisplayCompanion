@@ -78,7 +78,14 @@ public:
         return d_redBlink;
     }
 
+
+    Q_INVOKABLE double valueToAngle(double value) const
+    {
+        return d_cursorPosOffset + value * d_cursorPosFactor;
+    }
+
 signals:
+
     void angleChanged();
     void transformValueChanged();
     void valueChanged();
