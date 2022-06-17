@@ -1,20 +1,19 @@
 import QtQuick 2.15
 import QtQuick.Shapes 1.15
+import Mfd.Engine 1.0
 
 Item {
     id: main
 
-    property real elevTop: 0
-    property bool noElevTrim: false
-    property bool noAileronTrim: false
+    width: 126
+    height: 27
 
 
     Text {
         id: rudText
-        anchors.horizontalCenter: parent.left
-        anchors.horizontalCenterOffset: main.noElevTrim ? 210 : 267
-        anchors.baseline: parent.top
-        anchors.baselineOffset: main.elevTop + (main.noAileronTrim ? 52.9125 : 21.3)
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.bottom: parent.top
+        anchors.bottomMargin: 11
         color: "white"
         font.pixelSize: 24
         font.family: "Roboto Mono"
@@ -24,8 +23,8 @@ Item {
 
     Rectangle {
         id: horizontalBar
-        x: main.noElevTrim ? 147 : 204
-        y: main.elevTop + (main.noAileronTrim ? 81.1125 : 49.5)
+        x: 0
+        y: 24
         width: 126
         height: 3
         color: "white"
@@ -33,8 +32,8 @@ Item {
 
     Rectangle {
         id: leftBar
-        x: main.noElevTrim ? 147 : 204
-        y: main.elevTop + (main.noAileronTrim ? 61.6125 : 30)
+        x: 0
+        y: 4.5
         width: 3
         height: 22.5
         color: "white"
@@ -42,8 +41,8 @@ Item {
 
     Rectangle {
         id: rightBar
-        x: main.noElevTrim ? 270 : 327
-        y: main.elevTop + (main.noAileronTrim ? 61.6125 : 30)
+        x: 123
+        y: 4.5
         width: 3
         height: 22.5
         color: "white"
@@ -51,8 +50,8 @@ Item {
 
     Rectangle {
         id: centerGrad
-        x: main.noElevTrim ? 208.5 : 265.5
-        y: main.elevTop + (main.noAileronTrim ? 73.6125 : 42)
+        x: 61.5
+        y: 16.5
         width: 3
         height: 7.5
         color: "white"
@@ -60,14 +59,19 @@ Item {
 
     Shape {
         id: cursor
-        transform: Translate { x: commonGaugeProperties.rudderTrimTransformValue }
+        anchors.fill: parent
+
+        transform: Translate {
+            x: EngineMisc.rudderTrimTransformValue
+        }
+
         ShapePath {
             fillColor: "aqua"
             strokeColor: "transparent"
 
             PathMove {
-                x: main.noElevTrim ? 204 : 261
-                y: main.elevTop + (main.noAileronTrim ? 57.1125 : 25.5)
+                x: 57
+                y: 0
             }
             PathLine {
                 relativeX: 0
@@ -85,6 +89,22 @@ Item {
                 relativeX: 0
                 relativeY: -12
             }
+        }
+
+        Text {
+            id: trimValueText
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.bottom: parent.top
+            anchors.bottomMargin: -1
+
+            font {
+                family: "Roboto Mono"
+                bold: true
+                pixelSize: 15
+            }
+
+            color: "white"
+            text: (EngineMisc.rudderValue < 0 ? "" : " ") + (EngineMisc.rudderValue / 0.6).toFixed() + "°"
         }
     }
 }

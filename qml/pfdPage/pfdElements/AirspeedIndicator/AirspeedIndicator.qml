@@ -1,5 +1,6 @@
 import QtQuick 2.15
 import QtQuick.Shapes 1.15
+import Pfd.Airspeed 1.0
 
 Item {
 
@@ -60,7 +61,7 @@ Item {
         font.bold: true
         font.family: "Roboto Mono"
         font.pixelSize: 34
-        text: iasInterface.trueAirspeed + "KT"
+        text: Airspeed.trueAirspeed + "KT"
     }
 
     property real acceleration: 0
@@ -93,7 +94,7 @@ Item {
     }
 
     Connections {
-        target: iasInterface
+        target: Airspeed
         function onAirspeedChanged() {
             updateAcceleration(iasInterface.airspeed);
         }

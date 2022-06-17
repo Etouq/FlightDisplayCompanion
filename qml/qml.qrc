@@ -1,29 +1,8 @@
 <RCC>
     <qresource prefix="/">
-        <file>AirportInfoPopup.qml</file>
-        <file>deniedAccessDialog.qml</file>
         <file>main.qml</file>
         <file>mfdPage/MfdPage.qml</file>
         <file>mfdPage/NavTopBar.qml</file>
-        <file>mfdPage/engineDisplay/JetDouble.qml</file>
-        <file>mfdPage/engineDisplay/JetQuad.qml</file>
-        <file>mfdPage/engineDisplay/JetSingle.qml</file>
-        <file>mfdPage/engineDisplay/PropDouble.qml</file>
-        <file>mfdPage/engineDisplay/PropSingle.qml</file>
-        <file>mfdPage/engineDisplay/TurbopropDouble.qml</file>
-        <file>mfdPage/engineDisplay/TurbopropSingle.qml</file>
-        <file>mfdPage/engineDisplay/gauges/AileronTrimGauge.qml</file>
-        <file>mfdPage/engineDisplay/gauges/CircularGauge.qml</file>
-        <file>mfdPage/engineDisplay/gauges/ElevatorTrimGauge.qml</file>
-        <file>mfdPage/engineDisplay/gauges/FlapsGauge.qml</file>
-        <file>mfdPage/engineDisplay/gauges/FlapsSpoilersGauge.qml</file>
-        <file>mfdPage/engineDisplay/gauges/FuelDoubleTankGauge.qml</file>
-        <file>mfdPage/engineDisplay/gauges/FuelSingleTankGauge.qml</file>
-        <file>mfdPage/engineDisplay/gauges/FuelText.qml</file>
-        <file>mfdPage/engineDisplay/gauges/RudderTrimGauge.qml</file>
-        <file>mfdPage/engineDisplay/gauges/TrimGauges.qml</file>
-        <file>mfdPage/engineDisplay/gauges/VerticalDoubleGauge.qml</file>
-        <file>mfdPage/engineDisplay/gauges/VerticalGauge.qml</file>
         <file>mfdPage/map/FlightplanWpIcons.qml</file>
         <file>mfdPage/map/MapButtons.qml</file>
         <file>mfdPage/map/MapItem.qml</file>
@@ -112,5 +91,28 @@
         <file>tscPage/styled_controls/gradientButtonElements/TopText.qml</file>
         <file>tscPage/styled_controls/gradientButtonElements/UpperTitle.qml</file>
         <file>mfdPage/engineDisplay/Gauges/Elements/ValueBlinkAnimation.qml</file>
+        <file>mfdPage/engineDisplay/Gauges/Elements/Vertical/Gauge.qml</file>
+        <file>mfdPage/engineDisplay/Gauges/Elements/Vertical/DoubleGauge.qml</file>
+        <file>mfdPage/engineDisplay/Gauges/Elements/Vertical/QuadGauge.qml</file>
+        <file>mfdPage/engineDisplay/Gauges/Elements/Circular/ColorArc.qml</file>
+        <file>mfdPage/engineDisplay/Gauges/Elements/Circular/Gauge.qml</file>
+        <file>mfdPage/engineDisplay/Gauges/Elements/Flaps/Gauge.qml</file>
+        <file>mfdPage/engineDisplay/Gauges/Elements/Flaps/SpoilersGauge.qml</file>
+        <file>mfdPage/engineDisplay/Gauges/Elements/Trims/Aileron.qml</file>
+        <file>mfdPage/engineDisplay/Gauges/Elements/Trims/Elevator.qml</file>
+        <file>mfdPage/engineDisplay/Gauges/Elements/Trims/Rudder.qml</file>
+        <file>mfdPage/engineDisplay/Gauges/Elements/Compound/DoubleCircularGauge.qml</file>
+        <file>mfdPage/engineDisplay/Gauges/Elements/Compound/FuelText.qml</file>
+        <file>mfdPage/engineDisplay/Gauges/Elements/Compound/QuadVertGauge.qml</file>
+        <file>mfdPage/engineDisplay/Gauges/Elements/Compound/TrimGauge.qml</file>
+        <file>mfdPage/engineDisplay/Gauges/Layouts/DoubleEngine/DoubleGauge.qml</file>
+        <file>mfdPage/engineDisplay/Gauges/Layouts/DoubleEngine/QuadGauge.qml</file>
+        <file>mfdPage/engineDisplay/Gauges/Layouts/DoubleEngine/TripleGauge.qml</file>
+        <file>mfdPage/engineDisplay/Gauges/Layouts/QuadEngine/DoubleGauge.qml</file>
+        <file>mfdPage/engineDisplay/Gauges/Layouts/QuadEngine/QuadGauge.qml</file>
+        <file>mfdPage/engineDisplay/Gauges/Layouts/QuadEngine/TripleGauge.qml</file>
+        <file>mfdPage/engineDisplay/Gauges/Layouts/SingleEngine/DoubleGauge.qml</file>
+        <file>mfdPage/engineDisplay/Gauges/Layouts/SingleEngine/QuadGauge.qml</file>
+        <file>mfdPage/engineDisplay/Gauges/Layouts/SingleEngine/TripleGauge.qml</file>
     </qresource>
 </RCC>

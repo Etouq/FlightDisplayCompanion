@@ -1,18 +1,19 @@
 import QtQuick 2.15
 import QtQuick.Shapes 1.15
+import Mfd.Engine 1.0
 
 Item {
     id: main
 
-    property real elevTop: 0
-    property bool isOnlyTrimGauge: false
+    width: 15
+    height: 120
 
     Text {
         id: elevText
         anchors.left: parent.left
-        anchors.leftMargin: main.isOnlyTrimGauge ? 189 : 90
+        anchors.leftMargin: -22.5
         anchors.baseline: parent.top
-        anchors.baselineOffset: main.elevTop - 12
+        anchors.baselineOffset: -12
         color: "white"
         font.pixelSize: 18
         font.family: "Roboto Mono"
@@ -22,8 +23,8 @@ Item {
 
     Rectangle {
         id: verticalBar
-        x: main.isOnlyTrimGauge ? 226.5 : 127.5
-        y: main.elevTop - 3
+        x: 15
+        y: -3
         width: 3
         height: 126
         color: "white"
@@ -31,8 +32,8 @@ Item {
 
     Rectangle {
         id: topBar
-        x: main.isOnlyTrimGauge ? 211.5 : 112.5
-        y: main.elevTop - 3
+        x: 0
+        y: -3
         width: 15
         height: 3
         color: "white"
@@ -41,9 +42,8 @@ Item {
     Text {
         id: dnText
         anchors.left: parent.left
-        anchors.leftMargin: main.isOnlyTrimGauge ? 189 : 90
-        anchors.baseline: parent.top
-        anchors.baselineOffset: main.elevTop + 6
+        anchors.leftMargin: -22.5
+        anchors.verticalCenter: topBar.verticalCenter
         color: "white"
         font.pixelSize: 18
         font.family: "Roboto Mono"
@@ -53,8 +53,8 @@ Item {
 
     Rectangle {
         id: bottomBar
-        x: main.isOnlyTrimGauge ? 211.5 : 112.5
-        y: main.elevTop + 120
+        x: 0
+        y: 120
         width: 15
         height: 3
         color: "white"
@@ -63,9 +63,8 @@ Item {
     Text {
         id: upText
         anchors.left: parent.left
-        anchors.leftMargin: main.isOnlyTrimGauge ? 189 : 90
-        anchors.baseline: parent.top
-        anchors.baselineOffset: main.elevTop + 129
+        anchors.leftMargin: -22.5
+        anchors.verticalCenter: bottomBar.verticalCenter
         color: "white"
         font.pixelSize: 18
         font.family: "Roboto Mono"
@@ -75,8 +74,8 @@ Item {
 
     Rectangle {
         id: centerGrad
-        x: main.isOnlyTrimGauge ? 219 : 120
-        y: main.elevTop + 58.5
+        x: 7.5
+        y: 58.5
         width: 7.5
         height: 3
         color: "white"
@@ -84,14 +83,18 @@ Item {
 
     Shape {
         id: cursor
-        transform: Translate { y: commonGaugeProperties.elevTrimTransformValue }
+
+        transform: Translate {
+            y: EngineMisc.elevTrimTransformValue
+        }
+
         ShapePath {
             fillColor: "aqua"
             strokeColor: "transparent"
 
             PathMove {
-                x: main.isOnlyTrimGauge ? 211.5 : 112.5
-                y: main.elevTop + 54
+                x: 0
+                y: 54
             }
             PathLine {
                 relativeX: 7.5
@@ -110,6 +113,24 @@ Item {
                 relativeY: 0
             }
         }
+    }
+
+    Text {
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.right: parent.left
+        anchors.rightMargin: 3
+        font {
+            family: "Roboto Mono"
+            bold: true
+            pixelSize: 15
+        }
+
+        transform: Translate {
+            y: Math.max(Math.min(EngineMisc.elevTrimTransformValue, 45), -45)
+        }
+
+        color: "white"
+        text: (EngineMisc.elevTrimValue / 0.6).toFixed() + "%"
     }
 
 }

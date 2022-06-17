@@ -1,18 +1,19 @@
 import QtQuick 2.15
+import Mfd.Engine 1.0
 
 Item {
     id: main
     anchors.fill: parent
 
     property real topBaseline: 0
-    property bool hasApu: commonGaugeProperties.getHasApu()
+    property bool hasApu: EngineMisc.hasApu()
 
     Text {
         id: fuelTimeTitle
         anchors.left: parent.left
         anchors.leftMargin: 7.5
         anchors.baseline: parent.top
-        anchors.baselineOffset: main.hasApu ? topBaseline : topBaseline + 11.25
+        anchors.baselineOffset: main.hasApu ? main.topBaseline : main.topBaseline + 11.25
         color: "white"
         font.pixelSize: 18
         font.family: "Roboto Mono"
@@ -25,12 +26,12 @@ Item {
         anchors.right: parent.left
         anchors.rightMargin: -202.5
         anchors.baseline: parent.top
-        anchors.baselineOffset: main.hasApu ? topBaseline : topBaseline + 11.25
+        anchors.baselineOffset: main.hasApu ? main.topBaseline : main.topBaseline + 11.25
         color: "white"
         font.pixelSize: 18
         font.family: "Roboto Mono"
         font.bold: true
-        text: commonGaugeProperties.fuelTimeText
+        text: EngineMisc.fuelTimeText
     }
 
     Text {
@@ -38,7 +39,7 @@ Item {
         anchors.left: parent.right
         anchors.leftMargin: -202.5
         anchors.baseline: parent.top
-        anchors.baselineOffset: main.hasApu ? topBaseline : topBaseline + 11.25
+        anchors.baselineOffset: main.hasApu ? main.topBaseline : main.topBaseline + 11.25
         color: "white"
         font.pixelSize: 18
         font.family: "Roboto Mono"
@@ -51,12 +52,12 @@ Item {
         anchors.right: parent.right
         anchors.rightMargin: 7.5
         anchors.baseline: parent.top
-        anchors.baselineOffset: main.hasApu ? topBaseline : topBaseline + 11.25
+        anchors.baselineOffset: main.hasApu ? main.topBaseline : main.topBaseline + 11.25
         color: "white"
         font.pixelSize: 18
         font.family: "Roboto Mono"
         font.bold: true
-        text: commonGaugeProperties.fuelRangeText
+        text: EngineMisc.fuelRangeText
     }
 
     Rectangle {
@@ -68,32 +69,34 @@ Item {
         color: "white"
     }
 
-    Text {
-        id: apuTitle
-        visible: main.hasApu
-        enabled: main.hasApu
-        anchors.right: parent.left
-        anchors.rightMargin: -195
-        anchors.top: fuelTimeTitle.bottom
-        color: "white"
-        font.pixelSize: 18
-        font.family: "Roboto Mono"
-        font.bold: true
-        text: "APU N1"
+    Loader {
+        active: main.hasApu
+        sourceComponent: Item {
+            Text {
+                id: apuTitle
+                anchors.right: parent.left
+                anchors.rightMargin: -195
+                anchors.top: fuelTimeTitle.bottom
+                color: "white"
+                font.pixelSize: 18
+                font.family: "Roboto Mono"
+                font.bold: true
+                text: "APU N1"
+            }
+
+            Text {
+                id: apuText
+                anchors.left: parent.right
+                anchors.leftMargin: -195
+                anchors.top: fuelTimeTitle.bottom
+                color: "white"
+                font.pixelSize: 18
+                font.family: "Roboto Mono"
+                font.bold: true
+                text: EngineMisc.apuRpmText
+            }
+        }
     }
 
-    Text {
-        id: apuText
-        visible: main.hasApu
-        enabled: main.hasApu
-        anchors.left: parent.right
-        anchors.leftMargin: -195
-        anchors.top: fuelTimeTitle.bottom
-        color: "white"
-        font.pixelSize: 18
-        font.family: "Roboto Mono"
-        font.bold: true
-        text: commonGaugeProperties.apuRpmText
-    }
 
 }

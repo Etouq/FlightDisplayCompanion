@@ -13,15 +13,13 @@ Item {
     Connections {
         target: gaugeInterface
         function onGaugesLoaded() {
-            let typeVal = aircraftInterface.getAircraftType();
-            if (typeVal === -1)
-            {
-                edLoader.setSource('');
-                return;
-            }
-            let typeString = typeVal === 0 ? "Jet" : typeVal === 1 ? "Prop" : "Turboprop";
-            let engineString = aircraftInterface.getNumEngines() === 1 ? "Single" : aircraftInterface.getNumEngines() === 2 ? "Double" : "Quad";
-            edLoader.setSource("qrc:/mfdPage/engineDisplay/" + typeString + engineString + ".qml", { "numTanks": aircraftInterface.getNumTanks() });
+
+
+            let numEngines = 2;
+            let numGauges = 3;
+            const engineString = numEngines === 2 ? "Double" : numEngines === 3 ? "Triple" : "Quad";
+            const gaugeString = numGauges === 2 ? "Double" : numGauges === 3 ? "Triple" : "Quad";
+            edLoader.setSource("qrc:/mfdPage/engineDisplay/Gauges/Layouts/" + engineString + "Engine/" + gaugeString + "Gauge.qml");
         }
     }
 
