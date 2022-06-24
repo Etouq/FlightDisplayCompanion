@@ -15,6 +15,7 @@ class FlightTmr : public QObject
 
     Q_PROPERTY(QString timeString READ timeString NOTIFY timeStringChanged)
     Q_PROPERTY(bool countingDown READ countingDown WRITE setCountingDown NOTIFY countingDownChanged)
+    Q_PROPERTY(bool running READ running NOTIFY runningChanged)
 
 public:
 
@@ -37,6 +38,12 @@ public:
         }
     }
 
+    Q_INVOKABLE void setTime(int value)
+    {
+        d_currentValue = d_countingDown ? -value : value;
+        update();
+    }
+
     const QString &timeString() const
     {
         return d_timeString;
@@ -47,15 +54,23 @@ public:
         return d_countingDown;
     }
 
+    bool running() const
+    {
+        return d_running;
+    }
+
     Q_INVOKABLE void start()
     {
         d_running = true;
+        emit runningChanged();
 
         // reset last measured time so it doesn't include any paused time
         d_lastStartTime = std::chrono::steady_clock::now();
 
         // start on next whole 200ms portion to align update timer with when next second occurs (+5% inaccuracy)
         QTimer::singleShot(std::abs((d_currentValue + 10) % 200), this, &FlightTmr::startTimer);
+
+        update();  // just make sure we update right away for up to date ui
     }
 
     // called when the timer has been offscreen but not paused/stopped
@@ -76,6 +91,7 @@ public:
     Q_INVOKABLE void movedOffscreen()
     {
         d_onscreen = false;
+        emit runningChanged();
         d_timer.stop();
     }
 
@@ -103,6 +119,7 @@ signals:
 
     void timeStringChanged();
     void countingDownChanged();
+    void runningChanged();
 
 private slots:
 

@@ -5,27 +5,7 @@
 #include <QGeoCoordinate>
 #include <QObject>
 #include <QSettings>
-
-class MapRotationModeClass
-{
-Q_GADGET
-
-    public:
-
-    enum class Value
-    {
-        NORTH_UP,
-        DTK_UP,
-        HDG_UP,
-        TRACK_UP
-    };
-    Q_ENUM(Value)
-
-private:
-    explicit MapRotationModeClass();
-};
-
-typedef MapRotationModeClass::Value MapRotationMode;
+#include "common/QmlEnums.hpp"
 
 namespace io::network
 {
@@ -45,7 +25,7 @@ class GeoMap : public QObject
     Q_PROPERTY(QString iconPath READ iconPath NOTIFY iconPathChanged)
     Q_PROPERTY(double iconScale READ iconScale WRITE setIconScale NOTIFY iconScaleChanged)
     Q_PROPERTY(QColor iconColor READ iconColor WRITE setIconColor NOTIFY iconColorChanged)
-    Q_PROPERTY(QColor iconBorder READ iconBorder WRITE setIconBorderColor NOTIFY iconBorderChanged)
+    Q_PROPERTY(QColor iconBorder READ iconBorder WRITE setIconBorder NOTIFY iconBorderChanged)
     Q_PROPERTY(MapRotationMode rotationMode READ rotationMode WRITE setRotationMode NOTIFY rotationModeChanged)
 
 public:

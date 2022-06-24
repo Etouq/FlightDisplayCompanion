@@ -2,6 +2,7 @@
 #define __ALTIMETER_HPP__
 
 #include "common/typeEnums.hpp"
+#include "common/QmlEnums.hpp"
 
 #include <QObject>
 #include <QString>

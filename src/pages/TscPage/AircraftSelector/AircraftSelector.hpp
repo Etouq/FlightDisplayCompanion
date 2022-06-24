@@ -12,7 +12,7 @@
 namespace pages::tsc
 {
 
-struct AircraftGroup
+struct ThumbnailPair
 {
     QImage image;
     definitions::AircraftDefinition *definition;
@@ -82,27 +82,27 @@ public slots:
     // send request for definitions and thumbnails to server
     void requestAircraftSelection();
 
-    void receivedNewAircraft(const AircraftGroup &group)
+    void receivedNewAircraft(const ThumbnailPair &thumbnailPair)
     {
-        d_thumbnailProvider.storeImage(group.definition->name, group.image);
+        d_thumbnailProvider.storeImage(thumbnailPair.definition->name, thumbnailPair.image);
 
 
-        if (group.definition->type == AircraftType::JET)
+        if (thumbnailPair.definition->type == AircraftType::JET)
         {
-            d_jetAircraft.append(group.definition);
+            d_jetAircraft.append(thumbnailPair.definition);
             emit jetAircraftChanged();
             return;
         }
 
-        if (group.definition->type == AircraftType::PROP)
+        if (thumbnailPair.definition->type == AircraftType::PROP)
         {
-            d_propAircraft.append(group.definition);
+            d_propAircraft.append(thumbnailPair.definition);
             emit propAircraftChanged();
             return;
         }
-        if (group.definition->type == AircraftType::TURBOPROP)
+        if (thumbnailPair.definition->type == AircraftType::TURBOPROP)
         {
-            d_turbopropAircraft.append(group.definition);
+            d_turbopropAircraft.append(thumbnailPair.definition);
             emit turbopropAircraftChanged();
             return;
         }

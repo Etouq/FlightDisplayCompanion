@@ -2,6 +2,7 @@
 #define __FLIGHTPLAN_HPP__
 
 #include "FlightPlanWaypoint.hpp"
+#include "common/QmlEnums.hpp"
 
 #include <QList>
 #include <QObject>

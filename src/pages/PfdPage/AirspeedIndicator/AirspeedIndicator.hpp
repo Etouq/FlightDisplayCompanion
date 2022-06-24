@@ -3,6 +3,7 @@
 
 
 #include <QObject>
+#include <chrono>
 
 namespace io::network
 {
@@ -17,6 +18,7 @@ class AirspeedIndicator : public QObject
     Q_OBJECT
 
     Q_PROPERTY(double airspeed READ airspeed NOTIFY airspeedChanged)
+    Q_PROPERTY(double acceleration READ acceleration NOTIFY airspeedChanged)
     Q_PROPERTY(int center READ center NOTIFY centerChanged)
     Q_PROPERTY(double rawAirspeed READ rawAirspeed NOTIFY airspeedChanged)
 
@@ -47,6 +49,10 @@ public:
     double airspeed() const
     {
         return d_airspeed;
+    }
+    double acceleration() const
+    {
+        return d_acceleration;
     }
     int center() const
     {
@@ -170,8 +176,11 @@ public slots:
 private:
     void updateColorElements();
 
+    void updateAcceleration(double newAirspeed);
+
     // exposed items
     double d_airspeed = 20;
+    double d_acceleration = 0;
     int d_center = -10000;
     double d_rawAirspeed = 0;
 
@@ -205,6 +214,10 @@ private:
     int d_refSpeed = 0;
 
     bool d_dynamicMax = false;
+
+    double d_lastSpeed = -1;
+
+    std::chrono::steady_clock::time_point d_previousTime;
 
 };
 

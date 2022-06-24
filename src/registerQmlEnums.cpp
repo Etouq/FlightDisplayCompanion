@@ -1,5 +1,5 @@
 #include "main.hpp"
-#include "common/typeEnums.hpp"
+#include "common/QmlEnums.hpp"
 
 void registerQmlEnums()
 {
@@ -23,4 +23,32 @@ void registerQmlEnums()
                                                          0,
                                                          "TransponderState",
                                                          "Not creatable as it is an enum type");
+
+    qRegisterMetaType<MapRotationMode>("MapRotationMode");
+    qmlRegisterUncreatableType<QmlMapRotationModeClass>("TypeEnums",
+                                                     1,
+                                                     0,
+                                                     "MapRotationMode",
+                                                     "Not creatable as it is an enum type");
+
+    qRegisterMetaType<QmlWaypointType>("QmlWaypointType");
+    qmlRegisterUncreatableType<QmlWaypointTypeClass>("TypeEnums",
+                                                     1,
+                                                     0,
+                                                     "WaypointType",
+                                                     "Not creatable as it is an enum type");
+
+    qRegisterMetaType<QmlWpAltitudeType>("QmlWpAltitudeType");
+    qmlRegisterUncreatableType<QmlWpAltitudeTypeClass>("TypeEnums",
+                                                     1,
+                                                     0,
+                                                     "WpAltitudeType",
+                                                     "Not creatable as it is an enum type");
+
+    qRegisterMetaType<BearingMode>("BearingMode");
+    qmlRegisterUncreatableType<QmlBearingModeClass>("TypeEnums",
+                                                     1,
+                                                     0,
+                                                     "BearingMode",
+                                                     "Not creatable as it is an enum type");
 }

@@ -25,11 +25,11 @@ class MiscEngineDataElement : public QObject
     Q_PROPERTY(bool showFlapsText READ showFlapsText NOTIFY showFlapsTextChanged)
 
     Q_PROPERTY(double elevTrimTransformValue READ elevTrimTransformValue NOTIFY elevTrimTransformValueChanged)
-    Q_PROPERTY(double elevTrimValue READ elevTrimValue NOTIFY elevTrimValueChanged)
+    Q_PROPERTY(int elevTrimValue READ elevTrimValue NOTIFY elevTrimValueChanged)
     Q_PROPERTY(double rudderTrimTransformValue READ rudderTrimTransformValue NOTIFY rudderTrimTransformValueChanged)
-    Q_PROPERTY(double rudderValue READ rudderValue NOTIFY rudderValueChanged)
+    Q_PROPERTY(int rudderTrimValue READ rudderTrimValue NOTIFY rudderTrimValueChanged)
     Q_PROPERTY(double aileronTrimTransformValue READ aileronTrimTransformValue NOTIFY aileronTrimTransformValueChanged)
-    Q_PROPERTY(double aileronValue READ aileronValue NOTIFY aileronValueChanged)
+    Q_PROPERTY(int aileronTrimValue READ aileronTrimValue NOTIFY aileronTrimValueChanged)
 
     // fuel text
     float d_fuelRange = -1;
@@ -55,17 +55,26 @@ class MiscEngineDataElement : public QObject
     // trims
     bool d_hasElevatorTrim = false;
     double d_elevTrimTransformValue = 0;
-    double d_elevTrimValue = 0;
+    int d_elevTrimValue = 0;
     bool d_hasRudderTrim = false;
     double d_rudderTrimTransformValue = 0;
-    double d_rudderTrimValue = 0;
+    int d_rudderTrimValue = 0;
     bool d_hasAileronTrim = false;
     double d_aileronTrimTransformValue = 0;
-    double d_aileronTrimValue = 0;
+    int d_aileronTrimValue = 0;
 
     // private
     double d_smoothedSpeed = 0;
     double d_smoothedFF = 0;
+
+    bool d_trimUseDegrees = true;
+
+    int d_elevTrimDegrees = 0;
+    int d_elevTrimPct = 0;
+    int d_rudderTrimDegrees = 0;
+    int d_rudderTrimPct = 0;
+    int d_ailTrimDegrees = 0;
+    int d_ailTrimPct = 0;
 
 public:
 
@@ -200,7 +209,7 @@ public:
         return d_elevTrimTransformValue;
     }
 
-    double elevTrimValue() const
+    int elevTrimValue() const
     {
         return d_elevTrimValue;
     }
@@ -210,7 +219,7 @@ public:
         return d_rudderTrimTransformValue;
     }
 
-    double rudderTrimValue() const
+    int rudderTrimValue() const
     {
         return d_rudderTrimValue;
     }
@@ -220,7 +229,7 @@ public:
         return d_aileronTrimTransformValue;
     }
 
-    double aileronTrimValue() const
+    int aileronTrimValue() const
     {
         return d_aileronTrimValue;
     }
@@ -317,6 +326,14 @@ public slots:
         {
             d_elevTrimTransformValue = newVal * 60.0;
             emit elevTrimTransformValueChanged();
+
+            d_elevTrimPct = std::lround(newVal * 100.0);
+
+            if (!d_trimUseDegrees && d_elevTrimPct != d_elevTrimValue)
+            {
+                d_elevTrimValue = d_elevTrimPct;
+                emit elevTrimValueChanged();
+            }
         }
     }
 
@@ -326,6 +343,14 @@ public slots:
         {
             d_rudderTrimTransformValue = newVal * 60.0;
             emit rudderTrimTransformValueChanged();
+
+            d_rudderTrimPct = std::lround(newVal * 100.0);
+
+            if (!d_trimUseDegrees && d_rudderTrimPct != d_rudderTrimValue)
+            {
+                d_rudderTrimValue = d_rudderTrimPct;
+                emit rudderTrimValueChanged();
+            }
         }
     }
 
@@ -335,6 +360,47 @@ public slots:
         {
             d_aileronTrimTransformValue = newVal * 60.0;
             emit aileronTrimTransformValueChanged();
+
+            d_ailTrimPct = std::lround(newVal * 100.0);
+
+            if (!d_trimUseDegrees && d_ailTrimPct != d_aileronTrimValue)
+            {
+                d_aileronTrimValue = d_ailTrimPct;
+                emit aileronTrimValueChanged();
+            }
+        }
+    }
+
+    void updateElevTrimDegrees(int newVal)
+    {
+        d_elevTrimDegrees = newVal;
+
+        if (d_trimUseDegrees && d_elevTrimDegrees != d_elevTrimValue)
+        {
+            d_elevTrimValue = d_elevTrimDegrees;
+            emit elevTrimValueChanged();
+        }
+    }
+
+    void updateRudderTrimDegrees(int newVal)
+    {
+        d_rudderTrimDegrees = newVal;
+
+        if (d_trimUseDegrees && d_rudderTrimDegrees != d_rudderTrimValue)
+        {
+            d_rudderTrimValue = d_rudderTrimDegrees;
+            emit rudderTrimValueChanged();
+        }
+    }
+
+    void updateAileronTrimDegrees(int newVal)
+    {
+        d_ailTrimDegrees = newVal;
+
+        if (d_trimUseDegrees && d_ailTrimDegrees != d_aileronTrimValue)
+        {
+            d_aileronTrimValue = d_ailTrimDegrees;
+            emit aileronTrimValueChanged();
         }
     }
 };

@@ -6,7 +6,8 @@ namespace pages::pfd
 {
 
 AirspeedIndicator::AirspeedIndicator(io::network::NetworkClient *netClient, QObject *parent)
-  : QObject(parent)
+  : QObject(parent),
+    d_previousTime()
 {
     using io::network::NetworkClient;
     connect(netClient, &NetworkClient::airspeedChanged, this, &AirspeedIndicator::updateAirspeed);

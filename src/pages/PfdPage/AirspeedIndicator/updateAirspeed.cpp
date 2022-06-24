@@ -1,5 +1,6 @@
 #include "AirspeedIndicator.hpp"
 #include <cmath>
+using namespace std::chrono;
 
 namespace pages::pfd
 {
@@ -9,6 +10,9 @@ void AirspeedIndicator::updateAirspeed(double newValue)
     d_rawAirspeed = newValue;
 
     d_airspeed = std::max(newValue, 20.0);
+
+    updateAcceleration(newValue);
+
     emit airspeedChanged();
 
     int newCenter = std::max(std::lround(newValue / 10.0 + 0.5) * 10, 60l);

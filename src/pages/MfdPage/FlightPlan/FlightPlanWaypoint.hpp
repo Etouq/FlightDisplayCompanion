@@ -39,49 +39,6 @@ struct FlightPlanWaypoint
 
 }  // namespace pages::mfd
 
-class QmlWaypointTypeClass
-{
-Q_GADGET
 
-    public:
-
-    enum class Value
-    {
-        NONE = static_cast<int>(pages::mfd::WaypointType::NONE),
-        AIRPORT = static_cast<int>(pages::mfd::WaypointType::AIRPORT),
-        INTERSECTION = static_cast<int>(pages::mfd::WaypointType::INTERSECTION),
-        VOR = static_cast<int>(pages::mfd::WaypointType::VOR),
-        NDB = static_cast<int>(pages::mfd::WaypointType::NDB),
-        USER = static_cast<int>(pages::mfd::WaypointType::USER),
-        ATC = static_cast<int>(pages::mfd::WaypointType::ATC)
-    };
-    Q_ENUM(Value)
-
-private:
-    explicit QmlWaypointTypeClass();
-};
-
-class QmlWpAltitudeTypeClass
-{
-Q_GADGET
-
-    public:
-
-    enum class Value
-    {
-        NONE = static_cast<int>(pages::mfd::WpAltitudeType::NONE),
-        AT = static_cast<int>(pages::mfd::WpAltitudeType::AT),
-        AT_OR_BELOW = static_cast<int>(pages::mfd::WpAltitudeType::AT_OR_BELOW),
-        AT_OR_ABOVE = static_cast<int>(pages::mfd::WpAltitudeType::AT_OR_ABOVE),
-        BETWEEN = static_cast<int>(pages::mfd::WpAltitudeType::BETWEEN)
-    };
-    Q_ENUM(Value)
-
-private:
-    explicit QmlWpAltitudeTypeClass();
-};
-
-typedef QmlWaypointTypeClass::Value QmlWaypointType;
-typedef QmlWpAltitudeTypeClass::Value QmlWpAltitudeType;
 
 #endif  // __FLIGHTPLAN_WAYPOINT_HPP__

@@ -2,6 +2,7 @@
 #define __HSINDICATOR_HPP__
 
 #include "common/typeEnums.hpp"
+#include "common/QmlEnums.hpp"
 
 #include <QObject>
 

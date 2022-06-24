@@ -3,6 +3,7 @@
 
 #include "common/dataIdentifiers.hpp"
 #include "common/typeEnums.hpp"
+#include "common/QmlEnums.hpp"
 
 #include <QByteArray>
 #include <QObject>

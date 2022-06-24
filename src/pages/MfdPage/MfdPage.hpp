@@ -31,7 +31,7 @@ public:
 
 signals:
 
-    void gaugesLoaded();
+    void gaugesLoaded(const QString &layoutPath);
 
 public slots:
 

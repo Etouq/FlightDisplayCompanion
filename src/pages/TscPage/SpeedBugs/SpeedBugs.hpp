@@ -31,6 +31,12 @@ public:
     Q_INVOKABLE void setSpeed(int idx, int newSpeed)
     {
         d_speedBugs[idx].speed = newSpeed;
+
+        emit speedBugsChanged();
+
+        if (d_activeSpeedBugIds.contains(idx))
+            emit activeSpeedBugsChanged();
+
     }
 
     Q_INVOKABLE bool active(int idx) const
@@ -49,6 +55,22 @@ public:
             d_activeSpeedBugIds.remove(idx);
         }
 
+        emit speedBugsChanged();
+        emit activeSpeedBugsChanged();
+    }
+
+    Q_INVOKABLE void toggleActive(int idx)
+    {
+        if (d_activeSpeedBugIds.contains(idx))
+        {
+            d_activeSpeedBugIds.remove(idx);
+        }
+        else
+        {
+            d_activeSpeedBugIds.insert(idx);
+        }
+
+        emit speedBugsChanged();
         emit activeSpeedBugsChanged();
     }
 
@@ -81,6 +103,11 @@ public:
     Q_INVOKABLE QList<int> getActiveIds() const
     {
         return QList<int>(d_activeSpeedBugIds.constBegin(), d_activeSpeedBugIds.constEnd());
+    }
+
+    Q_INVOKABLE int numSpeedbugs() const
+    {
+        return d_speedBugs.size();
     }
 
 signals:
