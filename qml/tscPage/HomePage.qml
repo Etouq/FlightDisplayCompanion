@@ -1,6 +1,8 @@
 import QtQuick 2.15
 import "styled_controls"
 import "styled_controls/gradientButtonElements"
+import General.Settings 1.0
+import TypeEnums 1.0
 
 TscPageBase {
     id: root
@@ -14,7 +16,20 @@ TscPageBase {
     signal planeIconClicked()
     signal radiosClicked()
 
-
+    function bearingModeToString(mode: BearingMode) {
+        switch(mode) {
+            case BearingMode.OFF:
+                return "OFF";
+            case BearingMode.NAV1:
+                return "NAV1";
+            case BearingMode.NAV2:
+                return "NAV2";
+            case BearingMode.GPS:
+                return "GPS";
+            case BearingMode.ADF:
+                return "ADF";
+        }
+    }
 
 
     Column {
@@ -29,7 +44,6 @@ TscPageBase {
 
             GradientButton {
                 id: brg1Button
-                property var values: ["OFF", "NAV1", "NAV2", "GPS", "ADF"]
 
                 UpperTitle {
                     text: "Bearing 1"
@@ -40,15 +54,14 @@ TscPageBase {
                 }
 
                 LowerValue {
-                    text: brg1Button.values[hsiBrgInterface.brg1Mode]
+                    text: root.bearingModeToString(GenSettings.bearing1Mode)
                 }
 
-                onReleased: hsiBrgInterface.brg1Mode = (hsiBrgInterface.brg1Mode + 1) % 5
+                onReleased: GenSettings.nextBearing1Mode()
             }
 
             GradientButton {
                 id: brg2Button
-                property var values: ["OFF", "NAV1", "NAV2", "GPS", "ADF"]
 
                 UpperTitle {
                     text: "Bearing 2"
@@ -59,10 +72,10 @@ TscPageBase {
                 }
 
                 LowerValue {
-                    text: brg2Button.values[hsiBrgInterface.brg2Mode]
+                    text: root.bearingModeToString(GenSettings.bearing2Mode)
                 }
 
-                onReleased: hsiBrgInterface.brg2Mode = (hsiBrgInterface.brg2Mode + 1) % 5
+                onReleased: GenSettings.nextBearing2Mode()
             }
         }
 

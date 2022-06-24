@@ -4,6 +4,7 @@ import QtQuick.Controls 2.15
 import "../"
 import "../styled_controls"
 import "../styled_controls/gradientButtonElements"
+import Pfd.Altimeter 1.0
 
 TscPageBase {
     id: root
@@ -41,7 +42,7 @@ TscPageBase {
             writing.text = digits[digits.length - 1];
         }
         else {
-            initial.text = altInterface.minimumsValue + "FT";
+            initial.text = Altimeter.minimumsValue + "FT";
         }
     }
 
@@ -74,7 +75,7 @@ TscPageBase {
     }
 
     Component.onCompleted: {
-        let storedValue = altInterface.minimumsValue;
+        let storedValue = Altimeter.minimumsValue;
 
         for (let i = digits.length - 1; i >= 0; i--) {
             digits[i] = storedValue % 10;
@@ -92,8 +93,8 @@ TscPageBase {
             newValue += digits[i] * Math.pow(10, digits.length - i - 1);
         }
 
-        altInterface.minimumsValue = newValue;
-        altInterface.updateMinimumAlt();
+        Altimeter.minimumsValue = newValue;
+        Altimeter.updateMinimumAlt();
         updateInput();
     }
 
@@ -109,7 +110,7 @@ TscPageBase {
         }
 
         LowerValue {
-            text: altInterface.minimumsState === 0 ? "Off" : altInterface.minimumsState === 1 ? "Baro" : "Radio Alt"
+            text: Altimeter.minimumsState === 0 ? "Off" : Altimeter.minimumsState === 1 ? "Baro" : "Radio Alt"
         }
 
         onReleased: minimumsPopup.visible = true

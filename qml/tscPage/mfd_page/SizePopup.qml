@@ -1,6 +1,7 @@
 import QtQuick 2.15
 import "../styled_controls"
 import "../styled_controls/gradientButtonElements"
+import Mfd.GeoMap 1.0
 
 Rectangle {
     id: popupRoot
@@ -58,7 +59,7 @@ Rectangle {
                     text: "Extra Small"
                 }
 
-                onReleased: { mfdInterface.planeIconScaleFactor = 0.5; popupRoot.visible = false; }
+                onReleased: { GeoMap.iconScale = 0.5; popupRoot.visible = false; }
             }
 
             GradientButton {
@@ -75,7 +76,7 @@ Rectangle {
                     text: "Small"
                 }
 
-                onReleased: { mfdInterface.planeIconScaleFactor = 0.75; popupRoot.visible = false; }
+                onReleased: { GeoMap.iconScale = 0.75; popupRoot.visible = false; }
             }
 
             GradientButton {
@@ -92,7 +93,7 @@ Rectangle {
                     text: "Medium"
                 }
 
-                onReleased: { mfdInterface.planeIconScaleFactor = 1; popupRoot.visible = false; }
+                onReleased: { GeoMap.iconScale = 1; popupRoot.visible = false; }
             }
 
             GradientButton {
@@ -109,7 +110,7 @@ Rectangle {
                     text: "Large"
                 }
 
-                onReleased: { mfdInterface.planeIconScaleFactor = 1.5; popupRoot.visible = false; }
+                onReleased: { GeoMap.iconScale = 1.5; popupRoot.visible = false; }
             }
 
             GradientButton {
@@ -126,7 +127,7 @@ Rectangle {
                     text: "Extra Large"
                 }
 
-                onReleased: { mfdInterface.planeIconScaleFactor = 2; popupRoot.visible = false; }
+                onReleased: { GeoMap.iconScale = 2; popupRoot.visible = false; }
             }
         }
     }

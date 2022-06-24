@@ -1,8 +1,12 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
+import QtQml 2.15
+import Mfd 1.0
+import Mfd.GeoMap 1.0
+import TypeEnums 1.0
 
-import "map"
-import "engineDisplay"
+import "GeoMap"
+import "EngineDisplay"
 
 Item {
 
@@ -11,19 +15,13 @@ Item {
     }
 
     Connections {
-        target: gaugeInterface
-        function onGaugesLoaded() {
-
-
-            let numEngines = 2;
-            let numGauges = 3;
-            const engineString = numEngines === 2 ? "Double" : numEngines === 3 ? "Triple" : "Quad";
-            const gaugeString = numGauges === 2 ? "Double" : numGauges === 3 ? "Triple" : "Quad";
-            edLoader.setSource("qrc:/mfdPage/engineDisplay/Gauges/Layouts/" + engineString + "Engine/" + gaugeString + "Gauge.qml");
+        target: MfdRoot
+        function onGaugesLoaded(layoutPath: string) {
+            edLoader.setSource("qrc:/MfdPage/EngineDisplay/Gauges/Layouts/" + layoutPath + ".qml");
         }
     }
 
-    MapItem {
+    GeoMap {
         id: mapIdentifier
         focus: true
     }
@@ -38,13 +36,38 @@ Item {
         color: "#1A1D21"
 
         Text {
-            property var orientationStrings: ["NORTH UP", "HEADING UP", "TRACK UP"]
+            id: mapOrientationText
+
             anchors.centerIn: parent
             font.pixelSize: 31
             font.bold: true
             font.family: "Roboto Mono"
             color: "white"
-            text: orientationStrings[mfdInterface.mapOrientationMode]
+            text: "NORTH UP"
+
+            Component.onCompleted: function() {
+                mapOrientationText.text = mapOrientationToString();
+            }
+
+            Connections {
+                target: GeoMap
+                function onRotationModeChanged() {
+                    mapOrientationText.text = mapOrientationToString();
+                }
+            }
+
+            function mapOrientationToString() {
+                switch (GeoMap.rotationMode) {
+                    case MapRotationMode.NORTH_UP:
+                        return "NORTH UP";
+                    case MapRotationMode.DTK_UP:
+                        return "DTK UP";
+                    case MapRotationMode.HDG_UP:
+                        return "HDG UP";
+                    case MapRotationMode.TRACK_UP:
+                        return "TRACK UP";
+                }
+            }
         }
     }
 

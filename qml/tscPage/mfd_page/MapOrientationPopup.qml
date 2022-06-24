@@ -1,6 +1,8 @@
 import QtQuick 2.15
 import "../styled_controls"
 import "../styled_controls/gradientButtonElements"
+import Mfd.GeoMap 1.0
+import TypeEnums 1.0
 
 Rectangle {
     id: popupRoot
@@ -58,7 +60,7 @@ Rectangle {
                     text: "North Up"
                 }
 
-                onReleased: { mfdInterface.mapOrientationMode = 0; popupRoot.visible = false; }
+                onReleased: { GeoMap.rotationMode = MapRotationMode.NORTH_UP; popupRoot.visible = false; }
             }
 
             GradientButton {
@@ -74,7 +76,7 @@ Rectangle {
                     text: "Heading Up"
                 }
 
-                onReleased: { mfdInterface.mapOrientationMode = 1; popupRoot.visible = false; }
+                onReleased: { GeoMap.rotationMode = MapRotationMode.HDG_UP; popupRoot.visible = false; }
             }
 
             GradientButton {
@@ -90,9 +92,24 @@ Rectangle {
                     text: "Track Up"
                 }
 
-                onReleased: { mfdInterface.mapOrientationMode = 2; popupRoot.visible = false; }
+                onReleased: { GeoMap.rotationMode = MapRotationMode.TRACK_UP; popupRoot.visible = false; }
             }
         }
+            GradientButton {
+                width: 921.6
+
+                Text {
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    y: 50.4
+                    font.pixelSize: 60
+                    font.family: "Roboto Mono"
+                    font.bold: true
+                    color: "white"
+                    text: "Desired Track Up"
+                }
+
+                onReleased: { GeoMap.rotationMode = MapRotationMode.DTK_UP; popupRoot.visible = false; }
+            }
     }
 
 }

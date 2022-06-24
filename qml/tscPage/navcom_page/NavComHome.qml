@@ -2,6 +2,7 @@ import QtQuick 2.15
 import "../"
 import "../styled_controls"
 import "../styled_controls/gradientButtonElements"
+import Tsc.NavCom 1.0
 
 TscPageBase {
     id: root
@@ -33,38 +34,38 @@ TscPageBase {
 
             RadioRow {
                 name: "COM1"
-                activeFreq: (tscBackend.com1ActiveHz / 1000000).toFixed(3)
-                standbyFreq: (tscBackend.com1StbyHz / 1000000).toFixed(3)
+                activeFreq: (NavCom.com1Freq / 1000000).toFixed(3)
+                standbyFreq: (NavCom.com1StbyFreq / 1000000).toFixed(3)
 
-                onFrequencyClicked: root.radioClicked("COM1 Standby", 118, 136.99, tscBackend.com1ActiveHz, tscBackend.com1StbyHz, tscBackend.setCom1Freq, 3)
-                onXferClicked: tscBackend.swapCom1()
+                onFrequencyClicked: root.radioClicked("COM1 Standby", 118, 136.99, NavCom.com1Freq, NavCom.com1StbyFreq, NavCom.setCom1Freq, 3)
+                onXferClicked: NavCom.swapCom1()
             }
 
             RadioRow {
                 name: "COM2"
-                activeFreq: (tscBackend.com2ActiveHz / 1000000).toFixed(3)
-                standbyFreq: (tscBackend.com2StbyHz / 1000000).toFixed(3)
+                activeFreq: (NavCom.com2Freq / 1000000).toFixed(3)
+                standbyFreq: (NavCom.com2StbyFreq / 1000000).toFixed(3)
 
-                onFrequencyClicked: root.radioClicked("COM2 Standby", 118, 136.99, tscBackend.com2ActiveHz, tscBackend.com2StbyHz, tscBackend.setCom2Freq, 3)
-                onXferClicked: tscBackend.swapCom2()
+                onFrequencyClicked: root.radioClicked("COM2 Standby", 118, 136.99, NavCom.com2Freq, NavCom.com2StbyFreq, NavCom.setCom2Freq, 3)
+                onXferClicked: NavCom.swapCom2()
             }
 
             RadioRow {
                 name: "NAV1"
-                activeFreq: (tscBackend.nav1ActiveHz / 1000000).toFixed(2)
-                standbyFreq: (tscBackend.nav1StbyHz / 1000000).toFixed(2)
+                activeFreq: (NavCom.nav1Freq / 1000000).toFixed(2)
+                standbyFreq: (NavCom.nav1StbyFreq / 1000000).toFixed(2)
 
-                onFrequencyClicked: root.radioClicked("NAV1", 108, 117.95, tscBackend.nav1ActiveHz, tscBackend.nav1StbyHz, tscBackend.setNav1Freq, 2)
-                onXferClicked: tscBackend.swapNav1()
+                onFrequencyClicked: root.radioClicked("NAV1", 108, 117.95, NavCom.nav1Freq, NavCom.nav1StbyFreq, NavCom.setNav1Freq, 2)
+                onXferClicked: NavCom.swapNav1()
             }
 
             RadioRow {
                 name: "NAV2"
-                activeFreq: (tscBackend.nav2ActiveHz / 1000000).toFixed(2)
-                standbyFreq: (tscBackend.nav2StbyHz / 1000000).toFixed(2)
+                activeFreq: (NavCom.nav2Freq / 1000000).toFixed(2)
+                standbyFreq: (NavCom.nav2StbyFreq / 1000000).toFixed(2)
 
-                onFrequencyClicked: root.radioClicked("NAV2", 108, 117.95, tscBackend.nav2ActiveHz, tscBackend.nav2StbyHz, tscBackend.setNav2Freq, 2)
-                onXferClicked: tscBackend.swapNav2()
+                onFrequencyClicked: root.radioClicked("NAV2", 108, 117.95, NavCom.nav2Freq, NavCom.nav2StbyFreq, NavCom.setNav2Freq, 2)
+                onXferClicked: NavCom.swapNav2()
             }
 
             Row {
@@ -111,8 +112,8 @@ TscPageBase {
                             property var stateToString: ["Off", "STBY", "TEST", "ON", "ALT"]
                             x: 33.792
                             font.pixelSize: 36
-                            color: tscBackend.xpdrState === 3 || tscBackend.xpdrState === 4 ? "lawngreen" : "white"
-                            text: stateToString[tscBackend.xpdrState]
+                            color: NavCom.xpdrState === 3 || NavCom.xpdrState === 4 ? "lawngreen" : "white"
+                            text: stateToString[NavCom.xpdrState]
                         }
 
                         Text {
@@ -121,8 +122,8 @@ TscPageBase {
                             font.pixelSize: 84
                             font.family: "Roboto Mono"
                             font.bold: true
-                            color: tscBackend.xpdrState === 3 || tscBackend.xpdrState === 4 ? "lawngreen" : "white"
-                            text: ("0000" + tscBackend.xpdrCode).slice(-4)
+                            color: NavCom.xpdrState === 3 || NavCom.xpdrState === 4 ? "lawngreen" : "white"
+                            text: ("0000" + NavCom.xpdrCode).slice(-4)
                         }
 
                         onReleased: root.xpndrClicked()

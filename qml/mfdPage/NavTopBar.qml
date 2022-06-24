@@ -2,6 +2,12 @@ import QtQuick 2.15
 import QtQuick.Shapes 1.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
+import Pfd.NavInfo 1.0
+import Pfd.Bottombar 1.0
+import Pfd.WindInfo 1.0
+import Mfd.Flightplan 1.0
+import Pfd.HSIndicator 1.0
+import Pfd.Bearings 1.0
 
 Item {
     width: parent.width
@@ -13,8 +19,6 @@ Item {
         width: 1365
         height: 48
         color: "#1A1D21"
-
-        property bool flightPlanActive: navInterface.gpsIsActiveFlightPlan
 
         Row {
             spacing: 0
@@ -40,7 +44,7 @@ Item {
                 font.family: "Roboto Mono"
                 font.bold: true
                 color: "#D12BC7"
-                text: bottomInterface.groundSpeed + "KT"
+                text: Bottombar.groundSpeed + "KT"
             }
 
             Text {
@@ -64,7 +68,7 @@ Item {
                 font.family: "Roboto Mono"
                 font.bold: true
                 color: "#D12BC7"
-                text: bg.flightPlanActive ? mfdInterface.gps_dtk.toFixed(0) + "°" : "___°"
+                text: NavInfo.gpsIsActiveFlightPlan ? Flightplan.wpDtk.toFixed(0) + "°" : "___°"
             }
 
             Text {
@@ -88,7 +92,7 @@ Item {
                 font.family: "Roboto Mono"
                 font.bold: true
                 color: "#D12BC7"
-                text: hsiInterface.currentTrackAngle.toFixed(0) +  "°"
+                text: HSIndicator.currentTrackAngle.toFixed(0) +  "°"
             }
 
             Text {
@@ -112,7 +116,7 @@ Item {
                 font.family: "Roboto Mono"
                 font.bold: true
                 color: "#D12BC7"
-                text: bg.flightPlanActive ? mfdInterface.ete : "__:__"
+                text: NavInfo.gpsIsActiveFlightPlan ? Flightplan.wpEte : "__:__"
             }
 
             Text {
@@ -136,7 +140,7 @@ Item {
                 font.family: "Roboto Mono"
                 font.bold: true
                 color: "#D12BC7"
-                text: bg.flightPlanActive ? hsiBrgInterface.gpsBearing.toFixed(0) + "°" : "___°"
+                text: NavInfo.gpsIsActiveFlightPlan ? Bearings.gpsBearing.toFixed(0) + "°" : "___°"
             }
 
             Text {
@@ -160,7 +164,7 @@ Item {
                 font.family: "Roboto Mono"
                 font.bold: true
                 color: "#D12BC7"
-                text: hsiBrgInterface.gpsDistance === "" || !bg.flightPlanActive ? "__._NM" : hsiBrgInterface.gpsDistance
+                text: Bearings.gpsDistance === "" || !NavInfo.gpsIsActiveFlightPlan ? "__._NM" : Bearings.gpsDistance
             }
 
             Text {
@@ -184,7 +188,7 @@ Item {
                 font.family: "Roboto Mono"
                 font.bold: true
                 color: "#D12BC7"
-                text: bg.flightPlanActive ? mfdInterface.eta : "__:__UTC"
+                text: NavInfo.gpsIsActiveFlightPlan ? Flightplan.destEta : "__:__UTC"
             }
         }
     }
@@ -197,7 +201,7 @@ Item {
         color: "#1A1D21"
 
         Shape {
-            transform: Rotation { angle: windInterface.windTrueDirection + 180; origin.x: 33.75; origin.y: 45 }
+            transform: Rotation { angle: WindInfo.windTrueDirection + 180; origin.x: 33.75; origin.y: 45 }
             ShapePath {
                 fillColor: "white"
                 strokeColor: "transparent"
@@ -219,7 +223,7 @@ Item {
             font.family: "Roboto Mono"
             font.bold: true
             font.pixelSize: 45
-            text: Math.round(windInterface.windStrength)
+            text: Math.round(WindInfo.windStrength)
         }
     }
 }

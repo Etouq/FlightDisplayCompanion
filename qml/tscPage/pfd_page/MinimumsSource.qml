@@ -1,6 +1,7 @@
 import QtQuick 2.15
 import "../styled_controls"
 import "../styled_controls/gradientButtonElements"
+import Pfd.Altimeter 1.0
 
 Rectangle {
     id: popupRoot
@@ -58,7 +59,7 @@ Rectangle {
                 }
 
                 onReleased: {
-                    altInterface.minimumsState = 0;
+                    Altimeter.minimumsState = 0;
                     popupRoot.visible = false;
                 }
             }
@@ -78,8 +79,8 @@ Rectangle {
                 }
 
                 onReleased: {
-                    altInterface.minimumsState = 1;
-                    altInterface.updateMinimumAlt();
+                    Altimeter.minimumsState = 1;
+                    Altimeter.updateMinimumAlt();
                     popupRoot.visible = false;
                 }
             }
@@ -99,8 +100,8 @@ Rectangle {
                 }
 
                 onReleased: {
-                    altInterface.minimumsState = 2;
-                    altInterface.updateMinimumAlt();
+                    Altimeter.minimumsState = 2;
+                    Altimeter.updateMinimumAlt();
                     popupRoot.visible = false;
                 }
             }

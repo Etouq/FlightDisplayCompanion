@@ -2,6 +2,7 @@ import QtQuick 2.15
 import "../"
 import "../styled_controls"
 import "../styled_controls/gradientButtonElements"
+import Tsc.FlightTmr 1.0
 
 TscPageBase {
     id: root
@@ -13,12 +14,9 @@ TscPageBase {
 
     signal timeValueClicked()
 
-    Timer {
-        interval: 100
-        repeat: true
-        running: tscBackend.isCounting
-        onTriggered: tscBackend.updateTime();
-    }
+    Component.onCompleted: FlightTmr.movedOnscreen();
+
+    Component.onDestruction: FlightTmr.movedOffscreen();
 
     GradientButton {
         width: 510.72
@@ -47,7 +45,7 @@ TscPageBase {
             font.bold: true
             color: "aqua"
             font.pixelSize: 84
-            text: tscBackend.timeString
+            text: FlightTmr.timeString
         }
 
         onReleased: root.timeValueClicked()
@@ -87,10 +85,10 @@ TscPageBase {
 
             GradientStatusBar {
                 id: upTimerStatus
-                active: !downTimerStatus.active
+                active: !FlightTmr.countingDown
             }
 
-            onReleased: tscBackend.setCountingDown(false);
+            onReleased: FlightTmr.setCountingDown(false);
         }
 
         GradientButton {
@@ -105,10 +103,10 @@ TscPageBase {
 
             GradientStatusBar {
                 id: downTimerStatus
-                active: tscBackend.isCountingDown
+                active: FlightTmr.countingDown
             }
 
-            onReleased: tscBackend.setCountingDown(true);
+            onReleased: FlightTmr.setCountingDown(true);
         }
     }
 
@@ -122,7 +120,7 @@ TscPageBase {
             text: "Reset"
         }
 
-        onReleased: tscBackend.reset();
+        onReleased: FlightTmr.reset();
     }
 
     GradientButton {
@@ -132,10 +130,10 @@ TscPageBase {
         anchors.bottomMargin: 162
 
         UpperTitle {
-            text: tscBackend.isCounting ? "Stop" : "Start"
+            text: FlightTmr.running ? "Stop" : "Start"
         }
 
-        onReleased: tscBackend.switchCounting();
+        onReleased: FlightTmr.running ? FlightTmr.stop() : FlightTmr.start();
     }
 
 

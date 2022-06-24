@@ -3,6 +3,7 @@ import QtQuick.Layouts 1.12
 import "../"
 import "../styled_controls"
 import "../styled_controls/gradientButtonElements"
+import Tsc.SpeedBugs 1.0
 
 TscPageBase {
     id: root
@@ -13,7 +14,7 @@ TscPageBase {
     pageTitle: "Speed Bugs"
 
 
-    signal valueClicked(var _callback, int _startingValue);
+    signal valueClicked(int _bugIndex, int _startingValue);
 
     function setVr(value) {
         tscBackend.vrSpeed = value;
@@ -50,14 +51,81 @@ TscPageBase {
         }
 
         Column {
-            anchors.left: parent.left
-            anchors.right: parent.right
-            anchors.top: parent.top
-            anchors.bottom: parent.bottom
-            anchors.leftMargin: 10.8
-            anchors.rightMargin: 10.8
-            anchors.topMargin: 10.8
-            anchors.bottomMargin: 10.8
+            anchors.fill: parent
+            anchors.margins: 10.8
+            spacing: 2.4
+
+            Repeater {
+                model: SpeedBugs.numSpeedbugs()
+
+                delegate: Item {
+
+                    required property int index
+
+                    Rectangle {
+                        x: 0
+                        width: 354.6
+                        height: 197.76
+                        color: "#1a1d21"
+                        border.color: "transparent"
+                        border.width: 0
+
+                        GradientButton {
+                            anchors.centerIn: parent
+                            width: 346.8
+                            height: 188.16
+
+                            MainText {
+                                text: "V" + SpeedBugs.designator(index)
+                            }
+
+                            GradientStatusBar {
+                                id: vrStatus
+                                active: SpeedBugs.active(index)
+                            }
+
+                            onReleased: SpeedBugs.toggleActive(index)
+                        }
+                    }
+
+                    Rectangle {
+                        anchors.right: parent.right
+                        width: 354.6
+                        height: 197.76
+                        color: "#1a1d21"
+                        border.color: "transparent"
+                        border.width: 0
+
+                        GradientButton {
+                            anchors.centerIn: parent
+                            width: 346.8
+                            height: 188.16
+
+                            Text {
+                                width: parent.width
+                                anchors.top: parent.top
+                                anchors.topMargin: 42
+                                horizontalAlignment: Text.AlignHCenter
+                                font.pixelSize: 60
+                                font.family: "Roboto Mono"
+                                font.bold: true
+                                color: "aqua"
+                                text: SpeedBugs.speed(index) + "KT"
+                            }
+
+                            onReleased: root.valueClicked(index, SpeedBugs.speed(index))
+                        }
+                    }
+
+
+                }
+            }
+
+        }
+
+        Column {
+            anchors.fill: parent
+            anchors.margins: 10.8
             spacing: 4.8
 
             Item {
@@ -312,7 +380,7 @@ TscPageBase {
         }
 
         onReleased: {
-            aircraftInterface.updateDefaultSpeedbugs(tscBackend.vrSpeed, tscBackend.vxSpeed, tscBackend.vySpeed, tscBackend.vappSpeed);
+            SpeedBugs.updateDefaultSpeedbugs(tscBackend.vrSpeed, tscBackend.vxSpeed, tscBackend.vySpeed, tscBackend.vappSpeed);
         }
     }
 

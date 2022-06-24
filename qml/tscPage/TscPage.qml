@@ -7,6 +7,9 @@ import "styled_controls/gradientButtonElements"
 import "pfd_page"
 import "navcom_page"
 import "mfd_page"
+import Tsc.FlightTmr 1.0
+import Tsc.NavCom 1.0
+import Tsc.SpeedBugs 1.0
 
 Rectangle {
     id: tscRoot
@@ -48,9 +51,9 @@ Rectangle {
         id: speedBugsLoader
         active: false
         sourceComponent: SpeedBugs {
-            onValueClicked: {
+            onValueClicked: function(_bugIndex, _startingValue) {
                 speedKeyboardLoader.active = true;
-                speedKeyboardLoader.item.setContext(_callback, _startingValue);
+                speedKeyboardLoader.item.setContext(_bugIndex, _startingValue);
                 speedBugsLoader.visible = false;
             }
             onBackClicked: {
@@ -70,7 +73,7 @@ Rectangle {
         sourceComponent: Timers {
             onTimeValueClicked: {
                 timeKeyboardLoader.active = true;
-                timeKeyboardLoader.item.currentInput = tscBackend.getCurrentDisplay();
+                timeKeyboardLoader.item.currentInput = FlightTmr.timeString;
                 timeKeyboardLoader.item.updateInput();
                 timersLoader.active = false;
             }
@@ -160,7 +163,7 @@ Rectangle {
         active: false
         sourceComponent: SpeedKeyboard {
             onEnterClicked: {
-                callback(currentInput);
+                SpeedBugs.setSpeed(bugIndex, currentInput);
                 speedBugsLoader.visible = true;
                 speedKeyboardLoader.active = false;
             }
@@ -183,7 +186,7 @@ Rectangle {
         sourceComponent: TimeKeyboard {
             onEnterClicked: {
                 if (validateEdit()) {
-                    tscBackend.endKeyboardCallback(currentInput);
+                    FlightTmr.setTime(currentInput);
                     timersLoader.active = true;
                     timeKeyboardLoader.active = false;
                 }
@@ -237,7 +240,7 @@ Rectangle {
                     }
 
                     let code = 4096 * currentInput[0] + 256 * currentInput[1] + 16 * currentInput[2] + currentInput[3];
-                    tscBackend.setXpdrCode(code);
+                    NavCom.xpdrCode = code;
                     radioLoader.active = true;
                     xpdrKeyboardLoader.active = false;
                 }

@@ -3,6 +3,8 @@ import QtQuick.Controls 2.15
 import "../"
 import "../styled_controls"
 import "../styled_controls/gradientButtonElements"
+import Tsc.NavCom 1.0
+import TypeEnums 1.0
 
 TscPageBase {
     id: root
@@ -27,7 +29,7 @@ TscPageBase {
         toWrite.text = "";
 
         if (inputIndex == -1) {
-            fixed.text = ("0000" + tscBackend.xpdrCode).slice(-4);
+            fixed.text = ("0000" + NavCom.xpdrCode).slice(-4);
         }
         else {
             let regex = new RegExp('(.{' + inputIndex + '})(.?)(.*)');
@@ -49,6 +51,11 @@ TscPageBase {
         if (inputIndex < 4) {
             currentInput[inputIndex] = _digit;
             inputIndex++;
+
+            if (inputIndex === 4) {
+                let code = 4096 * root.currentInput[0] + 256 * root.currentInput[1] + 16 * root.currentInput[2] + root.currentInput[3];
+                NavCom.xpdrCode = code;
+            }
         }
 
         updateInput();
@@ -91,10 +98,10 @@ TscPageBase {
             }
 
             GradientStatusBar {
-                active: tscBackend.xpdrState === 4
+                active: NavCom.xpdrState === TransponderState.ALT
             }
 
-            onReleased: tscBackend.xpdrState = 4
+            onReleased: tscBackend.xpdrState = TransponderState.ALT
         }
 
         GradientButton {
@@ -104,10 +111,10 @@ TscPageBase {
             }
 
             GradientStatusBar {
-                active: tscBackend.xpdrState === 3
+                active: NavCom.xpdrState === TransponderState.ON
             }
 
-            onReleased: tscBackend.xpdrState = 3
+            onReleased: NavCom.xpdrState = TransponderState.ON
         }
 
         GradientButton {
@@ -117,10 +124,10 @@ TscPageBase {
             }
 
             GradientStatusBar {
-                active: tscBackend.xpdrState === 1
+                active: NavCom.xpdrState === TransponderState.STANDBY
             }
 
-            onReleased: tscBackend.xpdrState = 1
+            onReleased: NavCom.xpdrState = TransponderState.STANDBY
         }
     }
 
@@ -311,6 +318,9 @@ TscPageBase {
             root.currentInput = [1, 2, 0, 0];
             root.inputIndex = 4
             root.updateInput();
+
+            let code = 4096 * root.currentInput[0] + 256 * root.currentInput[1] + 16 * root.currentInput[2] + root.currentInput[3];
+            NavCom.xpdrCode = code;
         }
     }
 

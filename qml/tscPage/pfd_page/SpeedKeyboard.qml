@@ -13,13 +13,13 @@ TscPageBase {
 
     pageTitle: "Enter Speed"
 
-    function setContext(_callback, _startingValue) {
-        callback = _callback;
+    function setContext(_bugIndex, _startingValue) {
+        bugIndex = _bugIndex;
         currentInput = _startingValue;
         updateInput();
     }
 
-    property var callback
+    property int bugIndex
 
     property var digits: [0, 0, 0]
     property bool isInputing: false

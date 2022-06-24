@@ -3,19 +3,14 @@ import QtQuick.Window 2.15
 import QtQuick.Shapes 1.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
-import "pfdElements"
-import "pfdElements/AttitudeIndicator"
-import "pfdElements/HsiIndicator"
-import "pfdElements/AirspeedIndicator"
-import "pfdElements/Altimeter"
+import "Elements"
+import "Elements/AttitudeIndicator"
+import "Elements/HsiIndicator"
+import "Elements/AirspeedIndicator"
+import "Elements/Altimeter"
 
 Item {
 
-    property int airspeedLastCallTime: 0
-
-    Component.onCompleted: {
-        airspeedLastCallTime = new Date().getTime();
-    }
 
     AttitudeBackground {
         anchors.fill: parent

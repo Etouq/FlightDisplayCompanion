@@ -2,6 +2,7 @@ import QtQuick 2.15
 import "../"
 import "../styled_controls"
 import "../styled_controls/gradientButtonElements"
+import Mfd.GeoMap 1.0
 
 TscPageBase {
     id: root
@@ -73,7 +74,7 @@ TscPageBase {
         id: fillColorPopup
 
         onColorPicked: {
-            mfdInterface.planeIconColor = _newColor;
+            GeoMap.iconColor = _newColor;
         }
     }
 
@@ -81,7 +82,7 @@ TscPageBase {
         id: borderColorPopup
 
         onColorPicked: {
-            mfdInterface.planeIconBorderColor = _newColor;
+            GeoMap.iconBorder = _newColor;
         }
     }
 
