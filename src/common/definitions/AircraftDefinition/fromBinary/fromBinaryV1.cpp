@@ -6,7 +6,7 @@ namespace definitions
 
 void AircraftDefinition::fromBinaryV1(QIODevice &data, FileVersion version)
 {
-    name = Converters::convert<QString>(data);
+    name = Converters::convertString(data);
     fuelQtyGauge = GaugeDefinition::fromBinary(data, version);
     fuelFlowGauge = GaugeDefinition::fromBinary(data, version);
     oilTempGauge = GaugeDefinition::fromBinary(data, version);

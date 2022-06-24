@@ -1,5 +1,5 @@
 #include "NetworkClient.hpp"
-#include "common/binaryconverter.hpp"
+#include "common/converters/listConverters.hpp"
 #include "common/dataIdentifiers.hpp"
 #include <QGeoCoordinate>
 
@@ -32,7 +32,7 @@ void NetworkClient::readSimData()
                     d_socket.rollbackTransaction();
                     return;
                 }
-                BinaryConverter::convert(d_socket, byteSize);
+                Converters::convert(d_socket, byteSize);
 
                 if (d_socket.bytesAvailable() < byteSize)
                 {
@@ -42,7 +42,7 @@ void NetworkClient::readSimData()
 
                 d_socket.commitTransaction();
 
-                emit receivedFlightplan(BinaryConverter::convertList<FlightPlanWaypoint>(d_socket));
+                emit receivedFlightplan(Converters::convertList<pages::mfd::FlightPlanWaypoint>(d_socket));
                 break;
             }
 
@@ -81,7 +81,7 @@ void NetworkClient::readSimData()
                     d_socket.rollbackTransaction();
                     return;
                 }
-                BinaryConverter::convert(d_socket, size);
+                Converters::convert(d_socket, size);
 
                 if (d_socket.bytesAvailable() < static_cast<int64_t>(size))
                 {
@@ -93,7 +93,7 @@ void NetworkClient::readSimData()
 
                 if (size > 0) [[likely]]
                 {
-                    emit newErrorMessage(BinaryConverter::convertWithSize(d_socket, size));
+                    emit newErrorMessage(Converters::convertString(d_socket, size));
                 }
 
                 break;
@@ -112,8 +112,8 @@ void NetworkClient::readSimData()
                 }
                 d_socket.commitTransaction();
 
-                BinaryConverter::convert(d_socket, newLat);
-                BinaryConverter::convert(d_socket, newLon);
+                Converters::convert(d_socket, newLat);
+                Converters::convert(d_socket, newLon);
 
                 emit coordinatesChanged(QGeoCoordinate(newLat, newLon));
                 break;
@@ -128,7 +128,7 @@ void NetworkClient::readSimData()
                 }
 
                 d_socket.commitTransaction();
-                BinaryConverter::convert(d_socket, newValue);
+                Converters::convert(d_socket, newValue);
                 emit trueHeadingChanged(newValue);
                 break;
             }
@@ -142,7 +142,7 @@ void NetworkClient::readSimData()
                 }
 
                 d_socket.commitTransaction();
-                BinaryConverter::convert(d_socket, newValue);
+                Converters::convert(d_socket, newValue);
                 emit gpsWpDtkChanged(newValue);
                 break;
             }
@@ -156,7 +156,7 @@ void NetworkClient::readSimData()
                 }
 
                 d_socket.commitTransaction();
-                BinaryConverter::convert(d_socket, newValue);
+                Converters::convert(d_socket, newValue);
                 emit gpsWpEteChanged(newValue);
                 break;
             }
@@ -170,7 +170,7 @@ void NetworkClient::readSimData()
                 }
 
                 d_socket.commitTransaction();
-                BinaryConverter::convert(d_socket, newValue);
+                Converters::convert(d_socket, newValue);
                 emit gpsEteChanged(newValue);
                 break;
             }
@@ -184,7 +184,7 @@ void NetworkClient::readSimData()
                 }
 
                 d_socket.commitTransaction();
-                BinaryConverter::convert(d_socket, newValue);
+                Converters::convert(d_socket, newValue);
                 emit fuelLeftQtyChanged(newValue);
                 break;
             }
@@ -198,7 +198,7 @@ void NetworkClient::readSimData()
                 }
 
                 d_socket.commitTransaction();
-                BinaryConverter::convert(d_socket, newValue);
+                Converters::convert(d_socket, newValue);
                 emit fuelRightQtyChanged(newValue);
                 break;
             }
@@ -216,8 +216,8 @@ void NetworkClient::readSimData()
                 }
 
                 d_socket.commitTransaction();
-                BinaryConverter::convert(d_socket, engineIdx);
-                BinaryConverter::convert(d_socket, newValue);
+                Converters::convert(d_socket, engineIdx);
+                Converters::convert(d_socket, newValue);
                 emit engineN1Changed(newValue, engineIdx);
                 break;
             }
@@ -233,8 +233,8 @@ void NetworkClient::readSimData()
                 }
 
                 d_socket.commitTransaction();
-                BinaryConverter::convert(d_socket, engineIdx);
-                BinaryConverter::convert(d_socket, newValue);
+                Converters::convert(d_socket, engineIdx);
+                Converters::convert(d_socket, newValue);
                 emit engineN2Changed(newValue, engineIdx);
                 break;
             }
@@ -250,8 +250,8 @@ void NetworkClient::readSimData()
                 }
 
                 d_socket.commitTransaction();
-                BinaryConverter::convert(d_socket, engineIdx);
-                BinaryConverter::convert(d_socket, newValue);
+                Converters::convert(d_socket, engineIdx);
+                Converters::convert(d_socket, newValue);
                 emit engineIttChanged(newValue, engineIdx);
                 break;
             }
@@ -267,8 +267,8 @@ void NetworkClient::readSimData()
                 }
 
                 d_socket.commitTransaction();
-                BinaryConverter::convert(d_socket, engineIdx);
-                BinaryConverter::convert(d_socket, newValue);
+                Converters::convert(d_socket, engineIdx);
+                Converters::convert(d_socket, newValue);
                 emit engineRpmChanged(newValue, engineIdx);
                 break;
             }
@@ -284,8 +284,8 @@ void NetworkClient::readSimData()
                 }
 
                 d_socket.commitTransaction();
-                BinaryConverter::convert(d_socket, engineIdx);
-                BinaryConverter::convert(d_socket, newValue);
+                Converters::convert(d_socket, engineIdx);
+                Converters::convert(d_socket, newValue);
                 emit enginePowerChanged(newValue, engineIdx);
                 break;
             }
@@ -301,8 +301,8 @@ void NetworkClient::readSimData()
                 }
 
                 d_socket.commitTransaction();
-                BinaryConverter::convert(d_socket, engineIdx);
-                BinaryConverter::convert(d_socket, newValue);
+                Converters::convert(d_socket, engineIdx);
+                Converters::convert(d_socket, newValue);
                 emit engineManPressChanged(newValue, engineIdx);
                 break;
             }
@@ -318,8 +318,8 @@ void NetworkClient::readSimData()
                 }
 
                 d_socket.commitTransaction();
-                BinaryConverter::convert(d_socket, engineIdx);
-                BinaryConverter::convert(d_socket, newValue);
+                Converters::convert(d_socket, engineIdx);
+                Converters::convert(d_socket, newValue);
                 emit engineTrqChanged(newValue, engineIdx);
                 break;
             }
@@ -335,8 +335,8 @@ void NetworkClient::readSimData()
                 }
 
                 d_socket.commitTransaction();
-                BinaryConverter::convert(d_socket, engineIdx);
-                BinaryConverter::convert(d_socket, newValue);
+                Converters::convert(d_socket, engineIdx);
+                Converters::convert(d_socket, newValue);
                 emit engineChtChanged(newValue, engineIdx);
                 break;
             }
@@ -352,8 +352,8 @@ void NetworkClient::readSimData()
                 }
 
                 d_socket.commitTransaction();
-                BinaryConverter::convert(d_socket, engineIdx);
-                BinaryConverter::convert(d_socket, newValue);
+                Converters::convert(d_socket, engineIdx);
+                Converters::convert(d_socket, newValue);
                 emit engineFuelFlowChanged(newValue, engineIdx);
                 break;
             }
@@ -369,8 +369,8 @@ void NetworkClient::readSimData()
                 }
 
                 d_socket.commitTransaction();
-                BinaryConverter::convert(d_socket, engineIdx);
-                BinaryConverter::convert(d_socket, newValue);
+                Converters::convert(d_socket, engineIdx);
+                Converters::convert(d_socket, newValue);
                 emit engineEgtChanged(newValue, engineIdx);
                 break;
             }
@@ -386,8 +386,8 @@ void NetworkClient::readSimData()
                 }
 
                 d_socket.commitTransaction();
-                BinaryConverter::convert(d_socket, engineIdx);
-                BinaryConverter::convert(d_socket, newValue);
+                Converters::convert(d_socket, engineIdx);
+                Converters::convert(d_socket, newValue);
                 emit engineOilTempChanged(newValue, engineIdx);
                 break;
             }
@@ -403,8 +403,8 @@ void NetworkClient::readSimData()
                 }
 
                 d_socket.commitTransaction();
-                BinaryConverter::convert(d_socket, engineIdx);
-                BinaryConverter::convert(d_socket, newValue);
+                Converters::convert(d_socket, engineIdx);
+                Converters::convert(d_socket, newValue);
                 emit engineOilPressChanged(newValue, engineIdx);
                 break;
             }
@@ -421,7 +421,7 @@ void NetworkClient::readSimData()
                 }
 
                 d_socket.commitTransaction();
-                BinaryConverter::convert(d_socket, newValue);
+                Converters::convert(d_socket, newValue);
                 emit apuN1Changed(newValue);
                 break;
             }
@@ -438,9 +438,9 @@ void NetworkClient::readSimData()
                 }
 
                 d_socket.commitTransaction();
-                BinaryConverter::convert(d_socket, totalFuelQty);
-                BinaryConverter::convert(d_socket, totalFuelFlow);
-                BinaryConverter::convert(d_socket, groundSpeed);
+                Converters::convert(d_socket, totalFuelQty);
+                Converters::convert(d_socket, totalFuelFlow);
+                Converters::convert(d_socket, groundSpeed);
                 emit fuelTextDataChanged(totalFuelQty, totalFuelFlow, groundSpeed);
                 break;
             }
@@ -455,7 +455,7 @@ void NetworkClient::readSimData()
                 }
 
                 d_socket.commitTransaction();
-                BinaryConverter::convert(d_socket, newValue);
+                Converters::convert(d_socket, newValue);
                 emit flapsAngleChanged(newValue);
                 break;
             }
@@ -470,7 +470,7 @@ void NetworkClient::readSimData()
                 }
 
                 d_socket.commitTransaction();
-                BinaryConverter::convert(d_socket, newValue);
+                Converters::convert(d_socket, newValue);
                 emit spoilersPctChanged(newValue);
                 break;
             }
@@ -485,7 +485,7 @@ void NetworkClient::readSimData()
                 }
 
                 d_socket.commitTransaction();
-                BinaryConverter::convert(d_socket, newValue);
+                Converters::convert(d_socket, newValue);
                 emit elevTrimChanged(newValue);
                 break;
             }
@@ -500,7 +500,7 @@ void NetworkClient::readSimData()
                 }
 
                 d_socket.commitTransaction();
-                BinaryConverter::convert(d_socket, newValue);
+                Converters::convert(d_socket, newValue);
                 emit ruddTrimChanged(newValue);
                 break;
             }
@@ -515,7 +515,7 @@ void NetworkClient::readSimData()
                 }
 
                 d_socket.commitTransaction();
-                BinaryConverter::convert(d_socket, newValue);
+                Converters::convert(d_socket, newValue);
                 emit ailTrimChanged(newValue);
                 break;
             }
@@ -534,7 +534,7 @@ void NetworkClient::readSimData()
                 }
 
                 d_socket.commitTransaction();
-                BinaryConverter::convert(d_socket, newValue);
+                Converters::convert(d_socket, newValue);
                 emit airspeedChanged(newValue);
                 break;
             }
@@ -549,7 +549,7 @@ void NetworkClient::readSimData()
                 }
 
                 d_socket.commitTransaction();
-                BinaryConverter::convert(d_socket, newValue);
+                Converters::convert(d_socket, newValue);
                 emit maxSpeedChanged(newValue);
                 break;
             }
@@ -564,7 +564,7 @@ void NetworkClient::readSimData()
                 }
 
                 d_socket.commitTransaction();
-                BinaryConverter::convert(d_socket, newValue);
+                Converters::convert(d_socket, newValue);
                 emit trueAirspeedChanged(newValue);
                 break;
             }
@@ -579,7 +579,7 @@ void NetworkClient::readSimData()
                 }
 
                 d_socket.commitTransaction();
-                BinaryConverter::convert(d_socket, newValue);
+                Converters::convert(d_socket, newValue);
                 emit refSpeedChanged(newValue);
                 break;
             }
@@ -596,7 +596,7 @@ void NetworkClient::readSimData()
                 }
 
                 d_socket.commitTransaction();
-                BinaryConverter::convert(d_socket, newValue);
+                Converters::convert(d_socket, newValue);
                 emit altitudeChanged(newValue);
                 break;
             }
@@ -611,7 +611,7 @@ void NetworkClient::readSimData()
                 }
 
                 d_socket.commitTransaction();
-                BinaryConverter::convert(d_socket, newValue);
+                Converters::convert(d_socket, newValue);
                 emit radarAltitudeChanged(newValue);
                 break;
             }
@@ -626,7 +626,7 @@ void NetworkClient::readSimData()
                 }
 
                 d_socket.commitTransaction();
-                BinaryConverter::convert(d_socket, newValue);
+                Converters::convert(d_socket, newValue);
                 emit refAltitudeChanged(newValue);
                 break;
             }
@@ -641,7 +641,7 @@ void NetworkClient::readSimData()
                 }
 
                 d_socket.commitTransaction();
-                BinaryConverter::convert(d_socket, newValue);
+                Converters::convert(d_socket, newValue);
                 emit pressureChanged(newValue);
                 break;
             }
@@ -657,7 +657,7 @@ void NetworkClient::readSimData()
                 }
 
                 d_socket.commitTransaction();
-                BinaryConverter::convert(d_socket, newValue);
+                Converters::convert(d_socket, newValue);
                 emit vspeedChanged(newValue);
                 break;
             }
@@ -672,7 +672,7 @@ void NetworkClient::readSimData()
                 }
 
                 d_socket.commitTransaction();
-                BinaryConverter::convert(d_socket, newValue);
+                Converters::convert(d_socket, newValue);
                 emit refVspeedChanged(newValue);
                 break;
             }
@@ -687,7 +687,7 @@ void NetworkClient::readSimData()
                 }
 
                 d_socket.commitTransaction();
-                BinaryConverter::convert(d_socket, newValue);
+                Converters::convert(d_socket, newValue);
                 emit vDevModeChanged(newValue);
                 break;
             }
@@ -702,7 +702,7 @@ void NetworkClient::readSimData()
                 }
 
                 d_socket.commitTransaction();
-                BinaryConverter::convert(d_socket, newValue);
+                Converters::convert(d_socket, newValue);
                 emit vDevValueChanged(newValue);
                 break;
             }
@@ -721,9 +721,9 @@ void NetworkClient::readSimData()
                 }
 
                 d_socket.commitTransaction();
-                BinaryConverter::convert(d_socket, bank);
-                BinaryConverter::convert(d_socket, pitch);
-                BinaryConverter::convert(d_socket, slipskid);
+                Converters::convert(d_socket, bank);
+                Converters::convert(d_socket, pitch);
+                Converters::convert(d_socket, slipskid);
                 emit attitudeChanged(bank, pitch, slipskid);
             }
             case SimconnectIds::FD_ATTITUDE:
@@ -738,8 +738,8 @@ void NetworkClient::readSimData()
                 }
 
                 d_socket.commitTransaction();
-                BinaryConverter::convert(d_socket, bank);
-                BinaryConverter::convert(d_socket, pitch);
+                Converters::convert(d_socket, bank);
+                Converters::convert(d_socket, pitch);
                 emit fdAttitudeChanged(bank, pitch);
             }
             // aoa
@@ -754,7 +754,7 @@ void NetworkClient::readSimData()
                 }
 
                 d_socket.commitTransaction();
-                BinaryConverter::convert(d_socket, newValue);
+                Converters::convert(d_socket, newValue);
                 emit angleOfAttackChanged(newValue);
                 break;
             }
@@ -771,7 +771,7 @@ void NetworkClient::readSimData()
                 }
 
                 d_socket.commitTransaction();
-                BinaryConverter::convert(d_socket, newValue);
+                Converters::convert(d_socket, newValue);
                 emit rotationChanged(newValue);
                 break;
             }
@@ -786,7 +786,7 @@ void NetworkClient::readSimData()
                 }
 
                 d_socket.commitTransaction();
-                BinaryConverter::convert(d_socket, newValue);
+                Converters::convert(d_socket, newValue);
                 emit headingChanged(newValue);
                 break;
             }
@@ -801,7 +801,7 @@ void NetworkClient::readSimData()
                 }
 
                 d_socket.commitTransaction();
-                BinaryConverter::convert(d_socket, newValue);
+                Converters::convert(d_socket, newValue);
                 emit courseChanged(newValue);
                 break;
             }
@@ -816,7 +816,7 @@ void NetworkClient::readSimData()
                 }
 
                 d_socket.commitTransaction();
-                BinaryConverter::convert(d_socket, newValue);
+                Converters::convert(d_socket, newValue);
                 emit courseDeviationChanged(newValue);
                 break;
             }
@@ -831,7 +831,7 @@ void NetworkClient::readSimData()
                 }
 
                 d_socket.commitTransaction();
-                BinaryConverter::convert(d_socket, newValue);
+                Converters::convert(d_socket, newValue);
                 emit displayDeviationChanged(newValue);
                 break;
             }
@@ -846,7 +846,7 @@ void NetworkClient::readSimData()
                 }
 
                 d_socket.commitTransaction();
-                BinaryConverter::convert(d_socket, newValue);
+                Converters::convert(d_socket, newValue);
                 emit turnRateChanged(newValue);
                 break;
             }
@@ -861,7 +861,7 @@ void NetworkClient::readSimData()
                 }
 
                 d_socket.commitTransaction();
-                BinaryConverter::convert(d_socket, newValue);
+                Converters::convert(d_socket, newValue);
                 emit navSourceChanged(newValue);
                 break;
             }
@@ -876,7 +876,7 @@ void NetworkClient::readSimData()
                 }
 
                 d_socket.commitTransaction();
-                BinaryConverter::convert(d_socket, newValue);
+                Converters::convert(d_socket, newValue);
                 emit currentTrackChanged(newValue);
                 break;
             }
@@ -891,7 +891,7 @@ void NetworkClient::readSimData()
                 }
 
                 d_socket.commitTransaction();
-                BinaryConverter::convert(d_socket, newValue);
+                Converters::convert(d_socket, newValue);
                 emit toFromChanged(newValue);
                 break;
             }
@@ -908,7 +908,7 @@ void NetworkClient::readSimData()
                 }
 
                 d_socket.commitTransaction();
-                BinaryConverter::convert(d_socket, newValue);
+                Converters::convert(d_socket, newValue);
                 emit zuluSecondsChanged(newValue);
                 break;
             }
@@ -923,7 +923,7 @@ void NetworkClient::readSimData()
                 }
 
                 d_socket.commitTransaction();
-                BinaryConverter::convert(d_socket, newValue);
+                Converters::convert(d_socket, newValue);
                 emit localSecondsChanged(newValue);
                 break;
             }
@@ -938,7 +938,7 @@ void NetworkClient::readSimData()
                 }
 
                 d_socket.commitTransaction();
-                BinaryConverter::convert(d_socket, newValue);
+                Converters::convert(d_socket, newValue);
                 emit groundSpeedChanged(newValue);
                 break;
             }
@@ -953,7 +953,7 @@ void NetworkClient::readSimData()
                 }
 
                 d_socket.commitTransaction();
-                BinaryConverter::convert(d_socket, newValue);
+                Converters::convert(d_socket, newValue);
                 emit totalAirTempChanged(newValue);
                 break;
             }
@@ -968,7 +968,7 @@ void NetworkClient::readSimData()
                 }
 
                 d_socket.commitTransaction();
-                BinaryConverter::convert(d_socket, newValue);
+                Converters::convert(d_socket, newValue);
                 emit outsideAirTempChanged(newValue);
                 break;
             }
@@ -983,7 +983,7 @@ void NetworkClient::readSimData()
                 }
 
                 d_socket.commitTransaction();
-                BinaryConverter::convert(d_socket, newValue);
+                Converters::convert(d_socket, newValue);
                 emit isaTempChanged(newValue);
                 break;
             }
@@ -997,7 +997,7 @@ void NetworkClient::readSimData()
                     d_socket.rollbackTransaction();
                     return;
                 }
-                BinaryConverter::convert(d_socket, size);
+                Converters::convert(d_socket, size);
 
                 if (d_socket.bytesAvailable() < static_cast<int64_t>(size))
                 {
@@ -1007,7 +1007,7 @@ void NetworkClient::readSimData()
 
                 d_socket.commitTransaction();
 
-                emit nav1IdentChanged(size == 0 ? "" : BinaryConverter::convertWithSize(d_socket, size));
+                emit nav1IdentChanged(size == 0 ? "" : Converters::convertString(d_socket, size));
 
                 break;
             }
@@ -1022,7 +1022,7 @@ void NetworkClient::readSimData()
                 }
 
                 d_socket.commitTransaction();
-                BinaryConverter::convert(d_socket, newValue);
+                Converters::convert(d_socket, newValue);
                 emit nav1DmeChanged(newValue);
                 break;
             }
@@ -1037,7 +1037,7 @@ void NetworkClient::readSimData()
                 }
 
                 d_socket.commitTransaction();
-                BinaryConverter::convert(d_socket, newValue);
+                Converters::convert(d_socket, newValue);
                 emit nav1BearingChanged(newValue);
                 break;
             }
@@ -1052,7 +1052,7 @@ void NetworkClient::readSimData()
                 }
 
                 d_socket.commitTransaction();
-                BinaryConverter::convert(d_socket, newValue);
+                Converters::convert(d_socket, newValue);
                 emit nav1HasNavChanged(newValue);
                 break;
             }
@@ -1067,7 +1067,7 @@ void NetworkClient::readSimData()
                 }
 
                 d_socket.commitTransaction();
-                BinaryConverter::convert(d_socket, newValue);
+                Converters::convert(d_socket, newValue);
                 emit nav1HasSignalChanged(newValue);
                 break;
             }
@@ -1082,7 +1082,7 @@ void NetworkClient::readSimData()
                 }
 
                 d_socket.commitTransaction();
-                BinaryConverter::convert(d_socket, newValue);
+                Converters::convert(d_socket, newValue);
                 emit nav1HasDmeChanged(newValue);
                 break;
             }
@@ -1094,7 +1094,7 @@ void NetworkClient::readSimData()
                     d_socket.rollbackTransaction();
                     return;
                 }
-                BinaryConverter::convert(d_socket, size);
+                Converters::convert(d_socket, size);
 
                 if (d_socket.bytesAvailable() < static_cast<int64_t>(size))
                 {
@@ -1104,7 +1104,7 @@ void NetworkClient::readSimData()
 
                 d_socket.commitTransaction();
 
-                emit nav2IdentChanged(size == 0 ? "" : BinaryConverter::convertWithSize(d_socket, size));
+                emit nav2IdentChanged(size == 0 ? "" : Converters::convertString(d_socket, size));
 
                 break;
             }
@@ -1119,7 +1119,7 @@ void NetworkClient::readSimData()
                 }
 
                 d_socket.commitTransaction();
-                BinaryConverter::convert(d_socket, newValue);
+                Converters::convert(d_socket, newValue);
                 emit nav2DmeChanged(newValue);
                 break;
             }
@@ -1134,7 +1134,7 @@ void NetworkClient::readSimData()
                 }
 
                 d_socket.commitTransaction();
-                BinaryConverter::convert(d_socket, newValue);
+                Converters::convert(d_socket, newValue);
                 emit nav2BearingChanged(newValue);
                 break;
             }
@@ -1149,7 +1149,7 @@ void NetworkClient::readSimData()
                 }
 
                 d_socket.commitTransaction();
-                BinaryConverter::convert(d_socket, newValue);
+                Converters::convert(d_socket, newValue);
                 emit nav2HasNavChanged(newValue);
                 break;
             }
@@ -1164,7 +1164,7 @@ void NetworkClient::readSimData()
                 }
 
                 d_socket.commitTransaction();
-                BinaryConverter::convert(d_socket, newValue);
+                Converters::convert(d_socket, newValue);
                 emit nav2HasSignalChanged(newValue);
                 break;
             }
@@ -1179,7 +1179,7 @@ void NetworkClient::readSimData()
                 }
 
                 d_socket.commitTransaction();
-                BinaryConverter::convert(d_socket, newValue);
+                Converters::convert(d_socket, newValue);
                 emit nav2HasDmeChanged(newValue);
                 break;
             }
@@ -1194,7 +1194,7 @@ void NetworkClient::readSimData()
                 }
 
                 d_socket.commitTransaction();
-                BinaryConverter::convert(d_socket, newValue);
+                Converters::convert(d_socket, newValue);
                 emit gpsDistanceChanged(newValue);
                 break;
             }
@@ -1209,7 +1209,7 @@ void NetworkClient::readSimData()
                 }
 
                 d_socket.commitTransaction();
-                BinaryConverter::convert(d_socket, newValue);
+                Converters::convert(d_socket, newValue);
                 emit gpsBearingChanged(newValue);
                 break;
             }
@@ -1224,7 +1224,7 @@ void NetworkClient::readSimData()
                 }
 
                 d_socket.commitTransaction();
-                BinaryConverter::convert(d_socket, newValue);
+                Converters::convert(d_socket, newValue);
                 emit adfHasSignalChanged(newValue);
                 break;
             }
@@ -1239,7 +1239,7 @@ void NetworkClient::readSimData()
                 }
 
                 d_socket.commitTransaction();
-                BinaryConverter::convert(d_socket, newValue);
+                Converters::convert(d_socket, newValue);
                 emit adfFreqChanged(newValue);
                 break;
             }
@@ -1254,7 +1254,7 @@ void NetworkClient::readSimData()
                 }
 
                 d_socket.commitTransaction();
-                BinaryConverter::convert(d_socket, newValue);
+                Converters::convert(d_socket, newValue);
                 emit adfRadialChanged(newValue);
                 break;
             }
@@ -1271,7 +1271,7 @@ void NetworkClient::readSimData()
                 }
 
                 d_socket.commitTransaction();
-                BinaryConverter::convert(d_socket, newValue);
+                Converters::convert(d_socket, newValue);
                 emit gpsIsActiveFlightplanChanged(newValue);
                 break;
             }
@@ -1286,7 +1286,7 @@ void NetworkClient::readSimData()
                 }
 
                 d_socket.commitTransaction();
-                BinaryConverter::convert(d_socket, newValue);
+                Converters::convert(d_socket, newValue);
                 emit legIsDirectToChanged(newValue);
                 break;
             }
@@ -1298,7 +1298,7 @@ void NetworkClient::readSimData()
                     d_socket.rollbackTransaction();
                     return;
                 }
-                BinaryConverter::convert(d_socket, size);
+                Converters::convert(d_socket, size);
 
                 if (d_socket.bytesAvailable() < static_cast<int64_t>(size))
                 {
@@ -1308,7 +1308,7 @@ void NetworkClient::readSimData()
 
                 d_socket.commitTransaction();
 
-                emit currentLegToChanged(size == 0 ? "" : BinaryConverter::convertWithSize(d_socket, size));
+                emit currentLegToChanged(size == 0 ? "" : Converters::convertString(d_socket, size));
 
                 break;
             }
@@ -1320,7 +1320,7 @@ void NetworkClient::readSimData()
                     d_socket.rollbackTransaction();
                     return;
                 }
-                BinaryConverter::convert(d_socket, size);
+                Converters::convert(d_socket, size);
 
                 if (d_socket.bytesAvailable() < static_cast<int64_t>(size))
                 {
@@ -1330,7 +1330,7 @@ void NetworkClient::readSimData()
 
                 d_socket.commitTransaction();
 
-                emit currentLegFromChanged(size == 0 ? "" : BinaryConverter::convertWithSize(d_socket, size));
+                emit currentLegFromChanged(size == 0 ? "" : Converters::convertString(d_socket, size));
 
                 break;
             }
@@ -1347,7 +1347,7 @@ void NetworkClient::readSimData()
                 }
 
                 d_socket.commitTransaction();
-                BinaryConverter::convert(d_socket, newValue);
+                Converters::convert(d_socket, newValue);
                 emit com1AvailChanged(newValue);
                 break;
             }
@@ -1362,7 +1362,7 @@ void NetworkClient::readSimData()
                 }
 
                 d_socket.commitTransaction();
-                BinaryConverter::convert(d_socket, newValue);
+                Converters::convert(d_socket, newValue);
                 emit com2AvailChanged(newValue);
                 break;
             }
@@ -1377,7 +1377,7 @@ void NetworkClient::readSimData()
                 }
 
                 d_socket.commitTransaction();
-                BinaryConverter::convert(d_socket, newValue);
+                Converters::convert(d_socket, newValue);
                 emit nav1AvailChanged(newValue);
                 break;
             }
@@ -1392,7 +1392,7 @@ void NetworkClient::readSimData()
                 }
 
                 d_socket.commitTransaction();
-                BinaryConverter::convert(d_socket, newValue);
+                Converters::convert(d_socket, newValue);
                 emit nav2AvailChanged(newValue);
                 break;
             }
@@ -1407,7 +1407,7 @@ void NetworkClient::readSimData()
                 }
 
                 d_socket.commitTransaction();
-                BinaryConverter::convert(d_socket, newValue);
+                Converters::convert(d_socket, newValue);
                 emit com1FreqChanged(newValue);
                 break;
             }
@@ -1422,7 +1422,7 @@ void NetworkClient::readSimData()
                 }
 
                 d_socket.commitTransaction();
-                BinaryConverter::convert(d_socket, newValue);
+                Converters::convert(d_socket, newValue);
                 emit com2FreqChanged(newValue);
                 break;
             }
@@ -1437,7 +1437,7 @@ void NetworkClient::readSimData()
                 }
 
                 d_socket.commitTransaction();
-                BinaryConverter::convert(d_socket, newValue);
+                Converters::convert(d_socket, newValue);
                 emit nav1FreqChanged(newValue);
                 break;
             }
@@ -1452,7 +1452,7 @@ void NetworkClient::readSimData()
                 }
 
                 d_socket.commitTransaction();
-                BinaryConverter::convert(d_socket, newValue);
+                Converters::convert(d_socket, newValue);
                 emit nav2FreqChanged(newValue);
                 break;
             }
@@ -1467,7 +1467,7 @@ void NetworkClient::readSimData()
                 }
 
                 d_socket.commitTransaction();
-                BinaryConverter::convert(d_socket, newValue);
+                Converters::convert(d_socket, newValue);
                 emit com1StbyChanged(newValue);
                 break;
             }
@@ -1482,7 +1482,7 @@ void NetworkClient::readSimData()
                 }
 
                 d_socket.commitTransaction();
-                BinaryConverter::convert(d_socket, newValue);
+                Converters::convert(d_socket, newValue);
                 emit com2StbyChanged(newValue);
                 break;
             }
@@ -1497,7 +1497,7 @@ void NetworkClient::readSimData()
                 }
 
                 d_socket.commitTransaction();
-                BinaryConverter::convert(d_socket, newValue);
+                Converters::convert(d_socket, newValue);
                 emit nav1StbyChanged(newValue);
                 break;
             }
@@ -1512,7 +1512,7 @@ void NetworkClient::readSimData()
                 }
 
                 d_socket.commitTransaction();
-                BinaryConverter::convert(d_socket, newValue);
+                Converters::convert(d_socket, newValue);
                 emit nav2StbyChanged(newValue);
                 break;
             }
@@ -1527,13 +1527,13 @@ void NetworkClient::readSimData()
                 }
 
                 d_socket.commitTransaction();
-                BinaryConverter::convert(d_socket, newValue);
+                Converters::convert(d_socket, newValue);
                 emit xpdrCodeChanged(newValue);
                 break;
             }
             case SimconnectIds::XPDR_STATE:
             {
-                uint32_t newValue = 0;
+                TransponderState newValue = TransponderState::OFF;
 
                 if (static_cast<uint64_t>(d_socket.bytesAvailable()) < sizeof(newValue))
                 {
@@ -1542,7 +1542,7 @@ void NetworkClient::readSimData()
                 }
 
                 d_socket.commitTransaction();
-                BinaryConverter::convert(d_socket, newValue);
+                Converters::convert(d_socket, newValue);
                 emit xpdrStateChanged(newValue);
                 break;
             }
@@ -1559,7 +1559,7 @@ void NetworkClient::readSimData()
                 }
 
                 d_socket.commitTransaction();
-                BinaryConverter::convert(d_socket, newValue);
+                Converters::convert(d_socket, newValue);
                 emit windDirectionChanged(newValue);
                 break;
             }
@@ -1574,7 +1574,7 @@ void NetworkClient::readSimData()
                 }
 
                 d_socket.commitTransaction();
-                BinaryConverter::convert(d_socket, newValue);
+                Converters::convert(d_socket, newValue);
                 emit windStrengthChanged(newValue);
                 break;
             }
@@ -1589,7 +1589,7 @@ void NetworkClient::readSimData()
                 }
 
                 d_socket.commitTransaction();
-                BinaryConverter::convert(d_socket, newValue);
+                Converters::convert(d_socket, newValue);
                 emit windTrueDirectionChanged(newValue);
                 break;
             }
@@ -1606,7 +1606,7 @@ void NetworkClient::readSimData()
                 }
 
                 d_socket.commitTransaction();
-                BinaryConverter::convert(d_socket, newValue);
+                Converters::convert(d_socket, newValue);
                 emit apAvailableChanged(newValue);
                 break;
             }
@@ -1618,7 +1618,7 @@ void NetworkClient::readSimData()
                     d_socket.rollbackTransaction();
                     return;
                 }
-                BinaryConverter::convert(d_socket, size);
+                Converters::convert(d_socket, size);
 
                 if (d_socket.bytesAvailable() < static_cast<int64_t>(size))
                 {
@@ -1628,7 +1628,7 @@ void NetworkClient::readSimData()
 
                 d_socket.commitTransaction();
 
-                emit apLateralActiveChanged(size == 0 ? "" : BinaryConverter::convertWithSize(d_socket, size));
+                emit apLateralActiveChanged(size == 0 ? "" : Converters::convertString(d_socket, size));
 
                 break;
             }
@@ -1640,7 +1640,7 @@ void NetworkClient::readSimData()
                     d_socket.rollbackTransaction();
                     return;
                 }
-                BinaryConverter::convert(d_socket, size);
+                Converters::convert(d_socket, size);
 
                 if (d_socket.bytesAvailable() < static_cast<int64_t>(size))
                 {
@@ -1650,7 +1650,7 @@ void NetworkClient::readSimData()
 
                 d_socket.commitTransaction();
 
-                emit apLateralArmedChanged(size == 0 ? "" : BinaryConverter::convertWithSize(d_socket, size));
+                emit apLateralArmedChanged(size == 0 ? "" : Converters::convertString(d_socket, size));
 
                 break;
             }
@@ -1665,7 +1665,7 @@ void NetworkClient::readSimData()
                 }
 
                 d_socket.commitTransaction();
-                BinaryConverter::convert(d_socket, newValue);
+                Converters::convert(d_socket, newValue);
                 emit apStatusChanged(newValue);
                 break;
             }
@@ -1680,7 +1680,7 @@ void NetworkClient::readSimData()
                 }
 
                 d_socket.commitTransaction();
-                BinaryConverter::convert(d_socket, newValue);
+                Converters::convert(d_socket, newValue);
                 emit apYdStatusChanged(newValue);
                 break;
             }
@@ -1695,7 +1695,7 @@ void NetworkClient::readSimData()
                 }
 
                 d_socket.commitTransaction();
-                BinaryConverter::convert(d_socket, newValue);
+                Converters::convert(d_socket, newValue);
                 emit apFdStatusChanged(newValue);
                 break;
             }
@@ -1710,7 +1710,7 @@ void NetworkClient::readSimData()
                 }
 
                 d_socket.commitTransaction();
-                BinaryConverter::convert(d_socket, newValue);
+                Converters::convert(d_socket, newValue);
                 emit apFlcChanged(newValue);
                 break;
             }
@@ -1722,7 +1722,7 @@ void NetworkClient::readSimData()
                     d_socket.rollbackTransaction();
                     return;
                 }
-                BinaryConverter::convert(d_socket, size);
+                Converters::convert(d_socket, size);
 
                 if (d_socket.bytesAvailable() < static_cast<int64_t>(size))
                 {
@@ -1732,7 +1732,7 @@ void NetworkClient::readSimData()
 
                 d_socket.commitTransaction();
 
-                emit apVerticalActiveChanged(size == 0 ? "" : BinaryConverter::convertWithSize(d_socket, size));
+                emit apVerticalActiveChanged(size == 0 ? "" : Converters::convertString(d_socket, size));
 
                 break;
             }
@@ -1744,7 +1744,7 @@ void NetworkClient::readSimData()
                     d_socket.rollbackTransaction();
                     return;
                 }
-                BinaryConverter::convert(d_socket, size);
+                Converters::convert(d_socket, size);
 
                 if (d_socket.bytesAvailable() < static_cast<int64_t>(size))
                 {
@@ -1754,7 +1754,7 @@ void NetworkClient::readSimData()
 
                 d_socket.commitTransaction();
 
-                emit apModeReferenceChanged(size == 0 ? "" : BinaryConverter::convertWithSize(d_socket, size));
+                emit apModeReferenceChanged(size == 0 ? "" : Converters::convertString(d_socket, size));
 
                 break;
             }
@@ -1766,7 +1766,7 @@ void NetworkClient::readSimData()
                     d_socket.rollbackTransaction();
                     return;
                 }
-                BinaryConverter::convert(d_socket, size);
+                Converters::convert(d_socket, size);
 
                 if (d_socket.bytesAvailable() < static_cast<int64_t>(size))
                 {
@@ -1776,7 +1776,7 @@ void NetworkClient::readSimData()
 
                 d_socket.commitTransaction();
 
-                emit apArmedChanged(size == 0 ? "" : BinaryConverter::convertWithSize(d_socket, size));
+                emit apArmedChanged(size == 0 ? "" : Converters::convertString(d_socket, size));
 
                 break;
             }
@@ -1788,7 +1788,7 @@ void NetworkClient::readSimData()
                     d_socket.rollbackTransaction();
                     return;
                 }
-                BinaryConverter::convert(d_socket, size);
+                Converters::convert(d_socket, size);
 
                 if (d_socket.bytesAvailable() < static_cast<int64_t>(size))
                 {
@@ -1798,7 +1798,7 @@ void NetworkClient::readSimData()
 
                 d_socket.commitTransaction();
 
-                emit apArmedReferenceChanged(size == 0 ? "" : BinaryConverter::convertWithSize(d_socket, size));
+                emit apArmedReferenceChanged(size == 0 ? "" : Converters::convertString(d_socket, size));
 
                 break;
             }

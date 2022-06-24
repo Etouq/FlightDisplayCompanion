@@ -17,8 +17,8 @@ enum class FileVersion : uint16_t
 
 struct ColorZone
 {
-    double start = 0;
-    double end = 0;
+    double start;
+    double end;
     QColor color;
 };
 

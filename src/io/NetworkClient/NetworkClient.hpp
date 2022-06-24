@@ -2,13 +2,16 @@
 #define __NETWORK_CLIENT_HPP__
 
 #include "common/typeEnums.hpp"
+
 #include <QObject>
-#include <qabstractsocket.h>
-#include <qobjectdefs.h>
 #include <QString>
 #include <QTcpSocket>
 
+
+namespace pages::mfd
+{
 struct FlightPlanWaypoint;
+}
 class QGeoCoordinate;
 
 namespace io::network
@@ -41,6 +44,9 @@ class NetworkClient : public QObject
 {
     Q_OBJECT
 
+    Q_PROPERTY(ConnectionState connectionState READ connectionState NOTIFY connectionStateChanged)
+    Q_PROPERTY(bool simRunning READ simRunning NOTIFY simRunningChanged)
+
     QTcpSocket d_socket;
 
     static constexpr uint8_t s_communicationVersion = 3;
@@ -53,6 +59,8 @@ class NetworkClient : public QObject
     QString d_errorString = "";
     ConnectionState d_connectionState = ConnectionState::DISCONNECTED;
 
+    bool d_simRunning = false;
+
 public:
 
     explicit NetworkClient(QObject *parent = nullptr);
@@ -62,6 +70,7 @@ public:
     {
         return d_address;
     }
+
     Q_INVOKABLE uint port() const
     {
         return d_port;
@@ -75,6 +84,11 @@ public:
     Q_INVOKABLE ConnectionState connectionState() const
     {
         return d_connectionState;
+    }
+
+    bool simRunning() const
+    {
+        return d_simRunning;
     }
 
     Q_INVOKABLE void connectToServer(const QString &address, uint port);
@@ -104,6 +118,8 @@ signals:
 
     void newErrorMessage(const QString &msg);
 
+    void simRunningChanged();
+
     // sim
     void simStartReceived();
     void simStopReceived();
@@ -111,7 +127,7 @@ signals:
 
     // flightplan
     void clearFlightplanReceived();
-    void receivedFlightplan(const QList<FlightPlanWaypoint> &wpList);
+    void receivedFlightplan(const QList<pages::mfd::FlightPlanWaypoint> &wpList);
 
 
     // mfd
@@ -250,13 +266,12 @@ signals:
     void nav1StbyChanged(float newFreq);
     void nav2StbyChanged(float newFreq);
     void xpdrCodeChanged(int newCode);
-    void xpdrStateChanged(int newState);
+    void xpdrStateChanged(TransponderState newState);
 
     // wind data
     void windDirectionChanged(double newValue);
     void windStrengthChanged(double newValue);
     void windTrueDirectionChanged(int newValue);
-
 };
 
 }  // namespace io::network

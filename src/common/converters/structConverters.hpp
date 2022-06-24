@@ -3,7 +3,6 @@
 
 
 #include "basicConverters.hpp"
-#include "mfdbackend.hpp"
 #include "../AircraftConfig.hpp"
 #include "../definitions/baseTypes.hpp"
 #include "pages/MfdPage/FlightPlan/FlightPlanWaypoint.hpp"
@@ -18,39 +17,34 @@ namespace Converters
 {
 
 // to binary converters
-[[nodiscard]] inline QByteArray convert(const definitions::ColorZone &zone)
+inline QByteArray convert(const definitions::ColorZone &zone)
 {
     return convert(zone.start) + convert(zone.end) + convert(zone.color);
 }
 
-[[nodiscard]] inline QByteArray convert(const definitions::GradDef &grad)
+inline QByteArray convert(const definitions::GradDef &grad)
 {
     return convert(grad.gradPos) + convert(grad.isBig) + convert(grad.gradColor);
 }
 
-[[nodiscard]] inline QByteArray convert(const definitions::TextGradDef &textGrad)
+inline QByteArray convert(const definitions::TextGradDef &textGrad)
 {
     return convert(textGrad.textGradPos) + convert(textGrad.gradText);
 }
 
-[[nodiscard]] inline QByteArray convert(const definitions::ReferenceSpeed &refSpeed)
+inline QByteArray convert(const definitions::ReferenceSpeed &refSpeed)
 {
     return convert(refSpeed.speed) + convert(refSpeed.designator);
 }
 
-[[nodiscard]] inline QByteArray convert(const FlightPlanWaypoint &wp)
+
+inline QByteArray convert(const pages::mfd::FlightPlanWaypoint &wp)
 {
     return convert(wp.position.latitude()) + convert(wp.position.longitude()) + convert(wp.alt1) + convert(wp.alt2)
       + convert(wp.ident) + convert(wp.wpType) + convert(wp.altType);
 }
 
-[[nodiscard]] inline QByteArray convert(const pages::mfd::FlightPlanWaypoint &wp)
-{
-    return convert(wp.position.latitude()) + convert(wp.position.longitude()) + convert(wp.alt1) + convert(wp.alt2)
-      + convert(wp.ident) + convert(wp.wpType) + convert(wp.altType);
-}
-
-[[nodiscard]] inline QByteArray convert(const AircraftConfig &config)
+inline QByteArray convert(const AircraftConfig &config)
 {
     return convert(config.numEngines) + convert(config.type) + convert(config.n1Epsilon) + convert(config.n2Epsilon)
       + convert(config.ittEpsilon) + convert(config.rpmEpsilon) + convert(config.powerEpsilon)
@@ -66,12 +60,10 @@ namespace Converters
 }
 
 // from binary converters
-template<class T>
-requires std::is_same_v<T, definitions::ColorZone>
-
-[[nodiscard]] inline definitions::ColorZone convert(QIODevice &data)
+template<>
+inline definitions::ColorZone convert<definitions::ColorZone>(QIODevice &data)
 {
-    return { convert<double>(data), convert<double>(data), convert<QColor>(data) };
+    return { convert<double>(data), convert<double>(data), convertColor(data) };
 }
 
 inline void convert(QIODevice &data, definitions::ColorZone &val)
@@ -81,12 +73,10 @@ inline void convert(QIODevice &data, definitions::ColorZone &val)
     convert(data, val.color);
 }
 
-template<class T>
-requires std::is_same_v<T, definitions::GradDef>
-
-[[nodiscard]] inline definitions::GradDef convert(QIODevice &data)
+template<>
+inline definitions::GradDef convert<definitions::GradDef>(QIODevice &data)
 {
-    return { convert<double>(data), convert<bool>(data), convert<QColor>(data) };
+    return { convert<double>(data), convert<bool>(data), convertColor(data) };
 }
 
 inline void convert(QIODevice &data, definitions::GradDef &val)
@@ -97,53 +87,29 @@ inline void convert(QIODevice &data, definitions::GradDef &val)
 }
 
 
-template<class T>
-requires std::is_same_v<T, definitions::TextGradDef>
-
-[[nodiscard]] inline definitions::TextGradDef convert(QIODevice &data)
+template<>
+inline definitions::TextGradDef convert<definitions::TextGradDef>(QIODevice &data)
 {
-    return { convert<double>(data), convert<QString>(data) };
+    return { convert<double>(data), convertString(data) };
 }
 
 inline void convert(QIODevice &data, definitions::TextGradDef &val)
 {
     convert(data, val.textGradPos);
-    val.gradText = convert<QString>(data);
+    val.gradText = convertString(data);
 }
 
 
-template<class T>
-requires std::is_same_v<T, definitions::ReferenceSpeed>
-
-[[nodiscard]] inline definitions::ReferenceSpeed convert(QIODevice &data)
+template<>
+inline definitions::ReferenceSpeed convert<definitions::ReferenceSpeed>(QIODevice &data)
 {
-    return { convert<uint16_t>(data), convert<QString>(data) };
+    return { convert<uint16_t>(data), convertString(data) };
 }
 
 inline void convert(QIODevice &data, definitions::ReferenceSpeed &val)
 {
     convert(data, val.speed);
-    val.designator = convert<QString>(data);
-}
-
-
-inline void convert(QIODevice &data, FlightPlanWaypoint &val)
-{
-    val.position = QGeoCoordinate(convert<double>(data), convert<double>(data));
-    convert(data, val.alt1);
-    convert(data, val.alt2);
-    val.ident = convert<QString>(data);
-    convert(data, val.wpType);
-    convert(data, val.altType);
-}
-
-template<class T>
-requires std::is_same_v<T, FlightPlanWaypoint>
-[[nodiscard]] inline FlightPlanWaypoint convert(QIODevice &data)
-{
-    FlightPlanWaypoint ret;
-    convert(data, ret);
-    return ret;
+    val.designator = convertString(data);
 }
 
 
@@ -152,14 +118,13 @@ inline void convert(QIODevice &data, pages::mfd::FlightPlanWaypoint &val)
     val.position = QGeoCoordinate(convert<double>(data), convert<double>(data));
     convert(data, val.alt1);
     convert(data, val.alt2);
-    val.ident = convert<QString>(data);
+    val.ident = convertString(data);
     convert(data, val.wpType);
     convert(data, val.altType);
 }
 
-template<class T>
-requires std::is_same_v<T, pages::mfd::FlightPlanWaypoint>
-[[nodiscard]] inline pages::mfd::FlightPlanWaypoint convert(QIODevice &data)
+template<>
+inline pages::mfd::FlightPlanWaypoint convert<pages::mfd::FlightPlanWaypoint>(QIODevice &data)
 {
     pages::mfd::FlightPlanWaypoint ret;
     convert(data, ret);
@@ -207,10 +172,8 @@ inline void convert(QIODevice &data, AircraftConfig &val)
     convert(data, val.hasAileronTrim);
 }
 
-template<class T>
-requires std::is_same_v<T, AircraftConfig>
-
-[[nodiscard]] inline AircraftConfig convert(QIODevice &data)
+template<>
+inline AircraftConfig convert<AircraftConfig>(QIODevice &data)
 {
     AircraftConfig ret;
     convert(data, ret);
