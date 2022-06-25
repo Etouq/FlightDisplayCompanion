@@ -25,7 +25,17 @@ class AircraftSelector : public QObject
 
 public:
 
-    explicit AircraftSelector(QObject *parent = nullptr);
+    explicit AircraftSelector(QObject *parent = nullptr)
+    : QObject(parent)
+    {}
+
+    void clear()
+    {
+        d_jetAircraft.clear();
+        d_propAircraft.clear();
+        d_turbopropAircraft.clear();
+        d_thumbnailProvider.clear();
+    }
 
     Q_INVOKABLE int jetCount() const
     {
@@ -34,7 +44,7 @@ public:
 
     Q_INVOKABLE const QString &jetName(int idx) const
     {
-        return d_jetAircraft.at(idx)->name;
+        return d_jetAircraft.at(idx).name;
     }
 
     Q_INVOKABLE int propCount() const
@@ -44,7 +54,7 @@ public:
 
     Q_INVOKABLE const QString &propName(int idx) const
     {
-        return d_propAircraft.at(idx)->name;
+        return d_propAircraft.at(idx).name;
     }
 
     Q_INVOKABLE int turbopropCount() const
@@ -54,7 +64,7 @@ public:
 
     Q_INVOKABLE const QString &turbopropName(int idx) const
     {
-        return d_turbopropAircraft.at(idx)->name;
+        return d_turbopropAircraft.at(idx).name;
     }
 
     Q_INVOKABLE void selectJet(int idx)
@@ -72,37 +82,42 @@ public:
 
 signals:
 
-    void loadAircraft(definitions::AircraftDefinition *definition);
+    void loadAircraft(const definitions::AircraftDefinition &definition);
     void jetAircraftChanged();
     void propAircraftChanged();
     void turbopropAircraftChanged();
 
+    void requestServerAircraftSelection();
+
 public slots:
 
     // send request for definitions and thumbnails to server
-    void requestAircraftSelection();
-
-    void receivedNewAircraft(const ThumbnailPair &thumbnailPair)
+    void requestAircraftSelection()
     {
-        d_thumbnailProvider.storeImage(thumbnailPair.definition->name, thumbnailPair.image);
+        emit requestServerAircraftSelection();
+    }
+
+    void receivedNewAircraft(const QImage &thumbnail, const definitions::AircraftDefinition &definition)
+    {
+        d_thumbnailProvider.storeImage(definition.name, thumbnail);
 
 
-        if (thumbnailPair.definition->type == AircraftType::JET)
+        if (definition.type == AircraftType::JET)
         {
-            d_jetAircraft.append(thumbnailPair.definition);
+            d_jetAircraft.append(definition);
             emit jetAircraftChanged();
             return;
         }
 
-        if (thumbnailPair.definition->type == AircraftType::PROP)
+        if (definition.type == AircraftType::PROP)
         {
-            d_propAircraft.append(thumbnailPair.definition);
+            d_propAircraft.append(definition);
             emit propAircraftChanged();
             return;
         }
-        if (thumbnailPair.definition->type == AircraftType::TURBOPROP)
+        if (definition.type == AircraftType::TURBOPROP)
         {
-            d_turbopropAircraft.append(thumbnailPair.definition);
+            d_turbopropAircraft.append(definition);
             emit turbopropAircraftChanged();
             return;
         }
@@ -110,9 +125,9 @@ public slots:
 
 private:
 
-    QList<definitions::AircraftDefinition *> d_jetAircraft;
-    QList<definitions::AircraftDefinition *> d_propAircraft;
-    QList<definitions::AircraftDefinition *> d_turbopropAircraft;
+    QList<definitions::AircraftDefinition> d_jetAircraft;
+    QList<definitions::AircraftDefinition> d_propAircraft;
+    QList<definitions::AircraftDefinition> d_turbopropAircraft;
 
     ThumbnailProvider d_thumbnailProvider;
 };

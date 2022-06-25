@@ -39,7 +39,7 @@ class NavCom : public QObject
 
     Q_PROPERTY(bool xpdrAvail READ xpdrAvail NOTIFY xpdrAvailChanged)
     Q_PROPERTY(int xpdrCode READ xpdrCode WRITE setXpdrCode NOTIFY xpdrCodeChanged)
-    Q_PROPERTY(QmlTransponderState xpdrState READ xpdrState WRITE setXpdrState NOTIFY xpdrStateChanged)
+    Q_PROPERTY(QmlTransponderStateClass::Value xpdrState READ xpdrState WRITE setXpdrState NOTIFY xpdrStateChanged)
 
 public:
 

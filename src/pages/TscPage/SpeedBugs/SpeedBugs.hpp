@@ -18,7 +18,15 @@ public:
 
     explicit SpeedBugs(QObject *parent = nullptr) : QObject(parent) {}
 
-    Q_INVOKABLE const QString &designator(int idx) const
+    void setSpeedbugs(const QList<definitions::ReferenceSpeed> &speedBugs)
+    {
+        d_speedBugs = speedBugs;
+        d_activeSpeedBugIds.clear();
+        emit speedBugsChanged();
+        emit activeSpeedBugsChanged();
+    }
+
+    Q_INVOKABLE QString designator(int idx) const
     {
         return d_speedBugs.at(idx).designator;
     }
@@ -117,7 +125,7 @@ signals:
 
 private:
 
-    QList<definitions::ReferenceSpeed> d_speedBugs;
+    QList<definitions::ReferenceSpeed> d_speedBugs = { { 85, "R" }, { 100, "X" }, { 124, "Y" }, { 85, "AP" } };
     QSet<int> d_activeSpeedBugIds;
 };
 

@@ -12,6 +12,23 @@ struct AircraftConfig;
 namespace definitions
 {
 
+enum class SwitchingGaugeType : uint8_t
+{
+    NONE,
+    N1,
+    N2,
+    ENGINE_TEMP, // itt, egt or cht
+    RPM,
+    RPM_PCT,
+    PROP_RPM,
+    PROP_RPM_PCT,
+    POWER,
+    POWER_PCT,
+    MANIFOLD_PRESSURE,
+    TORQUE,
+    TORQUE_PCT
+};
+
 // definition containing all parameters used to display engine data of an aircraft
 struct AircraftDefinition
 {
@@ -19,11 +36,28 @@ struct AircraftDefinition
 
     QString name = "";  // used as identifier so needs to be unique
 
+    GaugeDefinition firstGauge;
+    GaugeDefinition secondGauge;
+    GaugeDefinition thirdGauge;
+    GaugeDefinition fourthGauge;
+
     GaugeDefinition fuelQtyGauge;
     GaugeDefinition fuelFlowGauge;
     GaugeDefinition oilTempGauge;
+    GaugeDefinition secondaryTempGauge;
     GaugeDefinition oilPressGauge;
-    GaugeDefinition egtGauge;
+
+    SwitchingGaugeType gauge1Type = SwitchingGaugeType::NONE;
+    SwitchingGaugeType gauge2Type = SwitchingGaugeType::NONE;
+    SwitchingGaugeType gauge3Type = SwitchingGaugeType::NONE;
+    SwitchingGaugeType gauge4Type = SwitchingGaugeType::NONE;
+
+    // never more than 1 of the switching gauges are a temperature type
+    TemperatureGaugeType engineTempType = TemperatureGaugeType::ITT;
+
+    double maxPower = 1;
+
+    bool hasApu = false;
 
     bool hasFlaps = false;
     bool hasSpoilers = false;
@@ -35,8 +69,8 @@ struct AircraftDefinition
     bool fuelQtyByWeight = false;
     bool fuelFlowByWeight = false;
 
-    bool hasEgt = false;
-    TemperatureGaugeType egtGaugeType = TemperatureGaugeType::EGT;
+    bool hasSecondaryTempGauge = false;
+    TemperatureGaugeType secondaryTempType = TemperatureGaugeType::EGT;
 
 
     uint8_t numEngines = 1;
@@ -60,6 +94,18 @@ struct AircraftDefinition
     QByteArray toBinary() const;
 
     AircraftConfig toConfig() const;
+
+    static AircraftDefinition fromBinary(QIODevice &stream);
+
+    uint8_t numGauges() const
+    {
+        if (gauge3Type == SwitchingGaugeType::NONE)
+            return 2; // always at least 2, and no NONE gauges in between defined gauges
+        if (gauge4Type == SwitchingGaugeType::NONE)
+            return 3;
+
+        return 4;
+    }
 
     bool operator==(const AircraftDefinition &rhs) const
     {

@@ -2,11 +2,16 @@
 #define __NETWORK_CLIENT_HPP__
 
 #include "common/typeEnums.hpp"
+#include "common/dataIdentifiers.hpp"
 
 #include <QObject>
 #include <QString>
 #include <QTcpSocket>
 
+namespace definitions
+{
+    struct AircraftDefinition;
+}
 
 namespace pages::mfd
 {
@@ -91,15 +96,47 @@ public:
         return d_simRunning;
     }
 
-    Q_INVOKABLE void connectToServer(const QString &address, uint port);
+    Q_INVOKABLE void connectToServer(const QString &address, uint port)
+    {
+        d_address = address;
+        d_port = port;
+        d_socket.setSocketOption(QAbstractSocket::KeepAliveOption, 1);
+        d_socket.connectToHost(address, port);
+        d_socket.setSocketOption(QAbstractSocket::LowDelayOption, 1);
+    }
 
-    Q_INVOKABLE void disconnectFromServer();
+    Q_INVOKABLE void disconnectFromServer()
+    {
+        ClientToServerIds clientId = ClientToServerIds::QUIT;
+        d_socket.write(reinterpret_cast<char *>(&clientId), sizeof(clientId));
+        d_socket.disconnectFromHost();
+    }
 
 public slots:
 
-    void startSim(const QByteArray &data);
-    void loadAircraft(const QByteArray &data);
-    void sendCommandString(const QByteArray &commandString);
+    void startSim(const QByteArray &data)
+    {
+        ClientToServerIds clientId = ClientToServerIds::START;
+        QByteArray msg(reinterpret_cast<char *>(&clientId), sizeof(clientId));
+        msg += data;
+        d_socket.write(msg);
+    }
+
+    void loadAircraft(const QByteArray &data)
+    {
+        ClientToServerIds clientId = ClientToServerIds::LOAD_AIRCRAFT;
+        QByteArray msg(reinterpret_cast<char *>(&clientId), sizeof(clientId));
+        msg += data;
+        d_socket.write(msg);
+    }
+
+    void sendCommandString(const QByteArray &commandString)
+    {
+        ClientToServerIds clientId = ClientToServerIds::COMMAND_STRING;
+        QByteArray msg(reinterpret_cast<char *>(&clientId), sizeof(clientId));
+        msg += commandString;
+        d_socket.write(msg);
+    }
 
 
 private slots:
@@ -110,6 +147,13 @@ private slots:
 
     void socketStateChanged(QAbstractSocket::SocketState state);
     void socketErrorOccurred(QAbstractSocket::SocketError error);
+
+private:
+
+    bool readPfdData();
+    bool readMfdData();
+    bool readTscData();
+    bool readServerData();
 
 signals:
 
@@ -125,33 +169,32 @@ signals:
     void simStopReceived();
     void simStartupFailed();
 
+
+    // mfd
+    // map
+    void coordinatesChanged(const QGeoCoordinate &newCoord);
+    void trueHeadingChanged(double newValue);
+
     // flightplan
     void clearFlightplanReceived();
     void receivedFlightplan(const QList<pages::mfd::FlightPlanWaypoint> &wpList);
-
-
-    // mfd
-    void coordinatesChanged(const QGeoCoordinate &newCoord);
-    void trueHeadingChanged(double newValue);
     void gpsWpDtkChanged(double newValue);
     void gpsWpEteChanged(int newValue);
-    void gpsEteChanged(int newValue);
+    void gpsDestEteChanged(int newValue);
 
+    // fuel
     void fuelLeftQtyChanged(double newValue);
     void fuelRightQtyChanged(double newValue);
 
     // engines
-    void engineN1Changed(double newValue, uint8_t engineIdx);
-    void engineN2Changed(double newValue, uint8_t engineIdx);
-    void engineIttChanged(double newValue, uint8_t engineIdx);
-    void engineRpmChanged(double newValue, uint8_t engineIdx);
-    void enginePowerChanged(double newValue, uint8_t engineIdx);
-    void engineManPressChanged(double newValue, uint8_t engineIdx);
-    void engineTrqChanged(double newValue, uint8_t engineIdx);
-    void engineChtChanged(double newValue, uint8_t engineIdx);
+    void engineGauge1Changed(double newValue, uint8_t engineIdx);
+    void engineGauge2Changed(double newValue, uint8_t engineIdx);
+    void engineGauge3Changed(double newValue, uint8_t engineIdx);
+    void engineGauge4Changed(double newValue, uint8_t engineIdx);
+
     void engineFuelFlowChanged(double newValue, uint8_t engineIdx);
-    void engineEgtChanged(double newValue, uint8_t engineIdx);
     void engineOilTempChanged(double newValue, uint8_t engineIdx);
+    void engineSecondaryTempChanged(double newValue, uint8_t engineIdx);
     void engineOilPressChanged(double newValue, uint8_t engineIdx);
 
     // misc engine display
@@ -159,9 +202,37 @@ signals:
     void fuelTextDataChanged(float totalFuelQty, float totalFuelflow, float groundSpeed);
     void flapsAngleChanged(double newValue);
     void spoilersPctChanged(double newValue);
-    void elevTrimChanged(double newValue);
-    void ruddTrimChanged(double newValue);
-    void ailTrimChanged(double newValue);
+    void elevTrimChanged(double newPct, int newAngle);
+    void ruddTrimChanged(double newPct, int newAngle);
+    void ailTrimChanged(double newPct, int newAngle);
+
+
+    // tsc
+    // radio info
+    //com
+    void com1AvailChanged(bool newValue);
+    void com1FreqChanged(float newValue);
+    void com1StbyFreqChanged(float newFreq);
+    void com2AvailChanged(bool newValue);
+    void com2FreqChanged(float newValue);
+    void com2StbyFreqChanged(float newFreq);
+    void com3AvailChanged(bool newValue);
+    void com3FreqChanged(float newValue);
+    void com3StbyFreqChanged(float newFreq);
+    //nav
+    void nav1AvailChanged(bool newValue);
+    void nav1FreqChanged(float newValue);
+    void nav1StbyFreqChanged(float newFreq);
+    void nav2AvailChanged(bool newValue);
+    void nav2FreqChanged(float newValue);
+    void nav2StbyFreqChanged(float newFreq);
+    //xpdr
+    void xpdrAvailChanged(bool newValue);
+    void xpdrCodeChanged(int newCode);
+    void xpdrStateChanged(TransponderState newState);
+
+    // aircraft selection data
+    void receivedNewAircraft(const QImage &thumbnail, const definitions::AircraftDefinition &definition);
 
 
     // pfd
@@ -251,22 +322,6 @@ signals:
     void currentLegToChanged(const QString &newValue);
     void currentLegFromChanged(const QString &newValue);
     void legIsDirectToChanged(bool newValue);
-
-    // radio info
-    void com1AvailChanged(bool newValue);
-    void com2AvailChanged(bool newValue);
-    void nav1AvailChanged(bool newValue);
-    void nav2AvailChanged(bool newValue);
-    void com1FreqChanged(float newValue);
-    void com2FreqChanged(float newValue);
-    void nav1FreqChanged(float newValue);
-    void nav2FreqChanged(float newValue);
-    void com1StbyChanged(float newFreq);
-    void com2StbyChanged(float newFreq);
-    void nav1StbyChanged(float newFreq);
-    void nav2StbyChanged(float newFreq);
-    void xpdrCodeChanged(int newCode);
-    void xpdrStateChanged(TransponderState newState);
 
     // wind data
     void windDirectionChanged(double newValue);

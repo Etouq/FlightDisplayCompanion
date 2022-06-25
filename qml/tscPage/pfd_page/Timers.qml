@@ -88,7 +88,7 @@ TscPageBase {
                 active: !FlightTmr.countingDown
             }
 
-            onReleased: FlightTmr.setCountingDown(false);
+            onReleased: FlightTmr.countingDown = false;
         }
 
         GradientButton {
@@ -106,7 +106,7 @@ TscPageBase {
                 active: FlightTmr.countingDown
             }
 
-            onReleased: FlightTmr.setCountingDown(true);
+            onReleased: FlightTmr.countingDown = true;
         }
     }
 

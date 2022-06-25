@@ -153,7 +153,7 @@ Q_GADGET
 
     public:
 
-    enum class Value
+    enum Value
     {
         OFF,
         NAV1,
@@ -168,5 +168,48 @@ private:
 };
 
 typedef QmlBearingModeClass::Value BearingMode;
+
+
+class QmlWindModeClass
+{
+Q_GADGET
+
+    public:
+
+    enum class Value
+    {
+        OFF,
+        MODE1,
+        MODE2,
+        MODE3
+    };
+    Q_ENUM(Value)
+
+private:
+    explicit QmlWindModeClass();
+};
+
+typedef QmlWindModeClass::Value WindMode;
+
+
+class QmlMinimumsSourceClass
+{
+Q_GADGET
+
+    public:
+
+    enum class Value
+    {
+        OFF,
+        BARO,
+        RADIO_ALT
+    };
+    Q_ENUM(Value)
+
+private:
+    explicit QmlMinimumsSourceClass();
+};
+
+typedef QmlMinimumsSourceClass::Value MinimumsSource;
 
 #endif  // __QML_ENUMS_HPP__

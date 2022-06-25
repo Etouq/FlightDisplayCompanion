@@ -9,5 +9,4 @@ set(QT_MODULES
     Gui
     Sql
     QuickControls2
-    Concurrent
 )

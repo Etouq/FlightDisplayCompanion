@@ -3,7 +3,7 @@
 
 #include "FlightPlan/FlightPlan.hpp"
 #include "GaugeElement/GaugeElement.hpp"
-#include "GeoMap/GeoMap.hpp"
+#include "GeoMapPage/GeoMapPage.hpp"
 #include "MiscEngineDataElement/MiscEngineDataElement.hpp"
 
 #include <QObject>
@@ -29,13 +29,13 @@ public:
 
     explicit MfdPage(io::network::NetworkClient *networkClient, QObject *parent = nullptr);
 
+    void loadAircraft(const definitions::AircraftDefinition &aircraft);
+
 signals:
 
     void gaugesLoaded(const QString &layoutPath);
 
 public slots:
-
-    void loadAircraft(const definitions::AircraftDefinition &aircraft);
 
     GaugeElement *gauge1()
     {
@@ -72,19 +72,17 @@ public slots:
         return &d_oilTempGauge;
     }
 
-    GaugeElement *egtGauge()
-    {
-        return &d_egtGauge;
-    }
-
     GaugeElement *oilPressGauge()
     {
         return &d_oilPressGauge;
     }
 
-private:
+    GaugeElement *secondaryTempGauge()
+    {
+        return &d_secondaryTempGauge;
+    }
 
-    void updateChangingGaugeConnections(const definitions::AircraftDefinition &aircraft);
+private:
 
     // changing gauges
     GaugeElement d_gauge1;
@@ -92,17 +90,18 @@ private:
     GaugeElement d_gauge3;
     GaugeElement d_gauge4;
 
+
     // regular, mostly present gauges
     GaugeElement d_fuelQtyGauge;
     GaugeElement d_fuelFlowGauge;
 
     GaugeElement d_oilTempGauge;
-    GaugeElement d_egtGauge;
+    GaugeElement d_secondaryTempGauge;
     GaugeElement d_oilPressGauge;
 
     MiscEngineDataElement d_miscEngineData;
 
-    GeoMap d_geoMap;
+    GeoMapPage d_geoMapPage;
     FlightPlan d_fpl;
 
 

@@ -3,18 +3,16 @@
 
 #include <cstdint>
 
-enum class SimconnectIds : uint8_t
+enum class DataGroupIdentifier : uint8_t
 {
-    // flightplan
-    CLEAR_FLIGHTPLAN,
-    FLIGHTPLAN_LIST,
-    // simconnect server
-    QUIT,
-    SIM_START_EVENT,
-    SIM_STOP_EVENT,
-    SIM_STARTUP_FAILED,
-    ERROR_MSG,
-    // pfd
+    PFD_DATA,
+    MFD_DATA,
+    TSC_DATA,
+    SERVER_DATA
+};
+
+enum class PfdIdentifier : uint8_t
+{
     // airspeed
     AIRSPEED,
     MAX_SPEED,
@@ -76,21 +74,6 @@ enum class SimconnectIds : uint8_t
     LEG_IS_DIRECT_TO,
     CURRENT_LEG_TO,
     CURRENT_LEG_FROM,
-    // radio info
-    COM1_AVAIL,
-    COM2_AVAIL,
-    NAV1_AVAIL,
-    NAV2_AVAIL,
-    COM1_FREQ,
-    COM2_FREQ,
-    NAV1_FREQ,
-    NAV2_FREQ,
-    COM1_STBY,
-    COM2_STBY,
-    NAV1_STBY,
-    NAV2_STBY,
-    XPDR_CODE,
-    XPDR_STATE,
     // wind
     WIND_DIRECTION,
     WIND_STRENGTH,
@@ -106,47 +89,83 @@ enum class SimconnectIds : uint8_t
     AP_VERTICAL_ACTIVE,
     AP_MODE_REFERENCE,
     AP_ARMED,
-    AP_ARMED_REFERENCE,
-    // mfd
+    AP_ARMED_REFERENCE
+};
+
+enum class MfdIdentifier : uint8_t
+{
+    // map
     COORDINATES,
     TRUE_HEADING,
+    // flightplan
+    CLEAR_FLIGHTPLAN,
+    FLIGHTPLAN_LIST,
     GPS_WP_DTK,
     GPS_WP_ETE,
-    GPS_ETE,
+    GPS_DEST_ETE,
+    // fuel
     FUEL_LEFT_QTY,
     FUEL_RIGHT_QTY,
-    // engine (indexed)
-    ENGINE_N1,
-    ENGINE_N2,
-    ENGINE_ITT,
-    ENGINE_RPM,
-    ENGINE_POWER,
-    ENGINE_MANIFOLD_PRESSURE,
-    ENGINE_TRQ,
-    ENGINE_CHT,
+    // engines (indexed)
+    ENGINE_FIRST_GAUGE,
+    ENGINE_SECOND_GAUGE,
+    ENGINE_THIRD_GAUGE,
+    ENGINE_FOURTH_GAUGE,
     ENGINE_FUEL_FLOW,
-    ENGINE_EGT,
     ENGINE_OIL_TEMP,
+    ENGINE_SECONDARY_TEMP,
     ENGINE_OIL_PRESS,
     // misc engine display
     APU_N1,
     FUEL_TEXT_DATA,
     FLAPS_ANGLE,
     SPOILERS_PCT,
-    ELEV_TRIM_PCT,
-    RUDD_TRIM_PCT,
-    AIL_TRIM_PCT,
-    // aliases
-    FUEL_TOTAL_QTY = FUEL_LEFT_QTY
+    ELEV_TRIM_POSITION,
+    RUDD_TRIM_POSITION,
+    AIL_TRIM_POSITION
+};
+
+enum class TscIdentifier : uint8_t
+{
+    // radio info
+    COM1_AVAIL,
+    COM1_FREQ,
+    COM1_STBY_FREQ,
+    COM2_AVAIL,
+    COM2_FREQ,
+    COM2_STBY_FREQ,
+    COM3_AVAIL,
+    COM3_FREQ,
+    COM3_STBY_FREQ,
+    NAV1_AVAIL,
+    NAV1_FREQ,
+    NAV1_STBY_FREQ,
+    NAV2_AVAIL,
+    NAV2_FREQ,
+    NAV2_STBY_FREQ,
+    XPDR_AVAIL,
+    XPDR_CODE,
+    XPDR_STATE,
+    // aircraft selection data
+    AIRCRAFT_THUMBNAIL_DATA
+};
+
+enum class ServerMessageIdentifier : uint8_t
+{
+    QUIT,
+    SIM_START_EVENT,
+    SIM_STOP_EVENT,
+    SIM_STARTUP_FAILED,
+    ERROR_MSG
 };
 
 enum class ClientToServerIds : uint8_t
 {
     CLIENT_NETWORK_VERSION,
     QUIT,
-    CHANGE_AIRCRAFT,
+    LOAD_AIRCRAFT,
     START,
-    SIM_COMMANDS
+    COMMAND_STRING
 };
 
 enum class SimCommandId : uint8_t

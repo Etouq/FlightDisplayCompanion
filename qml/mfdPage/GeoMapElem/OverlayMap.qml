@@ -4,9 +4,13 @@ import QtPositioning 5.15
 import QtQuick.Controls 2.15
 import QtQuick.Shapes 1.15
 import QtQml 2.15
-import Mfd.GeoMap 1.0
+import Mfd.GeoMapPage 1.0
 import General.Settings 1.0
 import Mfd.Engine 1.0
+import Mfd.Flightplan 1.0
+import Pfd.HSIndicator 1.0
+import IO.Network 1.0
+import TypeEnums 1.0
 
 import "FlightplanLayer"
 
@@ -34,7 +38,7 @@ Item {
 
 
     Connections {
-        target: GeoMap
+        target: GeoMapPage
         function onUserPositionChanged() {
             if (!NetworkClient.simRunning)
             {
@@ -44,14 +48,14 @@ Item {
             if (!firstCoordinateReceived)
             {
                 overlayMapRoot.startTime = new Date().getTime();
-                overlayMapRoot.lastCoordinate = GeoMap.userPosition;
+                overlayMapRoot.lastCoordinate = GeoMapPage.userPosition;
                 flightRouteLog.addCoordinate(lastCoordinate);
                 overlayMapRoot.firstCoordinateReceived = true;
             }
             else if (new Date().getTime() - overlayMapRoot.startTime >= 500 &&
-                    flightRouteLog.coordinateAt(flightRouteLog.pathLength() - 1).distanceTo(GeoMap.userPosition) >= 10) {
+                    flightRouteLog.coordinateAt(flightRouteLog.pathLength() - 1).distanceTo(GeoMapPage.userPosition) >= 10) {
                 overlayMapRoot.startTime = new Date().getTime();
-                overlayMapRoot.lastCoordinate = GeoMap.userPosition;
+                overlayMapRoot.lastCoordinate = GeoMapPage.userPosition;
                 flightRouteLog.addCoordinate(overlayMapRoot.lastCoordinate);
             }
         }
@@ -62,7 +66,7 @@ Item {
         function onSimRunningChanged() {
             if (NetworkClient.simRunning) { //wipe the flightlog for the new flight
                 flightRouteLog.path = [];
-                overlayMapRootfirstCoordinateReceived = false;
+                overlayMapRoot.firstCoordinateReceived = false;
             }
         }
     }
@@ -82,12 +86,13 @@ Item {
 
         RangeCircles {
             visible: !overlayMapRoot.panModeActive && GenSettings.showRangeRings
+            zoomSetting: overlayMapRoot.zoomSetting
         }
 
         MapCircle {
             id: fuelRangeCircle
 
-            center: GeoMap.userPosition
+            center: GeoMapPage.userPosition
             radius: 1852 * EngineMisc.fuelRange
             border.width: 3
             border.color: "green"
@@ -107,20 +112,20 @@ Item {
             anchorPoint.x: planeIconSource.width / 2
             anchorPoint.y: planeIconSource.height / 2
 
-            coordinate: GeoMap.userPosition
+            coordinate: GeoMapPage.userPosition
 
             sourceItem: Shape {
                 id: planeIconSource
-                width: 105 * GeoMap.iconScale
-                height: 105 * GeoMap.iconScale
+                width: 105 * GeoMapPage.iconScale
+                height: 105 * GeoMapPage.iconScale
 
                 ShapePath {
-                    fillColor: GeoMap.iconColor
-                    strokeColor: GeoMap.iconBorder
-                    strokeWidth: 1.5 * GeoMap.iconScale
+                    fillColor: GeoMapPage.iconColor
+                    strokeColor: GeoMapPage.iconBorder
+                    strokeWidth: 1.5 * GeoMapPage.iconScale
 
-                    scale: Qt.size(GeoMap.iconScale, GeoMap.iconScale)
-                    PathSvg { path: GeoMap.iconPath }
+                    scale: Qt.size(GeoMapPage.iconScale, GeoMapPage.iconScale)
+                    PathSvg { path: GeoMapPage.iconPath }
                 }
 
                 transform: Rotation
@@ -138,23 +143,23 @@ Item {
     states: [
             State {
                 name: "northUpState"
-                when: GeoMap.rotationMode === MapRotationMode.NORTH_UP
-                PropertyChanges { target: planeIconRotation; angle: GeoMap.trueHeading }
+                when: GeoMapPage.rotationMode === MapRotationMode.NORTH_UP
+                PropertyChanges { target: planeIconRotation; angle: GeoMapPage.trueHeading }
             },
             State {
                 name: "headingUpState"
-                when: GeoMap.mapOrientationMode == MapRotationMode.HDG_UP
+                when: GeoMapPage.mapOrientationMode === MapRotationMode.HDG_UP
                 PropertyChanges { target: planeIconRotation; angle: 0 }
             },
             State {
                 name: "trackUpState"
-                when: GeoMap.mapOrientationMode == MapRotationMode.TRACK_UP
-                PropertyChanges { target: planeIconRotation; angle: GeoMap.trueHeading - HSIndicator.currentTrackAngle }
+                when: GeoMapPage.mapOrientationMode === MapRotationMode.TRACK_UP
+                PropertyChanges { target: planeIconRotation; angle: GeoMapPage.trueHeading - HSIndicator.currentTrackAngle }
             },
             State {
                 name: "dtkUpState"
-                when: GeoMap.mapOrientationMode == MapRotationMode.DTK_UP
-                PropertyChanges { target: planeIconRotation; angle: GeoMap.trueHeading - Flightplan.wpDtk }
+                when: GeoMapPage.mapOrientationMode === MapRotationMode.DTK_UP
+                PropertyChanges { target: planeIconRotation; angle: GeoMapPage.trueHeading - Flightplan.wpDtk }
             }
         ]
 

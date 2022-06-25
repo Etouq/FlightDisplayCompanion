@@ -12,10 +12,17 @@
 #include "NavInfo/NavInfo.hpp"
 #include "RadioInfo/RadioInfo.hpp"
 #include "WindInfo/WindInfo.hpp"
-#include "io/NetworkClient/NetworkClient.hpp"
 
-#include <QQmlEngine>
 
+namespace definitions
+{
+struct AircraftDefinition;
+}
+
+namespace io::network
+{
+class NetworkClient;
+}
 
 namespace pages::pfd
 {
@@ -24,44 +31,23 @@ class PfdPage
 {
 public:
 
-    PfdPage(io::network::NetworkClient *netClient)
-      : airspeedIndicator(netClient),
-        altimeter(netClient),
-        aoaIndicator(netClient),
-        apInfo(netClient),
-        attitudeIndicator(netClient),
-        bottombar(netClient),
-        hsiBearings(netClient),
-        hsIndicator(netClient),
-        navInfo(netClient),
-        radioInfo(netClient),
-        windInfo(netClient)
-    {
-        qmlRegisterSingletonInstance("Pfd.Airspeed", 1, 0, "Airspeed", &airspeedIndicator);
-        qmlRegisterSingletonInstance("Pfd.Altimeter", 1, 0, "Altimeter", &altimeter);
-        qmlRegisterSingletonInstance("Pfd.Aoa", 1, 0, "Aoa", &aoaIndicator);
-        qmlRegisterSingletonInstance("Pfd.Autopilot", 1, 0, "ApInfo", &apInfo);
-        qmlRegisterSingletonInstance("Pfd.Attitude", 1, 0, "Attitude", &attitudeIndicator);
-        qmlRegisterSingletonInstance("Pfd.Bottombar", 1, 0, "Bottombar", &bottombar);
-        qmlRegisterSingletonInstance("Pfd.Bearings", 1, 0, "Bearings", &hsiBearings);
-        qmlRegisterSingletonInstance("Pfd.HSIndicator", 1, 0, "HSIndicator", &hsIndicator);
-        qmlRegisterSingletonInstance("Pfd.NavInfo", 1, 0, "NavInfo", &navInfo);
-        qmlRegisterSingletonInstance("Pfd.RadioInfo", 1, 0, "RadioInfo", &radioInfo);
-        qmlRegisterSingletonInstance("Pfd.WindInfo", 1, 0, "WindInfo", &windInfo);
-    }
+    PfdPage(io::network::NetworkClient *netClient);
 
+    void loadAircraft(const definitions::AircraftDefinition &aircraft);
 
-    AirspeedIndicator airspeedIndicator;
-    Altimeter altimeter;
-    AoaIndicator aoaIndicator;
-    ApInfo apInfo;
-    AttitudeIndicator attitudeIndicator;
-    Bottombar bottombar;
-    HSIBearings hsiBearings;
-    HSIndicator hsIndicator;
-    NavInfo navInfo;
-    RadioInfo radioInfo;
-    WindInfo windInfo;
+private:
+
+    AirspeedIndicator d_airspeedIndicator;
+    Altimeter d_altimeter;
+    AoaIndicator d_aoaIndicator;
+    ApInfo d_apInfo;
+    AttitudeIndicator d_attitudeIndicator;
+    Bottombar d_bottombar;
+    HSIBearings d_hsiBearings;
+    HSIndicator d_hsIndicator;
+    NavInfo d_navInfo;
+    RadioInfo d_radioInfo;
+    WindInfo d_windInfo;
 };
 
 }  // namespace pages::pfd

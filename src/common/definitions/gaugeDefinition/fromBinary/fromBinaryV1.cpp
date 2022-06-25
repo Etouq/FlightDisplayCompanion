@@ -1,5 +1,5 @@
 #include "../gaugeDefinition.hpp"
-#include "common/converters.hpp"
+#include "common/converters/listConverters.hpp"
 
 namespace definitions
 {
@@ -7,8 +7,8 @@ namespace definitions
 GaugeDefinition GaugeDefinition::fromBinaryV1(QIODevice &data)
 {
     GaugeDefinition ret;
-    Converters::convert(data, ret.title);
-    Converters::convert(data, ret.unitString);
+    Converters::convertString(data, ret.title);
+    Converters::convertString(data, ret.unitString);
     Converters::convert(data, ret.minValue);
     Converters::convert(data, ret.maxValue);
     Converters::convert(data, ret.colorZones);

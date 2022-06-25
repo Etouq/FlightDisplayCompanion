@@ -2,10 +2,10 @@ import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQml 2.15
 import Mfd 1.0
-import Mfd.GeoMap 1.0
+import Mfd.GeoMapPage 1.0
 import TypeEnums 1.0
 
-import "GeoMap"
+import "GeoMapElem"
 import "EngineDisplay"
 
 Item {
@@ -21,7 +21,7 @@ Item {
         }
     }
 
-    GeoMap {
+    GeoMapElem {
         id: mapIdentifier
         focus: true
     }
@@ -50,14 +50,14 @@ Item {
             }
 
             Connections {
-                target: GeoMap
+                target: GeoMapPage
                 function onRotationModeChanged() {
                     mapOrientationText.text = mapOrientationToString();
                 }
             }
 
             function mapOrientationToString() {
-                switch (GeoMap.rotationMode) {
+                switch (GeoMapPage.rotationMode) {
                     case MapRotationMode.NORTH_UP:
                         return "NORTH UP";
                     case MapRotationMode.DTK_UP:

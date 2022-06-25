@@ -3,6 +3,8 @@ import "../"
 import "../styled_controls"
 import "../styled_controls/gradientButtonElements"
 import Tsc.NavCom 1.0
+import TypeEnums 1.0
+import QtQml 2.15
 
 TscPageBase {
     id: root
@@ -12,9 +14,9 @@ TscPageBase {
 
     pageTitle: "Radios"
 
-    signal xpndrClicked()
+    signal xpndrClicked
 
-    signal radioClicked(string title, real minFreq, real maxFreq, int activeFreq, int stbyFreq, var endCallback, int nbDigits);
+    signal radioClicked(string title, real minFreq, real maxFreq, int activeFreq, int stbyFreq, var endCallback, int nbDigits)
 
     Rectangle {
         y: 120
@@ -37,7 +39,10 @@ TscPageBase {
                 activeFreq: (NavCom.com1Freq / 1000000).toFixed(3)
                 standbyFreq: (NavCom.com1StbyFreq / 1000000).toFixed(3)
 
-                onFrequencyClicked: root.radioClicked("COM1 Standby", 118, 136.99, NavCom.com1Freq, NavCom.com1StbyFreq, NavCom.setCom1Freq, 3)
+                onFrequencyClicked: root.radioClicked("COM1 Standby", 118,
+                                                      136.99, NavCom.com1Freq,
+                                                      NavCom.com1StbyFreq,
+                                                      NavCom.setCom1Freq, 3)
                 onXferClicked: NavCom.swapCom1()
             }
 
@@ -46,7 +51,10 @@ TscPageBase {
                 activeFreq: (NavCom.com2Freq / 1000000).toFixed(3)
                 standbyFreq: (NavCom.com2StbyFreq / 1000000).toFixed(3)
 
-                onFrequencyClicked: root.radioClicked("COM2 Standby", 118, 136.99, NavCom.com2Freq, NavCom.com2StbyFreq, NavCom.setCom2Freq, 3)
+                onFrequencyClicked: root.radioClicked("COM2 Standby", 118,
+                                                      136.99, NavCom.com2Freq,
+                                                      NavCom.com2StbyFreq,
+                                                      NavCom.setCom2Freq, 3)
                 onXferClicked: NavCom.swapCom2()
             }
 
@@ -55,7 +63,10 @@ TscPageBase {
                 activeFreq: (NavCom.nav1Freq / 1000000).toFixed(2)
                 standbyFreq: (NavCom.nav1StbyFreq / 1000000).toFixed(2)
 
-                onFrequencyClicked: root.radioClicked("NAV1", 108, 117.95, NavCom.nav1Freq, NavCom.nav1StbyFreq, NavCom.setNav1Freq, 2)
+                onFrequencyClicked: root.radioClicked("NAV1", 108, 117.95,
+                                                      NavCom.nav1Freq,
+                                                      NavCom.nav1StbyFreq,
+                                                      NavCom.setNav1Freq, 2)
                 onXferClicked: NavCom.swapNav1()
             }
 
@@ -64,7 +75,10 @@ TscPageBase {
                 activeFreq: (NavCom.nav2Freq / 1000000).toFixed(2)
                 standbyFreq: (NavCom.nav2StbyFreq / 1000000).toFixed(2)
 
-                onFrequencyClicked: root.radioClicked("NAV2", 108, 117.95, NavCom.nav2Freq, NavCom.nav2StbyFreq, NavCom.setNav2Freq, 2)
+                onFrequencyClicked: root.radioClicked("NAV2", 108, 117.95,
+                                                      NavCom.nav2Freq,
+                                                      NavCom.nav2StbyFreq,
+                                                      NavCom.setNav2Freq, 2)
                 onXferClicked: NavCom.swapNav2()
             }
 
@@ -107,13 +121,34 @@ TscPageBase {
                         width: 422.4
                         height: 180
 
-
                         TopText {
-                            property var stateToString: ["Off", "STBY", "TEST", "ON", "ALT"]
+                            id: xpdrStateText
                             x: 33.792
                             font.pixelSize: 36
-                            color: NavCom.xpdrState === 3 || NavCom.xpdrState === 4 ? "lawngreen" : "white"
-                            text: stateToString[NavCom.xpdrState]
+                            color: NavCom.xpdrState === TransponderState.ON || NavCom.xpdrState === TransponderState.ALT ? "lawngreen" : "white"
+                            text: xpdrStateToString(NavCom.xpdrState)
+
+                            function xpdrStateToString(xpdrState) {
+                                switch (xpdrState) {
+                                case TransponderState.OFF:
+                                    return "OFF"
+                                case TransponderState.STANDBY:
+                                    return "STBY"
+                                case TransponderState.TEST:
+                                    return "TEST"
+                                case TransponderState.ON:
+                                    return "ON"
+                                case TransponderState.ALT:
+                                    return "ALT"
+                                }
+                            }
+
+                            Connections {
+                                target: NavCom
+                                function onXpdrStateChanged() {
+                                    xpdrStateText.text = xpdrStateText.xpdrStateToString(NavCom.xpdrState)
+                                }
+                            }
                         }
 
                         Text {
@@ -122,7 +157,7 @@ TscPageBase {
                             font.pixelSize: 84
                             font.family: "Roboto Mono"
                             font.bold: true
-                            color: NavCom.xpdrState === 3 || NavCom.xpdrState === 4 ? "lawngreen" : "white"
+                            color: NavCom.xpdrState === TransponderState.ON || NavCom.xpdrState === TransponderState.ALT ? "lawngreen" : "white"
                             text: ("0000" + NavCom.xpdrCode).slice(-4)
                         }
 
@@ -135,12 +170,7 @@ TscPageBase {
                     height: 192
                     color: "black"
                 }
-
-
             }
-
         }
     }
-
-
 }

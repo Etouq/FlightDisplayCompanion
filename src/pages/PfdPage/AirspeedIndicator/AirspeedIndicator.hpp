@@ -131,6 +131,19 @@ public:
         return d_refSpeed;
     }
 
+    void updateColors(double minSpeed,
+                      double flapsBegin,
+                      double flapsEnd,
+                      double greenBegin,
+                      double greenEnd,
+                      double yellowBegin,
+                      double yellowEnd,
+                      double redBegin,
+                      double redEnd,
+                      double maxSpeed,
+                      bool noColor,
+                      bool dynamicMax = false);
+
 signals:
     void airspeedChanged();
     void centerChanged();
@@ -147,18 +160,6 @@ signals:
     void refSpeedChanged();
 
 public slots:
-    void updateColors(double minSpeed,
-                      double flapsBegin,
-                      double flapsEnd,
-                      double greenBegin,
-                      double greenEnd,
-                      double yellowBegin,
-                      double yellowEnd,
-                      double redBegin,
-                      double redEnd,
-                      double maxSpeed,
-                      bool noColor,
-                      bool dynamicMax = false);
 
     void updateAirspeed(double newValue);
     void updateMaxSpeed(double newValue); // for dynamic max speed

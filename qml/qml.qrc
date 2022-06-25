@@ -69,7 +69,8 @@
         <file>TscPage/navcom_page/TransponderKeyboard.qml</file>
         <file>TscPage/pfd_page/Minimums.qml</file>
         <file>TscPage/pfd_page/MinimumsSource.qml</file>
-        <file>TscPage/pfd_page/SpeedBugs.qml</file>
+        <file>TscPage/pfd_page/SpeedBugElem.qml</file>
+        <file>TscPage/pfd_page/SpeedBugsRow.qml</file>
         <file>TscPage/pfd_page/SpeedKeyboard.qml</file>
         <file>TscPage/pfd_page/TimeKeyboard.qml</file>
         <file>TscPage/pfd_page/Timers.qml</file>
@@ -110,18 +111,19 @@
         <file>MfdPage/EngineDisplay/Gauges/Layouts/SingleEngine/DoubleGauge.qml</file>
         <file>MfdPage/EngineDisplay/Gauges/Layouts/SingleEngine/QuadGauge.qml</file>
         <file>MfdPage/EngineDisplay/Gauges/Layouts/SingleEngine/TripleGauge.qml</file>
-        <file>MfdPage/GeoMap/FlightplanLayer/FlightplanLayer.qml</file>
-        <file>MfdPage/GeoMap/FlightplanLayer/FlightplanPath.qml</file>
-        <file>MfdPage/GeoMap/FlightplanLayer/FlightplanWaypoints.qml</file>
-        <file>MfdPage/GeoMap/GeoMap.qml</file>
-        <file>MfdPage/GeoMap/MapButtons.qml</file>
-        <file>MfdPage/GeoMap/OverlayMap.qml</file>
-        <file>MfdPage/GeoMap/RangeCircles.qml</file>
+        <file>MfdPage/GeoMapElem/FlightplanLayer/FlightplanLayer.qml</file>
+        <file>MfdPage/GeoMapElem/FlightplanLayer/FlightplanPath.qml</file>
+        <file>MfdPage/GeoMapElem/FlightplanLayer/FlightplanWaypoints.qml</file>
+        <file>MfdPage/GeoMapElem/GeoMapElem.qml</file>
+        <file>MfdPage/GeoMapElem/MapButtons.qml</file>
+        <file>MfdPage/GeoMapElem/OverlayMap.qml</file>
+        <file>MfdPage/GeoMapElem/RangeCircles.qml</file>
         <file>MfdPage/map/FlightplanWpIcons.qml</file>
         <file>MfdPage/map/MapButtons.qml</file>
         <file>MfdPage/map/MapItem.qml</file>
         <file>MfdPage/map/RangeCircles.qml</file>
         <file>PfdPage/Elements/AirspeedIndicator/SpeedBugElement.qml</file>
         <file>qml.qrc</file>
+        <file>testFile.qml</file>
     </qresource>
 </RCC>

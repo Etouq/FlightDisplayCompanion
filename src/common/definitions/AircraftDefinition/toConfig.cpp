@@ -14,7 +14,7 @@ AircraftConfig AircraftDefinition::toConfig() const
     ret.oilTempEpsilon = fuelFlowGauge.getEpsilon(false);
     ret.oilPressEpsilon = fuelFlowGauge.getEpsilon(false);
     ret.fuelQtyEpsilon = fuelFlowGauge.getEpsilon(false);
-    ret.egtEpsilon = hasEgt ? egtGauge.getEpsilon(false) : 10000;
+    ret.egtEpsilon = hasSecondaryTempGauge ? secondaryTempGauge.getEpsilon(false) : 10000;
 
     ret.fuelFlowByWeight = fuelFlowByWeight;
 

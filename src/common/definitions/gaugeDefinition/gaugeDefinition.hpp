@@ -73,7 +73,7 @@ struct GaugeDefinition
 
     QByteArray toBinary() const;
 
-    static GaugeDefinition fromBinary(QIODevice &data, FileVersion version)
+    static GaugeDefinition fromBinary(QIODevice &data, FileVersion version = FileVersion::V3)
     {
         switch (version)
         {

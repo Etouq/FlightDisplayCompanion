@@ -5,9 +5,8 @@ import QtQuick.Controls 2.15
 import QtQuick.Shapes 1.15
 import QtQml 2.15
 import TypeEnums 1.0
-import Mfd.GeoMap 1.0
+import Mfd.GeoMapPage 1.0
 import Pfd.HSIndicator 1.0
-import Mfd.Flightplan 1.0
 
 import "FlightplanLayer"
 
@@ -80,7 +79,7 @@ Item {
 
             onFlickFinished: function() {
                 if(!panModeActive) {
-                    mapDisplay.center = GeoMap.userPosition;
+                    mapDisplay.center = GeoMapPage.userPosition;
                 }
             }
         }
@@ -90,7 +89,7 @@ Item {
         Binding {
             target: mapDisplay
             property: 'center'
-            value: GeoMap.userPosition
+            value: GeoMapPage.userPosition
             when: !panModeActive
             restoreMode: Binding.RestoreBinding
         }
@@ -98,22 +97,22 @@ Item {
         states: [
             State {
                 name: "northUpState"
-                when: GeoMap.rotationMode === MapRotationMode.NORTH_UP
+                when: GeoMapPage.rotationMode === MapRotationMode.NORTH_UP
                 PropertyChanges { target: mapDisplay; bearing: 0 }
             },
             State {
                 name: "headingUpState"
-                when: GeoMap.mapOrientationMode === MapRotationMode.HDG_UP
+                when: GeoMapPage.mapOrientationMode === MapRotationMode.HDG_UP
                 PropertyChanges { target: mapDisplay; bearing: GeoMap.trueHeading }
             },
             State {
                 name: "trackUpState"
-                when: GeoMap.mapOrientationMode === MapRotationMode.TRACK_UP
+                when: GeoMapPage.mapOrientationMode === MapRotationMode.TRACK_UP
                 PropertyChanges { target: mapDisplay; bearing: HSIndicator.currentTrackAngle }
             },
             State {
                 name: "dtkUpState"
-                when: GeoMap.mapOrientationMode === MapRotationMode.DTK_UP
+                when: GeoMapPage.mapOrientationMode === MapRotationMode.DTK_UP
                 PropertyChanges { target: mapDisplay; bearing: Flightplan.wpDtk }
             }
         ]
@@ -147,7 +146,7 @@ Item {
         }
 
         onRecenterClicked: function() {
-            mapDisplay.center = GeoMap.userPosition;
+            mapDisplay.center = GeoMapPage.userPosition;
             geoMapRoot.panModeActive = false;
             geoMapRoot.updateZoom();
         }

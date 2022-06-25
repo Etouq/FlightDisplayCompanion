@@ -16,7 +16,7 @@ TscPageBase {
     signal planeIconClicked()
     signal radiosClicked()
 
-    function bearingModeToString(mode: BearingMode) {
+    function bearingModeToString(mode) {
         switch(mode) {
             case BearingMode.OFF:
                 return "OFF";

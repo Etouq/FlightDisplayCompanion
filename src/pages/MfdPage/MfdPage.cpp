@@ -11,15 +11,14 @@ namespace pages::mfd
 MfdPage::MfdPage(NetworkClient *networkClient, QObject *parent)
   : QObject(parent),
     d_networkClient(networkClient),
-    d_geoMap(networkClient),
+    d_geoMapPage(networkClient),
     d_fpl(networkClient)
 {
-    qmlRegisterSingletonInstance("Mfd.GeoMap", 1, 0, "GeoMap", &d_geoMap);
+    qmlRegisterSingletonInstance("Mfd.GeoMapPage", 1, 0, "GeoMapPage", &d_geoMapPage);
     qmlRegisterSingletonInstance("Mfd.Flightplan", 1, 0, "Flightplan", &d_fpl);
     qmlRegisterSingletonInstance("Mfd.Engine", 1, 0, "EngineMisc", &d_miscEngineData);
     qmlRegisterUncreatableType<GaugeElement>("Mfd.Engine", 1, 0, "GaugeData", "Bad Boy");
     qmlRegisterUncreatableType<GaugeEngine>("Mfd.Engine", 1, 0, "GaugeEngine", "Bad Boy");
-    qmlRegisterSingletonInstance("Mfd", 1, 0, "MfdRoot", this);
 
     QQmlEngine::setObjectOwnership(&d_gauge1, QQmlEngine::CppOwnership);
     QQmlEngine::setObjectOwnership(&d_gauge2, QQmlEngine::CppOwnership);
@@ -28,11 +27,29 @@ MfdPage::MfdPage(NetworkClient *networkClient, QObject *parent)
     QQmlEngine::setObjectOwnership(&d_fuelQtyGauge, QQmlEngine::CppOwnership);
     QQmlEngine::setObjectOwnership(&d_fuelFlowGauge, QQmlEngine::CppOwnership);
     QQmlEngine::setObjectOwnership(&d_oilTempGauge, QQmlEngine::CppOwnership);
-    QQmlEngine::setObjectOwnership(&d_egtGauge, QQmlEngine::CppOwnership);
     QQmlEngine::setObjectOwnership(&d_oilPressGauge, QQmlEngine::CppOwnership);
     QQmlEngine::setObjectOwnership(&d_miscEngineData, QQmlEngine::CppOwnership);
+    QQmlEngine::setObjectOwnership(&d_secondaryTempGauge, QQmlEngine::CppOwnership);
 
     // connect signals and slots
+    connect(d_networkClient,
+            &NetworkClient::engineGauge1Changed,
+            &d_gauge1,
+            &GaugeElement::update);
+    connect(d_networkClient,
+            &NetworkClient::engineGauge2Changed,
+            &d_gauge2,
+            &GaugeElement::update);
+    connect(d_networkClient,
+            &NetworkClient::engineGauge3Changed,
+            &d_gauge3,
+            &GaugeElement::update);
+    connect(d_networkClient,
+            &NetworkClient::engineGauge4Changed,
+            &d_gauge4,
+            &GaugeElement::update);
+
+
     connect(d_networkClient,
             &NetworkClient::fuelLeftQtyChanged,
             d_fuelQtyGauge.engine1(),
@@ -51,8 +68,8 @@ MfdPage::MfdPage(NetworkClient *networkClient, QObject *parent)
             &d_oilTempGauge,
             &GaugeElement::update);
     connect(d_networkClient,
-            &NetworkClient::engineEgtChanged,
-            &d_egtGauge,
+            &NetworkClient::engineSecondaryTempChanged,
+            &d_secondaryTempGauge,
             &GaugeElement::update);
     connect(d_networkClient,
             &NetworkClient::engineOilPressChanged,

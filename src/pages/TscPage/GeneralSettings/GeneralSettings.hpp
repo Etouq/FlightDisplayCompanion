@@ -18,9 +18,9 @@ class GeneralSettings : public QObject
     Q_PROPERTY(bool showRangeText READ showRangeText WRITE setShowRangeText NOTIFY showRangeTextChanged)
     Q_PROPERTY(bool showRangeRings READ showRangeRings WRITE setShowRangeRings NOTIFY showRangeRingsChanged)
     Q_PROPERTY(bool showFuelRangeRing READ showFuelRangeRing WRITE setShowFuelRangeRing NOTIFY showFuelRangeRingChanged)
-    Q_PROPERTY(BearingMode bearing1Mode READ bearing1Mode NOTIFY bearing1ModeChanged)
-    Q_PROPERTY(BearingMode bearing2Mode READ bearing2Mode NOTIFY bearing2ModeChanged)
-    Q_PROPERTY(BearingMode dmeMode READ dmeMode NOTIFY dmeModeChanged)
+    Q_PROPERTY(QmlBearingModeClass::Value bearing1Mode READ bearing1Mode NOTIFY bearing1ModeChanged)
+    Q_PROPERTY(QmlBearingModeClass::Value bearing2Mode READ bearing2Mode NOTIFY bearing2ModeChanged)
+    Q_PROPERTY(QmlBearingModeClass::Value dmeMode READ dmeMode NOTIFY dmeModeChanged)
 
 
 public:

@@ -1,18 +1,20 @@
 #include "main.hpp"
-
+//#include "AircraftLoader/AircraftLoader.hpp"
 #include "io/NetworkClient/NetworkClient.hpp"
 #include "pages/MfdPage/MfdPage.hpp"
 #include "pages/PfdPage/PfdPage.hpp"
 #include "pages/TscPage/TscPage.hpp"
 
+#include <QQmlApplicationEngine>
+#include <QFontDatabase>
 #include <QGuiApplication>
 #include <QLocale>
+#include <QObject>
 #include <QSurfaceFormat>
-#include <QFontDatabase>
-
 
 int main(int argc, char *argv[])
 {
+    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     // initialize application
     QGuiApplication app(argc, argv);
     QGuiApplication::setOrganizationName("nl.Etouq");
@@ -42,6 +44,14 @@ int main(int argc, char *argv[])
     pages::pfd::PfdPage pfdPage(&networkClient);
     pages::tsc::TscPage tscPage(&networkClient);
 
+//    AircraftLoader aircraftLoader(mfdPage, pfdPage, tscPage);
+
+//    QObject::connect(&aircraftLoader,
+//                     &AircraftLoader::aircraftLoaded,
+//                     &networkClient,
+//                     &io::network::NetworkClient::loadAircraft);
+
+    qmlRegisterSingletonInstance("Mfd", 1, 0, "MfdRoot", &mfdPage);
     // add networkclient to qml as singleton
     qmlRegisterSingletonInstance("IO.Network", 1, 0, "NetworkClient", &networkClient);
 
@@ -49,6 +59,7 @@ int main(int argc, char *argv[])
     QQmlApplicationEngine engine;
 
     engine.load("qrc:/main.qml");
+    //engine.load("qrc:/testFile.qml");
 
     return app.exec();
 }

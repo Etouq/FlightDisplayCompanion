@@ -3,10 +3,10 @@ import QtQuick.Window 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Dialogs 1.3
 
-import "mfdPage"
-import "pfdPage"
+import "MfdPage"
+import "PfdPage"
 import "settingsPage"
-import "tscPage"
+import "TscPage"
 
 ApplicationWindow {
     id: bgRect
@@ -27,19 +27,19 @@ ApplicationWindow {
     SwipeView {
         id: view
         anchors.fill: parent
-        currentIndex: 0
-        clip: true
+        currentIndex: 1
+        //clip: true
 
-        Item {
-            SettingsPage {
-                id: settingsPageId
-                clip: true
-                width: 1920
-                height: 1200
-                scale: scaleFactor
-                anchors.centerIn: parent
-            }
-        }
+//        Item {
+//            SettingsPage {
+//                id: settingsPageId
+//                clip: true
+//                width: 1920
+//                height: 1200
+//                scale: scaleFactor
+//                anchors.centerIn: parent
+//            }
+//        }
 
         Item {
             TscPage {
@@ -75,21 +75,21 @@ ApplicationWindow {
         }
     }
 
-    Connections {
-        target: netInterface
-        function onShowPopupError(msg) {
-            errorPopup.text = msg;
-            errorPopup.open();
-        }
-    }
+//    Connections {
+//        target: NetworkClient
+//        function onNewErrorMessage(msg) {
+//            errorPopup.text = msg;
+//            errorPopup.open();
+//        }
+//    }
 
 
-    MessageDialog {
-        id: errorPopup
-        icon: StandardIcon.Critical
-        title: "Error"
-        standardButtons: StandardButton.Ok
-    }
+//    MessageDialog {
+//        id: errorPopup
+//        icon: StandardIcon.Critical
+//        title: "Error"
+//        standardButtons: StandardButton.Ok
+//    }
 }
 
 

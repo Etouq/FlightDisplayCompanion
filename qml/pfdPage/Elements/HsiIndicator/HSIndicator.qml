@@ -1,6 +1,7 @@
 import QtQuick 2.15
 import Pfd.Bearings 1.0
 import General.Settings 1.0
+import TypeEnums 1.0
 
 Item {
 

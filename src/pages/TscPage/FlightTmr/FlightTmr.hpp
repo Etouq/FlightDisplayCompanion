@@ -38,6 +38,11 @@ public:
         }
     }
 
+    Q_INVOKABLE int getCurrentValue() const
+    {
+        return std::abs(d_currentValue);
+    }
+
     Q_INVOKABLE void setTime(int value)
     {
         d_currentValue = d_countingDown ? -value : value;

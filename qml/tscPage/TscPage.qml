@@ -6,7 +6,7 @@ import "styled_controls"
 import "styled_controls/gradientButtonElements"
 import "pfd_page"
 import "navcom_page"
-import "mfd_page"
+//import "mfd_page"
 import Tsc.FlightTmr 1.0
 import Tsc.NavCom 1.0
 import Tsc.SpeedBugs 1.0
@@ -50,8 +50,8 @@ Rectangle {
     Loader {
         id: speedBugsLoader
         active: false
-        sourceComponent: SpeedBugs {
-            onValueClicked: function(_bugIndex, _startingValue) {
+        sourceComponent: SpeedBugElem {
+            onValueClicked: {
                 speedKeyboardLoader.active = true;
                 speedKeyboardLoader.item.setContext(_bugIndex, _startingValue);
                 speedBugsLoader.visible = false;
@@ -67,13 +67,14 @@ Rectangle {
         }
     }
 
+
     Loader {
         id: timersLoader
         active: false
         sourceComponent: Timers {
             onTimeValueClicked: {
                 timeKeyboardLoader.active = true;
-                timeKeyboardLoader.item.currentInput = FlightTmr.timeString;
+                timeKeyboardLoader.item.currentInput = FlightTmr.getCurrentValue();
                 timeKeyboardLoader.item.updateInput();
                 timersLoader.active = false;
             }
@@ -104,35 +105,35 @@ Rectangle {
         }
     }
 
-    Loader {
-        id: mapSettingsLoader
-        active: false
-        sourceComponent: MapSettingsPage {
-            onBackClicked: {
-                homeLoader.active = true;
-                mapSettingsLoader.active = false;
-            }
-            onHomeClicked: {
-                homeLoader.active = true;
-                mapSettingsLoader.active = false;
-            }
-        }
-    }
+//    Loader {
+//        id: mapSettingsLoader
+//        active: false
+//        sourceComponent: MapSettingsPage {
+//            onBackClicked: {
+//                homeLoader.active = true;
+//                mapSettingsLoader.active = false;
+//            }
+//            onHomeClicked: {
+//                homeLoader.active = true;
+//                mapSettingsLoader.active = false;
+//            }
+//        }
+//    }
 
-    Loader {
-        id: planeIconLoader
-        active: false
-        sourceComponent: PlaneIconPage {
-            onBackClicked: {
-                homeLoader.active = true;
-                planeIconLoader.active = false;
-            }
-            onHomeClicked: {
-                homeLoader.active = true;
-                planeIconLoader.active = false;
-            }
-        }
-    }
+//    Loader {
+//        id: planeIconLoader
+//        active: false
+//        sourceComponent: PlaneIconPage {
+//            onBackClicked: {
+//                homeLoader.active = true;
+//                planeIconLoader.active = false;
+//            }
+//            onHomeClicked: {
+//                homeLoader.active = true;
+//                planeIconLoader.active = false;
+//            }
+//        }
+//    }
 
     Loader {
         id: radioLoader

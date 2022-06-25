@@ -1,5 +1,6 @@
 #include "main.hpp"
 #include "common/QmlEnums.hpp"
+#include <QtQml>
 
 void registerQmlEnums()
 {

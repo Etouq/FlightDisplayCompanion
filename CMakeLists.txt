@@ -6,6 +6,7 @@ set(_PROJECT_VERSION 4)
 project(${_PROJECT_NAME} VERSION ${_PROJECT_VERSION} LANGUAGES CXX)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+set(CMAKE_CXX_CLANG_TIDY clang-tidy -checks=-*,clang-*)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
@@ -30,9 +31,12 @@ set(PROJECT_SOURCES
     resources/fonts.qrc
     qml/qml.qrc
 )
-
+set(ANDROID_EXTRA_LIBS
+    C:/Users/Mikey/AppData/Local/Android/Sdk/android_openssl/latest/arm64/libcrypto_1_1.so
+    C:/Users/Mikey/AppData/Local/Android/Sdk/android_openssl/latest/arm64/libssl_1_1.so
+CACHE INTERNAL "")
 if(ANDROID)
-    include(D:/android_openssl-master/CMakeLists.txt)
+    include(C:/Users/Mikey/AppData/Local/Android/Sdk/android_openssl/CMakeLists.txt)
     add_library(${_PROJECT_NAME} SHARED
         ${PROJECT_SOURCES}
     )

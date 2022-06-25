@@ -1,33 +1,31 @@
 set(CPP_FILES
-        src/keepScreenOn.cpp
         src/main.cpp
+        src/keepScreenOn.cpp
         src/registerQmlEnums.cpp
+#
+#        src/AircraftLoader/AircraftLoader.cpp
+#        src/AircraftLoader/loadAircraft.cpp
+#
         src/common/definitions/AircraftDefinition/toBinary.cpp
         src/common/definitions/AircraftDefinition/toConfig.cpp
-        src/common/definitions/AircraftDefinition/fromBinary/fromBinaryV1.cpp
-        src/common/definitions/AircraftDefinition/fromBinary/fromBinaryV2.cpp
-        src/common/definitions/AircraftDefinition/fromBinary/fromBinaryV3.cpp
+        src/common/definitions/AircraftDefinition/fromBinary.cpp
         src/common/definitions/gaugeDefinition/gaugeDefinition.cpp
         src/common/definitions/gaugeDefinition/getEpsilon.cpp
         src/common/definitions/gaugeDefinition/toBinary.cpp
         src/common/definitions/gaugeDefinition/fromBinary/fromBinaryV1.cpp
-        src/common/definitions/JetDefinition/toBinary.cpp
-        src/common/definitions/JetDefinition/toConfig.cpp
-        src/common/definitions/JetDefinition/fromBinary/fromBinaryV1.cpp
-        src/common/definitions/JetDefinition/fromBinary/fromBinaryV3.cpp
-        src/common/definitions/PropDefinition/toBinary.cpp
-        src/common/definitions/PropDefinition/toConfig.cpp
-        src/common/definitions/PropDefinition/fromBinary/fromBinaryV1.cpp
-        src/common/definitions/PropDefinition/fromBinary/fromBinaryV3.cpp
-        src/common/definitions/TurbopropDefinition/toBinary.cpp
-        src/common/definitions/TurbopropDefinition/toConfig.cpp
-        src/common/definitions/TurbopropDefinition/fromBinary/fromBinaryV1.cpp
-        src/common/definitions/TurbopropDefinition/fromBinary/fromBinaryV3.cpp
+#
         src/io/NetworkClient/NetworkClient.cpp
         src/io/NetworkClient/readSimData.cpp
+        src/io/NetworkClient/readMfdData.cpp
+        src/io/NetworkClient/readPfdData.cpp
+        src/io/NetworkClient/readTscData.cpp
+        src/io/NetworkClient/readServerData.cpp
         src/io/NetworkClient/verifyConnectionVersion.cpp
+        src/io/NetworkClient/socketStateChanged.cpp
+        src/io/NetworkClient/socketErrorOccurred.cpp
+#
         src/pages/MfdPage/MfdPage.cpp
-        src/pages/MfdPage/updateChangingGaugeConnections.cpp
+        src/pages/MfdPage/loadAircraft.cpp
         src/pages/MfdPage/FlightPlan/appendWp.cpp
         src/pages/MfdPage/FlightPlan/editWp.cpp
         src/pages/MfdPage/FlightPlan/FlightPlan.cpp
@@ -38,8 +36,11 @@ set(CPP_FILES
         src/pages/MfdPage/GaugeElement/GaugeEngine/setGaugeParameters1.cpp
         src/pages/MfdPage/GaugeElement/GaugeEngine/setGaugeParameters2.cpp
         src/pages/MfdPage/GaugeElement/GaugeEngine/update.cpp
-        src/pages/MfdPage/GeoMap/GeoMap.cpp
+        src/pages/MfdPage/GeoMapPage/GeoMapPage.cpp
         src/pages/MfdPage/MiscEngineDataElement/updateFuelText.cpp
+#
+        src/pages/PfdPage/PfdPage.cpp
+        src/pages/PfdPage/loadAircraft.cpp
         src/pages/PfdPage/AirspeedIndicator/AirspeedIndicator.cpp
         src/pages/PfdPage/AirspeedIndicator/updateAcceleration.cpp
         src/pages/PfdPage/AirspeedIndicator/updateAirspeed.cpp
@@ -73,6 +74,9 @@ set(CPP_FILES
         src/pages/PfdPage/HSIndicator/updateHeading.cpp
         src/pages/PfdPage/HSIndicator/updateRotation.cpp
         src/pages/PfdPage/RadioInfo/RadioInfo.cpp
+#
+        src/pages/TscPage/TscPage.cpp
+        src/pages/TscPage/loadAircraft.cpp
         src/pages/TscPage/FlightTmr/update.cpp
         src/pages/TscPage/NavCom/NavCom.cpp
         src/pages/TscPage/NavCom/setCom1Freq.cpp
@@ -82,8 +86,10 @@ set(CPP_FILES
         src/pages/TscPage/NavCom/setNav2Freq.cpp
         src/pages/TscPage/NavCom/setXpdrCode.cpp
         src/pages/TscPage/NavCom/setXpdrState.cpp
-        src/settings/settingscontroller.cpp
-        src/settings/settingsinterface.cpp
+#
+#        src/settings/settingscontroller.cpp
+#        src/settings/settingsinterface.cpp
+#
         src/unitConverter/pressureConverters.cpp
         src/unitConverter/temperatureConverters.cpp
         src/unitConverter/torqueConverters.cpp
@@ -96,28 +102,33 @@ set(CPP_FILES
 
 set(HPP_FILES
         src/main.hpp
+
+#        src/AircraftLoader/AircraftLoader.hpp
+#
         src/common/AircraftConfig.hpp
         src/common/converters.hpp
         src/common/dataIdentifiers.hpp
         src/common/QmlEnums.hpp
         src/common/typeEnums.hpp
+#
         src/common/converters/basicConverters.hpp
         src/common/converters/listConverters.hpp
         src/common/converters/structConverters.hpp
+#
         src/common/definitions/baseTypes.hpp
         src/common/definitions/AircraftDefinition/AircraftDefinition.hpp
         src/common/definitions/gaugeDefinition/gaugeDefinition.hpp
-        src/common/definitions/JetDefinition/JetDefinition.hpp
-        src/common/definitions/PropDefinition/PropDefinition.hpp
-        src/common/definitions/TurbopropDefinition/TurbopropDefinition.hpp
+#
         src/io/NetworkClient/NetworkClient.hpp
+#
         src/pages/MfdPage/MfdPage.hpp
         src/pages/MfdPage/FlightPlan/FlightPlan.hpp
         src/pages/MfdPage/FlightPlan/FlightPlanWaypoint.hpp
         src/pages/MfdPage/GaugeElement/GaugeElement.hpp
         src/pages/MfdPage/GaugeElement/GaugeEngine/GaugeEngine.hpp
-        src/pages/MfdPage/GeoMap/GeoMap.hpp
+        src/pages/MfdPage/GeoMapPage/GeoMapPage.hpp
         src/pages/MfdPage/MiscEngineDataElement/MiscEngineDataElement.hpp
+#
         src/pages/PfdPage/PfdPage.hpp
         src/pages/PfdPage/AirspeedIndicator/AirspeedIndicator.hpp
         src/pages/PfdPage/Altimeter/Altimeter.hpp
@@ -130,6 +141,7 @@ set(HPP_FILES
         src/pages/PfdPage/NavInfo/NavInfo.hpp
         src/pages/PfdPage/RadioInfo/RadioInfo.hpp
         src/pages/PfdPage/WindInfo/WindInfo.hpp
+#
         src/pages/TscPage/TscPage.hpp
         src/pages/TscPage/AircraftSelector/AircraftSelector.hpp
         src/pages/TscPage/AircraftSelector/ThumbnailProvider/ThumbnailProvider.hpp
@@ -137,8 +149,10 @@ set(HPP_FILES
         src/pages/TscPage/GeneralSettings/GeneralSettings.hpp
         src/pages/TscPage/NavCom/NavCom.hpp
         src/pages/TscPage/SpeedBugs/SpeedBugs.hpp
-        src/settings/settingscontroller.hpp
-        src/settings/settingsinterface.hpp
+#
+#        src/settings/settingscontroller.hpp
+#        src/settings/settingsinterface.hpp
+#
         src/unitConverter/unitconverter.hpp
         src/unitConverter/units.hpp
 )

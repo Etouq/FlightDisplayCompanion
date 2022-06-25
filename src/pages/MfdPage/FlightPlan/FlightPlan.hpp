@@ -68,12 +68,12 @@ public:
         return d_waypoints[idx].ident;
     }
 
-    Q_INVOKABLE QmlWaypointType getWpType(int idx) const
+    Q_INVOKABLE QmlWaypointTypeClass::Value getWpType(int idx) const
     {
         return static_cast<QmlWaypointType>(d_waypoints[idx].wpType);
     }
 
-    Q_INVOKABLE QmlWpAltitudeType getAltType(int idx) const
+    Q_INVOKABLE QmlWpAltitudeTypeClass::Value getAltType(int idx) const
     {
         return static_cast<QmlWpAltitudeType>(d_waypoints[idx].altType);
     }
@@ -107,8 +107,8 @@ public:
                               int alt1,
                               int alt2,
                               QString ident,
-                              QmlWaypointType wpType,
-                              QmlWpAltitudeType altType);
+                              QmlWaypointTypeClass::Value wpType,
+                              QmlWpAltitudeTypeClass::Value altType);
 
     Q_INVOKABLE void insertWp(int idx,
                               double lat,
@@ -116,8 +116,8 @@ public:
                               int alt1,
                               int alt2,
                               QString ident,
-                              QmlWaypointType wpType,
-                              QmlWpAltitudeType altType);
+                              QmlWaypointTypeClass::Value wpType,
+                              QmlWpAltitudeTypeClass::Value altType);
 
     Q_INVOKABLE void removeWp(int idx)
     {
@@ -131,8 +131,8 @@ public:
                             int alt1,
                             int alt2,
                             QString ident,
-                            QmlWaypointType wpType,
-                            QmlWpAltitudeType altType);
+                            QmlWaypointTypeClass::Value wpType,
+                            QmlWpAltitudeTypeClass::Value altType);
 
 
 signals:
