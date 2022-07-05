@@ -16,7 +16,7 @@ Item {
         centerY: 82.5
         edgeSpacing: 97.5
 
-        gaugeData: MfdRoot.engine1()
+        gaugeData: MfdRoot.gauge1()
     }
 
     Compound.DoubleCircularGauge {
@@ -26,7 +26,7 @@ Item {
         centerY: 217.5
         edgeSpacing: 97.5
 
-        gaugeData: MfdRoot.engine2()
+        gaugeData: MfdRoot.gauge2()
     }
 
     Vertical.DoubleGauge {
@@ -37,7 +37,7 @@ Item {
         title: thirdGauge.gaugeData.getTitle()
         unit: thirdGauge.gaugeData.getUnitString()
 
-        gaugeData: MfdRoot.engine3()
+        gaugeData: MfdRoot.gauge3()
     }
 
     Vertical.DoubleGauge {
@@ -48,7 +48,7 @@ Item {
         title: fourthGauge.gaugeData.getTitle()
         unit: fourthGauge.gaugeData.getUnitString()
 
-        gaugeData: MfdRoot.engine4()
+        gaugeData: MfdRoot.gauge4()
     }
 
     Component {
@@ -106,7 +106,7 @@ Item {
 
     Vertical.DoubleGauge {
         id: oilTempGauge
-        centerX: EngineMisc.hasEgt() ? 82.5 : 120
+        centerX: EngineMisc.hasSecondaryTempGauge() ? 82.5 : 120
         yTop: 765
 
         title: oilTempGauge.gaugeData.getTitle()
@@ -117,7 +117,7 @@ Item {
 
     Vertical.DoubleGauge {
         id: oilPressGauge
-        centerX: EngineMisc.hasEgt() ? 337.5 : 300
+        centerX: EngineMisc.hasSecondaryTempGauge() ? 337.5 : 300
         yTop: 765
 
         title: oilPressGauge.gaugeData.getTitle()
@@ -127,7 +127,7 @@ Item {
     }
 
     Loader {
-        active: EngineMisc.hasEgt()
+        active: EngineMisc.hasSecondaryTempGauge()
         asynchronous: true
         sourceComponent: Vertical.DoubleGauge {
             id: egtGauge
@@ -138,7 +138,7 @@ Item {
             title: egtGauge.gaugeData.getTitle()
             unit: egtGauge.gaugeData.getUnitString()
 
-            gaugeData: MfdRoot.egtGauge()
+            gaugeData: MfdRoot.secondaryTempGauge()
         }
     }
 

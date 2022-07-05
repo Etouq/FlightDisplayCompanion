@@ -40,7 +40,7 @@ Item {
     property string title: ""
     property string unit: ""
 
-    required property GaugeEngine gaugeData
+    required property GaugeData gaugeData
     required property GaugeEngine engine
 
 
@@ -83,7 +83,7 @@ Item {
         delegate: Rectangle {
             required property int index
 
-            color: gauge.gaugeData.colorZoneColorAt(index)
+            color: gauge.gaugeData.gradColorAt(index)
 
             transform: Rotation {
                 id: gradTransform
@@ -113,6 +113,7 @@ Item {
     Repeater {
         model: gauge.gaugeData.numTextGrads()
         delegate: Text {
+            id: textGrad
             required property int index
 
             anchors.horizontalCenter: parent.left
@@ -129,11 +130,12 @@ Item {
                 const radiusFactor = gauge.radius + gauge.arcWidth / 2
                                    - gauge.gradScaleFactor * 9 - 10
                 const gradValRad = gauge.gaugeData.valueToAngle(
-                        gauge.gaugeData.textGradValAt(index)
+                        gauge.gaugeData.textGradValAt(textGrad.index)
                     ) * Math.PI / 180
+
                 anchors.horizontalCenterOffset = gauge.centerX +
                     radiusFactor * 0.85 * Math.cos(gradValRad)
-                anchors.verticalCenterOffset = gauge.centerY -
+                anchors.verticalCenterOffset = gauge.centerY +
                     radiusFactor * 0.9 * Math.sin(gradValRad)
             }
         }
