@@ -2,18 +2,14 @@ set(CPP_FILES
         src/main.cpp
         src/keepScreenOn.cpp
         src/registerQmlEnums.cpp
-#
-#        src/AircraftLoader/AircraftLoader.cpp
-#        src/AircraftLoader/loadAircraft.cpp
-#
-        src/common/definitions/AircraftDefinition/toBinary.cpp
-        src/common/definitions/AircraftDefinition/toConfig.cpp
+        src/createTestDefinition.cpp
+
+        src/AircraftLoader/AircraftLoader.cpp
+        src/AircraftLoader/loadAircraft.cpp
+
         src/common/definitions/AircraftDefinition/fromBinary.cpp
-        src/common/definitions/gaugeDefinition/gaugeDefinition.cpp
-        src/common/definitions/gaugeDefinition/getEpsilon.cpp
-        src/common/definitions/gaugeDefinition/toBinary.cpp
-        src/common/definitions/gaugeDefinition/fromBinary/fromBinaryV1.cpp
-#
+        src/common/definitions/gaugeDefinition/fromBinary.cpp
+
         src/io/NetworkClient/NetworkClient.cpp
         src/io/NetworkClient/readSimData.cpp
         src/io/NetworkClient/readMfdData.cpp
@@ -23,7 +19,7 @@ set(CPP_FILES
         src/io/NetworkClient/verifyConnectionVersion.cpp
         src/io/NetworkClient/socketStateChanged.cpp
         src/io/NetworkClient/socketErrorOccurred.cpp
-#
+
         src/pages/MfdPage/MfdPage.cpp
         src/pages/MfdPage/loadAircraft.cpp
         src/pages/MfdPage/FlightPlan/appendWp.cpp
@@ -38,7 +34,7 @@ set(CPP_FILES
         src/pages/MfdPage/GaugeElement/GaugeEngine/update.cpp
         src/pages/MfdPage/GeoMapPage/GeoMapPage.cpp
         src/pages/MfdPage/MiscEngineDataElement/updateFuelText.cpp
-#
+
         src/pages/PfdPage/PfdPage.cpp
         src/pages/PfdPage/loadAircraft.cpp
         src/pages/PfdPage/AirspeedIndicator/AirspeedIndicator.cpp
@@ -74,7 +70,7 @@ set(CPP_FILES
         src/pages/PfdPage/HSIndicator/updateHeading.cpp
         src/pages/PfdPage/HSIndicator/updateRotation.cpp
         src/pages/PfdPage/RadioInfo/RadioInfo.cpp
-#
+
         src/pages/TscPage/TscPage.cpp
         src/pages/TscPage/loadAircraft.cpp
         src/pages/TscPage/FlightTmr/update.cpp
@@ -86,41 +82,35 @@ set(CPP_FILES
         src/pages/TscPage/NavCom/setNav2Freq.cpp
         src/pages/TscPage/NavCom/setXpdrCode.cpp
         src/pages/TscPage/NavCom/setXpdrState.cpp
-#
+
 #        src/settings/settingscontroller.cpp
 #        src/settings/settingsinterface.cpp
-#
-        src/unitConverter/pressureConverters.cpp
-        src/unitConverter/temperatureConverters.cpp
-        src/unitConverter/torqueConverters.cpp
-        src/unitConverter/unitconverter.cpp
-        src/unitConverter/volumeConverters.cpp
-        src/unitConverter/volumerateConverters.cpp
-        src/unitConverter/weightConverters.cpp
-        src/unitConverter/weightrateConverters.cpp
 )
 
 set(HPP_FILES
         src/main.hpp
 
-#        src/AircraftLoader/AircraftLoader.hpp
-#
+        src/AircraftLoader/AircraftLoader.hpp
+
         src/common/AircraftConfig.hpp
         src/common/converters.hpp
         src/common/dataIdentifiers.hpp
         src/common/QmlEnums.hpp
         src/common/typeEnums.hpp
-#
+        src/common/Units.hpp
+
+        src/common/UnitConverter/UnitConverter.hpp
+
         src/common/converters/basicConverters.hpp
         src/common/converters/listConverters.hpp
         src/common/converters/structConverters.hpp
-#
+
         src/common/definitions/baseTypes.hpp
         src/common/definitions/AircraftDefinition/AircraftDefinition.hpp
         src/common/definitions/gaugeDefinition/gaugeDefinition.hpp
-#
+
         src/io/NetworkClient/NetworkClient.hpp
-#
+
         src/pages/MfdPage/MfdPage.hpp
         src/pages/MfdPage/FlightPlan/FlightPlan.hpp
         src/pages/MfdPage/FlightPlan/FlightPlanWaypoint.hpp
@@ -128,7 +118,7 @@ set(HPP_FILES
         src/pages/MfdPage/GaugeElement/GaugeEngine/GaugeEngine.hpp
         src/pages/MfdPage/GeoMapPage/GeoMapPage.hpp
         src/pages/MfdPage/MiscEngineDataElement/MiscEngineDataElement.hpp
-#
+
         src/pages/PfdPage/PfdPage.hpp
         src/pages/PfdPage/AirspeedIndicator/AirspeedIndicator.hpp
         src/pages/PfdPage/Altimeter/Altimeter.hpp
@@ -141,7 +131,7 @@ set(HPP_FILES
         src/pages/PfdPage/NavInfo/NavInfo.hpp
         src/pages/PfdPage/RadioInfo/RadioInfo.hpp
         src/pages/PfdPage/WindInfo/WindInfo.hpp
-#
+
         src/pages/TscPage/TscPage.hpp
         src/pages/TscPage/AircraftSelector/AircraftSelector.hpp
         src/pages/TscPage/AircraftSelector/ThumbnailProvider/ThumbnailProvider.hpp
@@ -149,11 +139,9 @@ set(HPP_FILES
         src/pages/TscPage/GeneralSettings/GeneralSettings.hpp
         src/pages/TscPage/NavCom/NavCom.hpp
         src/pages/TscPage/SpeedBugs/SpeedBugs.hpp
-#
+        src/pages/TscPage/SpeedBugs/SpeedBugEntry.hpp
+
 #        src/settings/settingscontroller.hpp
 #        src/settings/settingsinterface.hpp
-#
-        src/unitConverter/unitconverter.hpp
-        src/unitConverter/units.hpp
 )
 

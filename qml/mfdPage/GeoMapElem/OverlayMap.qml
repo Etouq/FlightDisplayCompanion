@@ -122,7 +122,7 @@ Item {
                 ShapePath {
                     fillColor: GeoMapPage.iconColor
                     strokeColor: GeoMapPage.iconBorder
-                    strokeWidth: 1.5 * GeoMapPage.iconScale
+                    strokeWidth: GeoMapPage.iconScale
 
                     scale: Qt.size(GeoMapPage.iconScale, GeoMapPage.iconScale)
                     PathSvg { path: GeoMapPage.iconPath }

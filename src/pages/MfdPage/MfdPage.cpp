@@ -14,12 +14,6 @@ MfdPage::MfdPage(NetworkClient *networkClient, QObject *parent)
     d_geoMapPage(networkClient),
     d_fpl(networkClient)
 {
-    qmlRegisterSingletonInstance("Mfd.GeoMapPage", 1, 0, "GeoMapPage", &d_geoMapPage);
-    qmlRegisterSingletonInstance("Mfd.Flightplan", 1, 0, "Flightplan", &d_fpl);
-    qmlRegisterSingletonInstance("Mfd.Engine", 1, 0, "EngineMisc", &d_miscEngineData);
-    qmlRegisterUncreatableType<GaugeElement>("Mfd.Engine", 1, 0, "GaugeData", "Bad Boy");
-    qmlRegisterUncreatableType<GaugeEngine>("Mfd.Engine", 1, 0, "GaugeEngine", "Bad Boy");
-
     QQmlEngine::setObjectOwnership(&d_gauge1, QQmlEngine::CppOwnership);
     QQmlEngine::setObjectOwnership(&d_gauge2, QQmlEngine::CppOwnership);
     QQmlEngine::setObjectOwnership(&d_gauge3, QQmlEngine::CppOwnership);
@@ -30,6 +24,14 @@ MfdPage::MfdPage(NetworkClient *networkClient, QObject *parent)
     QQmlEngine::setObjectOwnership(&d_oilPressGauge, QQmlEngine::CppOwnership);
     QQmlEngine::setObjectOwnership(&d_miscEngineData, QQmlEngine::CppOwnership);
     QQmlEngine::setObjectOwnership(&d_secondaryTempGauge, QQmlEngine::CppOwnership);
+
+    qRegisterMetaType<GaugeElement*>("GaugeElement*");
+    qRegisterMetaType<GaugeEngine*>("GaugeEngine*");
+    qmlRegisterSingletonInstance("Mfd.GeoMapPage", 1, 0, "GeoMapPage", &d_geoMapPage);
+    qmlRegisterSingletonInstance("Mfd.Flightplan", 1, 0, "Flightplan", &d_fpl);
+    qmlRegisterSingletonInstance("Mfd.Engine", 1, 0, "EngineMisc", &d_miscEngineData);
+    qmlRegisterUncreatableType<GaugeElement>("Mfd.Engine", 1, 0, "GaugeData", "Bad Boy");
+    qmlRegisterUncreatableType<GaugeEngine>("Mfd.Engine", 1, 0, "GaugeEngine", "Bad Boy");
 
     // connect signals and slots
     connect(d_networkClient,

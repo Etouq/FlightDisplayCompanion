@@ -44,17 +44,17 @@ public:
 
     Q_INVOKABLE int iconCount() const
     {
-        return 1;//s_iconPaths.size();
+        return s_iconPaths.size();
     }
 
     Q_INVOKABLE const QString iconAt(int idx) const
     {
-        return d_iconPath;//s_iconPaths.at(idx);
+        return s_iconPaths.at(idx);
     }
 
     Q_INVOKABLE void selectIcon(int idx)
     {
-        //d_iconPath = s_iconPaths.at(idx);
+        d_iconPath = s_iconPaths.at(idx);
         //QSettings().setValue("pages/mfd/geomap/iconIdx", idx);
         emit iconPathChanged();
     }
@@ -158,21 +158,33 @@ private:
 
     MapRotationMode d_rotationMode = MapRotationMode::NORTH_UP;
 
-//    static const QString s_defaultPlanePath;
-//    static const QString s_cursorIconPath;
-//    static const QString s_triangleIconPath;
-//    static const QString s_airlinerIconPath;
-//    static const QString s_gliderIconPath;
-//    static const QString s_glider2IconPath;
-//    static const QString s_jetIconPath;
-//    static const QString s_propIconPath;
-//    static const QString s_turbopropIconPath;
-//    static const QString s_heliIconPath;
+   static const QString s_defaultPlanePath;
+   static const QString s_cursorIconPath;
+   static const QString s_triangleIconPath;
+   static const QString s_airlinerIconPath;
+   static const QString s_gliderIconPath;
+   static const QString s_glider2IconPath;
+   static const QString s_jetIconPath;
+   static const QString s_propIconPath;
+   static const QString s_turbopropIconPath;
+   static const QString s_heliIconPath;
 
-//    inline static const QList<QString> s_iconPaths = { s_defaultPlanePath, s_cursorIconPath, s_triangleIconPath,
-//                                                       s_airlinerIconPath, s_gliderIconPath, s_glider2IconPath,
-//                                                       s_jetIconPath,      s_propIconPath,   s_turbopropIconPath,
-//                                                       s_heliIconPath };
+   static const QString s_c152Path;
+   static const QString s_b747Path;
+   static const QString s_dualTurbopropHighDetailPath;
+   static const QString s_dualTurbopropLowDetailPath;
+   static const QString s_cj4HighDetailPath;
+   static const QString s_cj4LowDetailPath;
+   static const QString s_baron58HighDetailPath;
+   static const QString s_baron58LowDetailPath;
+   static const QString s_pc12HighDetailPath;
+   static const QString s_pc12LowDetailPath;
+   static const QString s_sr22HighDetailPath;
+   static const QString s_sr22LowDetailPath;
+   static const QString s_tbmHighDetailPath;
+   static const QString s_tbmLowDetailPath;
+
+   static const QList<QString> s_iconPaths;
 };
 
 }  // namespace pages::mfd

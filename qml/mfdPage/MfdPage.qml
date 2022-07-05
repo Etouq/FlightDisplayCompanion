@@ -16,7 +16,7 @@ Item {
 
     Connections {
         target: MfdRoot
-        function onGaugesLoaded(layoutPath: string) {
+        function onGaugesLoaded(layoutPath) {
             edLoader.setSource("qrc:/MfdPage/EngineDisplay/Gauges/Layouts/" + layoutPath + ".qml");
         }
     }
@@ -45,17 +45,6 @@ Item {
             color: "white"
             text: "NORTH UP"
 
-            Component.onCompleted: function() {
-                mapOrientationText.text = mapOrientationToString();
-            }
-
-            Connections {
-                target: GeoMapPage
-                function onRotationModeChanged() {
-                    mapOrientationText.text = mapOrientationToString();
-                }
-            }
-
             function mapOrientationToString() {
                 switch (GeoMapPage.rotationMode) {
                     case MapRotationMode.NORTH_UP:
@@ -68,6 +57,18 @@ Item {
                         return "TRACK UP";
                 }
             }
+
+            Component.onCompleted: function() {
+                mapOrientationText.text = mapOrientationText.mapOrientationToString();
+            }
+
+            Connections {
+                target: GeoMapPage
+                function onRotationModeChanged() {
+                    mapOrientationText.text = mapOrientationText.mapOrientationToString();
+                }
+            }
+
         }
     }
 
