@@ -104,7 +104,7 @@ Item {
             }
 
             color: "white"
-            text: (EngineMisc.rudderValue < 0 ? "" : " ") + (EngineMisc.rudderValue / 0.6).toFixed() + "°"
+            text: EngineMisc.rudderTrimValue
         }
     }
 }

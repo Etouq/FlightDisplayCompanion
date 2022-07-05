@@ -130,7 +130,7 @@ Item {
         }
 
         color: "white"
-        text: (EngineMisc.elevTrimValue / 0.6).toFixed() + "%"
+        text: EngineMisc.elevTrimValue
     }
 
 }

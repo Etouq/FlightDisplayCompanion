@@ -103,7 +103,7 @@ Item {
             }
 
             color: "white"
-            text: (EngineMisc.aileronValue < 0 ? "" : " ") + (EngineMisc.aileronValue / 0.6).toFixed() + "°"
+            text: EngineMisc.aileronTrimValue
         }
     }
 }

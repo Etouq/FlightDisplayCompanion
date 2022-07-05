@@ -25,11 +25,11 @@ class MiscEngineDataElement : public QObject
     Q_PROPERTY(bool showFlapsText READ showFlapsText NOTIFY showFlapsTextChanged)
 
     Q_PROPERTY(double elevTrimTransformValue READ elevTrimTransformValue NOTIFY elevTrimTransformValueChanged)
-    Q_PROPERTY(int elevTrimValue READ elevTrimValue NOTIFY elevTrimValueChanged)
+    Q_PROPERTY(QString elevTrimValue READ elevTrimValue NOTIFY elevTrimValueChanged)
     Q_PROPERTY(double rudderTrimTransformValue READ rudderTrimTransformValue NOTIFY rudderTrimTransformValueChanged)
-    Q_PROPERTY(int rudderTrimValue READ rudderTrimValue NOTIFY rudderTrimValueChanged)
+    Q_PROPERTY(QString rudderTrimValue READ rudderTrimValue NOTIFY rudderTrimValueChanged)
     Q_PROPERTY(double aileronTrimTransformValue READ aileronTrimTransformValue NOTIFY aileronTrimTransformValueChanged)
-    Q_PROPERTY(int aileronTrimValue READ aileronTrimValue NOTIFY aileronTrimValueChanged)
+    Q_PROPERTY(QString aileronTrimValue READ aileronTrimValue NOTIFY aileronTrimValueChanged)
 
 public:
 
@@ -164,7 +164,7 @@ public:
         return d_elevTrimTransformValue;
     }
 
-    int elevTrimValue() const
+    const QString &elevTrimValue() const
     {
         return d_elevTrimValue;
     }
@@ -174,7 +174,7 @@ public:
         return d_rudderTrimTransformValue;
     }
 
-    int rudderTrimValue() const
+    const QString &rudderTrimValue() const
     {
         return d_rudderTrimValue;
     }
@@ -184,7 +184,7 @@ public:
         return d_aileronTrimTransformValue;
     }
 
-    int aileronTrimValue() const
+    const QString &aileronTrimValue() const
     {
         return d_aileronTrimValue;
     }
@@ -287,15 +287,17 @@ public slots:
 
             if (d_trimUseDegrees)
             {
-                if (d_elevTrimDegrees != d_elevTrimValue)
+                if (const QString newValue = QString::number(std::abs(d_elevTrimDegrees)) + "°";
+                    d_elevTrimValue != newValue)
                 {
-                    d_elevTrimValue = d_elevTrimDegrees;
+                    d_elevTrimValue = newValue;
                     emit elevTrimValueChanged();
                 }
             }
-            else if (d_elevTrimPct != d_elevTrimValue)
+            else if (const QString newValue = QString::number(std::abs(d_elevTrimPct)) + "%";
+                     d_elevTrimValue != newValue)
             {
-                d_elevTrimValue = d_elevTrimPct;
+                d_elevTrimValue = newValue;
                 emit elevTrimValueChanged();
             }
         }
@@ -313,15 +315,19 @@ public slots:
 
             if (d_trimUseDegrees)
             {
-                if (d_rudderTrimDegrees != d_rudderTrimValue)
+                if (const QString newValue =
+                      d_rudderTrimDegrees < 0 ? "" : " " + QString::number(std::abs(d_rudderTrimDegrees)) + "°";
+                    d_rudderTrimValue != newValue)
                 {
-                    d_rudderTrimValue = d_rudderTrimDegrees;
+                    d_rudderTrimValue = newValue;
                     emit rudderTrimValueChanged();
                 }
             }
-            else if (d_rudderTrimPct != d_rudderTrimValue)
+            else if (const QString newValue =
+                       d_rudderTrimPct < 0 ? "" : " " + QString::number(std::abs(d_rudderTrimPct)) + "%";
+                     d_rudderTrimValue != newValue)
             {
-                d_rudderTrimValue = d_rudderTrimPct;
+                d_rudderTrimValue = newValue;
                 emit rudderTrimValueChanged();
             }
         }
@@ -337,17 +343,22 @@ public slots:
             d_ailTrimPct = std::lround(newPct * 100.0);
             d_ailTrimDegrees = newAngle;
 
+
             if (d_trimUseDegrees)
             {
-                if (d_ailTrimDegrees != d_aileronTrimValue)
+                if (const QString newValue =
+                      d_ailTrimDegrees < 0 ? "" : " " + QString::number(std::abs(d_ailTrimDegrees)) + "°";
+                    d_aileronTrimValue != newValue)
                 {
-                    d_aileronTrimValue = d_ailTrimDegrees;
+                    d_aileronTrimValue = newValue;
                     emit aileronTrimValueChanged();
                 }
             }
-            else if (d_ailTrimPct != d_aileronTrimValue)
+            else if (const QString newValue =
+                       d_ailTrimPct < 0 ? "" : " " + QString::number(std::abs(d_ailTrimPct)) + "%";
+                     d_aileronTrimValue != newValue)
             {
-                d_aileronTrimValue = d_ailTrimPct;
+                d_aileronTrimValue = newValue;
                 emit aileronTrimValueChanged();
             }
         }
@@ -379,13 +390,15 @@ private:
     // trims
     bool d_hasElevatorTrim = false;
     double d_elevTrimTransformValue = 0;
-    int d_elevTrimValue = 0;
+    QString d_elevTrimValue = "0°";
+
     bool d_hasRudderTrim = false;
     double d_rudderTrimTransformValue = 0;
-    int d_rudderTrimValue = 0;
+    QString d_rudderTrimValue = "0°";
+
     bool d_hasAileronTrim = false;
     double d_aileronTrimTransformValue = 0;
-    int d_aileronTrimValue = 0;
+    QString d_aileronTrimValue = "0°";
 
     // private
     double d_smoothedSpeed = 0;
