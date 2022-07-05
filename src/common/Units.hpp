@@ -1,5 +1,5 @@
-#ifndef _UNITS_H_
-#define _UNITS_H_
+#ifndef __UNITS_HPP__
+#define __UNITS_HPP__
 
 #include <cstdint>
 
@@ -123,5 +123,4 @@ enum class Units : uint8_t
     UKTONNE_PER_SECOND,
 };
 
-
-#endif  //_UNITS_H_
+#endif  //__UNITS_HPP__

@@ -1,7 +1,7 @@
 #ifndef __GAUGE_ENGINE_HPP__
 #define __GAUGE_ENGINE_HPP__
 
-#include "unitConverter/unitconverter.hpp"
+
 #include "common/definitions/gaugeDefinition/gaugeDefinition.hpp"
 
 #include <QColor>
@@ -22,8 +22,8 @@ class GaugeEngine : public QObject
     Q_PROPERTY(QColor color READ color NOTIFY colorChanged)
     Q_PROPERTY(bool redBlink READ redBlink NOTIFY redBlinkChanged)
 
-
-    void (*convertValue)(double *);
+    double d_conversionFactor = 1;
+    double d_conversionOffset = 0;
 
     bool d_isCircular = false;
 
@@ -45,7 +45,6 @@ public:
     explicit GaugeEngine(QObject *parent = nullptr)
       : QObject(parent)
     {
-        UnitConverter::setConversionFunction(convertValue, Units::NONE);
     }
 
     void setGaugeParameters(const definitions::GaugeDefinition &gaugeDef, double startAngle, double endAngle);

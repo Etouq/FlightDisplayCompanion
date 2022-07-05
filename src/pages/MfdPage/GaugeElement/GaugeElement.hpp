@@ -7,6 +7,7 @@
 #include <QObject>
 #include <QFont>
 #include <QFontMetrics>
+#include <QQmlEngine>
 
 namespace pages::mfd
 {
@@ -14,6 +15,7 @@ namespace pages::mfd
 class GaugeElement : public QObject
 {
     Q_OBJECT
+
 
     definitions::GaugeDefinition d_def;
 
@@ -30,19 +32,24 @@ public:
 
     explicit GaugeElement(QObject *parent = nullptr)
       : QObject(parent)
-    {}
+    {
+        QQmlEngine::setObjectOwnership(&d_engine1, QQmlEngine::CppOwnership);
+        QQmlEngine::setObjectOwnership(&d_engine2, QQmlEngine::CppOwnership);
+        QQmlEngine::setObjectOwnership(&d_engine3, QQmlEngine::CppOwnership);
+        QQmlEngine::setObjectOwnership(&d_engine4, QQmlEngine::CppOwnership);
+    }
 
     void setGaugeParameters(const definitions::GaugeDefinition &gaugeDef, double startAngle, double endAngle)
     {
         d_def = gaugeDef;
 
-        d_startAngle = startAngle;
-        d_endAngle = endAngle;
+        d_startAngle = 360 - startAngle;
+        d_endAngle = 360 - endAngle;
 
-        d_engine1.setGaugeParameters(gaugeDef, startAngle, endAngle);
-        d_engine2.setGaugeParameters(gaugeDef, startAngle, endAngle);
-        d_engine3.setGaugeParameters(gaugeDef, startAngle, endAngle);
-        d_engine4.setGaugeParameters(gaugeDef, startAngle, endAngle);
+        d_engine1.setGaugeParameters(gaugeDef, d_startAngle, d_endAngle);
+        d_engine2.setGaugeParameters(gaugeDef, d_startAngle, d_endAngle);
+        d_engine3.setGaugeParameters(gaugeDef, d_startAngle, d_endAngle);
+        d_engine4.setGaugeParameters(gaugeDef, d_startAngle, d_endAngle);
     }
 
     void setGaugeParameters(const definitions::GaugeDefinition &gaugeDef, double length)
@@ -162,7 +169,12 @@ public:
         return d_def.colorZones.at(idx).end;
     }
 
-    Q_INVOKABLE const QColor &colorZoneColorAt(int idx) const
+    Q_INVOKABLE double colorZoneRangeAt(int idx) const
+    {
+        return d_def.colorZones.at(idx).end - d_def.colorZones.at(idx).start;
+    }
+
+    Q_INVOKABLE QColor colorZoneColorAt(int idx) const
     {
         return d_def.colorZones.at(idx).color;
     }
@@ -183,7 +195,7 @@ public:
         return d_def.grads.at(idx).isBig;
     }
 
-    Q_INVOKABLE const QColor &gradColorAt(int idx) const
+    Q_INVOKABLE QColor gradColorAt(int idx) const
     {
         return d_def.grads.at(idx).gradColor;
     }
@@ -199,7 +211,7 @@ public:
         return d_def.textGrads.at(idx).textGradPos;
     }
 
-    Q_INVOKABLE const QString &gradTextAt(int idx) const
+    Q_INVOKABLE QString gradTextAt(int idx) const
     {
         return d_def.textGrads.at(idx).gradText;
     }
@@ -210,6 +222,23 @@ public:
             if (d_def.textGrads[i].gradText.size() > 4)
                 return true;
         return false;
+    }
+    Q_INVOKABLE int maxTextGradWidth() const
+    {
+        int ret = 0;
+
+        QFont robotoFont("Roboto Mono", -1, QFont::Bold);
+        robotoFont.setPixelSize(15);
+        QFontMetrics metrics(robotoFont);
+
+        for (const definitions::TextGradDef &textGrad : d_def.textGrads)
+        {
+            int width = metrics.horizontalAdvance(textGrad.gradText);
+            if (width > ret)
+                ret = width;
+        }
+
+        return ret;
     }
 
 public slots:

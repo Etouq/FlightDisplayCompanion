@@ -5,7 +5,7 @@ namespace pages::mfd
 
 void GaugeEngine::update(double newValue)
 {
-    convertValue(&newValue);
+    newValue = newValue * d_conversionFactor + d_conversionOffset;
 
     if (!d_def.noText)
     {
@@ -56,7 +56,7 @@ void GaugeEngine::update(double newValue)
 
     if (d_isCircular)
     {
-        d_angle = newValue * d_cursorPosFactor - d_cursorPosOffset;
+        d_angle = newValue * d_cursorPosFactor + d_cursorPosOffset;
         emit angleChanged();
     }
     else
