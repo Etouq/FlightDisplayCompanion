@@ -12,23 +12,6 @@ struct AircraftConfig;
 namespace definitions
 {
 
-enum class SwitchingGaugeType : uint8_t
-{
-    NONE,
-    N1,
-    N2,
-    ENGINE_TEMP, // itt, egt or cht
-    RPM,
-    RPM_PCT,
-    PROP_RPM,
-    PROP_RPM_PCT,
-    POWER,
-    POWER_PCT,
-    MANIFOLD_PRESSURE,
-    TORQUE,
-    TORQUE_PCT
-};
-
 // definition containing all parameters used to display engine data of an aircraft
 struct AircraftDefinition
 {
@@ -89,11 +72,7 @@ struct AircraftDefinition
     bool noColors = false;
     bool dynamicBarberpole = false;
 
-    QList<ReferenceSpeed> refSpeedDefaults = { { 85, "R" }, { 100, "X" }, { 124, "Y" }, { 85, "AP" } };
-
-    QByteArray toBinary() const;
-
-    AircraftConfig toConfig() const;
+    QList<ReferenceSpeed> refSpeedDefaults = { { 85, "r" }, { 100, "x" }, { 124, "y" }, { 85, "ap" } };
 
     static AircraftDefinition fromBinary(QIODevice &stream);
 
@@ -137,29 +116,6 @@ struct AircraftDefinition
         return name >= rhs.name;
     }
 
-protected:
-
-    void fromBinaryProtected(QIODevice &data, FileVersion version)
-    {
-        switch (version)
-        {
-            case FileVersion::V1:
-                fromBinaryV1(data, version);
-                break;
-            case FileVersion::V2:
-                fromBinaryV2(data, version);
-                break;
-            case FileVersion::V3:
-                //return fromBinaryV3(data, version);
-                return;
-        }
-    }
-
-private:
-
-    void fromBinaryV1(QIODevice &data, FileVersion version);
-    void fromBinaryV2(QIODevice &data, FileVersion version);
-    void fromBinaryV3(QIODevice &data, FileVersion version);
 };
 
 }  // namespace definitions

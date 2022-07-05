@@ -7,14 +7,6 @@
 namespace definitions
 {
 
-// fileversion for aircraft definition files
-enum class FileVersion : uint16_t
-{
-    V1,
-    V2,
-    V3
-};
-
 struct ColorZone
 {
     double start;

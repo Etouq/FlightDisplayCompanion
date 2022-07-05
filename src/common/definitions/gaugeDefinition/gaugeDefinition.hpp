@@ -2,7 +2,7 @@
 #define GAUGEDEFINITION_H
 
 #include "../baseTypes.hpp"
-#include "unitConverter/units.hpp"
+#include "common/Units.hpp"
 
 #include <cstdint>
 #include <QColor>
@@ -65,34 +65,15 @@ struct GaugeDefinition
 
     Units unit = Units::NONE;
 
-    GaugeDefinition() = default;
-    ~GaugeDefinition() = default;
-    GaugeDefinition(const GaugeDefinition &) = default;
-    GaugeDefinition(const RawGaugeDefinition &rhs);
-    GaugeDefinition &operator=(const GaugeDefinition &) = default;
-
     QByteArray toBinary() const;
 
-    static GaugeDefinition fromBinary(QIODevice &data, FileVersion version = FileVersion::V3)
-    {
-        switch (version)
-        {
-            case FileVersion::V1:
-            case FileVersion::V2:
-            case FileVersion::V3:
-                return fromBinaryV1(data);
-                break;
-        }
-    }
+    static GaugeDefinition fromBinary(QIODevice &data);
 
     double getEpsilon(bool isCircular) const;
 
-private:
-
-    static GaugeDefinition fromBinaryV1(QIODevice &data);
 };
 
 }  // namespace definitions
-Q_DECLARE_METATYPE(definitions::GaugeDefinition)
+
 
 #endif  // GAUGEDEFINITION_H

@@ -1,10 +1,10 @@
-#include "../gaugeDefinition.hpp"
+#include "gaugeDefinition.hpp"
 #include "common/converters/listConverters.hpp"
 
 namespace definitions
 {
 
-GaugeDefinition GaugeDefinition::fromBinaryV1(QIODevice &data)
+GaugeDefinition GaugeDefinition::fromBinary(QIODevice &data)
 {
     GaugeDefinition ret;
     Converters::convertString(data, ret.title);
