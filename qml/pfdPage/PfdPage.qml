@@ -11,6 +11,14 @@ import "Elements/Altimeter"
 
 Item {
 
+    function movedOnScreen() {
+        bottomBarElement.movedOnScreen();
+    }
+
+    function movedOffScreen() {
+        bottomBarElement.movedOffScreen();
+    }
+
 
     AttitudeBackground {
         anchors.fill: parent
@@ -40,7 +48,7 @@ Item {
     }
 
     BottomBar {
-
+        id: bottomBarElement
     }
 
     HSIndicator {
