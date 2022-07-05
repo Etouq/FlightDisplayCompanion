@@ -1,12 +1,17 @@
 import QtQuick 2.15
-import "../styled_controls"
-import "../styled_controls/gradientButtonElements"
-import Mfd.GeoMap 1.0
+
+import Mfd.GeoMapPage 1.0
+
+import "../../styled_controls"
+import "../../styled_controls/gradientButtonElements"
 
 Rectangle {
     id: popupRoot
-    visible: false
+
     anchors.fill: parent
+
+    visible: false
+
     color: Qt.rgba(0, 0, 0, 0.8)
 
 
@@ -59,7 +64,7 @@ Rectangle {
                     text: "Extra Small"
                 }
 
-                onReleased: { GeoMap.iconScale = 0.5; popupRoot.visible = false; }
+                onReleased: { GeoMapPage.iconScale = 0.5; popupRoot.visible = false; }
             }
 
             GradientButton {
@@ -76,7 +81,7 @@ Rectangle {
                     text: "Small"
                 }
 
-                onReleased: { GeoMap.iconScale = 0.75; popupRoot.visible = false; }
+                onReleased: { GeoMapPage.iconScale = 0.75; popupRoot.visible = false; }
             }
 
             GradientButton {
@@ -93,7 +98,7 @@ Rectangle {
                     text: "Medium"
                 }
 
-                onReleased: { GeoMap.iconScale = 1; popupRoot.visible = false; }
+                onReleased: { GeoMapPage.iconScale = 1; popupRoot.visible = false; }
             }
 
             GradientButton {
@@ -110,7 +115,7 @@ Rectangle {
                     text: "Large"
                 }
 
-                onReleased: { GeoMap.iconScale = 1.5; popupRoot.visible = false; }
+                onReleased: { GeoMapPage.iconScale = 1.5; popupRoot.visible = false; }
             }
 
             GradientButton {
@@ -127,7 +132,7 @@ Rectangle {
                     text: "Extra Large"
                 }
 
-                onReleased: { GeoMap.iconScale = 2; popupRoot.visible = false; }
+                onReleased: { GeoMapPage.iconScale = 2; popupRoot.visible = false; }
             }
         }
     }

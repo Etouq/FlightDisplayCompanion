@@ -1,12 +1,18 @@
 import QtQuick 2.15
-import "../styled_controls"
-import "../styled_controls/gradientButtonElements"
-import Pfd.Altimeter 1.0
+
+import Mfd.GeoMapPage 1.0
+import TypeEnums 1.0
+
+import "../../styled_controls"
+import "../../styled_controls/gradientButtonElements"
 
 Rectangle {
     id: popupRoot
-    visible: false
+
     anchors.fill: parent
+
+    visible: false
+
     color: Qt.rgba(0, 0, 0, 0.8)
 
 
@@ -26,87 +32,88 @@ Rectangle {
             font.bold: true
             font.pixelSize: 60
             color: "white"
-            text: "Minimum Source"
+            text: "Map Orientation"
         }
     }
 
     Rectangle {
-        x: 604.8
-        y: 180
-        width: 518.4
-        height: 724.992
+        x: 379.2
+        y: 100
+        width: 969.6
+        height: 1074
         border.width: 4.8
         border.color: "white"
         color: "black"
 
         Column {
-            x: 15.168
-            y: 15.168
-            spacing: 10.368
+            anchors.centerIn: parent
+            spacing: 6
 
             GradientButton {
-                width: 488.064
-                height: 224.64
+                width: 921.6
 
                 Text {
-                    y: 44.928
                     anchors.horizontalCenter: parent.horizontalCenter
+                    y: 50.4
                     font.pixelSize: 60
                     font.family: "Roboto Mono"
                     font.bold: true
                     color: "white"
-                    text: "Off"
+                    text: "North Up"
                 }
 
-                onReleased: {
-                    Altimeter.minimumsState = 0;
-                    popupRoot.visible = false;
-                }
+                onReleased: { GeoMapPage.rotationMode = MapRotationMode.NORTH_UP; popupRoot.visible = false; }
             }
 
             GradientButton {
-                width: 488.064
-                height: 224.64
+                width: 921.6
 
                 Text {
-                    y: 44.928
                     anchors.horizontalCenter: parent.horizontalCenter
+                    y: 50.4
                     font.pixelSize: 60
                     font.family: "Roboto Mono"
                     font.bold: true
                     color: "white"
-                    text: "Baro"
+                    text: "Heading Up"
                 }
 
-                onReleased: {
-                    Altimeter.minimumsState = 1;
-                    Altimeter.updateMinimumAlt();
-                    popupRoot.visible = false;
-                }
+                onReleased: { GeoMapPage.rotationMode = MapRotationMode.HDG_UP; popupRoot.visible = false; }
             }
 
             GradientButton {
-                width: 488.064
-                height: 224.64
+                width: 921.6
 
                 Text {
-                    y: 44.928
                     anchors.horizontalCenter: parent.horizontalCenter
+                    y: 50.4
                     font.pixelSize: 60
                     font.family: "Roboto Mono"
                     font.bold: true
                     color: "white"
-                    text: "Radio Alt"
+                    text: "Track Up"
                 }
 
-                onReleased: {
-                    Altimeter.minimumsState = 2;
-                    Altimeter.updateMinimumAlt();
-                    popupRoot.visible = false;
+                onReleased: { GeoMapPage.rotationMode = MapRotationMode.TRACK_UP; popupRoot.visible = false; }
+            }
+
+            GradientButton {
+                width: 921.6
+
+                Text {
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    y: 50.4
+                    font.pixelSize: 60
+                    font.family: "Roboto Mono"
+                    font.bold: true
+                    color: "white"
+                    text: "Desired Track Up"
                 }
+
+                onReleased: { GeoMapPage.rotationMode = MapRotationMode.DTK_UP; popupRoot.visible = false; }
             }
         }
-    }
 
+    }
 
 }

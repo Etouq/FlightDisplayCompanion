@@ -1,9 +1,11 @@
 import QtQuick 2.15
+
 import "../styled_controls"
 import "../styled_controls/gradientButtonElements"
 
 Row {
     id: root
+
     property alias name: radioId.text
     property alias activeFreq: radioActiveFreq.text
     property alias standbyFreq: radioStandbyFreq.text
@@ -28,13 +30,12 @@ Row {
 
             Text {
                 id: radioId
-                x: 22.5
+                anchors.horizontalCenter: parent.horizontalCenter
                 y: 7.5
                 font.family: "Roboto Mono"
                 font.pixelSize: 66
                 font.bold: true
                 color: "white"
-                text: "COM1"
             }
         }
     }

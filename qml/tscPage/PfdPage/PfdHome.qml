@@ -1,20 +1,23 @@
 import QtQuick 2.15
-import "styled_controls"
-import "styled_controls/gradientButtonElements"
+
+import IO.Network 1.0
 import General.Settings 1.0
 import TypeEnums 1.0
 
-TscPageBase {
-    id: root
+import "../"
+import "../styled_controls"
+import "../styled_controls/gradientButtonElements"
+import "../../settingsPage/flightplan"
 
-    pageTitle: "Home"
+TscPageBase {
+    id: pfdHome
+
+    pageTitle: "PFD Home"
 
     signal speedbugsClicked()
     signal timersClicked()
     signal minimumsClicked()
-    signal mapSettingsClicked()
-    signal planeIconClicked()
-    signal radiosClicked()
+    signal pfdSettingsClicked()
 
     function bearingModeToString(mode) {
         switch(mode) {
@@ -38,6 +41,55 @@ TscPageBase {
         anchors.horizontalCenterOffset: 864
         spacing: 6
 
+        GradientButton {
+            id: cdiButton
+            anchors.horizontalCenter: parent.horizontalCenter
+
+            UpperTitle {
+                text: "NAV SOURCE"
+            }
+
+            LowerValue {
+                text: "GPS"
+            }
+
+            onReleased: function() {
+                NetworkClient.connectToServer(addressField.text, parseInt(portField.text));
+            }
+        }
+
+        StyledTextInput {
+            id: addressField
+            width: 250
+            height: 45
+
+            placeholderTxt: "Address"
+
+            EnterKey.type: Qt.EnterKeyNext
+
+            Component.onCompleted: {
+                if (NetworkClient.address() !== "")
+                    text = NetworkClient.address();
+            }
+        }
+
+        StyledTextInput {
+            id: portField
+            width: 250
+            height: 45
+
+            placeholderTxt: "Port"
+
+            EnterKey.type: Qt.EnterKeyDone
+
+            inputMethodHints: Qt.ImhDigitsOnly
+
+            Component.onCompleted: {
+                if (NetworkClient.port() > -1)
+                    text = NetworkClient.port();
+            }
+        }
+
         Row {
             anchors.horizontalCenter: parent.horizontalCenter
             spacing: 6
@@ -54,7 +106,7 @@ TscPageBase {
                 }
 
                 LowerValue {
-                    text: root.bearingModeToString(GenSettings.bearing1Mode)
+                    text: pfdHome.bearingModeToString(GenSettings.bearing1Mode)
                 }
 
                 onReleased: GenSettings.nextBearing1Mode()
@@ -72,7 +124,7 @@ TscPageBase {
                 }
 
                 LowerValue {
-                    text: root.bearingModeToString(GenSettings.bearing2Mode)
+                    text: pfdHome.bearingModeToString(GenSettings.bearing2Mode)
                 }
 
                 onReleased: GenSettings.nextBearing2Mode()
@@ -92,7 +144,7 @@ TscPageBase {
                     text: "Speed Bugs"
                 }
 
-                onReleased: root.speedbugsClicked()
+                onReleased: pfdHome.speedbugsClicked()
             }
 
             GradientButton {
@@ -104,7 +156,7 @@ TscPageBase {
                     text: "Timers"
                 }
 
-                onReleased: root.timersClicked()
+                onReleased: pfdHome.timersClicked()
             }
 
             GradientButton {
@@ -116,52 +168,25 @@ TscPageBase {
                     text: "Minimums"
                 }
 
-                onReleased: root.minimumsClicked()
-            }
-        }
-
-        Row {
-            anchors.horizontalCenter: parent.horizontalCenter
-            spacing: 6
-
-            GradientButton {
-                Img {
-                    source: "qrc:/images/buttonImages/ICON_MAP_SETTINGS_1.png"
-                }
-
-                Title {
-                    text: "Map"
-                }
-
-                onReleased: root.mapSettingsClicked()
-            }
-
-            GradientButton {
-
-                Img {
-                    source: "qrc:/images/mapImages/planeIconOutligned.svg"
-                }
-
-                Title {
-                    text: "Plane\nIcon"
-                }
-
-                onReleased: root.planeIconClicked()
+                onReleased: pfdHome.minimumsClicked()
             }
         }
 
         GradientButton {
+            id: pfdSettingsButton
             anchors.horizontalCenter: parent.horizontalCenter
 
-            MainText {
-                text: "Nav/Com\nRadios"
+            Img {
+                source: "qrc:/images/buttonImages/ICON_MAP_SMALL_PFD_SETTINGS_1.png"
             }
 
-            onReleased: root.radiosClicked()
+            Title {
+                text: "PFD Settings"
+            }
+
+            onReleased: pfdHome.pfdSettingsClicked()
         }
 
     }
-
-
 
 }

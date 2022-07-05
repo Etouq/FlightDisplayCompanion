@@ -1,16 +1,17 @@
 import QtQuick 2.15
-import "../"
-import "../styled_controls"
-import "../styled_controls/gradientButtonElements"
-import Mfd.GeoMap 1.0
+
+import Mfd.GeoMapPage 1.0
+
+import "../../"
+import "../../styled_controls"
+import "../../styled_controls/gradientButtonElements"
 
 TscPageBase {
-    id: root
+    id: iconSettings
 
-    pageTitle: "Plane Icon"
+    pageTitle: "Aircraft Icon"
 
     showBackButton: true
-    showHomeButton: true
 
 
     Column {
@@ -74,7 +75,7 @@ TscPageBase {
         id: fillColorPopup
 
         onColorPicked: {
-            GeoMap.iconColor = _newColor;
+            GeoMapPage.iconColor = _newColor;
         }
     }
 
@@ -82,7 +83,7 @@ TscPageBase {
         id: borderColorPopup
 
         onColorPicked: {
-            GeoMap.iconBorder = _newColor;
+            GeoMapPage.iconBorder = _newColor;
         }
     }
 

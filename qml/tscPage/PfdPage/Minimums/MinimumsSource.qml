@@ -1,8 +1,9 @@
 import QtQuick 2.15
-import "../styled_controls"
-import "../styled_controls/gradientButtonElements"
-import Mfd.GeoMap 1.0
-import TypeEnums 1.0
+
+import Pfd.Altimeter 1.0
+
+import "../../styled_controls"
+import "../../styled_controls/gradientButtonElements"
 
 Rectangle {
     id: popupRoot
@@ -27,89 +28,87 @@ Rectangle {
             font.bold: true
             font.pixelSize: 60
             color: "white"
-            text: "Map Orientation"
+            text: "Minimum Source"
         }
     }
 
     Rectangle {
-        x: 379.2
+        x: 604.8
         y: 180
-        width: 969.6
-        height: 819.6
+        width: 518.4
+        height: 724.992
         border.width: 4.8
         border.color: "white"
         color: "black"
 
         Column {
-            x: 24
-            y: 24
-            width: 921.6
-            height: 768
-            spacing: 6
+            x: 15.168
+            y: 15.168
+            spacing: 10.368
 
             GradientButton {
-                width: 921.6
+                width: 488.064
+                height: 224.64
 
                 Text {
+                    y: 44.928
                     anchors.horizontalCenter: parent.horizontalCenter
-                    y: 50.4
                     font.pixelSize: 60
                     font.family: "Roboto Mono"
                     font.bold: true
                     color: "white"
-                    text: "North Up"
+                    text: "Off"
                 }
 
-                onReleased: { GeoMap.rotationMode = MapRotationMode.NORTH_UP; popupRoot.visible = false; }
+                onReleased: {
+                    Altimeter.minimumsState = 0;
+                    popupRoot.visible = false;
+                }
             }
 
             GradientButton {
-                width: 921.6
+                width: 488.064
+                height: 224.64
 
                 Text {
+                    y: 44.928
                     anchors.horizontalCenter: parent.horizontalCenter
-                    y: 50.4
                     font.pixelSize: 60
                     font.family: "Roboto Mono"
                     font.bold: true
                     color: "white"
-                    text: "Heading Up"
+                    text: "Baro"
                 }
 
-                onReleased: { GeoMap.rotationMode = MapRotationMode.HDG_UP; popupRoot.visible = false; }
+                onReleased: {
+                    Altimeter.minimumsState = 1;
+                    Altimeter.updateMinimumAlt();
+                    popupRoot.visible = false;
+                }
             }
 
             GradientButton {
-                width: 921.6
+                width: 488.064
+                height: 224.64
 
                 Text {
+                    y: 44.928
                     anchors.horizontalCenter: parent.horizontalCenter
-                    y: 50.4
                     font.pixelSize: 60
                     font.family: "Roboto Mono"
                     font.bold: true
                     color: "white"
-                    text: "Track Up"
+                    text: "Radio Alt"
                 }
 
-                onReleased: { GeoMap.rotationMode = MapRotationMode.TRACK_UP; popupRoot.visible = false; }
+                onReleased: {
+                    Altimeter.minimumsState = 2;
+                    Altimeter.updateMinimumAlt();
+                    popupRoot.visible = false;
+                }
             }
         }
-            GradientButton {
-                width: 921.6
-
-                Text {
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    y: 50.4
-                    font.pixelSize: 60
-                    font.family: "Roboto Mono"
-                    font.bold: true
-                    color: "white"
-                    text: "Desired Track Up"
-                }
-
-                onReleased: { GeoMap.rotationMode = MapRotationMode.DTK_UP; popupRoot.visible = false; }
-            }
     }
+
 
 }

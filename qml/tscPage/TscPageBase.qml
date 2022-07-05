@@ -11,14 +11,15 @@ Item {
     height: 1200
 
     property bool showBackButton: false
-    property bool showHomeButton: false
     property bool showEnterButton: false
 
     property string pageTitle: ""
 
     signal backClicked()
-    signal homeClicked()
     signal enterClicked()
+    signal pfdClicked()
+    signal mfdClicked()
+    signal navcomClicked()
 
     Text {
         anchors.horizontalCenter: parent.left
@@ -56,22 +57,62 @@ Item {
         }
 
         GradientButton {
-            y: 192
+            y: 318
             width: 180
             height: 180
             x: 6
 
-            Img {
-                source: "qrc:/images/buttonImages/ICON_MAP_BUTTONBAR_HOME.png"
+            Text {
+                anchors.fill: parent
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+                font.pixelSize: 60
+                font.family: "Roboto Mono"
+                font.bold: true
+                color: "white"
+                text: "PFD"
             }
 
-            Title {
-                text: "Home"
+            onReleased: root.pfdClicked()
+        }
+        GradientButton {
+            y: 504
+            width: 180
+            height: 180
+            x: 6
+
+            Text {
+                anchors.fill: parent
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+                font.pixelSize: 60
+                font.family: "Roboto Mono"
+                font.bold: true
+                color: "white"
+                text: "MFD"
             }
 
-            onReleased: root.homeClicked()
+            onReleased: root.mfdClicked()
+        }
+        GradientButton {
+            y: 690
+            width: 180
+            height: 180
+            x: 6
 
-            visible: root.showHomeButton
+            Text {
+                anchors.fill: parent
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+                font.pixelSize: 60
+                font.family: "Roboto Mono"
+                font.bold: true
+                color: "white"
+                text: "NAV COM"
+                wrapMode: Text.WordWrap
+            }
+
+            onReleased: root.navcomClicked()
         }
 
         GradientButton {

@@ -1,16 +1,17 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
+
+import Tsc.NavCom 1.0
+import TypeEnums 1.0
+
 import "../"
 import "../styled_controls"
 import "../styled_controls/gradientButtonElements"
-import Tsc.NavCom 1.0
-import TypeEnums 1.0
 
 TscPageBase {
     id: root
 
     showBackButton: true
-    showHomeButton: true
     showEnterButton: true
 
     pageTitle: "Transponder"
@@ -20,6 +21,20 @@ TscPageBase {
     property int inputIndex: -1
 
     Component.onCompleted: updateInput()
+
+    onEnterClicked: function() {
+        if (inputIndex != -1) {
+            for (let i = 0; i < currentInput.length; i++) {
+                if (currentInput[i] === -1) {
+                    return;
+                }
+            }
+
+            NavCom.xpdrCode = 4096 * currentInput[0] + 256 * currentInput[1] + 16 * currentInput[2] + currentInput[3];
+
+            root.backClicked();
+        }
+    }
 
 
     function updateInput() {
@@ -101,7 +116,7 @@ TscPageBase {
                 active: NavCom.xpdrState === TransponderState.ALT
             }
 
-            onReleased: tscBackend.xpdrState = TransponderState.ALT
+            onReleased: NavCom.xpdrState = TransponderState.ALT
         }
 
         GradientButton {
