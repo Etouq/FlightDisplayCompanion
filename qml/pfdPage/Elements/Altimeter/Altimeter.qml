@@ -64,17 +64,7 @@ Item {
         font.bold: true
         font.family: "Roboto Mono"
         font.pixelSize: 43
-        text: Altimeter.pressure.toFixed(2) + "IN"
-
-        Connections {
-            target: settingsInterface
-            function onPressureUnitChanged() {
-                if (settingsInterface.getPressureUnit() === 0)
-                    baroText.text = Qt.binding(function() { return Altimeter.pressure.toFixed(2) + "IN" });
-                else
-                    baroText.text = Qt.binding(function() { return Math.round(Altimeter.pressure * 33.8639) + "MB" });
-            }
-        }
+        text: Altimeter.pressureText
     }
 
     VerticalSpeedGroup {

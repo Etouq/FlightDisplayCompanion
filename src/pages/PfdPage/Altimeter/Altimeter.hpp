@@ -1,8 +1,8 @@
 #ifndef __ALTIMETER_HPP__
 #define __ALTIMETER_HPP__
 
-#include "common/typeEnums.hpp"
 #include "common/QmlEnums.hpp"
+#include "common/typeEnums.hpp"
 
 #include <QObject>
 #include <QString>
@@ -31,7 +31,8 @@ class Altimeter : public QObject
     Q_PROPERTY(QString vspeedTextValue READ vspeedTextValue NOTIFY vspeedTextValueChanged)
     Q_PROPERTY(int referenceVspeed READ referenceVspeed NOTIFY referenceVspeedChanged)
 
-    Q_PROPERTY(double pressure READ pressure NOTIFY pressureChanged)
+    Q_PROPERTY(QString pressureText READ pressureText NOTIFY pressureTextChanged)
+    Q_PROPERTY(bool isPressureInMillibar READ isPressureInMillibar NOTIFY isPressureInMillibarChanged)
 
     Q_PROPERTY(QmlVerticalDeviationModeClass::Value vertDevMode READ vertDevMode NOTIFY vertDevModeChanged)
     Q_PROPERTY(double vertDevTransformValue READ vertDevTransformValue NOTIFY vertDevTransformValueChanged)
@@ -87,9 +88,14 @@ public:
         return d_referenceVspeed;
     }
 
-    double pressure() const
+    const QString &pressureText() const
     {
-        return d_pressure;
+        return d_pressureText;
+    }
+
+    bool isPressureInMillibar() const
+    {
+        return d_pressureInMillibar;
     }
 
     QmlVerticalDeviationMode vertDevMode() const
@@ -114,6 +120,16 @@ public:
 
     Q_INVOKABLE void updateMinimumAlt();
 
+    Q_INVOKABLE void setPressureInMillibar(bool useMillibar)
+    {
+        d_pressureInMillibar = useMillibar;
+
+        d_pressureText = d_pressureInMillibar ? (QString::number(std::lround(d_pressure * 33.8639)) + "MB")
+                                              : (QString::number(d_pressure, 'f', 2) + "IN");
+        emit pressureTextChanged();
+        emit isPressureInMillibarChanged();
+    }
+
 signals:
     void centerChanged();
     void altitudeChanged();
@@ -125,7 +141,8 @@ signals:
     void vspeedTextValueChanged();
     void referenceVspeedChanged();
 
-    void pressureChanged();
+    void pressureTextChanged();
+    void isPressureInMillibarChanged();
 
     void vertDevModeChanged();
     void vertDevTransformValueChanged();
@@ -157,7 +174,15 @@ public slots:
     void updatePressure(double newValue)
     {
         d_pressure = newValue;
-        emit pressureChanged();
+
+        const QString newText = d_pressureInMillibar ? (QString::number(std::lround(newValue * 33.8639)) + "MB")
+                                                     : (QString::number(newValue, 'f', 2) + "IN");
+
+        if (newText != d_pressureText)
+        {
+            d_pressureText = newText;
+            emit pressureTextChanged();
+        }
     }
 
     void updateVertDevMode(VerticalDeviationMode newValue)
@@ -187,9 +212,9 @@ private:
     QString d_vspeedTextValue = "-0000";
     int d_referenceVspeed = 0;
 
-    double d_pressure = 29.92;
+    QString d_pressureText = "29.92IN";
 
-    VerticalDeviationMode d_vertDevMode = VerticalDeviationMode::NONE;   // 0: none, 1: vdi, 2: gs, 3: gp, 4: gspreview
+    VerticalDeviationMode d_vertDevMode = VerticalDeviationMode::NONE;  // 0: none, 1: vdi, 2: gs, 3: gp, 4: gspreview
     double d_vertDevTransformValue = 0;
 
     double d_altitudeTrendValue = 250;
@@ -203,6 +228,9 @@ private:
     // internal items
     double d_scaleFactor = 0.96;
     double d_realRadioAltitude = 0;
+
+    double d_pressure = 29.92;
+    bool d_pressureInMillibar = false;
 };
 
 }  // namespace pages::pfd
