@@ -6,22 +6,18 @@ import Tsc.SpeedBugs 1.0
 
 Item {
 
-    ListModel {
-        id: speedBugModel
-    }
-
     Repeater {
-        model: speedBugModel
+        model: SpeedBugs.numActiveSpeedbugs
 
         delegate: Shape {
             id: spdBug
 
 
-            required property int bugSpeed
-            required property string bugDesignator
+            required property int index
+            readonly property SpeedBugEntry speedBugEntry: SpeedBugs.activeSpeedBugAt(spdBug.index)
 
             x: 192
-            y: bugSpeed * -9.6
+            y: spdBug.speedBugEntry.speed * -9.6
 
             ShapePath {
                 fillColor: "#1a1d21"
@@ -52,34 +48,8 @@ Item {
                 font.bold: true
                 font.family: "Roboto Mono"
                 font.pixelSize: 24
-                text: spdBug.bugDesignator.toUpperCase()
+                text: spdBug.speedBugEntry.designator().toUpperCase()
             }
-        }
-    }
-
-    Connections {
-        target: SpeedBugs
-        function onActiveSpeedBugsChanged()
-        {
-            speedBugModel.clear()
-
-            for (const bugIdx of SpeedBugs.getActiveIds()) {
-                speedBugModel.append({
-                    "bugSpeed": SpeedBugs.speed(bugIdx),
-                    "bugDesignator": SpeedBugs.designator(bugIdx)
-                })
-            }
-        }
-    }
-
-    Component.onCompleted: function() {
-        speedBugModel.clear()
-
-        for (const bugIdx of SpeedBugs.getActiveIds()) {
-            speedBugModel.append({
-                "bugSpeed": SpeedBugs.speed(bugIdx),
-                "bugDesignator": SpeedBugs.designator(bugIdx)
-            })
         }
     }
 
