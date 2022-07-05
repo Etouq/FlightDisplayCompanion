@@ -122,12 +122,10 @@ public slots:
         d_socket.write(msg);
     }
 
-    void loadAircraft(const QByteArray &data)
+    void aircraftLoaded()
     {
-        ClientToServerIds clientId = ClientToServerIds::LOAD_AIRCRAFT;
-        QByteArray msg(reinterpret_cast<char *>(&clientId), sizeof(clientId));
-        msg += data;
-        d_socket.write(msg);
+        ClientToServerIds clientId = ClientToServerIds::AIRCRAFT_LOADED;
+        d_socket.write(reinterpret_cast<char *>(&clientId), sizeof(clientId));
     }
 
     void sendCommandString(const QByteArray &commandString)
@@ -168,6 +166,8 @@ signals:
     void simStartReceived();
     void simStopReceived();
     void simStartupFailed();
+
+    void loadAircraft(const definitions::AircraftDefinition &definition);
 
 
     // mfd

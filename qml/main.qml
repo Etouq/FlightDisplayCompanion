@@ -16,18 +16,18 @@ ApplicationWindow {
 
     property real scaleFactor: Math.min(Screen.width / 1920, Screen.height / 1200)
 
-    FontLoader {
-        source: "qrc:/fonts/RobotoMono-VariableFont_wght.ttf"
-    }
+//    FontLoader {
+//        source: "qrc:/fonts/RobotoMono-VariableFont_wght.ttf"
+//    }
 
-    FontLoader {
-        source: "qrc:/fonts/RobotoMono-Bold.ttf"
-    }
+//    FontLoader {
+//        source: "qrc:/fonts/RobotoMono-Bold.ttf"
+//    }
 
     SwipeView {
         id: view
         anchors.fill: parent
-        currentIndex: 1
+        currentIndex: 0
         //clip: true
 
 //        Item {
@@ -61,6 +61,13 @@ ApplicationWindow {
                 scale: scaleFactor
                 anchors.centerIn: parent
             }
+
+            SwipeView.onIsCurrentItemChanged: function() {
+                if (SwipeView.isCurrentItem)
+                    pfdPageId.movedOnScreen();
+                else
+                    pfdPageId.movedOffScreen();
+            }
         }
 
         Item {
@@ -77,7 +84,7 @@ ApplicationWindow {
 
 //    Connections {
 //        target: NetworkClient
-//        function onNewErrorMessage(msg) {
+//        onNewErrorMessage: {
 //            errorPopup.text = msg;
 //            errorPopup.open();
 //        }

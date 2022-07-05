@@ -1,9 +1,6 @@
 #include "NetworkClient.hpp"
 #include "common/dataIdentifiers.hpp"
 #include "common/converters/basicConverters.hpp"
-#include <QDataStream>
-#include <QImage>
-#include "common/definitions/AircraftDefinition/AircraftDefinition.hpp"
 
 namespace io::network
 {
@@ -285,43 +282,6 @@ bool NetworkClient::readTscData()
             Converters::convert(d_socket, newValue);
             emit xpdrStateChanged(newValue);
             break;
-        }
-        // aircraft selection data
-        case TscIdentifier::AIRCRAFT_THUMBNAIL_DATA:
-        {
-            uint64_t dataSize = 0;
-            if (static_cast<uint64_t>(d_socket.bytesAvailable()) < sizeof(dataSize))
-            {
-                d_socket.rollbackTransaction();
-                return false;
-            }
-
-            Converters::convert(d_socket, dataSize);
-
-            if (static_cast<uint64_t>(d_socket.bytesAvailable()) < dataSize)
-            {
-                d_socket.rollbackTransaction();
-                return false;
-            }
-
-            d_socket.commitTransaction();
-
-            // read image
-            uint64_t imgSize = 0;
-            Converters::convert(d_socket, imgSize);
-
-            QByteArray imgArray = d_socket.read(imgSize);
-
-            QDataStream imgData(&imgArray, QIODevice::ReadOnly);
-            imgData.setVersion(QDataStream::Qt_5_15);
-
-            QImage thumbnail;
-            imgData >> thumbnail;
-
-            // read aircraft definition
-            definitions::AircraftDefinition aircraftDefinition = definitions::AircraftDefinition::fromBinary(d_socket);
-
-            emit receivedNewAircraft(thumbnail, aircraftDefinition);
         }
     }
 

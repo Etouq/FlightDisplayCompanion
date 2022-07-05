@@ -21,6 +21,12 @@ class GeneralSettings : public QObject
     Q_PROPERTY(QmlBearingModeClass::Value bearing1Mode READ bearing1Mode NOTIFY bearing1ModeChanged)
     Q_PROPERTY(QmlBearingModeClass::Value bearing2Mode READ bearing2Mode NOTIFY bearing2ModeChanged)
     Q_PROPERTY(QmlBearingModeClass::Value dmeMode READ dmeMode NOTIFY dmeModeChanged)
+    Q_PROPERTY(QmlBottomTemperatureTypeClass::Value bottomTempType READ bottomTempType WRITE setBottomTempType NOTIFY bottomTempTypeChanged)
+    Q_PROPERTY(QmlWindModeClass::Value windMode READ windMode WRITE setWindMode NOTIFY windModeChanged)
+    Q_PROPERTY(QmlTimeTypeClass::Value topTimeType READ topTimeType WRITE setTopTimeType NOTIFY topTimeTypeChanged)
+    Q_PROPERTY(QmlTimeTypeClass::Value botTimeType READ botTimeType WRITE setBotTimeType NOTIFY botTimeTypeChanged)
+
+
 
 
 public:
@@ -77,6 +83,68 @@ public:
         return d_dmeMode;
     }
 
+    BottomTemperatureType bottomTempType() const
+    {
+        return d_bottomTempType;
+    }
+
+    void setBottomTempType(BottomTemperatureType newType)
+    {
+        d_bottomTempType = newType;
+        emit bottomTempTypeChanged();
+    }
+
+    WindMode windMode() const
+    {
+        return d_windMode;
+    }
+
+    void setWindMode(WindMode newMode)
+    {
+        d_windMode = newMode;
+        emit windModeChanged();
+    }
+
+    Q_INVOKABLE void nextWindMode()
+    {
+        switch (d_windMode)
+        {
+            case WindMode::OFF:
+                d_windMode = WindMode::MODE1;
+                break;
+            case WindMode::MODE1:
+                d_windMode = WindMode::MODE2;
+                break;
+            case WindMode::MODE2:
+                d_windMode = WindMode::MODE3;
+                break;
+            case WindMode::MODE3:
+                d_windMode = WindMode::OFF;
+                break;
+        }
+        emit windModeChanged();
+    }
+
+    TimeType topTimeType() const
+    {
+        return d_topTimeType;
+    }
+    TimeType botTimeType() const
+    {
+        return d_botTimeType;
+    }
+
+    void setTopTimeType(TimeType newType)
+    {
+        d_topTimeType = newType;
+        emit topTimeTypeChanged();
+    }
+    void setBotTimeType(TimeType newType)
+    {
+        d_botTimeType = newType;
+        emit botTimeTypeChanged();
+    }
+
     Q_INVOKABLE void nextBearing1Mode()
     {
         d_bearing1Mode = getNextBearingMode(d_bearing1Mode);
@@ -114,7 +182,10 @@ signals:
     void bearing1ModeChanged();
     void bearing2ModeChanged();
     void dmeModeChanged();
-
+    void bottomTempTypeChanged();
+    void windModeChanged();
+    void topTimeTypeChanged();
+    void botTimeTypeChanged();
 
 private:
 
@@ -142,6 +213,12 @@ private:
     BearingMode d_bearing1Mode = BearingMode::OFF;
     BearingMode d_bearing2Mode = BearingMode::OFF;
     BearingMode d_dmeMode = BearingMode::OFF;
+
+    BottomTemperatureType d_bottomTempType = BottomTemperatureType::TAT;
+    WindMode d_windMode = WindMode::OFF;
+
+    TimeType d_topTimeType = TimeType::UTC;
+    TimeType d_botTimeType = TimeType::LCL;
 };
 
 }  // namespace pages::tsc

@@ -1,6 +1,7 @@
 #include "NetworkClient.hpp"
 #include "common/dataIdentifiers.hpp"
 #include "common/converters/basicConverters.hpp"
+#include "common/definitions/AircraftDefinition/AircraftDefinition.hpp"
 
 #include <QGeoCoordinate>
 
@@ -20,6 +21,30 @@ bool NetworkClient::readServerData()
             d_socket.commitTransaction();
             emit newErrorMessage("Sim closed");
             d_socket.disconnectFromHost();
+            break;
+        }
+        case ServerMessageIdentifier::LOAD_AIRCRAFT:
+        {
+            uint64_t dataSize = 0;
+            if (static_cast<uint64_t>(d_socket.bytesAvailable()) < sizeof(dataSize))
+            {
+                d_socket.rollbackTransaction();
+                return false;
+            }
+
+            Converters::convert(d_socket, dataSize);
+
+            if (static_cast<uint64_t>(d_socket.bytesAvailable()) < dataSize)
+            {
+                d_socket.rollbackTransaction();
+                return false;
+            }
+
+            d_socket.commitTransaction();
+
+            definitions::AircraftDefinition aircraftDefinition = definitions::AircraftDefinition::fromBinary(d_socket);
+
+            emit loadAircraft(aircraftDefinition);
             break;
         }
         case ServerMessageIdentifier::SIM_START_EVENT:

@@ -7,7 +7,7 @@ namespace pages::tsc
 
 void FlightTmr::update()
 {
-    d_currentValue = duration_cast<milliseconds>(steady_clock::now() - d_lastStartTime).count();
+    d_currentValue = duration_cast<milliseconds>(steady_clock::now() - d_lastStartTime).count() + d_lastStartValue;
 
     if (d_currentValue >= 0 && d_countingDown)
     {
@@ -22,22 +22,7 @@ void FlightTmr::update()
         d_currentValue -= 86400000;
     }
 
-    // update time string
-    int seconds = std::abs(d_currentValue) / 1000;
-    int hours = seconds / 3600;
-    seconds -= hours * 3600;
-    int mins = seconds / 60;
-    seconds -= mins * 60;
-
-    QString timeStr =
-      QString("%1:%2:%3").arg(hours, 2, 10, QChar('0')).arg(mins, 2, 10, QChar('0')).arg(seconds, 2, 10, QChar('0'));
-
-
-    if (d_timeString != timeStr)
-    {
-        d_timeString = timeStr;
-        emit timeStringChanged();
-    }
+    updateTimeString(std::abs(d_currentValue) / 1000);
 }
 
 }  // namespace pages::tsc

@@ -4,7 +4,6 @@
 #include "pages/PfdPage/PfdPage.hpp"
 #include "pages/TscPage/TscPage.hpp"
 #include "common/definitions/AircraftDefinition/AircraftDefinition.hpp"
-#include "common/converters/basicConverters.hpp"
 
 void AircraftLoader::loadAircraft(const definitions::AircraftDefinition &aircraft)
 {
@@ -12,5 +11,5 @@ void AircraftLoader::loadAircraft(const definitions::AircraftDefinition &aircraf
     d_pfdPage.loadAircraft(aircraft);
     d_tscPage.loadAircraft(aircraft);
 
-    emit aircraftLoaded(Converters::convert(aircraft.name));
+    emit aircraftLoaded();
 }

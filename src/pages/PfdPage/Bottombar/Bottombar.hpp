@@ -4,7 +4,7 @@
 #include <QDateTime>
 #include <QObject>
 #include <QString>
-#include "unitConverter/units.hpp"
+#include "common/Units.hpp"
 
 namespace io::network
 {
@@ -24,6 +24,7 @@ class Bottombar : public QObject
     Q_PROPERTY(QString totalAirTemp READ totalAirTemp NOTIFY totalAirTempChanged)
     Q_PROPERTY(QString outsideAirTemp READ outsideAirTemp NOTIFY outsideAirTempChanged)
     Q_PROPERTY(QString stdAtmAirTemp READ stdAtmAirTemp NOTIFY stdAtmAirTempChanged)
+    Q_PROPERTY(int tempUnit READ tempUnit NOTIFY tempUnitChanged)
 
 public:
 
@@ -59,6 +60,22 @@ public:
         return d_stdAtmAirTemp;
     }
 
+    int tempUnit() const
+    {
+        switch (d_tempUnit)
+        {
+            default:
+            case Units::CELSIUS:
+                return 0;
+            case Units::FAHRENHEIT:
+                return 1;
+            case Units::KELVIN:
+                return 2;
+            case Units::RANKINE:
+                return 3;
+        }
+    }
+
 signals:
     void zuluTimeChanged();
     void localTimeChanged();
@@ -66,6 +83,8 @@ signals:
     void totalAirTempChanged();
     void outsideAirTempChanged();
     void stdAtmAirTempChanged();
+
+    void tempUnitChanged();
 
 public slots:
 
@@ -108,9 +127,27 @@ public slots:
         emit stdAtmAirTempChanged();
     }
 
-    void updateTemperatureUnit(Units unit)
+    void updateTemperatureUnit(int unit)
     {
-        d_tempUnit = unit;
+        switch (unit)
+        {
+            default:
+            case 0:
+                d_tempUnit = Units::CELSIUS;
+                break;
+            case 1:
+                d_tempUnit = Units::FAHRENHEIT;
+                break;
+            case 2:
+                d_tempUnit = Units::KELVIN;
+                break;
+            case 3:
+                d_tempUnit = Units::RANKINE;
+                break;
+        }
+
+        emit tempUnitChanged();
+
         updateTotalAirTemp(d_tatValue);
         updateOutsideAirTemp(d_oatValue);
         updateStdAtmAirTemp(d_isaValue);

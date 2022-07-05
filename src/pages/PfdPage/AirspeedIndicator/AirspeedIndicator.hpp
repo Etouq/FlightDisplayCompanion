@@ -182,7 +182,7 @@ private:
     // exposed items
     double d_airspeed = 20;
     double d_acceleration = 0;
-    int d_center = -10000;
+    int d_center = 60;//-10000;
     double d_rawAirspeed = 0;
 
     bool d_redCursor = false;

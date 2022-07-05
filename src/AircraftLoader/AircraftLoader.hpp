@@ -39,7 +39,7 @@ public:
 
 signals:
 
-    void aircraftLoaded(const QByteArray &data);
+    void aircraftLoaded();
 
 public slots:
 

@@ -327,8 +327,8 @@ public slots:
 
 private:
 
-    bool d_com1Avail = false;
-    bool d_com2Avail = false;
+    bool d_com1Avail = true;
+    bool d_com2Avail = true;
     bool d_com3Avail = false;
     float d_com1Freq = 0;
     float d_com2Freq = 0;
@@ -337,8 +337,8 @@ private:
     float d_com2StbyFreq = 0;
     float d_com3StbyFreq = 0;
 
-    bool d_nav1Avail = false;
-    bool d_nav2Avail = false;
+    bool d_nav1Avail = true;
+    bool d_nav2Avail = true;
     float d_nav1Freq = 0;
     float d_nav2Freq = 0;
     float d_nav1StbyFreq = 0;
