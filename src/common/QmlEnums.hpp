@@ -212,4 +212,46 @@ private:
 
 typedef QmlMinimumsSourceClass::Value MinimumsSource;
 
+
+class QmlBottomTemperatureTypeClass
+{
+Q_GADGET
+
+    public:
+
+    enum class Value
+    {
+        TAT,
+        OAT,
+        ISA
+    };
+    Q_ENUM(Value)
+
+private:
+    explicit QmlBottomTemperatureTypeClass();
+};
+
+typedef QmlBottomTemperatureTypeClass::Value BottomTemperatureType;
+
+
+class QmlTimeTypeClass
+{
+Q_GADGET
+
+    public:
+
+    enum class Value
+    {
+        UTC,
+        LCL,
+        TMR
+    };
+    Q_ENUM(Value)
+
+private:
+    explicit QmlTimeTypeClass();
+};
+
+typedef QmlTimeTypeClass::Value TimeType;
+
 #endif  // __QML_ENUMS_HPP__

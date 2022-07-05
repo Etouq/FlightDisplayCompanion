@@ -52,4 +52,25 @@ void registerQmlEnums()
                                                      0,
                                                      "BearingMode",
                                                      "Not creatable as it is an enum type");
+
+    qRegisterMetaType<WindMode>("WindMode");
+    qmlRegisterUncreatableType<QmlWindModeClass>("TypeEnums",
+                                                     1,
+                                                     0,
+                                                     "WindMode",
+                                                     "Not creatable as it is an enum type");
+
+    qRegisterMetaType<BottomTemperatureType>("BottomTemperatureType");
+    qmlRegisterUncreatableType<QmlBottomTemperatureTypeClass>("TypeEnums",
+                                                     1,
+                                                     0,
+                                                     "BottomTemperatureType",
+                                                     "Not creatable as it is an enum type");
+
+    qRegisterMetaType<TimeType>("TimeType");
+    qmlRegisterUncreatableType<QmlTimeTypeClass>("TypeEnums",
+                                                     1,
+                                                     0,
+                                                     "TimeType",
+                                                     "Not creatable as it is an enum type");
 }

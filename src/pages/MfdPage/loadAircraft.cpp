@@ -113,6 +113,12 @@ void MfdPage::loadAircraft(const definitions::AircraftDefinition &aircraft)
         }
     }
 
+    d_fuelQtyGauge.setGaugeParameters(aircraft.fuelQtyGauge, 120);
+    d_fuelFlowGauge.setGaugeParameters(aircraft.fuelFlowGauge, 120);
+    d_oilTempGauge.setGaugeParameters(aircraft.oilTempGauge, 120);
+    d_secondaryTempGauge.setGaugeParameters(aircraft.secondaryTempGauge, 120);
+    d_oilPressGauge.setGaugeParameters(aircraft.oilPressGauge, 120);
+
     emit gaugesLoaded(engineDisplayPath);
 }
 

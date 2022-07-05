@@ -1,5 +1,5 @@
 #include "main.hpp"
-//#include "AircraftLoader/AircraftLoader.hpp"
+#include "AircraftLoader/AircraftLoader.hpp"
 #include "io/NetworkClient/NetworkClient.hpp"
 #include "pages/MfdPage/MfdPage.hpp"
 #include "pages/PfdPage/PfdPage.hpp"
@@ -11,6 +11,7 @@
 #include <QLocale>
 #include <QObject>
 #include <QSurfaceFormat>
+#include <QTimer>
 
 int main(int argc, char *argv[])
 {
@@ -18,8 +19,8 @@ int main(int argc, char *argv[])
     // initialize application
     QGuiApplication app(argc, argv);
     QGuiApplication::setOrganizationName("nl.Etouq");
-    QGuiApplication::setApplicationName("FlightDisplayCompanion");
-    QGuiApplication::setApplicationDisplayName("Flight Display Companion");
+    QGuiApplication::setApplicationName("FlightDisplayCompanionTest");
+    QGuiApplication::setApplicationDisplayName("Flight Display Companion Test");
 
     QLocale::setDefault(QLocale::c());
 
@@ -44,7 +45,7 @@ int main(int argc, char *argv[])
     pages::pfd::PfdPage pfdPage(&networkClient);
     pages::tsc::TscPage tscPage(&networkClient);
 
-//    AircraftLoader aircraftLoader(mfdPage, pfdPage, tscPage);
+   AircraftLoader aircraftLoader(mfdPage, pfdPage, tscPage);
 
 //    QObject::connect(&aircraftLoader,
 //                     &AircraftLoader::aircraftLoaded,
@@ -55,6 +56,11 @@ int main(int argc, char *argv[])
     // add networkclient to qml as singleton
     qmlRegisterSingletonInstance("IO.Network", 1, 0, "NetworkClient", &networkClient);
 
+    definitions::AircraftDefinition def = createTestDefinition();
+
+    QTimer::singleShot(2000, [&aircraftLoader, &def] () {
+        aircraftLoader.loadAircraft(def);
+    });
 
     QQmlApplicationEngine engine;
 

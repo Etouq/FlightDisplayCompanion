@@ -33,8 +33,8 @@ struct FlightPlanWaypoint
     int32_t alt1 = 0;
     int32_t alt2 = 0;
     QString ident = "";
-    WaypointType wpType = WaypointType::AIRPORT;
-    WpAltitudeType altType = WpAltitudeType::AT;
+    WaypointType wpType = WaypointType::NONE;
+    WpAltitudeType altType = WpAltitudeType::NONE;
 };
 
 }  // namespace pages::mfd

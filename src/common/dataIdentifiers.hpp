@@ -1,14 +1,14 @@
-#ifndef _DATAIDENTIFIERS_H
-#define _DATAIDENTIFIERS_H
+#ifndef __DATAIDENTIFIERS_HPP__
+#define __DATAIDENTIFIERS_HPP__
 
 #include <cstdint>
 
 enum class DataGroupIdentifier : uint8_t
 {
-    PFD_DATA,
-    MFD_DATA,
-    TSC_DATA,
-    SERVER_DATA
+    PFD_DATA = 0,
+    MFD_DATA = 1,
+    TSC_DATA = 2,
+    SERVER_DATA = 3
 };
 
 enum class PfdIdentifier : uint8_t
@@ -145,14 +145,13 @@ enum class TscIdentifier : uint8_t
     NAV2_STBY_FREQ,
     XPDR_AVAIL,
     XPDR_CODE,
-    XPDR_STATE,
-    // aircraft selection data
-    AIRCRAFT_THUMBNAIL_DATA
+    XPDR_STATE
 };
 
 enum class ServerMessageIdentifier : uint8_t
 {
     QUIT,
+    LOAD_AIRCRAFT,
     SIM_START_EVENT,
     SIM_STOP_EVENT,
     SIM_STARTUP_FAILED,
@@ -163,7 +162,7 @@ enum class ClientToServerIds : uint8_t
 {
     CLIENT_NETWORK_VERSION,
     QUIT,
-    LOAD_AIRCRAFT,
+    AIRCRAFT_LOADED,
     START,
     COMMAND_STRING
 };
@@ -181,8 +180,9 @@ enum class SimCommandId : uint8_t
     SWAP_NAV1,
     SWAP_NAV2,
     SET_XPDR_STATE,
-    SET_XPDR_CODE
+    SET_XPDR_CODE,
+    NEXT_CDI_MODE
 };
 
 
-#endif  // DATAIDENTIFIERS_H
+#endif  // __DATAIDENTIFIERS_HPP__

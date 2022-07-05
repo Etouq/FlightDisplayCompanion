@@ -5,69 +5,45 @@
 
 struct AircraftConfig
 {
-    uint8_t numEngines = 1;
     AircraftType type = AircraftType::JET;
 
-    // jet aircraft
-    double n1Epsilon = 10000; // shared with turboprop
-    double n2Epsilon = 10000;
-    double ittEpsilon = 10000; // shared with turboprop
+    uint8_t numEngines = 1;
+    bool singleTank = false;
 
-    // prop aircraft
-    double rpmEpsilon = 10000; // shared with turboprop
-    double powerEpsilon = 10000;
-    double manPressEpsilon = 10000;
-    double chtEpsilon = 10000;
-
-    // turboprop aircraft
-    double trqEpsilon = 10000;
-
-    // general
-    double fuelFlowEpsilon = 10000;
-    double oilTempEpsilon = 10000;
-    double oilPressEpsilon = 10000;
-    double egtEpsilon = 10000;
+    double firstGaugeEpsilon = 10000;
+    double secondGaugeEpsilon = 10000;
+    double thirdGaugeEpsilon = 10000;
+    double fourthGaugeEpsilon = 10000;
 
     double fuelQtyEpsilon = 10000;
+    double fuelFlowEpsilon = 10000;
+    double oilTempEpsilon = 10000;
+    double secondaryTempEpsilon = 10000;
+    double oilPressEpsilon = 10000;
 
-    // jet aircraft
-    TemperatureGaugeType ittGaugeType = TemperatureGaugeType::ITT; // shared with turboprop
+    SwitchingGaugeType gauge1Type = SwitchingGaugeType::NONE;
+    SwitchingGaugeType gauge2Type = SwitchingGaugeType::NONE;
+    SwitchingGaugeType gauge3Type = SwitchingGaugeType::NONE;
+    SwitchingGaugeType gauge4Type = SwitchingGaugeType::NONE;
 
-    // prop aircraft
-    bool hasRpm = true;
-    bool usePropRpm = false; // shared with turboprop
+    TemperatureGaugeType engineTempType = TemperatureGaugeType::ITT;
 
-    bool hasPower = false;
-    bool powerAsPct = true;
     double maxPower = 1;
 
-    bool hasManPress = true;
-
-    bool hasCht = false;
-    TemperatureGaugeType chtGaugeType = TemperatureGaugeType::CHT;
-
-    // turboprop aircraft
-    bool trqAsPct = true;
-    bool rpmAsPct = false;
-
-    bool hasApu = false; // shared with jet
-
-    // general
-    bool fuelFlowByWeight = false;
-
-    bool singleTank = false;
-    bool fuelQtyByWeight = false;
-
-    bool hasEgt = false;
-    TemperatureGaugeType egtGaugeType = TemperatureGaugeType::EGT;
+    bool hasApu = false;
 
     bool hasFlaps = false;
     bool hasSpoilers = false;
 
-    bool hasElevTrim = false;
+    bool hasElevatorTrim = false;
     bool hasRudderTrim = false;
     bool hasAileronTrim = false;
 
+    bool fuelQtyByWeight = false;
+    bool fuelFlowByWeight = false;
+
+    bool hasSecondaryTempGauge = false;
+    TemperatureGaugeType secondaryTempType = TemperatureGaugeType::EGT;
 
 };
 

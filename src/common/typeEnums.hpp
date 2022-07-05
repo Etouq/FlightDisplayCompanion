@@ -2,7 +2,6 @@
 #define __TYPE_ENUMS_HPP__
 
 #include <cstdint>
-#include <QObject>
 
 enum class HsiNavSource : uint8_t
 {
@@ -48,6 +47,23 @@ enum class TemperatureGaugeType : uint8_t
     EGT = 0,
     ITT,
     CHT
+};
+
+enum class SwitchingGaugeType : uint8_t
+{
+    NONE,
+    N1,
+    N2,
+    ENGINE_TEMP, // itt, egt or cht
+    RPM,
+    RPM_PCT,
+    PROP_RPM,
+    PROP_RPM_PCT,
+    POWER,
+    POWER_PCT,
+    MANIFOLD_PRESSURE,
+    TORQUE,
+    TORQUE_PCT
 };
 
 #endif  // __TYPE_ENUMS_HPP__

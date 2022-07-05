@@ -80,21 +80,4 @@ TextField {
 
 
 
-
-    Keys.onEnterPressed: {
-        if (!overrideEnterHandler) {
-            KeyNavigation.tab.forceActiveFocus();
-            if (nextIsComboBox)
-                Qt.callLater(KeyNavigation.tab.popup.open)
-        }
-    }
-
-    Keys.onReturnPressed: {
-        if (!overrideEnterHandler) {
-            KeyNavigation.tab.forceActiveFocus();
-            if (nextIsComboBox)
-                Qt.callLater(KeyNavigation.tab.popup.open)
-        }
-    }
-
 }
