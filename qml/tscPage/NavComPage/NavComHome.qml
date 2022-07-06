@@ -14,6 +14,8 @@ TscPageBase {
 
     pageTitle: "Radios"
 
+    showConnectionState: true
+
     signal xpndrClicked()
 
     signal radioClicked(string title, real minFreq, real maxFreq, int activeFreq, int stbyFreq, var endCallback, int nbDigits)

@@ -33,7 +33,7 @@ TscPageBase {
         }
     }
 
-    function onDigitPressed(_digit) {
+    function digitPressed(_digit) {
         if (!isEditing) {
             isEditing = true
             digits = [0, 0, 0, 0, 0]

@@ -2,11 +2,14 @@
 #define __NETWORK_CLIENT_HPP__
 
 #include "common/typeEnums.hpp"
+#include "common/QmlEnums.hpp"
 #include "common/dataIdentifiers.hpp"
 
 #include <QObject>
 #include <QString>
 #include <QTcpSocket>
+#include <QUdpSocket>
+#include <QTimer>
 
 namespace definitions
 {
@@ -22,63 +25,80 @@ class QGeoCoordinate;
 namespace io::network
 {
 
-class ConnectionStateClass
-{
-    Q_GADGET
-
-public:
-
-    enum ConnectionStateEnum
-    {
-        DISCONNECTED,
-        CONNECTED,
-        CONNECTING,
-        DISCONNECTING
-    };
-    Q_ENUM(ConnectionStateEnum)
-
-private:
-
-    explicit ConnectionStateClass()
-    {}
-};
-
-typedef ConnectionStateClass::ConnectionStateEnum ConnectionState;
-
 class NetworkClient : public QObject
 {
     Q_OBJECT
 
-    Q_PROPERTY(ConnectionState connectionState READ connectionState NOTIFY connectionStateChanged)
+    Q_PROPERTY(io::network::ConnectionStateClass::Value connectionState READ connectionState NOTIFY connectionStateChanged)
     Q_PROPERTY(bool simRunning READ simRunning NOTIFY simRunningChanged)
+
+    Q_PROPERTY(QString address READ address NOTIFY addressChanged)
+    Q_PROPERTY(int port READ port NOTIFY portChanged)
+
 
     QTcpSocket d_socket;
 
+    QUdpSocket d_serverDatagramSocket;
+
     static constexpr uint8_t s_communicationVersion = 3;
 
+    bool d_tryConnecting = false;
+    bool d_addressOrPortChanged = false;
+
+    QHostAddress d_datagramAddress;
+    quint16 d_datagramPort;
+
+    QTimer d_connectionAttemptKiller;
 
     // qml
-    QString d_address = "";
-    uint d_port = 0;
+    QString d_address = "192.168.2.37";
+    quint16 d_port = 58008;
 
     QString d_errorString = "";
     ConnectionState d_connectionState = ConnectionState::DISCONNECTED;
 
     bool d_simRunning = false;
 
+    // to prevent restarting of udp socket when we want to shut down
+    bool d_closingApplication = false;
+
 public:
 
     explicit NetworkClient(QObject *parent = nullptr);
 
+    ~NetworkClient()
+    {
+        d_closingApplication = true;
+
+        d_serverDatagramSocket.abort();
+
+        disconnectFromServer();
+        if (d_socket.state() != QAbstractSocket::UnconnectedState
+            && !d_socket.waitForDisconnected(1000)) {
+                d_socket.abort();
+        }
+    }
+
     // qml
-    Q_INVOKABLE const QString &address() const
+    const QString &address() const
     {
         return d_address;
     }
 
-    Q_INVOKABLE uint port() const
+    int port() const
     {
         return d_port;
+    }
+
+    void setAddress(const QString &newAddress)
+    {
+        d_address = newAddress;
+        emit addressChanged();
+    }
+    void setPort(int newPort)
+    {
+        d_port = newPort;
+        emit portChanged();
     }
 
     Q_INVOKABLE const QString &errorString() const
@@ -86,7 +106,7 @@ public:
         return d_errorString;
     }
 
-    Q_INVOKABLE ConnectionState connectionState() const
+    ConnectionState connectionState() const
     {
         return d_connectionState;
     }
@@ -96,21 +116,6 @@ public:
         return d_simRunning;
     }
 
-    Q_INVOKABLE void connectToServer(const QString &address, uint port)
-    {
-        d_address = address;
-        d_port = port;
-        d_socket.setSocketOption(QAbstractSocket::KeepAliveOption, 1);
-        d_socket.connectToHost(address, port);
-        d_socket.setSocketOption(QAbstractSocket::LowDelayOption, 1);
-    }
-
-    Q_INVOKABLE void disconnectFromServer()
-    {
-        ClientToServerIds clientId = ClientToServerIds::QUIT;
-        d_socket.write(reinterpret_cast<char *>(&clientId), sizeof(clientId));
-        d_socket.disconnectFromHost();
-    }
 
 public slots:
 
@@ -146,6 +151,32 @@ private slots:
     void socketStateChanged(QAbstractSocket::SocketState state);
     void socketErrorOccurred(QAbstractSocket::SocketError error);
 
+    void broadcastReceived();
+
+    void abortConnectionAttempt()
+    {
+        d_tryConnecting = false;
+        if (d_socket.state() != QTcpSocket::ConnectedState && d_socket.state() != QTcpSocket::ConnectingState)
+        {
+            d_socket.abort();
+
+            // address or port changed so try again with new address and port
+            if (d_addressOrPortChanged)
+            {
+                d_addressOrPortChanged = false;
+
+                connectToServer();
+            }
+        }
+    }
+
+    void disconnectFromServer()
+    {
+        ClientToServerIds clientId = ClientToServerIds::QUIT;
+        d_socket.write(reinterpret_cast<char *>(&clientId), sizeof(clientId));
+        d_socket.disconnectFromHost();
+    }
+
 private:
 
     bool readPfdData();
@@ -153,14 +184,28 @@ private:
     bool readTscData();
     bool readServerData();
 
+    void connectToServer()
+    {
+        d_tryConnecting = true;
+
+        d_socket.setSocketOption(QAbstractSocket::KeepAliveOption, 1);
+        d_socket.connectToHost(d_datagramAddress, d_datagramPort);
+        d_socket.setSocketOption(QAbstractSocket::LowDelayOption, 1);
+
+        d_connectionAttemptKiller.start();
+    }
+
 signals:
 
     // qml
-    void connectionStateChanged(ConnectionState state);
+    void connectionStateChanged();
 
     void newErrorMessage(const QString &msg);
 
     void simRunningChanged();
+
+    void addressChanged();
+    void portChanged();
 
     // sim
     void simStartReceived();

@@ -19,6 +19,7 @@ set(CPP_FILES
         src/io/NetworkClient/verifyConnectionVersion.cpp
         src/io/NetworkClient/socketStateChanged.cpp
         src/io/NetworkClient/socketErrorOccurred.cpp
+        src/io/NetworkClient/broadcastReceived.cpp
 
         src/pages/MfdPage/MfdPage.cpp
         src/pages/MfdPage/loadAircraft.cpp

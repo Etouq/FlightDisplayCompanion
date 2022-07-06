@@ -60,6 +60,7 @@
         <file>TscPage/styled_controls/GradientRoundButton.qml</file>
         <file>TscPage/styled_controls/NumericKeyboard.qml</file>
         <file>TscPage/styled_controls/FullKeyboard.qml</file>
+        <file>TscPage/styled_controls/LoadSpinner.qml</file>
         <file>TscPage/styled_controls/gradientButtonElements/CenterImg.qml</file>
         <file>TscPage/styled_controls/gradientButtonElements/GradientStatusBar.qml</file>
         <file>TscPage/styled_controls/gradientButtonElements/Img.qml</file>
@@ -122,6 +123,7 @@
         <file>TscPage/NavComPage/TransponderKeyboard.qml</file>
         <file>TscPage/NavComPage/TransponderRow.qml</file>
         <file>TscPage/NavComPage/ServerConnectionRow.qml</file>
+        <file>TscPage/NavComPage/PortKeyboard.qml</file>
         <file>TscPage/PfdPage/Minimums/Minimums.qml</file>
         <file>TscPage/PfdPage/Minimums/MinimumsSource.qml</file>
         <file>TscPage/PfdPage/SpeedBugPage/SpeedBugNameKeyboard.qml</file>

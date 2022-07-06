@@ -73,4 +73,11 @@ void registerQmlEnums()
                                                      0,
                                                      "TimeType",
                                                      "Not creatable as it is an enum type");
+
+    qRegisterMetaType<io::network::ConnectionState>("ConnectionState");
+    qmlRegisterUncreatableType<io::network::ConnectionStateClass>("TypeEnums",
+                                                     1,
+                                                     0,
+                                                     "ConnectionState",
+                                                     "Not creatable as it is an enum type");
 }

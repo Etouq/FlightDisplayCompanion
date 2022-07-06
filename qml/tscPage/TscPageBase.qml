@@ -1,6 +1,9 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 
+import IO.Network 1.0
+import TypeEnums 1.0
+
 import "styled_controls"
 import "styled_controls/gradientButtonElements"
 
@@ -13,6 +16,8 @@ Item {
     property bool showBackButton: false
     property bool showEnterButton: false
 
+    property bool showConnectionState: false
+
     property string pageTitle: ""
 
     signal backClicked()
@@ -20,6 +25,11 @@ Item {
     signal pfdClicked()
     signal mfdClicked()
     signal navcomClicked()
+
+    Loader {
+        active: root.showConnectionState
+        sourceComponent: NetworkClient.connectionState === ConnectionState.CONNECTED || NetworkClient.connectionState === ConnectionState.DISCONNECTED ? connectedIndicator: connectingIndicator
+    }
 
     Text {
         anchors.horizontalCenter: parent.left
@@ -135,4 +145,112 @@ Item {
         }
     }
 
+    Component {
+        id: connectedIndicator
+
+        Item {
+            x: 20
+            y: 30
+            height: 60
+
+            Rectangle {
+                width: 60
+                height: 60
+                radius: 30
+                color: NetworkClient.connectionState === ConnectionState.CONNECTED ? "green": "red"
+            }
+
+            Loader {
+                active: NetworkClient.connectionState === ConnectionState.CONNECTED
+                sourceComponent: Grid {
+                    x: 70
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    columns: 2
+                    columnSpacing: 5
+                    rowSpacing: 0
+
+                    Text {
+                        font.family: "Roboto Mono"
+                        font.bold: true
+                        font.pixelSize: 30
+                        color: "white"
+                        text: "Address: "
+                    }
+
+                    Text {
+                        font.family: "Roboto Mono"
+                        font.bold: true
+                        font.pixelSize: 30
+                        color: "white"
+                        text: NetworkClient.address
+                    }
+
+                    Text {
+                        font.family: "Roboto Mono"
+                        font.bold: true
+                        font.pixelSize: 30
+                        color: "white"
+                        text: "Port: "
+                    }
+
+                    Text {
+                        font.family: "Roboto Mono"
+                        font.bold: true
+                        font.pixelSize: 30
+                        color: "white"
+                        text: NetworkClient.port
+                    }
+                }
+            }
+        }
+    }
+
+    Component {
+        id: connectingIndicator
+
+        Item {
+            x: 20
+            y: 30
+            height: 60
+
+            LoadSpinner {
+                radius: 30
+            }
+
+            Component.onCompleted: {
+                if (NetworkClient.connectionState === ConnectionState.CONNECTING)
+                {
+                connectingText.actionText = "Connecting"
+            }
+            else {
+                connectingText.actionText = "Disonnecting"
+            }
+        }
+
+        Text {
+            id: connectingText
+            property int numDots: 0
+            property string actionText: "Connecting"
+
+            x: 70
+            anchors.verticalCenter: parent.verticalCenter
+            font.family: "Roboto Mono"
+            font.bold: true
+            font.pixelSize: 30
+            color: "white"
+            text: actionText + ".".repeat(numDots)
+        }
+
+        Timer {
+            running: true
+            interval: 400
+            repeat: true
+            onTriggered: {
+                connectingText.numDots = (connectingText.numDots + 1) % 4
+            }
+        }
+
+    }
+}
 }

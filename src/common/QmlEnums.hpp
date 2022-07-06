@@ -254,4 +254,32 @@ private:
 
 typedef QmlTimeTypeClass::Value TimeType;
 
+namespace io::network
+{
+
+class ConnectionStateClass
+{
+    Q_GADGET
+
+public:
+
+    enum Value
+    {
+        DISCONNECTED,
+        CONNECTED,
+        CONNECTING,
+        DISCONNECTING
+    };
+    Q_ENUM(Value)
+
+private:
+
+    explicit ConnectionStateClass()
+    {}
+};
+
+typedef ConnectionStateClass::Value ConnectionState;
+
+}
+
 #endif  // __QML_ENUMS_HPP__

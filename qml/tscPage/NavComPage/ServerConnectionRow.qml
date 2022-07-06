@@ -46,7 +46,7 @@ Row {
                 font.bold: true
 
                 color: "white"
-                text: "42069"
+                text: NetworkClient.port
             }
 
             onReleased: serverConnectionRowRoot.portClicked()
@@ -83,7 +83,7 @@ Row {
                 font.bold: true
 
                 color: "white"
-                text: ("0000" + NavCom.xpdrCode).slice(-4)
+                text: NetworkClient.address
             }
 
             onReleased: serverConnectionRowRoot.addressClicked()

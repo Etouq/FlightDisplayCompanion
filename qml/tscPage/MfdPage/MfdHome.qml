@@ -9,6 +9,8 @@ TscPageBase {
 
     pageTitle: "MFD Home"
 
+    showConnectionState: true
+
     signal mapSettingsClicked()
     signal planeIconClicked()
     signal flightplanClicked()

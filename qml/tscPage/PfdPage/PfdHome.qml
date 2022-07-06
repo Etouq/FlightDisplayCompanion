@@ -1,18 +1,18 @@
 import QtQuick 2.15
 
-import IO.Network 1.0
 import General.Settings 1.0
 import TypeEnums 1.0
 
 import "../"
 import "../styled_controls"
 import "../styled_controls/gradientButtonElements"
-import "../../settingsPage/flightplan"
 
 TscPageBase {
     id: pfdHome
 
     pageTitle: "PFD Home"
+
+    showConnectionState: true
 
     signal speedbugsClicked()
     signal timersClicked()
@@ -35,6 +35,7 @@ TscPageBase {
     }
 
 
+
     Column {
         y: 120
         anchors.horizontalCenter: parent.left
@@ -53,41 +54,6 @@ TscPageBase {
                 text: "GPS"
             }
 
-            onReleased: function() {
-                NetworkClient.connectToServer(addressField.text, parseInt(portField.text));
-            }
-        }
-
-        StyledTextInput {
-            id: addressField
-            width: 250
-            height: 45
-
-            placeholderTxt: "Address"
-
-            EnterKey.type: Qt.EnterKeyNext
-
-            Component.onCompleted: {
-                if (NetworkClient.address() !== "")
-                    text = NetworkClient.address();
-            }
-        }
-
-        StyledTextInput {
-            id: portField
-            width: 250
-            height: 45
-
-            placeholderTxt: "Port"
-
-            EnterKey.type: Qt.EnterKeyDone
-
-            inputMethodHints: Qt.ImhDigitsOnly
-
-            Component.onCompleted: {
-                if (NetworkClient.port() > -1)
-                    text = NetworkClient.port();
-            }
         }
 
         Row {
