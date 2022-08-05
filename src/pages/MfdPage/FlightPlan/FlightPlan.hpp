@@ -2,7 +2,7 @@
 #define __FLIGHTPLAN_HPP__
 
 #include "FlightPlanWaypoint.hpp"
-#include "common/QmlEnums.hpp"
+#include "WaypointModel/WaypointModel.hpp"
 
 #include <QList>
 #include <QObject>
@@ -20,6 +20,7 @@ class FlightPlan : public QObject
 {
     Q_OBJECT
 
+    Q_PROPERTY(int activeLegIdx READ activeLegIdx NOTIFY activeLegIdxChanged)
     Q_PROPERTY(double wpDtk READ wpDtk NOTIFY wpDtkChanged)
     Q_PROPERTY(QString wpEte READ wpEte NOTIFY wpEteChanged)
     Q_PROPERTY(QString destEta READ destEta NOTIFY destEtaChanged)
@@ -27,6 +28,11 @@ class FlightPlan : public QObject
 public:
 
     explicit FlightPlan(io::network::NetworkClient *netClient, QObject *parent = nullptr);
+
+    int activeLegIdx() const
+    {
+        return d_activeLegIdx;
+    }
 
     double wpDtk() const
     {
@@ -43,116 +49,25 @@ public:
         return d_gpsDestEta;
     }
 
-    Q_INVOKABLE int getFlightPlanSize() const
-    {
-        return static_cast<int>(d_waypoints.size());
-    }
-
-    Q_INVOKABLE QGeoCoordinate getPosition(int idx) const
-    {
-        return d_waypoints[idx].position;
-    }
-
-    Q_INVOKABLE int getAltitude1(int idx) const
-    {
-        return d_waypoints[idx].alt1;
-    }
-
-    Q_INVOKABLE int getAltitude2(int idx) const
-    {
-        return d_waypoints[idx].alt2;
-    }
-
-    Q_INVOKABLE const QString &getIdent(int idx) const
-    {
-        return d_waypoints[idx].ident;
-    }
-
-    Q_INVOKABLE QmlWaypointTypeClass::Value getWpType(int idx) const
-    {
-        return static_cast<QmlWaypointType>(d_waypoints[idx].wpType);
-    }
-
-    Q_INVOKABLE QmlWpAltitudeTypeClass::Value getAltType(int idx) const
-    {
-        return static_cast<QmlWpAltitudeType>(d_waypoints[idx].altType);
-    }
-
-    Q_INVOKABLE double getLegDistanceTo(int idx) const
-    {
-        if (idx == 0)
-            return -1.0;
-        return d_waypoints[idx - 1].position.distanceTo(d_waypoints[idx].position) / 1852.0;
-    }
-
-    Q_INVOKABLE double getCumulativeDistance(int idx) const
-    {
-        if (idx == 0)
-            return -1.0;
-        double totalDist = 0.0;
-        for (int i = 1; i <= idx; i++)
-            totalDist += d_waypoints[i - 1].position.distanceTo(d_waypoints[i].position);
-        return totalDist / 1852.0;
-    }
-
-    Q_INVOKABLE int getLegBearing(int idx) const
-    {
-        if (idx == 0)
-            return -1.0;
-        return std::lround(d_waypoints[idx - 1].position.azimuthTo(d_waypoints[idx].position));
-    }
-
-    Q_INVOKABLE void appendWp(double lat,
-                              double lon,
-                              int alt1,
-                              int alt2,
-                              QString ident,
-                              QmlWaypointTypeClass::Value wpType,
-                              QmlWpAltitudeTypeClass::Value altType);
-
-    Q_INVOKABLE void insertWp(int idx,
-                              double lat,
-                              double lon,
-                              int alt1,
-                              int alt2,
-                              QString ident,
-                              QmlWaypointTypeClass::Value wpType,
-                              QmlWpAltitudeTypeClass::Value altType);
-
-    Q_INVOKABLE void removeWp(int idx)
-    {
-        d_waypoints.removeAt(idx);
-        emit flightplanChanged();
-    }
-
-    Q_INVOKABLE void editWp(int idx,
-                            double lat,
-                            double lon,
-                            int alt1,
-                            int alt2,
-                            QString ident,
-                            QmlWaypointTypeClass::Value wpType,
-                            QmlWpAltitudeTypeClass::Value altType);
-
-
 signals:
 
     void flightplanChanged();
     void wpDtkChanged();
     void wpEteChanged();
     void destEtaChanged();
+    void activeLegIdxChanged();
 
 public slots:
 
     void clearFlightplan()
     {
-        d_waypoints.clear();
+        d_wpModel.clear();
         emit flightplanChanged();
     }
 
     void receivedFlightplan(const QList<FlightPlanWaypoint> &wpList)
     {
-        d_waypoints = wpList;
+        d_wpModel.overwrite(std::vector<FlightPlanWaypoint>(wpList.begin(), wpList.end()));
         emit flightplanChanged();
     }
 
@@ -166,6 +81,12 @@ public slots:
     void updateDestEte(int64_t newValue);
     void updateZuluTime(int64_t newValue);
 
+    void updateActiveLegIdx(int newIdx)
+    {
+        d_activeLegIdx = newIdx;
+        emit activeLegIdxChanged();
+    }
+
 private:
 
     double d_gpsWpDtk = 0;
@@ -176,7 +97,9 @@ private:
     int64_t d_gpsDestEte = 0;
     int64_t d_zuluTime = 0;
 
-    QList<FlightPlanWaypoint> d_waypoints;
+    WaypointModel d_wpModel;
+
+    int d_activeLegIdx = -1;
 };
 
 }  // namespace pages::mfd
