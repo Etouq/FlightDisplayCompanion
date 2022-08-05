@@ -28,7 +28,7 @@ Item {
 
     Loader {
         active: root.showConnectionState
-        sourceComponent: NetworkClient.connectionState === ConnectionState.CONNECTED || NetworkClient.connectionState === ConnectionState.DISCONNECTED ? connectedIndicator: connectingIndicator
+        sourceComponent: NetworkClient.connectionState === ConnectionState.CONNECTED || NetworkClient.connectionState === ConnectionState.DISCONNECTED ? connectedIndicator : connectingIndicator
     }
 
     Text {
@@ -81,6 +81,7 @@ Item {
                 font.bold: true
                 color: "white"
                 text: "PFD"
+                lineHeight: 0.8
             }
 
             onReleased: root.pfdClicked()
@@ -100,6 +101,7 @@ Item {
                 font.bold: true
                 color: "white"
                 text: "MFD"
+                lineHeight: 0.8
             }
 
             onReleased: root.mfdClicked()
@@ -120,6 +122,7 @@ Item {
                 color: "white"
                 text: "NAV COM"
                 wrapMode: Text.WordWrap
+                lineHeight: 0.8
             }
 
             onReleased: root.navcomClicked()
@@ -159,50 +162,6 @@ Item {
                 radius: 30
                 color: NetworkClient.connectionState === ConnectionState.CONNECTED ? "green": "red"
             }
-
-            Loader {
-                active: NetworkClient.connectionState === ConnectionState.CONNECTED
-                sourceComponent: Grid {
-                    x: 70
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    columns: 2
-                    columnSpacing: 5
-                    rowSpacing: 0
-
-                    Text {
-                        font.family: "Roboto Mono"
-                        font.bold: true
-                        font.pixelSize: 30
-                        color: "white"
-                        text: "Address: "
-                    }
-
-                    Text {
-                        font.family: "Roboto Mono"
-                        font.bold: true
-                        font.pixelSize: 30
-                        color: "white"
-                        text: NetworkClient.address
-                    }
-
-                    Text {
-                        font.family: "Roboto Mono"
-                        font.bold: true
-                        font.pixelSize: 30
-                        color: "white"
-                        text: "Port: "
-                    }
-
-                    Text {
-                        font.family: "Roboto Mono"
-                        font.bold: true
-                        font.pixelSize: 30
-                        color: "white"
-                        text: NetworkClient.port
-                    }
-                }
-            }
         }
     }
 
@@ -217,40 +176,8 @@ Item {
             LoadSpinner {
                 radius: 30
             }
-
-            Component.onCompleted: {
-                if (NetworkClient.connectionState === ConnectionState.CONNECTING)
-                {
-                connectingText.actionText = "Connecting"
-            }
-            else {
-                connectingText.actionText = "Disonnecting"
-            }
-        }
-
-        Text {
-            id: connectingText
-            property int numDots: 0
-            property string actionText: "Connecting"
-
-            x: 70
-            anchors.verticalCenter: parent.verticalCenter
-            font.family: "Roboto Mono"
-            font.bold: true
-            font.pixelSize: 30
-            color: "white"
-            text: actionText + ".".repeat(numDots)
-        }
-
-        Timer {
-            running: true
-            interval: 400
-            repeat: true
-            onTriggered: {
-                connectingText.numDots = (connectingText.numDots + 1) % 4
-            }
         }
 
     }
 }
-}
+
