@@ -32,7 +32,7 @@ Row {
             height: 188.16
 
             MainText {
-                text: "V" + speedBugRow.speedBugEntry.designator()
+                text: "V" + speedBugRow.speedBugEntry.designator().toLowerCase()
             }
 
             GradientStatusBar {

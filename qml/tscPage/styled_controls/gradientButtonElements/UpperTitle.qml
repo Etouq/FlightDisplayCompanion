@@ -14,4 +14,6 @@ Text {
     color: "white"
 
     wrapMode: Text.WordWrap
+    lineHeight: 42
+    lineHeightMode: Text.FixedHeight
 }

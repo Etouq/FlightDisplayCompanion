@@ -119,14 +119,14 @@ Column {
                 height: 180
 
                 Img {
-                    source: "qrc: /images/buttonImages/DoubleArrowVerticalWhite.svg"
+                    source: "qrc:/images/buttonImages/DoubleArrowVerticalWhite.svg"
                 }
 
                 Title {
                     text: "XFER"
                 }
 
-                onReleased: numKeyboard.transferClicked();
+                onReleased: numKeyboard.transferPressed();
             }
         }
 

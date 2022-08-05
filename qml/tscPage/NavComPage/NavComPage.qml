@@ -64,7 +64,7 @@ Item {
             pageTitle: propertyObject.pageTitle
             minFreq: propertyObject.minFreq * 1000000
             maxFreq: propertyObject.maxFreq * 1000000
-            activeFreq: "Active Freq: " + (propertyObject.activeFreq / 1000000).toFixed(propertyObject.nbDigits)
+            activeFreq: "Active Freq: " + propertyObject.activeFreq.toFixed(propertyObject.nbDigits)
             stbyFreq: propertyObject.stbyFreq
             endCallback: propertyObject.endCallback
             nbDigits: propertyObject.nbDigits

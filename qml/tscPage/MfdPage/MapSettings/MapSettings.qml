@@ -46,7 +46,7 @@ TscPageBase {
 
             GradientButton {
 
-                MainText {
+                UpperTitle {
                     text: "Range Rings"
                 }
 
@@ -76,7 +76,7 @@ TscPageBase {
         GradientButton {
             anchors.horizontalCenter: parent.horizontalCenter
 
-            MainText {
+            UpperTitle {
                 text: "Fuel Range Ring"
             }
 

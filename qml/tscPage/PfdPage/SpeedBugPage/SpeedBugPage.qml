@@ -89,12 +89,15 @@ TscPageBase {
                         width: 346.8
                         height: 188.16
 
+                        enabled: SpeedBugs.numSpeedbugs > 0 && SpeedBugs.numActiveSpeedbugs < SpeedBugs.numSpeedbugs
+
                         MainText {
                             text: "All On"
                         }
 
-
-                        //onReleased: activate all
+                        onReleased: function() {
+                            SpeedBugs.setAllActiveState(true)
+                        }
                     }
                 }
 
@@ -110,11 +113,15 @@ TscPageBase {
                         width: 346.8
                         height: 188.16
 
+                        enabled: SpeedBugs.numSpeedbugs > 0 && SpeedBugs.numActiveSpeedbugs === SpeedBugs.numSpeedbugs
+
                         MainText {
                             text: "All Off"
                         }
 
-                        //onReleased: deactivate all
+                        onReleased: function() {
+                            SpeedBugs.setAllActiveState(false)
+                        }
                     }
                 }
 

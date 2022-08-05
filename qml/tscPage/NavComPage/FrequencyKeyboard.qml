@@ -31,7 +31,7 @@ TscPageBase {
     }
 
     Component.onCompleted: function() {
-        currentInput = stbyFreq;
+        currentInput = stbyFreq * 1000000;
         updateInput();
     }
 
@@ -42,8 +42,8 @@ TscPageBase {
         toWrite.text = ""
 
         if (inputIndex == -1) {
-            currentInput = stbyFreq
-            stbyFreqLabel.text = (stbyFreq / 1000000).toFixed(nbDigits)
+            currentInput = stbyFreq * 1000000
+            stbyFreqLabel.text = stbyFreq.toFixed(nbDigits)
         } else {
             let inputString = (currentInput / 1000000).toFixed(nbDigits)
             let regexStr = new RegExp('(.{' + (inputIndex > 2 ? inputIndex + 1 : inputIndex)
@@ -232,6 +232,8 @@ TscPageBase {
         y: 336
         anchors.horizontalCenter: parent.left
         anchors.horizontalCenterOffset: 864
+
+        hasTransferButton: true
 
         onDigitPressed: function (digit) {
             root.digitPressed(digit)

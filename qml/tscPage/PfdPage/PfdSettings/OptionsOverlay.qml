@@ -79,6 +79,9 @@ Rectangle {
                         text: optionButton.modelData
 
                         wrapMode: Text.WordWrap
+
+                        lineHeight: 60
+                        lineHeightMode: Text.FixedHeight
                     }
 
                     onReleased: function() {
