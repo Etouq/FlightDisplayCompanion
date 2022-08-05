@@ -1,6 +1,5 @@
 #include "NetworkClient.hpp"
 #include "common/dataIdentifiers.hpp"
-#include "common/converters/basicConverters.hpp"
 
 namespace io::network
 {
@@ -25,7 +24,7 @@ bool NetworkClient::readPfdData()
             }
 
             d_socket.commitTransaction();
-            Converters::convert(d_socket, newValue);
+            d_socket.read(reinterpret_cast<char *>(&newValue), sizeof(newValue));
             emit airspeedChanged(newValue);
             break;
         }
@@ -40,7 +39,7 @@ bool NetworkClient::readPfdData()
             }
 
             d_socket.commitTransaction();
-            Converters::convert(d_socket, newValue);
+            d_socket.read(reinterpret_cast<char *>(&newValue), sizeof(newValue));
             emit maxSpeedChanged(newValue);
             break;
         }
@@ -55,7 +54,7 @@ bool NetworkClient::readPfdData()
             }
 
             d_socket.commitTransaction();
-            Converters::convert(d_socket, newValue);
+            d_socket.read(reinterpret_cast<char *>(&newValue), sizeof(newValue));
             emit trueAirspeedChanged(newValue);
             break;
         }
@@ -70,7 +69,7 @@ bool NetworkClient::readPfdData()
             }
 
             d_socket.commitTransaction();
-            Converters::convert(d_socket, newValue);
+            d_socket.read(reinterpret_cast<char *>(&newValue), sizeof(newValue));
             emit refSpeedChanged(newValue);
             break;
         }
@@ -87,7 +86,7 @@ bool NetworkClient::readPfdData()
             }
 
             d_socket.commitTransaction();
-            Converters::convert(d_socket, newValue);
+            d_socket.read(reinterpret_cast<char *>(&newValue), sizeof(newValue));
             emit altitudeChanged(newValue);
             break;
         }
@@ -102,7 +101,7 @@ bool NetworkClient::readPfdData()
             }
 
             d_socket.commitTransaction();
-            Converters::convert(d_socket, newValue);
+            d_socket.read(reinterpret_cast<char *>(&newValue), sizeof(newValue));
             emit radarAltitudeChanged(newValue);
             break;
         }
@@ -117,7 +116,7 @@ bool NetworkClient::readPfdData()
             }
 
             d_socket.commitTransaction();
-            Converters::convert(d_socket, newValue);
+            d_socket.read(reinterpret_cast<char *>(&newValue), sizeof(newValue));
             emit refAltitudeChanged(newValue);
             break;
         }
@@ -132,7 +131,7 @@ bool NetworkClient::readPfdData()
             }
 
             d_socket.commitTransaction();
-            Converters::convert(d_socket, newValue);
+            d_socket.read(reinterpret_cast<char *>(&newValue), sizeof(newValue));
             emit pressureChanged(newValue);
             break;
         }
@@ -148,7 +147,7 @@ bool NetworkClient::readPfdData()
             }
 
             d_socket.commitTransaction();
-            Converters::convert(d_socket, newValue);
+            d_socket.read(reinterpret_cast<char *>(&newValue), sizeof(newValue));
             emit vspeedChanged(newValue);
             break;
         }
@@ -163,7 +162,7 @@ bool NetworkClient::readPfdData()
             }
 
             d_socket.commitTransaction();
-            Converters::convert(d_socket, newValue);
+            d_socket.read(reinterpret_cast<char *>(&newValue), sizeof(newValue));
             emit refVspeedChanged(newValue);
             break;
         }
@@ -178,7 +177,7 @@ bool NetworkClient::readPfdData()
             }
 
             d_socket.commitTransaction();
-            Converters::convert(d_socket, newValue);
+            d_socket.read(reinterpret_cast<char *>(&newValue), sizeof(newValue));
             emit vDevModeChanged(newValue);
             break;
         }
@@ -193,7 +192,7 @@ bool NetworkClient::readPfdData()
             }
 
             d_socket.commitTransaction();
-            Converters::convert(d_socket, newValue);
+            d_socket.read(reinterpret_cast<char *>(&newValue), sizeof(newValue));
             emit vDevValueChanged(newValue);
             break;
         }
@@ -212,10 +211,11 @@ bool NetworkClient::readPfdData()
             }
 
             d_socket.commitTransaction();
-            Converters::convert(d_socket, bank);
-            Converters::convert(d_socket, pitch);
-            Converters::convert(d_socket, slipskid);
+            d_socket.read(reinterpret_cast<char *>(&bank), sizeof(bank));
+            d_socket.read(reinterpret_cast<char *>(&pitch), sizeof(pitch));
+            d_socket.read(reinterpret_cast<char *>(&slipskid), sizeof(slipskid));
             emit attitudeChanged(bank, pitch, slipskid);
+            break;
         }
         case PfdIdentifier::FD_ATTITUDE:
         {
@@ -229,9 +229,10 @@ bool NetworkClient::readPfdData()
             }
 
             d_socket.commitTransaction();
-            Converters::convert(d_socket, bank);
-            Converters::convert(d_socket, pitch);
+            d_socket.read(reinterpret_cast<char *>(&bank), sizeof(bank));
+            d_socket.read(reinterpret_cast<char *>(&pitch), sizeof(pitch));
             emit fdAttitudeChanged(bank, pitch);
+            break;
         }
         // aoa
         case PfdIdentifier::ANGLE_OF_ATTACK:
@@ -245,7 +246,7 @@ bool NetworkClient::readPfdData()
             }
 
             d_socket.commitTransaction();
-            Converters::convert(d_socket, newValue);
+            d_socket.read(reinterpret_cast<char *>(&newValue), sizeof(newValue));
             emit angleOfAttackChanged(newValue);
             break;
         }
@@ -262,7 +263,7 @@ bool NetworkClient::readPfdData()
             }
 
             d_socket.commitTransaction();
-            Converters::convert(d_socket, newValue);
+            d_socket.read(reinterpret_cast<char *>(&newValue), sizeof(newValue));
             emit rotationChanged(newValue);
             break;
         }
@@ -277,7 +278,7 @@ bool NetworkClient::readPfdData()
             }
 
             d_socket.commitTransaction();
-            Converters::convert(d_socket, newValue);
+            d_socket.read(reinterpret_cast<char *>(&newValue), sizeof(newValue));
             emit headingChanged(newValue);
             break;
         }
@@ -292,7 +293,7 @@ bool NetworkClient::readPfdData()
             }
 
             d_socket.commitTransaction();
-            Converters::convert(d_socket, newValue);
+            d_socket.read(reinterpret_cast<char *>(&newValue), sizeof(newValue));
             emit courseChanged(newValue);
             break;
         }
@@ -307,7 +308,7 @@ bool NetworkClient::readPfdData()
             }
 
             d_socket.commitTransaction();
-            Converters::convert(d_socket, newValue);
+            d_socket.read(reinterpret_cast<char *>(&newValue), sizeof(newValue));
             emit courseDeviationChanged(newValue);
             break;
         }
@@ -322,7 +323,7 @@ bool NetworkClient::readPfdData()
             }
 
             d_socket.commitTransaction();
-            Converters::convert(d_socket, newValue);
+            d_socket.read(reinterpret_cast<char *>(&newValue), sizeof(newValue));
             emit displayDeviationChanged(newValue);
             break;
         }
@@ -337,7 +338,7 @@ bool NetworkClient::readPfdData()
             }
 
             d_socket.commitTransaction();
-            Converters::convert(d_socket, newValue);
+            d_socket.read(reinterpret_cast<char *>(&newValue), sizeof(newValue));
             emit turnRateChanged(newValue);
             break;
         }
@@ -352,7 +353,7 @@ bool NetworkClient::readPfdData()
             }
 
             d_socket.commitTransaction();
-            Converters::convert(d_socket, newValue);
+            d_socket.read(reinterpret_cast<char *>(&newValue), sizeof(newValue));
             emit navSourceChanged(newValue);
             break;
         }
@@ -367,7 +368,7 @@ bool NetworkClient::readPfdData()
             }
 
             d_socket.commitTransaction();
-            Converters::convert(d_socket, newValue);
+            d_socket.read(reinterpret_cast<char *>(&newValue), sizeof(newValue));
             emit currentTrackChanged(newValue);
             break;
         }
@@ -382,7 +383,7 @@ bool NetworkClient::readPfdData()
             }
 
             d_socket.commitTransaction();
-            Converters::convert(d_socket, newValue);
+            d_socket.read(reinterpret_cast<char *>(&newValue), sizeof(newValue));
             emit toFromChanged(newValue);
             break;
         }
@@ -399,7 +400,7 @@ bool NetworkClient::readPfdData()
             }
 
             d_socket.commitTransaction();
-            Converters::convert(d_socket, newValue);
+            d_socket.read(reinterpret_cast<char *>(&newValue), sizeof(newValue));
             emit zuluSecondsChanged(newValue);
             break;
         }
@@ -414,7 +415,7 @@ bool NetworkClient::readPfdData()
             }
 
             d_socket.commitTransaction();
-            Converters::convert(d_socket, newValue);
+            d_socket.read(reinterpret_cast<char *>(&newValue), sizeof(newValue));
             emit localSecondsChanged(newValue);
             break;
         }
@@ -429,7 +430,7 @@ bool NetworkClient::readPfdData()
             }
 
             d_socket.commitTransaction();
-            Converters::convert(d_socket, newValue);
+            d_socket.read(reinterpret_cast<char *>(&newValue), sizeof(newValue));
             emit groundSpeedChanged(newValue);
             break;
         }
@@ -444,7 +445,7 @@ bool NetworkClient::readPfdData()
             }
 
             d_socket.commitTransaction();
-            Converters::convert(d_socket, newValue);
+            d_socket.read(reinterpret_cast<char *>(&newValue), sizeof(newValue));
             emit totalAirTempChanged(newValue);
             break;
         }
@@ -459,7 +460,7 @@ bool NetworkClient::readPfdData()
             }
 
             d_socket.commitTransaction();
-            Converters::convert(d_socket, newValue);
+            d_socket.read(reinterpret_cast<char *>(&newValue), sizeof(newValue));
             emit outsideAirTempChanged(newValue);
             break;
         }
@@ -474,7 +475,7 @@ bool NetworkClient::readPfdData()
             }
 
             d_socket.commitTransaction();
-            Converters::convert(d_socket, newValue);
+            d_socket.read(reinterpret_cast<char *>(&newValue), sizeof(newValue));
             emit isaTempChanged(newValue);
             break;
         }
@@ -488,7 +489,7 @@ bool NetworkClient::readPfdData()
                 d_socket.rollbackTransaction();
                 return false;
             }
-            Converters::convert(d_socket, size);
+            d_socket.read(reinterpret_cast<char *>(&size), sizeof(size));
 
             if (d_socket.bytesAvailable() < static_cast<int64_t>(size))
             {
@@ -498,7 +499,7 @@ bool NetworkClient::readPfdData()
 
             d_socket.commitTransaction();
 
-            emit nav1IdentChanged(size == 0 ? "" : Converters::convertString(d_socket, size));
+            emit nav1IdentChanged(size == 0 ? "" : QString::fromUtf8(d_socket.read(size)));
 
             break;
         }
@@ -513,7 +514,7 @@ bool NetworkClient::readPfdData()
             }
 
             d_socket.commitTransaction();
-            Converters::convert(d_socket, newValue);
+            d_socket.read(reinterpret_cast<char *>(&newValue), sizeof(newValue));
             emit nav1DmeChanged(newValue);
             break;
         }
@@ -528,7 +529,7 @@ bool NetworkClient::readPfdData()
             }
 
             d_socket.commitTransaction();
-            Converters::convert(d_socket, newValue);
+            d_socket.read(reinterpret_cast<char *>(&newValue), sizeof(newValue));
             emit nav1BearingChanged(newValue);
             break;
         }
@@ -543,7 +544,7 @@ bool NetworkClient::readPfdData()
             }
 
             d_socket.commitTransaction();
-            Converters::convert(d_socket, newValue);
+            d_socket.read(reinterpret_cast<char *>(&newValue), sizeof(newValue));
             emit nav1HasNavChanged(newValue);
             break;
         }
@@ -558,7 +559,7 @@ bool NetworkClient::readPfdData()
             }
 
             d_socket.commitTransaction();
-            Converters::convert(d_socket, newValue);
+            d_socket.read(reinterpret_cast<char *>(&newValue), sizeof(newValue));
             emit nav1HasSignalChanged(newValue);
             break;
         }
@@ -573,7 +574,7 @@ bool NetworkClient::readPfdData()
             }
 
             d_socket.commitTransaction();
-            Converters::convert(d_socket, newValue);
+            d_socket.read(reinterpret_cast<char *>(&newValue), sizeof(newValue));
             emit nav1HasDmeChanged(newValue);
             break;
         }
@@ -585,7 +586,7 @@ bool NetworkClient::readPfdData()
                 d_socket.rollbackTransaction();
                 return false;
             }
-            Converters::convert(d_socket, size);
+            d_socket.read(reinterpret_cast<char *>(&size), sizeof(size));
 
             if (d_socket.bytesAvailable() < static_cast<int64_t>(size))
             {
@@ -595,7 +596,7 @@ bool NetworkClient::readPfdData()
 
             d_socket.commitTransaction();
 
-            emit nav2IdentChanged(size == 0 ? "" : Converters::convertString(d_socket, size));
+            emit nav2IdentChanged(size == 0 ? "" : QString::fromUtf8(d_socket.read(size)));
 
             break;
         }
@@ -610,7 +611,7 @@ bool NetworkClient::readPfdData()
             }
 
             d_socket.commitTransaction();
-            Converters::convert(d_socket, newValue);
+            d_socket.read(reinterpret_cast<char *>(&newValue), sizeof(newValue));
             emit nav2DmeChanged(newValue);
             break;
         }
@@ -625,7 +626,7 @@ bool NetworkClient::readPfdData()
             }
 
             d_socket.commitTransaction();
-            Converters::convert(d_socket, newValue);
+            d_socket.read(reinterpret_cast<char *>(&newValue), sizeof(newValue));
             emit nav2BearingChanged(newValue);
             break;
         }
@@ -640,7 +641,7 @@ bool NetworkClient::readPfdData()
             }
 
             d_socket.commitTransaction();
-            Converters::convert(d_socket, newValue);
+            d_socket.read(reinterpret_cast<char *>(&newValue), sizeof(newValue));
             emit nav2HasNavChanged(newValue);
             break;
         }
@@ -655,7 +656,7 @@ bool NetworkClient::readPfdData()
             }
 
             d_socket.commitTransaction();
-            Converters::convert(d_socket, newValue);
+            d_socket.read(reinterpret_cast<char *>(&newValue), sizeof(newValue));
             emit nav2HasSignalChanged(newValue);
             break;
         }
@@ -670,7 +671,7 @@ bool NetworkClient::readPfdData()
             }
 
             d_socket.commitTransaction();
-            Converters::convert(d_socket, newValue);
+            d_socket.read(reinterpret_cast<char *>(&newValue), sizeof(newValue));
             emit nav2HasDmeChanged(newValue);
             break;
         }
@@ -685,7 +686,7 @@ bool NetworkClient::readPfdData()
             }
 
             d_socket.commitTransaction();
-            Converters::convert(d_socket, newValue);
+            d_socket.read(reinterpret_cast<char *>(&newValue), sizeof(newValue));
             emit gpsDistanceChanged(newValue);
             break;
         }
@@ -700,7 +701,7 @@ bool NetworkClient::readPfdData()
             }
 
             d_socket.commitTransaction();
-            Converters::convert(d_socket, newValue);
+            d_socket.read(reinterpret_cast<char *>(&newValue), sizeof(newValue));
             emit gpsBearingChanged(newValue);
             break;
         }
@@ -715,7 +716,7 @@ bool NetworkClient::readPfdData()
             }
 
             d_socket.commitTransaction();
-            Converters::convert(d_socket, newValue);
+            d_socket.read(reinterpret_cast<char *>(&newValue), sizeof(newValue));
             emit adfHasSignalChanged(newValue);
             break;
         }
@@ -730,7 +731,7 @@ bool NetworkClient::readPfdData()
             }
 
             d_socket.commitTransaction();
-            Converters::convert(d_socket, newValue);
+            d_socket.read(reinterpret_cast<char *>(&newValue), sizeof(newValue));
             emit adfFreqChanged(newValue);
             break;
         }
@@ -745,7 +746,7 @@ bool NetworkClient::readPfdData()
             }
 
             d_socket.commitTransaction();
-            Converters::convert(d_socket, newValue);
+            d_socket.read(reinterpret_cast<char *>(&newValue), sizeof(newValue));
             emit adfRadialChanged(newValue);
             break;
         }
@@ -762,7 +763,7 @@ bool NetworkClient::readPfdData()
             }
 
             d_socket.commitTransaction();
-            Converters::convert(d_socket, newValue);
+            d_socket.read(reinterpret_cast<char *>(&newValue), sizeof(newValue));
             emit gpsIsActiveFlightplanChanged(newValue);
             break;
         }
@@ -777,7 +778,7 @@ bool NetworkClient::readPfdData()
             }
 
             d_socket.commitTransaction();
-            Converters::convert(d_socket, newValue);
+            d_socket.read(reinterpret_cast<char *>(&newValue), sizeof(newValue));
             emit legIsDirectToChanged(newValue);
             break;
         }
@@ -789,7 +790,7 @@ bool NetworkClient::readPfdData()
                 d_socket.rollbackTransaction();
                 return false;
             }
-            Converters::convert(d_socket, size);
+            d_socket.read(reinterpret_cast<char *>(&size), sizeof(size));
 
             if (d_socket.bytesAvailable() < static_cast<int64_t>(size))
             {
@@ -799,7 +800,7 @@ bool NetworkClient::readPfdData()
 
             d_socket.commitTransaction();
 
-            emit currentLegToChanged(size == 0 ? "" : Converters::convertString(d_socket, size));
+            emit currentLegToChanged(size == 0 ? "" : QString::fromUtf8(d_socket.read(size)));
 
             break;
         }
@@ -811,7 +812,7 @@ bool NetworkClient::readPfdData()
                 d_socket.rollbackTransaction();
                 return false;
             }
-            Converters::convert(d_socket, size);
+            d_socket.read(reinterpret_cast<char *>(&size), sizeof(size));
 
             if (d_socket.bytesAvailable() < static_cast<int64_t>(size))
             {
@@ -821,7 +822,7 @@ bool NetworkClient::readPfdData()
 
             d_socket.commitTransaction();
 
-            emit currentLegFromChanged(size == 0 ? "" : Converters::convertString(d_socket, size));
+            emit currentLegFromChanged(size == 0 ? "" : QString::fromUtf8(d_socket.read(size)));
 
             break;
         }
@@ -838,7 +839,7 @@ bool NetworkClient::readPfdData()
             }
 
             d_socket.commitTransaction();
-            Converters::convert(d_socket, newValue);
+            d_socket.read(reinterpret_cast<char *>(&newValue), sizeof(newValue));
             emit windDirectionChanged(newValue);
             break;
         }
@@ -853,7 +854,7 @@ bool NetworkClient::readPfdData()
             }
 
             d_socket.commitTransaction();
-            Converters::convert(d_socket, newValue);
+            d_socket.read(reinterpret_cast<char *>(&newValue), sizeof(newValue));
             emit windStrengthChanged(newValue);
             break;
         }
@@ -868,7 +869,7 @@ bool NetworkClient::readPfdData()
             }
 
             d_socket.commitTransaction();
-            Converters::convert(d_socket, newValue);
+            d_socket.read(reinterpret_cast<char *>(&newValue), sizeof(newValue));
             emit windTrueDirectionChanged(newValue);
             break;
         }
@@ -885,7 +886,7 @@ bool NetworkClient::readPfdData()
             }
 
             d_socket.commitTransaction();
-            Converters::convert(d_socket, newValue);
+            d_socket.read(reinterpret_cast<char *>(&newValue), sizeof(newValue));
             emit apAvailableChanged(newValue);
             break;
         }
@@ -897,7 +898,7 @@ bool NetworkClient::readPfdData()
                 d_socket.rollbackTransaction();
                 return false;
             }
-            Converters::convert(d_socket, size);
+            d_socket.read(reinterpret_cast<char *>(&size), sizeof(size));
 
             if (d_socket.bytesAvailable() < static_cast<int64_t>(size))
             {
@@ -907,7 +908,7 @@ bool NetworkClient::readPfdData()
 
             d_socket.commitTransaction();
 
-            emit apLateralActiveChanged(size == 0 ? "" : Converters::convertString(d_socket, size));
+            emit apLateralActiveChanged(size == 0 ? "" : QString::fromUtf8(d_socket.read(size)));
 
             break;
         }
@@ -919,7 +920,7 @@ bool NetworkClient::readPfdData()
                 d_socket.rollbackTransaction();
                 return false;
             }
-            Converters::convert(d_socket, size);
+            d_socket.read(reinterpret_cast<char *>(&size), sizeof(size));
 
             if (d_socket.bytesAvailable() < static_cast<int64_t>(size))
             {
@@ -929,7 +930,7 @@ bool NetworkClient::readPfdData()
 
             d_socket.commitTransaction();
 
-            emit apLateralArmedChanged(size == 0 ? "" : Converters::convertString(d_socket, size));
+            emit apLateralArmedChanged(size == 0 ? "" : QString::fromUtf8(d_socket.read(size)));
 
             break;
         }
@@ -944,7 +945,7 @@ bool NetworkClient::readPfdData()
             }
 
             d_socket.commitTransaction();
-            Converters::convert(d_socket, newValue);
+            d_socket.read(reinterpret_cast<char *>(&newValue), sizeof(newValue));
             emit apStatusChanged(newValue);
             break;
         }
@@ -959,7 +960,7 @@ bool NetworkClient::readPfdData()
             }
 
             d_socket.commitTransaction();
-            Converters::convert(d_socket, newValue);
+            d_socket.read(reinterpret_cast<char *>(&newValue), sizeof(newValue));
             emit apYdStatusChanged(newValue);
             break;
         }
@@ -974,7 +975,7 @@ bool NetworkClient::readPfdData()
             }
 
             d_socket.commitTransaction();
-            Converters::convert(d_socket, newValue);
+            d_socket.read(reinterpret_cast<char *>(&newValue), sizeof(newValue));
             emit apFdStatusChanged(newValue);
             break;
         }
@@ -989,7 +990,7 @@ bool NetworkClient::readPfdData()
             }
 
             d_socket.commitTransaction();
-            Converters::convert(d_socket, newValue);
+            d_socket.read(reinterpret_cast<char *>(&newValue), sizeof(newValue));
             emit apFlcChanged(newValue);
             break;
         }
@@ -1001,7 +1002,7 @@ bool NetworkClient::readPfdData()
                 d_socket.rollbackTransaction();
                 return false;
             }
-            Converters::convert(d_socket, size);
+            d_socket.read(reinterpret_cast<char *>(&size), sizeof(size));
 
             if (d_socket.bytesAvailable() < static_cast<int64_t>(size))
             {
@@ -1011,7 +1012,7 @@ bool NetworkClient::readPfdData()
 
             d_socket.commitTransaction();
 
-            emit apVerticalActiveChanged(size == 0 ? "" : Converters::convertString(d_socket, size));
+            emit apVerticalActiveChanged(size == 0 ? "" : QString::fromUtf8(d_socket.read(size)));
 
             break;
         }
@@ -1023,7 +1024,7 @@ bool NetworkClient::readPfdData()
                 d_socket.rollbackTransaction();
                 return false;
             }
-            Converters::convert(d_socket, size);
+            d_socket.read(reinterpret_cast<char *>(&size), sizeof(size));
 
             if (d_socket.bytesAvailable() < static_cast<int64_t>(size))
             {
@@ -1033,7 +1034,7 @@ bool NetworkClient::readPfdData()
 
             d_socket.commitTransaction();
 
-            emit apModeReferenceChanged(size == 0 ? "" : Converters::convertString(d_socket, size));
+            emit apModeReferenceChanged(size == 0 ? "" : QString::fromUtf8(d_socket.read(size)));
 
             break;
         }
@@ -1045,7 +1046,7 @@ bool NetworkClient::readPfdData()
                 d_socket.rollbackTransaction();
                 return false;
             }
-            Converters::convert(d_socket, size);
+            d_socket.read(reinterpret_cast<char *>(&size), sizeof(size));
 
             if (d_socket.bytesAvailable() < static_cast<int64_t>(size))
             {
@@ -1055,7 +1056,7 @@ bool NetworkClient::readPfdData()
 
             d_socket.commitTransaction();
 
-            emit apArmedChanged(size == 0 ? "" : Converters::convertString(d_socket, size));
+            emit apArmedChanged(size == 0 ? "" : QString::fromUtf8(d_socket.read(size)));
 
             break;
         }
@@ -1067,7 +1068,7 @@ bool NetworkClient::readPfdData()
                 d_socket.rollbackTransaction();
                 return false;
             }
-            Converters::convert(d_socket, size);
+            d_socket.read(reinterpret_cast<char *>(&size), sizeof(size));
 
             if (d_socket.bytesAvailable() < static_cast<int64_t>(size))
             {
@@ -1077,7 +1078,7 @@ bool NetworkClient::readPfdData()
 
             d_socket.commitTransaction();
 
-            emit apArmedReferenceChanged(size == 0 ? "" : Converters::convertString(d_socket, size));
+            emit apArmedReferenceChanged(size == 0 ? "" : QString::fromUtf8(d_socket.read(size)));
 
             break;
         }

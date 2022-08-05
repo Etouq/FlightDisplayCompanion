@@ -1,6 +1,5 @@
 #include "NetworkClient.hpp"
 #include "common/dataIdentifiers.hpp"
-#include "common/converters/basicConverters.hpp"
 #include "common/definitions/AircraftDefinition/AircraftDefinition.hpp"
 
 #include <QGeoCoordinate>
@@ -10,17 +9,17 @@ namespace io::network
 
 bool NetworkClient::readServerData()
 {
-    ServerMessageIdentifier id = ServerMessageIdentifier::QUIT;
+    ServerMessageIdentifier id = ServerMessageIdentifier::SERVER_CLOSING;
     d_socket.read(reinterpret_cast<char *>(&id), sizeof(id));
 
 
     switch (id)
     {
-        case ServerMessageIdentifier::QUIT:
+        case ServerMessageIdentifier::SERVER_CLOSING:
         {
             d_socket.commitTransaction();
-            emit newErrorMessage("Sim closed");
             d_socket.disconnectFromHost();
+            emit newErrorMessage("Server closed");
             break;
         }
         case ServerMessageIdentifier::LOAD_AIRCRAFT:
@@ -32,7 +31,7 @@ bool NetworkClient::readServerData()
                 return false;
             }
 
-            Converters::convert(d_socket, dataSize);
+            d_socket.read(reinterpret_cast<char *>(&dataSize), sizeof(dataSize));
 
             if (static_cast<uint64_t>(d_socket.bytesAvailable()) < dataSize)
             {
@@ -50,31 +49,26 @@ bool NetworkClient::readServerData()
         case ServerMessageIdentifier::SIM_START_EVENT:
         {
             d_socket.commitTransaction();
-            emit simStartReceived();
+            d_simRunning = true;
+            emit simRunningChanged();
             break;
         }
         case ServerMessageIdentifier::SIM_STOP_EVENT:
         {
             d_socket.commitTransaction();
-            emit simStopReceived();
-            break;
-        }
-        case ServerMessageIdentifier::SIM_STARTUP_FAILED:
-        {
-            d_socket.commitTransaction();
-            emit newErrorMessage("Could not connect to sim");
-            emit simStartupFailed();
+            d_simRunning = false;
+            emit simRunningChanged();
             break;
         }
         case ServerMessageIdentifier::ERROR_MSG:
         {
-            uint8_t size = 0;
+            uint64_t size = 0;
             if (static_cast<uint64_t>(d_socket.bytesAvailable()) < sizeof(size))
             {
                 d_socket.rollbackTransaction();
                 return false;
             }
-            Converters::convert(d_socket, size);
+            d_socket.read(reinterpret_cast<char *>(&size), sizeof(size));
 
             if (d_socket.bytesAvailable() < static_cast<int64_t>(size))
             {
@@ -86,7 +80,7 @@ bool NetworkClient::readServerData()
 
             if (size > 0) [[likely]]
             {
-                emit newErrorMessage(Converters::convertString(d_socket, size));
+                emit newErrorMessage(QString::fromUtf8(d_socket.read(size)));
             }
 
             break;

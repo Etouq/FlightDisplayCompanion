@@ -1,69 +1,86 @@
 #include "AircraftDefinition.hpp"
-#include "common/converters/listConverters.hpp"
+#include <QIODevice>
 
 namespace definitions
 {
 
-AircraftDefinition AircraftDefinition::fromBinary(QIODevice &stream)
+AircraftDefinition AircraftDefinition::fromBinary(QIODevice &data)
 {
     AircraftDefinition ret;
 
-    Converters::convert(stream, ret.type);
+    data.read(reinterpret_cast<char *>(&ret.type), sizeof(ret.type));
 
-    Converters::convertString(stream, ret.name);
+    uint8_t stringSize = 0;
+    data.read(reinterpret_cast<char *>(&stringSize), sizeof(stringSize));
 
-    ret.firstGauge = GaugeDefinition::fromBinary(stream);
-    ret.secondGauge = GaugeDefinition::fromBinary(stream);
-    ret.thirdGauge = GaugeDefinition::fromBinary(stream);
-    ret.fourthGauge = GaugeDefinition::fromBinary(stream);
+    ret.name = QString::fromUtf8(data.read(stringSize));
 
-    ret.fuelQtyGauge = GaugeDefinition::fromBinary(stream);
-    ret.fuelFlowGauge = GaugeDefinition::fromBinary(stream);
-    ret.oilTempGauge = GaugeDefinition::fromBinary(stream);
-    ret.secondaryTempGauge = GaugeDefinition::fromBinary(stream);
-    ret.oilPressGauge = GaugeDefinition::fromBinary(stream);
 
-    Converters::convert(stream, ret.gauge1Type);
-    Converters::convert(stream, ret.gauge2Type);
-    Converters::convert(stream, ret.gauge3Type);
-    Converters::convert(stream, ret.gauge4Type);
+    ret.firstGauge = GaugeDefinition::fromBinary(data);
+    ret.secondGauge = GaugeDefinition::fromBinary(data);
+    ret.thirdGauge = GaugeDefinition::fromBinary(data);
+    ret.fourthGauge = GaugeDefinition::fromBinary(data);
 
-    Converters::convert(stream, ret.engineTempType);
+    ret.fuelQtyGauge = GaugeDefinition::fromBinary(data);
+    ret.fuelFlowGauge = GaugeDefinition::fromBinary(data);
+    ret.oilTempGauge = GaugeDefinition::fromBinary(data);
+    ret.secondaryTempGauge = GaugeDefinition::fromBinary(data);
+    ret.oilPressGauge = GaugeDefinition::fromBinary(data);
 
-    Converters::convert(stream, ret.maxPower);
+    data.read(reinterpret_cast<char *>(&ret.gauge1Type), sizeof(ret.gauge1Type));
+    data.read(reinterpret_cast<char *>(&ret.gauge2Type), sizeof(ret.gauge2Type));
+    data.read(reinterpret_cast<char *>(&ret.gauge3Type), sizeof(ret.gauge3Type));
+    data.read(reinterpret_cast<char *>(&ret.gauge4Type), sizeof(ret.gauge4Type));
 
-    Converters::convert(stream, ret.hasApu);
+    data.read(reinterpret_cast<char *>(&ret.engineTempType), sizeof(ret.engineTempType));
 
-    Converters::convert(stream, ret.hasFlaps);
-    Converters::convert(stream, ret.hasSpoilers);
+    data.read(reinterpret_cast<char *>(&ret.maxPower), sizeof(ret.maxPower));
 
-    Converters::convert(stream, ret.hasElevatorTrim);
-    Converters::convert(stream, ret.hasRudderTrim);
-    Converters::convert(stream, ret.hasAileronTrim);
+    data.read(reinterpret_cast<char *>(&ret.hasApu), sizeof(ret.hasApu));
 
-    Converters::convert(stream, ret.fuelQtyByWeight);
-    Converters::convert(stream, ret.fuelFlowByWeight);
+    data.read(reinterpret_cast<char *>(&ret.hasFlaps), sizeof(ret.hasFlaps));
+    data.read(reinterpret_cast<char *>(&ret.hasSpoilers), sizeof(ret.hasSpoilers));
 
-    Converters::convert(stream, ret.hasSecondaryTempGauge);
-    Converters::convert(stream, ret.secondaryTempType);
+    data.read(reinterpret_cast<char *>(&ret.hasElevatorTrim), sizeof(ret.hasElevatorTrim));
+    data.read(reinterpret_cast<char *>(&ret.hasRudderTrim), sizeof(ret.hasRudderTrim));
+    data.read(reinterpret_cast<char *>(&ret.hasAileronTrim), sizeof(ret.hasAileronTrim));
 
-    Converters::convert(stream, ret.numEngines);
-    Converters::convert(stream, ret.singleTank);
+    data.read(reinterpret_cast<char *>(&ret.fuelQtyByWeight), sizeof(ret.fuelQtyByWeight));
+    data.read(reinterpret_cast<char *>(&ret.fuelFlowByWeight), sizeof(ret.fuelFlowByWeight));
 
-    Converters::convert(stream, ret.lowLimit);
-    Converters::convert(stream, ret.flapsBegin);
-    Converters::convert(stream, ret.flapsEnd);
-    Converters::convert(stream, ret.greenBegin);
-    Converters::convert(stream, ret.greenEnd);
-    Converters::convert(stream, ret.yellowBegin);
-    Converters::convert(stream, ret.yellowEnd);
-    Converters::convert(stream, ret.redBegin);
-    Converters::convert(stream, ret.redEnd);
-    Converters::convert(stream, ret.highLimit);
-    Converters::convert(stream, ret.noColors);
-    Converters::convert(stream, ret.dynamicBarberpole);
+    data.read(reinterpret_cast<char *>(&ret.hasSecondaryTempGauge), sizeof(ret.hasSecondaryTempGauge));
+    data.read(reinterpret_cast<char *>(&ret.secondaryTempType), sizeof(ret.secondaryTempType));
 
-    Converters::convert(stream, ret.refSpeedDefaults);
+    data.read(reinterpret_cast<char *>(&ret.numEngines), sizeof(ret.numEngines));
+    data.read(reinterpret_cast<char *>(&ret.singleTank), sizeof(ret.singleTank));
+
+    data.read(reinterpret_cast<char *>(&ret.lowLimit), sizeof(ret.lowLimit));
+    data.read(reinterpret_cast<char *>(&ret.flapsBegin), sizeof(ret.flapsBegin));
+    data.read(reinterpret_cast<char *>(&ret.flapsEnd), sizeof(ret.flapsEnd));
+    data.read(reinterpret_cast<char *>(&ret.greenBegin), sizeof(ret.greenBegin));
+    data.read(reinterpret_cast<char *>(&ret.greenEnd), sizeof(ret.greenEnd));
+    data.read(reinterpret_cast<char *>(&ret.yellowBegin), sizeof(ret.yellowBegin));
+    data.read(reinterpret_cast<char *>(&ret.yellowEnd), sizeof(ret.yellowEnd));
+    data.read(reinterpret_cast<char *>(&ret.redBegin), sizeof(ret.redBegin));
+    data.read(reinterpret_cast<char *>(&ret.redEnd), sizeof(ret.redEnd));
+    data.read(reinterpret_cast<char *>(&ret.highLimit), sizeof(ret.highLimit));
+    data.read(reinterpret_cast<char *>(&ret.noColors), sizeof(ret.noColors));
+    data.read(reinterpret_cast<char *>(&ret.dynamicBarberpole), sizeof(ret.dynamicBarberpole));
+
+    uint16_t listSize = 0;
+    data.read(reinterpret_cast<char *>(&listSize), sizeof(listSize));
+
+    ret.refSpeedDefaults.clear();
+
+    uint16_t bugSetting = 0;
+
+    while (listSize--)
+    {
+        data.read(reinterpret_cast<char *>(&bugSetting), sizeof(bugSetting));
+        data.read(reinterpret_cast<char *>(&stringSize), sizeof(stringSize));
+        ret.refSpeedDefaults.push_back({ bugSetting, QString::fromUtf8(data.read(stringSize)) });
+    }
+
 
     return ret;
 }

@@ -1,6 +1,5 @@
 #include "NetworkClient.hpp"
 #include "common/dataIdentifiers.hpp"
-#include "common/converters/basicConverters.hpp"
 
 namespace io::network
 {
@@ -24,7 +23,7 @@ bool NetworkClient::readTscData()
             }
 
             d_socket.commitTransaction();
-            Converters::convert(d_socket, newValue);
+            d_socket.read(reinterpret_cast<char *>(&newValue), sizeof(newValue));
             emit com1AvailChanged(newValue);
             break;
         }
@@ -39,7 +38,7 @@ bool NetworkClient::readTscData()
             }
 
             d_socket.commitTransaction();
-            Converters::convert(d_socket, newValue);
+            d_socket.read(reinterpret_cast<char *>(&newValue), sizeof(newValue));
             emit com1FreqChanged(newValue);
             break;
         }
@@ -54,7 +53,7 @@ bool NetworkClient::readTscData()
             }
 
             d_socket.commitTransaction();
-            Converters::convert(d_socket, newValue);
+            d_socket.read(reinterpret_cast<char *>(&newValue), sizeof(newValue));
             emit com1StbyFreqChanged(newValue);
             break;
         }
@@ -69,7 +68,7 @@ bool NetworkClient::readTscData()
             }
 
             d_socket.commitTransaction();
-            Converters::convert(d_socket, newValue);
+            d_socket.read(reinterpret_cast<char *>(&newValue), sizeof(newValue));
             emit com2AvailChanged(newValue);
             break;
         }
@@ -84,7 +83,7 @@ bool NetworkClient::readTscData()
             }
 
             d_socket.commitTransaction();
-            Converters::convert(d_socket, newValue);
+            d_socket.read(reinterpret_cast<char *>(&newValue), sizeof(newValue));
             emit com2FreqChanged(newValue);
             break;
         }
@@ -99,7 +98,7 @@ bool NetworkClient::readTscData()
             }
 
             d_socket.commitTransaction();
-            Converters::convert(d_socket, newValue);
+            d_socket.read(reinterpret_cast<char *>(&newValue), sizeof(newValue));
             emit com2StbyFreqChanged(newValue);
             break;
         }
@@ -114,7 +113,7 @@ bool NetworkClient::readTscData()
             }
 
             d_socket.commitTransaction();
-            Converters::convert(d_socket, newValue);
+            d_socket.read(reinterpret_cast<char *>(&newValue), sizeof(newValue));
             emit com3AvailChanged(newValue);
             break;
         }
@@ -129,7 +128,7 @@ bool NetworkClient::readTscData()
             }
 
             d_socket.commitTransaction();
-            Converters::convert(d_socket, newValue);
+            d_socket.read(reinterpret_cast<char *>(&newValue), sizeof(newValue));
             emit com3FreqChanged(newValue);
             break;
         }
@@ -144,7 +143,7 @@ bool NetworkClient::readTscData()
             }
 
             d_socket.commitTransaction();
-            Converters::convert(d_socket, newValue);
+            d_socket.read(reinterpret_cast<char *>(&newValue), sizeof(newValue));
             emit com3StbyFreqChanged(newValue);
             break;
         }
@@ -159,7 +158,7 @@ bool NetworkClient::readTscData()
             }
 
             d_socket.commitTransaction();
-            Converters::convert(d_socket, newValue);
+            d_socket.read(reinterpret_cast<char *>(&newValue), sizeof(newValue));
             emit nav1AvailChanged(newValue);
             break;
         }
@@ -174,7 +173,7 @@ bool NetworkClient::readTscData()
             }
 
             d_socket.commitTransaction();
-            Converters::convert(d_socket, newValue);
+            d_socket.read(reinterpret_cast<char *>(&newValue), sizeof(newValue));
             emit nav1FreqChanged(newValue);
             break;
         }
@@ -189,7 +188,7 @@ bool NetworkClient::readTscData()
             }
 
             d_socket.commitTransaction();
-            Converters::convert(d_socket, newValue);
+            d_socket.read(reinterpret_cast<char *>(&newValue), sizeof(newValue));
             emit nav1StbyFreqChanged(newValue);
             break;
         }
@@ -204,7 +203,7 @@ bool NetworkClient::readTscData()
             }
 
             d_socket.commitTransaction();
-            Converters::convert(d_socket, newValue);
+            d_socket.read(reinterpret_cast<char *>(&newValue), sizeof(newValue));
             emit nav2AvailChanged(newValue);
             break;
         }
@@ -219,7 +218,7 @@ bool NetworkClient::readTscData()
             }
 
             d_socket.commitTransaction();
-            Converters::convert(d_socket, newValue);
+            d_socket.read(reinterpret_cast<char *>(&newValue), sizeof(newValue));
             emit nav2FreqChanged(newValue);
             break;
         }
@@ -234,7 +233,7 @@ bool NetworkClient::readTscData()
             }
 
             d_socket.commitTransaction();
-            Converters::convert(d_socket, newValue);
+            d_socket.read(reinterpret_cast<char *>(&newValue), sizeof(newValue));
             emit nav2StbyFreqChanged(newValue);
             break;
         }
@@ -249,7 +248,7 @@ bool NetworkClient::readTscData()
             }
 
             d_socket.commitTransaction();
-            Converters::convert(d_socket, newValue);
+            d_socket.read(reinterpret_cast<char *>(&newValue), sizeof(newValue));
             emit xpdrAvailChanged(newValue);
             break;
         }
@@ -264,7 +263,7 @@ bool NetworkClient::readTscData()
             }
 
             d_socket.commitTransaction();
-            Converters::convert(d_socket, newValue);
+            d_socket.read(reinterpret_cast<char *>(&newValue), sizeof(newValue));
             emit xpdrCodeChanged(newValue);
             break;
         }
@@ -279,7 +278,7 @@ bool NetworkClient::readTscData()
             }
 
             d_socket.commitTransaction();
-            Converters::convert(d_socket, newValue);
+            d_socket.read(reinterpret_cast<char *>(&newValue), sizeof(newValue));
             emit xpdrStateChanged(newValue);
             break;
         }

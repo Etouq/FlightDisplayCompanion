@@ -1,6 +1,5 @@
 #include "NetworkClient.hpp"
 #include "common/dataIdentifiers.hpp"
-#include "common/converters/listConverters.hpp"
 
 #include <QGeoCoordinate>
 
@@ -9,9 +8,9 @@ namespace io::network
 
 bool NetworkClient::readMfdData()
 {
+    QByteArray allData = d_socket.peek(d_socket.bytesAvailable());
     MfdIdentifier id = MfdIdentifier::COORDINATES;
     d_socket.read(reinterpret_cast<char *>(&id), sizeof(id));
-
 
     switch (id)
     {
@@ -29,8 +28,8 @@ bool NetworkClient::readMfdData()
 
             d_socket.commitTransaction();
 
-            Converters::convert(d_socket, newLat);
-            Converters::convert(d_socket, newLon);
+            d_socket.read(reinterpret_cast<char *>(&newLat), sizeof(newLat));
+            d_socket.read(reinterpret_cast<char *>(&newLon), sizeof(newLon));
 
             emit coordinatesChanged(QGeoCoordinate(newLat, newLon));
             break;
@@ -45,7 +44,7 @@ bool NetworkClient::readMfdData()
             }
 
             d_socket.commitTransaction();
-            Converters::convert(d_socket, newValue);
+            d_socket.read(reinterpret_cast<char *>(&newValue), sizeof(newValue));
             emit trueHeadingChanged(newValue);
             break;
         }
@@ -59,15 +58,15 @@ bool NetworkClient::readMfdData()
         }
         case MfdIdentifier::FLIGHTPLAN_LIST:
         {
-            int64_t byteSize = 0;
-            if (static_cast<uint64_t>(d_socket.bytesAvailable()) < sizeof(byteSize))
+            uint64_t size = 0;
+            if (static_cast<uint64_t>(d_socket.bytesAvailable()) < sizeof(size))
             {
                 d_socket.rollbackTransaction();
                 return false;
             }
-            Converters::convert(d_socket, byteSize);
+            d_socket.read(reinterpret_cast<char *>(&size), sizeof(size));
 
-            if (d_socket.bytesAvailable() < byteSize)
+            if (d_socket.bytesAvailable() < size)
             {
                 d_socket.rollbackTransaction();
                 return false;
@@ -75,7 +74,32 @@ bool NetworkClient::readMfdData()
 
             d_socket.commitTransaction();
 
-            emit receivedFlightplan(Converters::convertList<pages::mfd::FlightPlanWaypoint>(d_socket));
+            d_socket.read(reinterpret_cast<char *>(&size), sizeof(size));
+            QList<pages::mfd::FlightPlanWaypoint> waypoints;
+            waypoints.reserve(size);
+
+            while (size--)
+            {
+                waypoints.append(pages::mfd::FlightPlanWaypoint::fromBinary(d_socket));
+            }
+
+            emit receivedFlightplan(waypoints);
+            break;
+        }
+        case MfdIdentifier::FLIGHTPLAN_LEG_IDX:
+        {
+            int32_t newIdx = 0;
+            if (static_cast<uint64_t>(d_socket.bytesAvailable()) < sizeof(newIdx))
+            {
+                d_socket.rollbackTransaction();
+                return false;
+            }
+
+            d_socket.commitTransaction();
+
+            d_socket.read(reinterpret_cast<char *>(&newIdx), sizeof(newIdx));
+
+            emit activeLegIdxChanged(newIdx);
             break;
         }
         case MfdIdentifier::GPS_WP_DTK:
@@ -88,7 +112,7 @@ bool NetworkClient::readMfdData()
             }
 
             d_socket.commitTransaction();
-            Converters::convert(d_socket, newValue);
+            d_socket.read(reinterpret_cast<char *>(&newValue), sizeof(newValue));
             emit gpsWpDtkChanged(newValue);
             break;
         }
@@ -102,7 +126,7 @@ bool NetworkClient::readMfdData()
             }
 
             d_socket.commitTransaction();
-            Converters::convert(d_socket, newValue);
+            d_socket.read(reinterpret_cast<char *>(&newValue), sizeof(newValue));
             emit gpsWpEteChanged(newValue);
             break;
         }
@@ -116,7 +140,7 @@ bool NetworkClient::readMfdData()
             }
 
             d_socket.commitTransaction();
-            Converters::convert(d_socket, newValue);
+            d_socket.read(reinterpret_cast<char *>(&newValue), sizeof(newValue));
             emit gpsDestEteChanged(newValue);
             break;
         }
@@ -132,7 +156,7 @@ bool NetworkClient::readMfdData()
             }
 
             d_socket.commitTransaction();
-            Converters::convert(d_socket, newValue);
+            d_socket.read(reinterpret_cast<char *>(&newValue), sizeof(newValue));
             emit fuelLeftQtyChanged(newValue);
             break;
         }
@@ -146,7 +170,7 @@ bool NetworkClient::readMfdData()
             }
 
             d_socket.commitTransaction();
-            Converters::convert(d_socket, newValue);
+            d_socket.read(reinterpret_cast<char *>(&newValue), sizeof(newValue));
             emit fuelRightQtyChanged(newValue);
             break;
         }
@@ -164,8 +188,8 @@ bool NetworkClient::readMfdData()
             }
 
             d_socket.commitTransaction();
-            Converters::convert(d_socket, engineIdx);
-            Converters::convert(d_socket, newValue);
+            d_socket.read(reinterpret_cast<char *>(&engineIdx), sizeof(engineIdx));
+            d_socket.read(reinterpret_cast<char *>(&newValue), sizeof(newValue));
             emit engineGauge1Changed(newValue, engineIdx);
             break;
         }
@@ -181,8 +205,8 @@ bool NetworkClient::readMfdData()
             }
 
             d_socket.commitTransaction();
-            Converters::convert(d_socket, engineIdx);
-            Converters::convert(d_socket, newValue);
+            d_socket.read(reinterpret_cast<char *>(&engineIdx), sizeof(engineIdx));
+            d_socket.read(reinterpret_cast<char *>(&newValue), sizeof(newValue));
             emit engineGauge2Changed(newValue, engineIdx);
             break;
         }
@@ -198,8 +222,8 @@ bool NetworkClient::readMfdData()
             }
 
             d_socket.commitTransaction();
-            Converters::convert(d_socket, engineIdx);
-            Converters::convert(d_socket, newValue);
+            d_socket.read(reinterpret_cast<char *>(&engineIdx), sizeof(engineIdx));
+            d_socket.read(reinterpret_cast<char *>(&newValue), sizeof(newValue));
             emit engineGauge3Changed(newValue, engineIdx);
             break;
         }
@@ -215,8 +239,8 @@ bool NetworkClient::readMfdData()
             }
 
             d_socket.commitTransaction();
-            Converters::convert(d_socket, engineIdx);
-            Converters::convert(d_socket, newValue);
+            d_socket.read(reinterpret_cast<char *>(&engineIdx), sizeof(engineIdx));
+            d_socket.read(reinterpret_cast<char *>(&newValue), sizeof(newValue));
             emit engineGauge4Changed(newValue, engineIdx);
             break;
         }
@@ -232,8 +256,8 @@ bool NetworkClient::readMfdData()
             }
 
             d_socket.commitTransaction();
-            Converters::convert(d_socket, engineIdx);
-            Converters::convert(d_socket, newValue);
+            d_socket.read(reinterpret_cast<char *>(&engineIdx), sizeof(engineIdx));
+            d_socket.read(reinterpret_cast<char *>(&newValue), sizeof(newValue));
             emit engineFuelFlowChanged(newValue, engineIdx);
             break;
         }
@@ -249,8 +273,8 @@ bool NetworkClient::readMfdData()
             }
 
             d_socket.commitTransaction();
-            Converters::convert(d_socket, engineIdx);
-            Converters::convert(d_socket, newValue);
+            d_socket.read(reinterpret_cast<char *>(&engineIdx), sizeof(engineIdx));
+            d_socket.read(reinterpret_cast<char *>(&newValue), sizeof(newValue));
             emit engineOilTempChanged(newValue, engineIdx);
             break;
         }
@@ -266,8 +290,8 @@ bool NetworkClient::readMfdData()
             }
 
             d_socket.commitTransaction();
-            Converters::convert(d_socket, engineIdx);
-            Converters::convert(d_socket, newValue);
+            d_socket.read(reinterpret_cast<char *>(&engineIdx), sizeof(engineIdx));
+            d_socket.read(reinterpret_cast<char *>(&newValue), sizeof(newValue));
             emit engineSecondaryTempChanged(newValue, engineIdx);
             break;
         }
@@ -283,8 +307,8 @@ bool NetworkClient::readMfdData()
             }
 
             d_socket.commitTransaction();
-            Converters::convert(d_socket, engineIdx);
-            Converters::convert(d_socket, newValue);
+            d_socket.read(reinterpret_cast<char *>(&engineIdx), sizeof(engineIdx));
+            d_socket.read(reinterpret_cast<char *>(&newValue), sizeof(newValue));
             emit engineOilPressChanged(newValue, engineIdx);
             break;
         }
@@ -301,7 +325,7 @@ bool NetworkClient::readMfdData()
             }
 
             d_socket.commitTransaction();
-            Converters::convert(d_socket, newValue);
+            d_socket.read(reinterpret_cast<char *>(&newValue), sizeof(newValue));
             emit apuN1Changed(newValue);
             break;
         }
@@ -319,9 +343,9 @@ bool NetworkClient::readMfdData()
             }
 
             d_socket.commitTransaction();
-            Converters::convert(d_socket, totalFuelQty);
-            Converters::convert(d_socket, totalFuelFlow);
-            Converters::convert(d_socket, groundSpeed);
+            d_socket.read(reinterpret_cast<char *>(&totalFuelQty), sizeof(totalFuelQty));
+            d_socket.read(reinterpret_cast<char *>(&totalFuelFlow), sizeof(totalFuelFlow));
+            d_socket.read(reinterpret_cast<char *>(&groundSpeed), sizeof(groundSpeed));
             emit fuelTextDataChanged(totalFuelQty, totalFuelFlow, groundSpeed);
             break;
         }
@@ -336,7 +360,7 @@ bool NetworkClient::readMfdData()
             }
 
             d_socket.commitTransaction();
-            Converters::convert(d_socket, newValue);
+            d_socket.read(reinterpret_cast<char *>(&newValue), sizeof(newValue));
             emit flapsAngleChanged(newValue);
             break;
         }
@@ -351,14 +375,14 @@ bool NetworkClient::readMfdData()
             }
 
             d_socket.commitTransaction();
-            Converters::convert(d_socket, newValue);
+            d_socket.read(reinterpret_cast<char *>(&newValue), sizeof(newValue));
             emit spoilersPctChanged(newValue);
             break;
         }
         case MfdIdentifier::ELEV_TRIM_POSITION:
         {
             double newPct = 0;
-            int8_t newAngle = 0;
+            int32_t newAngle = 0;
 
             if (static_cast<uint64_t>(d_socket.bytesAvailable()) < sizeof(newPct) + sizeof(newAngle))
             {
@@ -367,15 +391,15 @@ bool NetworkClient::readMfdData()
             }
 
             d_socket.commitTransaction();
-            Converters::convert(d_socket, newPct);
-            Converters::convert(d_socket, newAngle);
+            d_socket.read(reinterpret_cast<char *>(&newPct), sizeof(newPct));
+            d_socket.read(reinterpret_cast<char *>(&newAngle), sizeof(newAngle));
             emit elevTrimChanged(newPct, newAngle);
             break;
         }
         case MfdIdentifier::RUDD_TRIM_POSITION:
         {
             double newPct = 0;
-            int8_t newAngle = 0;
+            int32_t newAngle = 0;
 
             if (static_cast<uint64_t>(d_socket.bytesAvailable()) < sizeof(newPct) + sizeof(newAngle))
             {
@@ -384,15 +408,15 @@ bool NetworkClient::readMfdData()
             }
 
             d_socket.commitTransaction();
-            Converters::convert(d_socket, newPct);
-            Converters::convert(d_socket, newAngle);
+            d_socket.read(reinterpret_cast<char *>(&newPct), sizeof(newPct));
+            d_socket.read(reinterpret_cast<char *>(&newAngle), sizeof(newAngle));
             emit ruddTrimChanged(newPct, newAngle);
             break;
         }
         case MfdIdentifier::AIL_TRIM_POSITION:
         {
             double newPct = 0;
-            int8_t newAngle = 0;
+            int32_t newAngle = 0;
 
             if (static_cast<uint64_t>(d_socket.bytesAvailable()) < sizeof(newPct) + sizeof(newAngle))
             {
@@ -401,8 +425,8 @@ bool NetworkClient::readMfdData()
             }
 
             d_socket.commitTransaction();
-            Converters::convert(d_socket, newPct);
-            Converters::convert(d_socket, newAngle);
+            d_socket.read(reinterpret_cast<char *>(&newPct), sizeof(newPct));
+            d_socket.read(reinterpret_cast<char *>(&newAngle), sizeof(newAngle));
             emit ailTrimChanged(newPct, newAngle);
             break;
         }
