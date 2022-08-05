@@ -2,7 +2,6 @@ set(CPP_FILES
         src/main.cpp
         src/keepScreenOn.cpp
         src/registerQmlEnums.cpp
-        src/createTestDefinition.cpp
 
         src/AircraftLoader/AircraftLoader.cpp
         src/AircraftLoader/loadAircraft.cpp
@@ -23,10 +22,8 @@ set(CPP_FILES
 
         src/pages/MfdPage/MfdPage.cpp
         src/pages/MfdPage/loadAircraft.cpp
-        src/pages/MfdPage/FlightPlan/appendWp.cpp
-        src/pages/MfdPage/FlightPlan/editWp.cpp
         src/pages/MfdPage/FlightPlan/FlightPlan.cpp
-        src/pages/MfdPage/FlightPlan/insertWp.cpp
+        src/pages/MfdPage/FlightPlan/WaypointModel/data.cpp
         src/pages/MfdPage/FlightPlan/updateDestEte.cpp
         src/pages/MfdPage/FlightPlan/updateWpEte.cpp
         src/pages/MfdPage/FlightPlan/updateZuluTime.cpp
@@ -83,9 +80,6 @@ set(CPP_FILES
         src/pages/TscPage/NavCom/setNav2Freq.cpp
         src/pages/TscPage/NavCom/setXpdrCode.cpp
         src/pages/TscPage/NavCom/setXpdrState.cpp
-
-#        src/settings/settingscontroller.cpp
-#        src/settings/settingsinterface.cpp
 )
 
 set(HPP_FILES
@@ -94,17 +88,12 @@ set(HPP_FILES
         src/AircraftLoader/AircraftLoader.hpp
 
         src/common/AircraftConfig.hpp
-        src/common/converters.hpp
         src/common/dataIdentifiers.hpp
         src/common/QmlEnums.hpp
         src/common/typeEnums.hpp
         src/common/Units.hpp
 
         src/common/UnitConverter/UnitConverter.hpp
-
-        src/common/converters/basicConverters.hpp
-        src/common/converters/listConverters.hpp
-        src/common/converters/structConverters.hpp
 
         src/common/definitions/baseTypes.hpp
         src/common/definitions/AircraftDefinition/AircraftDefinition.hpp
@@ -115,6 +104,7 @@ set(HPP_FILES
         src/pages/MfdPage/MfdPage.hpp
         src/pages/MfdPage/FlightPlan/FlightPlan.hpp
         src/pages/MfdPage/FlightPlan/FlightPlanWaypoint.hpp
+        src/pages/MfdPage/FlightPlan/WaypointModel/WaypointModel.hpp
         src/pages/MfdPage/GaugeElement/GaugeElement.hpp
         src/pages/MfdPage/GaugeElement/GaugeEngine/GaugeEngine.hpp
         src/pages/MfdPage/GeoMapPage/GeoMapPage.hpp
@@ -134,15 +124,10 @@ set(HPP_FILES
         src/pages/PfdPage/WindInfo/WindInfo.hpp
 
         src/pages/TscPage/TscPage.hpp
-        src/pages/TscPage/AircraftSelector/AircraftSelector.hpp
-        src/pages/TscPage/AircraftSelector/ThumbnailProvider/ThumbnailProvider.hpp
         src/pages/TscPage/FlightTmr/FlightTmr.hpp
         src/pages/TscPage/GeneralSettings/GeneralSettings.hpp
         src/pages/TscPage/NavCom/NavCom.hpp
         src/pages/TscPage/SpeedBugs/SpeedBugs.hpp
         src/pages/TscPage/SpeedBugs/SpeedBugEntry.hpp
-
-#        src/settings/settingscontroller.hpp
-#        src/settings/settingsinterface.hpp
 )
 

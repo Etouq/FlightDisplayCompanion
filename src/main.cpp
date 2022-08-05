@@ -16,6 +16,7 @@
 int main(int argc, char *argv[])
 {
     //QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+    qSetMessagePattern("[%{time HH:mm:ss.zzz} %{type}] %{if-category}%{category}: %{endif}- %{message}");
     // initialize application
     QGuiApplication app(argc, argv);
     QGuiApplication::setOrganizationName("nl.Etouq");
@@ -25,7 +26,7 @@ int main(int argc, char *argv[])
     QLocale::setDefault(QLocale::c());
 
     // add roboto font
-    QFontDatabase::addApplicationFont("qrc:/fonts/RobotoMono-VariableFont_wght.ttf");
+    QFontDatabase::addApplicationFont(":/fonts/RobotoMono-Bold.ttf");
 
     QSurfaceFormat format;
     format.setSamples(8);
@@ -47,25 +48,22 @@ int main(int argc, char *argv[])
 
    AircraftLoader aircraftLoader(mfdPage, pfdPage, tscPage);
 
-//    QObject::connect(&aircraftLoader,
-//                     &AircraftLoader::aircraftLoaded,
-//                     &networkClient,
-//                     &io::network::NetworkClient::loadAircraft);
+   QObject::connect(&networkClient,
+                    &io::network::NetworkClient::loadAircraft,
+                    &aircraftLoader,
+                    &AircraftLoader::loadAircraft);
+   QObject::connect(&aircraftLoader,
+                    &AircraftLoader::aircraftLoaded,
+                    &networkClient,
+                    &io::network::NetworkClient::aircraftLoaded);
 
     qmlRegisterSingletonInstance("Mfd", 1, 0, "MfdRoot", &mfdPage);
     // add networkclient to qml as singleton
     qmlRegisterSingletonInstance("IO.Network", 1, 0, "NetworkClient", &networkClient);
 
-    definitions::AircraftDefinition def = createTestDefinition();
-
-    QTimer::singleShot(2000, [&aircraftLoader, &def] () {
-        aircraftLoader.loadAircraft(def);
-    });
-
     QQmlApplicationEngine engine;
 
     engine.load("qrc:/main.qml");
-    //engine.load("qrc:/testFile.qml");
 
     return app.exec();
 }

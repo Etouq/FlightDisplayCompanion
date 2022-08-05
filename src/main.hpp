@@ -7,11 +7,5 @@ void keepScreenOn(bool on);
 
 void registerQmlEnums();
 
-namespace definitions
-{
-    class AircraftDefinition;
-}
-
-definitions::AircraftDefinition createTestDefinition();
 
 #endif  // __FLIGHT_DISPLAY_COMPANION_HPP__

@@ -4,7 +4,6 @@
 #include "FlightTmr/FlightTmr.hpp"
 #include "NavCom/NavCom.hpp"
 #include "SpeedBugs/SpeedBugs.hpp"
-#include "AircraftSelector/AircraftSelector.hpp"
 #include "io/NetworkClient/NetworkClient.hpp"
 #include "GeneralSettings/GeneralSettings.hpp"
 
@@ -25,17 +24,12 @@ public:
 
     void loadAircraft(const definitions::AircraftDefinition &aircraft);
 
-    AircraftSelector *getSelector()
-    {
-        return &d_aircraftSelector;
-    }
 
 private:
 
     FlightTmr d_flightTmr;
     NavCom d_navCom;
     SpeedBugs d_speedBugs;
-    AircraftSelector d_aircraftSelector;
     GeneralSettings d_generalSettings;
 };
 
