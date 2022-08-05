@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QString>
+#include <QSettings>
 
 namespace pages::mfd
 {
@@ -35,7 +36,12 @@ public:
 
     explicit MiscEngineDataElement(QObject *parent = nullptr)
       : QObject(parent)
-    {}
+    {
+        QSettings settings;
+
+        if (settings.contains("trimUseDegrees"))
+            d_trimUseDegrees = settings.value("trimUseDegrees").toBool();
+    }
 
     void setParameters(bool hasApu,
                        bool hasSecondaryTempGauge,
@@ -63,6 +69,35 @@ public:
         d_fuelRangeText = QLatin1String("__._NM");
         emit fuelRangeTextChanged();
         emit fuelRangeChanged();
+    }
+
+    Q_INVOKABLE void setTrimUseDegrees(bool degrees)
+    {
+        if (d_trimUseDegrees == degrees)
+            return;
+
+        QSettings settings;
+
+        settings.setValue("trimUseDegrees", d_trimUseDegrees);
+
+        d_trimUseDegrees = degrees;
+
+        if (d_trimUseDegrees)
+        {
+            d_elevTrimValue = QString::number(std::abs(d_elevTrimDegrees)) + "°";
+            d_rudderTrimValue = d_rudderTrimDegrees < 0 ? "" : " " + QString::number(std::abs(d_rudderTrimDegrees)) + "°";
+            d_aileronTrimValue = d_ailTrimDegrees < 0 ? "" : " " + QString::number(std::abs(d_ailTrimDegrees)) + "°";
+        }
+        else
+        {
+            d_elevTrimValue = QString::number(std::abs(d_elevTrimPct)) + "%";
+            d_rudderTrimValue = d_rudderTrimPct < 0 ? "" : " " + QString::number(std::abs(d_rudderTrimPct)) + "%";
+            d_aileronTrimValue = d_ailTrimPct < 0 ? "" : " " + QString::number(std::abs(d_ailTrimPct)) + "%";
+        }
+
+        emit elevTrimValueChanged();
+        emit rudderTrimValueChanged();
+        emit aileronTrimValueChanged();
     }
 
     // basic info
@@ -404,7 +439,7 @@ private:
     double d_smoothedSpeed = 0;
     double d_smoothedFF = 0;
 
-    bool d_trimUseDegrees = true;
+    bool d_trimUseDegrees = false;
 
     int d_elevTrimDegrees = 0;
     int d_elevTrimPct = 0;

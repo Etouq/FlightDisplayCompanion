@@ -42,7 +42,7 @@ public:
         {
             newDefaults.append(*entry);
         }
-        emit updateSpeedbugsDefaults(newDefaults);
+        emit updateDefaultSpeedBugs(newDefaults);
     }
 
     Q_INVOKABLE void restoreDefaults()
@@ -112,7 +112,7 @@ public:
 
     Q_INVOKABLE void newSpeedBug(const QString &designator)
     {
-        SpeedBugEntry *newBug = new SpeedBugEntry(designator);
+        SpeedBugEntry *newBug = new SpeedBugEntry(designator.toUpper());
         QQmlEngine::setObjectOwnership(newBug, QQmlEngine::CppOwnership);
 
         d_speedBugs.append(newBug);
@@ -135,6 +135,24 @@ public:
         delete speedBug;
     }
 
+    Q_INVOKABLE void setAllActiveState(bool active)
+    {
+        for (SpeedBugEntry *entry : d_speedBugs)
+        {
+            if (entry->active() != active)
+            {
+                entry->setActive(active);
+            }
+        }
+
+        if (active)
+            d_activeSpeedBugs = d_speedBugs;
+        else
+            d_activeSpeedBugs.clear();
+
+        emit numActiveSpeedbugsChanged();
+    }
+
     int numSpeedbugs() const
     {
         return d_speedBugs.size();
@@ -150,7 +168,7 @@ signals:
     void numSpeedbugsChanged();
     void numActiveSpeedbugsChanged();
 
-    void updateSpeedbugsDefaults(const QList<definitions::ReferenceSpeed> &newDefaults);
+    void updateDefaultSpeedBugs(const QList<definitions::ReferenceSpeed> &newDefaults);
 
 private:
 
@@ -175,7 +193,7 @@ private:
     }
 
     QList<SpeedBugEntry *> d_speedBugs;
-    QList<definitions::ReferenceSpeed> d_speedBugsDefaults = { { 85, "r" }, { 100, "x" }, { 124, "y" }, { 85, "ap" } };
+    QList<definitions::ReferenceSpeed> d_speedBugsDefaults = { { 85, "R" }, { 100, "X" }, { 124, "Y" }, { 85, "AP" } };
     QList<SpeedBugEntry *> d_activeSpeedBugs;
 };
 

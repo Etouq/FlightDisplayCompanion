@@ -28,6 +28,9 @@ NavCom::NavCom(io::network::NetworkClient *netClient, QObject *parent)
     connect(netClient, &NetworkClient::xpdrAvailChanged, this, &NavCom::updateXpdrAvail);
     connect(netClient, &NetworkClient::xpdrCodeChanged, this, &NavCom::updateXprdCode);
     connect(netClient, &NetworkClient::xpdrStateChanged, this, &NavCom::updateXpdrState);
+
+
+    connect(this, &NavCom::sendCommandsToSim, netClient, &NetworkClient::sendCommandString);
 }
 
 }  // namespace pages::tsc

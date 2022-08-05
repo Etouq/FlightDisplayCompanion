@@ -101,18 +101,27 @@ public slots:
     {
         d_com1Avail = newValue;
         emit com1AvailChanged();
+
+        if (newValue)
+            emit com1FreqChanged();
     }
 
     void updateCom2Avail(bool newValue)
     {
         d_com2Avail = newValue;
         emit com2AvailChanged();
+
+        if (newValue)
+            emit com2FreqChanged();
     }
 
     void updateCom3Avail(bool newValue)
     {
         d_com3Avail = newValue;
         emit com3AvailChanged();
+
+        if (newValue)
+            emit com3FreqChanged();
     }
 
     void updateCom1Freq(float newValue)
@@ -140,12 +149,18 @@ public slots:
     {
         d_nav1Avail = newValue;
         emit nav1AvailChanged();
+
+        if (newValue)
+            emit nav1FreqChanged();
     }
 
     void updateNav2Avail(bool newValue)
     {
         d_nav2Avail = newValue;
         emit nav2AvailChanged();
+
+        if (newValue)
+            emit nav2FreqChanged();
     }
 
     void updateNav1Freq(float newValue)

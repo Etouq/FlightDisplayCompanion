@@ -7,6 +7,7 @@
 
 #include <QByteArray>
 #include <QObject>
+#include <QDebug>
 
 namespace io::network
 {
@@ -209,24 +210,44 @@ public slots:
 
     void updateCom1Avail(bool newValue)
     {
+        qDebug() << "received com1 avail:" << newValue;
         d_com1Avail = newValue;
         emit com1AvailChanged();
+
+        if (newValue)
+        {
+            emit com1FreqChanged();
+            emit com1StbyFreqChanged();
+        }
     }
 
     void updateCom2Avail(bool newValue)
     {
         d_com2Avail = newValue;
         emit com2AvailChanged();
+
+        if (newValue)
+        {
+            emit com2FreqChanged();
+            emit com2StbyFreqChanged();
+        }
     }
 
     void updateCom3Avail(bool newValue)
     {
         d_com3Avail = newValue;
         emit com3AvailChanged();
+
+        if (newValue)
+        {
+            emit com3FreqChanged();
+            emit com3StbyFreqChanged();
+        }
     }
 
     void updateCom1Freq(float newValue)
     {
+        qDebug() << "received com1 freq:" << newValue;
         d_com1Freq = newValue;
         if (d_com1Avail)
             emit com1FreqChanged();
@@ -271,12 +292,24 @@ public slots:
     {
         d_nav1Avail = newValue;
         emit nav1AvailChanged();
+
+        if (newValue)
+        {
+            emit nav1FreqChanged();
+            emit nav1StbyFreqChanged();
+        }
     }
 
     void updateNav2Avail(bool newValue)
     {
         d_nav2Avail = newValue;
         emit nav2AvailChanged();
+
+        if (newValue)
+        {
+            emit nav2FreqChanged();
+            emit nav2StbyFreqChanged();
+        }
     }
 
     void updateNav1Freq(float newValue)

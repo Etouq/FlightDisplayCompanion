@@ -100,6 +100,7 @@ enum class MfdIdentifier : uint8_t
     // flightplan
     CLEAR_FLIGHTPLAN,
     FLIGHTPLAN_LIST,
+    FLIGHTPLAN_LEG_IDX,
     GPS_WP_DTK,
     GPS_WP_ETE,
     GPS_DEST_ETE,
@@ -150,20 +151,18 @@ enum class TscIdentifier : uint8_t
 
 enum class ServerMessageIdentifier : uint8_t
 {
-    QUIT,
+    SERVER_CLOSING,
     LOAD_AIRCRAFT,
     SIM_START_EVENT,
     SIM_STOP_EVENT,
-    SIM_STARTUP_FAILED,
     ERROR_MSG
 };
 
 enum class ClientToServerIds : uint8_t
 {
-    CLIENT_NETWORK_VERSION,
-    QUIT,
+    HANDSHAKE,
     AIRCRAFT_LOADED,
-    START,
+    UPDATE_DEFAULT_SPEEDBUGS,
     COMMAND_STRING
 };
 

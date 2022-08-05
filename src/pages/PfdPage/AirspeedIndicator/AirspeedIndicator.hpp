@@ -52,7 +52,7 @@ public:
     }
     double acceleration() const
     {
-        return d_acceleration;
+        return d_qmlAcceleration;
     }
     int center() const
     {
@@ -181,7 +181,8 @@ private:
 
     // exposed items
     double d_airspeed = 20;
-    double d_acceleration = 0;
+    double d_acceleration = 336;
+    double d_qmlAcceleration = 336;
     int d_center = 60;//-10000;
     double d_rawAirspeed = 0;
 

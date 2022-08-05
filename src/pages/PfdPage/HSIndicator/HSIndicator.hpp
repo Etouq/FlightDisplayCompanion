@@ -106,6 +106,12 @@ public:
         return d_toFrom;
     }
 
+    Q_INVOKABLE void qmlArrowCompleted() // used to hide stroke after completion
+    {
+        d_navSource = HsiNavSource::GPS;
+        emit navSourceChanged();
+    }
+
 signals:
     void rotationChanged();
     void rotationTextChanged();
