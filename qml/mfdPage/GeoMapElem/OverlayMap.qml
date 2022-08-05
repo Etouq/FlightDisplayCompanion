@@ -4,11 +4,15 @@ import QtPositioning 5.15
 import QtQuick.Controls 2.15
 import QtQuick.Shapes 1.15
 import QtQml 2.15
+
 import Mfd.GeoMapPage 1.0
-import General.Settings 1.0
 import Mfd.Engine 1.0
 import Mfd.Flightplan 1.0
+
 import Pfd.HSIndicator 1.0
+
+import General.Settings 1.0
+
 import IO.Network 1.0
 import TypeEnums 1.0
 
@@ -141,26 +145,26 @@ Item {
 
 
     states: [
-            State {
-                name: "northUpState"
-                when: GeoMapPage.rotationMode === MapRotationMode.NORTH_UP
-                PropertyChanges { target: planeIconRotation; angle: GeoMapPage.trueHeading }
-            },
-            State {
-                name: "headingUpState"
-                when: GeoMapPage.mapOrientationMode === MapRotationMode.HDG_UP
-                PropertyChanges { target: planeIconRotation; angle: 0 }
-            },
-            State {
-                name: "trackUpState"
-                when: GeoMapPage.mapOrientationMode === MapRotationMode.TRACK_UP
-                PropertyChanges { target: planeIconRotation; angle: GeoMapPage.trueHeading - HSIndicator.currentTrackAngle }
-            },
-            State {
-                name: "dtkUpState"
-                when: GeoMapPage.mapOrientationMode === MapRotationMode.DTK_UP
-                PropertyChanges { target: planeIconRotation; angle: GeoMapPage.trueHeading - Flightplan.wpDtk }
-            }
-        ]
+        State {
+            name: "northUpState"
+            when: GeoMapPage.rotationMode === MapRotationMode.NORTH_UP
+            PropertyChanges { target: planeIconRotation; angle: GeoMapPage.trueHeading }
+        },
+        State {
+            name: "headingUpState"
+            when: GeoMapPage.mapOrientationMode === MapRotationMode.HDG_UP
+            PropertyChanges { target: planeIconRotation; angle: 0 }
+        },
+        State {
+            name: "trackUpState"
+            when: GeoMapPage.mapOrientationMode === MapRotationMode.TRACK_UP
+            PropertyChanges { target: planeIconRotation; angle: GeoMapPage.trueHeading - HSIndicator.currentTrackAngle }
+        },
+        State {
+            name: "dtkUpState"
+            when: GeoMapPage.mapOrientationMode === MapRotationMode.DTK_UP
+            PropertyChanges { target: planeIconRotation; angle: GeoMapPage.trueHeading - Flightplan.wpDtk }
+        }
+    ]
 
 }

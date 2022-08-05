@@ -48,7 +48,7 @@ Item {
                 font.bold: true
                 font.family: "Roboto Mono"
                 font.pixelSize: 24
-                text: spdBug.speedBugEntry.designator().toUpperCase()
+                text: spdBug.speedBugEntry.designator()
             }
         }
     }

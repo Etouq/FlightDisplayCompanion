@@ -12,6 +12,7 @@ import Pfd.Bearings 1.0
 Item {
     width: parent.width
     height: 90
+
     Rectangle {
         id: bg
         x: 420
@@ -21,10 +22,11 @@ Item {
         color: "#1A1D21"
 
         Row {
-            spacing: 0
+            spacing: 4.5
+            anchors.fill: parent
 
             Text {
-                width: 62.758620689655174
+                width: 46.5
                 lineHeightMode: Text.FixedHeight
                 lineHeight: 48
                 horizontalAlignment: Text.AlignHCenter
@@ -36,7 +38,7 @@ Item {
             }
 
             Text {
-                width: 125.51724137931035
+                width: 125
                 lineHeightMode: Text.FixedHeight
                 lineHeight: 48
                 horizontalAlignment: Text.AlignHCenter
@@ -48,7 +50,7 @@ Item {
             }
 
             Text {
-                width: 62.758620689655174
+                width: 60
                 lineHeightMode: Text.FixedHeight
                 lineHeight: 48
                 horizontalAlignment: Text.AlignHCenter
@@ -60,7 +62,7 @@ Item {
             }
 
             Text {
-                width: 125.51724137931035
+                width: 100
                 lineHeightMode: Text.FixedHeight
                 lineHeight: 48
                 horizontalAlignment: Text.AlignHCenter
@@ -68,11 +70,11 @@ Item {
                 font.family: "Roboto Mono"
                 font.bold: true
                 color: "#D12BC7"
-                text: NavInfo.gpsIsActiveFlightPlan ? Flightplan.wpDtk.toFixed(0) + "°" : "___°"
+                text: NavInfo.gpsIsActiveFlightPlan ? Flightplan.wpDtk.toFixed(0) + "°": "___°"
             }
 
             Text {
-                width: 62.758620689655174
+                width: 60
                 lineHeightMode: Text.FixedHeight
                 lineHeight: 48
                 horizontalAlignment: Text.AlignHCenter
@@ -84,7 +86,7 @@ Item {
             }
 
             Text {
-                width: 125.51724137931035
+                width: 100
                 lineHeightMode: Text.FixedHeight
                 lineHeight: 48
                 horizontalAlignment: Text.AlignHCenter
@@ -92,11 +94,11 @@ Item {
                 font.family: "Roboto Mono"
                 font.bold: true
                 color: "#D12BC7"
-                text: HSIndicator.currentTrackAngle.toFixed(0) +  "°"
+                text: HSIndicator.currentTrackAngle.toFixed(0) + "°"
             }
 
             Text {
-                width: 62.758620689655174
+                width: 60
                 lineHeightMode: Text.FixedHeight
                 lineHeight: 48
                 horizontalAlignment: Text.AlignHCenter
@@ -108,7 +110,7 @@ Item {
             }
 
             Text {
-                width: 125.51724137931035
+                width: 125
                 lineHeightMode: Text.FixedHeight
                 lineHeight: 48
                 horizontalAlignment: Text.AlignHCenter
@@ -116,11 +118,11 @@ Item {
                 font.family: "Roboto Mono"
                 font.bold: true
                 color: "#D12BC7"
-                text: NavInfo.gpsIsActiveFlightPlan ? Flightplan.wpEte : "__:__"
+                text: NavInfo.gpsIsActiveFlightPlan ? Flightplan.wpEte: "--:--"
             }
 
             Text {
-                width: 62.758620689655174
+                width: 60
                 lineHeightMode: Text.FixedHeight
                 lineHeight: 48
                 horizontalAlignment: Text.AlignHCenter
@@ -132,7 +134,7 @@ Item {
             }
 
             Text {
-                width: 125.51724137931035
+                width: 100
                 lineHeightMode: Text.FixedHeight
                 lineHeight: 48
                 horizontalAlignment: Text.AlignHCenter
@@ -140,11 +142,11 @@ Item {
                 font.family: "Roboto Mono"
                 font.bold: true
                 color: "#D12BC7"
-                text: NavInfo.gpsIsActiveFlightPlan ? Bearings.gpsBearing.toFixed(0) + "°" : "___°"
+                text: NavInfo.gpsIsActiveFlightPlan ? Bearings.gpsBearing.toFixed(0) + "°": "___°"
             }
 
             Text {
-                width: 62.758620689655174
+                width: 60
                 lineHeightMode: Text.FixedHeight
                 lineHeight: 48
                 horizontalAlignment: Text.AlignHCenter
@@ -156,7 +158,7 @@ Item {
             }
 
             Text {
-                width: 125.51724137931035
+                width: 175
                 lineHeightMode: Text.FixedHeight
                 lineHeight: 48
                 horizontalAlignment: Text.AlignHCenter
@@ -164,11 +166,11 @@ Item {
                 font.family: "Roboto Mono"
                 font.bold: true
                 color: "#D12BC7"
-                text: Bearings.gpsDistance === "" || !NavInfo.gpsIsActiveFlightPlan ? "__._NM" : Bearings.gpsDistance
+                text: Bearings.gpsDistance === "" || !NavInfo.gpsIsActiveFlightPlan ? "__._NM": Bearings.gpsDistance
             }
 
             Text {
-                width: 62.758620689655174
+                width: 60
                 lineHeightMode: Text.FixedHeight
                 lineHeight: 48
                 horizontalAlignment: Text.AlignHCenter
@@ -180,7 +182,7 @@ Item {
             }
 
             Text {
-                width: 172.58620689655174
+                width: 175
                 lineHeightMode: Text.FixedHeight
                 lineHeight: 48
                 horizontalAlignment: Text.AlignHCenter
@@ -188,7 +190,7 @@ Item {
                 font.family: "Roboto Mono"
                 font.bold: true
                 color: "#D12BC7"
-                text: NavInfo.gpsIsActiveFlightPlan ? Flightplan.destEta : "__:__UTC"
+                text: NavInfo.gpsIsActiveFlightPlan ? Flightplan.destEta: "--:--UTC"
             }
         }
     }
@@ -201,17 +203,33 @@ Item {
         color: "#1A1D21"
 
         Shape {
-            transform: Rotation { angle: WindInfo.windTrueDirection + 180; origin.x: 33.75; origin.y: 45 }
+            transform: Rotation {
+                angle: WindInfo.windTrueDirection + 180; origin.x: 33.75; origin.y: 45
+            }
             ShapePath {
                 fillColor: "white"
                 strokeColor: "transparent"
-                PathMove { x: 33.75; y: 15 }
-                PathLine { x: 22.5; y: 30 }
-                PathLine { x: 31.5; y: 30 }
-                PathLine { x: 31.5; y: 75 }
-                PathLine { x: 36; y: 75 }
-                PathLine { x: 36; y: 30 }
-                PathLine { x: 45; y: 30 }
+                PathMove {
+                    x: 33.75; y: 15
+                }
+                PathLine {
+                    x: 22.5; y: 30
+                }
+                PathLine {
+                    x: 31.5; y: 30
+                }
+                PathLine {
+                    x: 31.5; y: 75
+                }
+                PathLine {
+                    x: 36; y: 75
+                }
+                PathLine {
+                    x: 36; y: 30
+                }
+                PathLine {
+                    x: 45; y: 30
+                }
             }
         }
 

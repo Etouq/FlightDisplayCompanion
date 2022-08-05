@@ -7,53 +7,36 @@ import TypeEnums 1.0
 Shape {
     id: root
 
-    states: [
-        State {
-            name: "nav1ModeDme"
-            when: GenSettings.dmeMode === BearingMode.NAV1
 
-            PropertyChanges {
-                target: sourceText
-                text: "NAV1"
-            }
-            PropertyChanges {
-                target: identText
-                text: Bearings.nav1Freq
-            }
-            PropertyChanges {
-                target: distanceText
-                text: Bearings.nav1Dme
-            }
-        },
-        State {
-            name: "nav2ModeDme"
-            when: GenSettings.dmeMode === BearingMode.NAV2
-
-            PropertyChanges {
-                target: sourceText
-                text: "NAV2"
-            }
-            PropertyChanges {
-                target: identText
-                text: Bearings.nav2Freq
-            }
-            PropertyChanges {
-                target: distanceText
-                text: Bearings.nav2Dme
-            }
-        }
-    ]
 
 
     ShapePath {
         fillColor: "#1A1D21"
         strokeColor: "transparent"
 
-        PathMove { x: 93.04615384615386; y: 288 }
-        PathLine { x: 0; y: 288 }
-        PathLine { x: 0; y: 426.4055530211599 }
-        PathLine { x: 134.34814059988142; y: 426.4055530211599 }
-        PathArc { radiusX: 252.55384615384617; radiusY: 252.55384615384617; direction: PathArc.Clockwise; x: 93.04615384615386; y: 288 }
+        // PathMove {
+        //     x: 93.04615384615386
+        //     y: 288
+        // }
+        PathMove {
+            x: 0
+            y: 288
+        }
+        PathLine {
+            x: 0
+            y: 426.4055530211599
+        }
+        PathLine {
+            x: 134.34814059988142
+            y: 426.4055530211599
+        }
+        PathArc {
+            radiusX: 252.55384615384617
+            radiusY: 252.55384615384617
+            direction: PathArc.Clockwise
+            x: 93.04615384615386
+            y: 288
+        }
     }
 
     Text {
@@ -106,6 +89,43 @@ Shape {
         font.bold: true
         text: "97.7NM"
     }
+
+    states: [
+        State {
+            name: "nav1ModeDme"
+            when: GenSettings.dmeMode === BearingMode.NAV1
+
+            PropertyChanges {
+                target: sourceText
+                text: "NAV1"
+            }
+            PropertyChanges {
+                target: identText
+                text: Bearings.nav1Freq
+            }
+            PropertyChanges {
+                target: distanceText
+                text: Bearings.nav1Dme
+            }
+        },
+        State {
+            name: "nav2ModeDme"
+            when: GenSettings.dmeMode === BearingMode.NAV2
+
+            PropertyChanges {
+                target: sourceText
+                text: "NAV2"
+            }
+            PropertyChanges {
+                target: identText
+                text: Bearings.nav2Freq
+            }
+            PropertyChanges {
+                target: distanceText
+                text: Bearings.nav2Dme
+            }
+        }
+    ]
 
 
 }

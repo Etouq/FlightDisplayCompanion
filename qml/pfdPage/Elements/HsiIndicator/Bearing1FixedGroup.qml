@@ -7,85 +7,34 @@ import TypeEnums 1.0
 Shape {
     id: root
 
-    states: [
-        State {
-            name: "nav1ModeBrg1"
-            when: GenSettings.bearing1Mode === BearingMode.NAV1
-
-            PropertyChanges {
-                target: distanceText
-                text: Bearings.nav1Distance
-            }
-            PropertyChanges {
-                target: identText
-                text: Bearings.nav1Ident
-            }
-            PropertyChanges {
-                target: sourceText
-                text: "NAV1"
-            }
-        },
-        State {
-            name: "nav2ModeBrg1"
-            when: GenSettings.bearing1Mode === BearingMode.NAV2
-
-            PropertyChanges {
-                target: distanceText
-                text: Bearings.nav2Distance
-            }
-            PropertyChanges {
-                target: identText
-                text: Bearings.nav2Ident
-            }
-            PropertyChanges {
-                target: sourceText
-                text: "NAV2"
-            }
-        },
-        State {
-            name: "gpsModeBrg1"
-            when: GenSettings.bearing1Mode === BearingMode.GPS
-
-            PropertyChanges {
-                target: distanceText
-                text: Bearings.gpsDistance
-            }
-            PropertyChanges {
-                target: identText
-                text: Bearings.gpsIdent
-            }
-            PropertyChanges {
-                target: sourceText
-                text: "GPS"
-            }
-        },
-        State {
-            name: "adfModeBrg1"
-            when: GenSettings.bearing1Mode === BearingMode.ADF
-
-            PropertyChanges {
-                target: distanceText
-                text: ""
-            }
-            PropertyChanges {
-                target: identText
-                text: Bearings.adfIdent
-            }
-            PropertyChanges {
-                target: sourceText
-                text: "ADF"
-            }
-        }
-    ]
 
     ShapePath {
         fillColor: "#1A1D21"
         strokeColor: "transparent"
-        PathMove { x: 137.15831608681108; y: 430.602628357737 }
-        PathLine { x: 0; y: 430.602628357737 }
-        PathLine { x: 0; y: 513.0778465041312 }
-        PathLine { x: 231.04255493350342; y: 513.0778465041312 }
-        PathArc { radiusX: 252.55384615384617; radiusY: 252.55384615384617; direction: PathArc.Clockwise; x: 137.15831608681108; y: 430.602628357737 }
+
+        // PathMove {
+        //     x: 137.15831608681108
+        //     y: 430.602628357737
+        // }
+        PathMove {
+            x: 0
+            y: 430.602628357737
+        }
+        PathLine {
+            x: 0
+            y: 513.0778465041312
+        }
+        PathLine {
+            x: 231.04255493350342
+            y: 513.0778465041312
+        }
+        PathArc {
+            radiusX: 252.55384615384617
+            radiusY: 252.55384615384617
+            direction: PathArc.Clockwise
+            x: 137.15831608681108
+            y: 430.602628357737
+        }
     }
 
     Text {
@@ -162,5 +111,74 @@ Shape {
         }
     }
 
+    states: [
+        State {
+            name: "nav1ModeBrg1"
+            when: GenSettings.bearing1Mode === BearingMode.NAV1
 
+            PropertyChanges {
+                target: distanceText
+                text: Bearings.nav1Distance
+            }
+            PropertyChanges {
+                target: identText
+                text: Bearings.nav1Ident
+            }
+            PropertyChanges {
+                target: sourceText
+                text: "NAV1"
+            }
+        },
+        State {
+            name: "nav2ModeBrg1"
+            when: GenSettings.bearing1Mode === BearingMode.NAV2
+
+            PropertyChanges {
+                target: distanceText
+                text: Bearings.nav2Distance
+            }
+            PropertyChanges {
+                target: identText
+                text: Bearings.nav2Ident
+            }
+            PropertyChanges {
+                target: sourceText
+                text: "NAV2"
+            }
+        },
+        State {
+            name: "gpsModeBrg1"
+            when: GenSettings.bearing1Mode === BearingMode.GPS
+
+            PropertyChanges {
+                target: distanceText
+                text: Bearings.gpsDistance
+            }
+            PropertyChanges {
+                target: identText
+                text: Bearings.gpsIdent
+            }
+            PropertyChanges {
+                target: sourceText
+                text: "GPS"
+            }
+        },
+        State {
+            name: "adfModeBrg1"
+            when: GenSettings.bearing1Mode === BearingMode.ADF
+
+            PropertyChanges {
+                target: distanceText
+                text: ""
+            }
+            PropertyChanges {
+                target: identText
+                text: Bearings.adfIdent
+            }
+            PropertyChanges {
+                target: sourceText
+                text: "ADF"
+            }
+        }
+    ]
 }

@@ -1,7 +1,10 @@
 import QtQuick 2.15
 import QtQuick.Shapes 1.15
+
 import Pfd.HSIndicator 1.0
 import Pfd.Bearings 1.0
+import General.Settings 1.0
+import TypeEnums 1.0
 
 Item {
     id: root
@@ -39,7 +42,7 @@ Item {
     }
 
     Rectangle {
-        visible: Bearings.brg1Mode != 0 || Bearings.brg2Mode != 0
+        visible: GenSettings.bearing1Mode !== BearingMode.OFF || GenSettings.bearing2Mode !== BearingMode.OFF
         anchors.horizontalCenter: parent.left
         anchors.horizontalCenterOffset: 345.6
         anchors.verticalCenter: parent.top
@@ -79,7 +82,7 @@ Item {
         states: [
             State {
                 name: "nav1Mode"
-                when: Bearings.brg1Mode == 1
+                when: GenSettings.bearing1Mode === BearingMode.NAV1
 
                 PropertyChanges {
                     target: bearing1Arrow
@@ -92,7 +95,7 @@ Item {
             },
             State {
                 name: "nav2Mode"
-                when: Bearings.brg1Mode == 2
+                when: GenSettings.bearing1Mode === BearingMode.NAV2
 
                 PropertyChanges {
                     target: bearing1Arrow
@@ -105,7 +108,7 @@ Item {
             },
             State {
                 name: "gpsMode"
-                when: Bearings.brg1Mode == 3
+                when: GenSettings.bearing1Mode === BearingMode.GPS
 
                 PropertyChanges {
                     target: bearing1Arrow
@@ -118,7 +121,7 @@ Item {
             },
             State {
                 name: "adfMode"
-                when: Bearings.brg1Mode == 4
+                when: GenSettings.bearing1Mode === BearingMode.ADF
 
                 PropertyChanges {
                     target: bearing1Arrow
@@ -161,7 +164,7 @@ Item {
         states: [
             State {
                 name: "nav1Mode"
-                when: Bearings.brg2Mode == 1
+                when: GenSettings.bearing2Mode === BearingMode.NAV1
 
                 PropertyChanges {
                     target: bearing2Arrow
@@ -174,7 +177,7 @@ Item {
             },
             State {
                 name: "nav2Mode"
-                when: Bearings.brg2Mode == 2
+                when: GenSettings.bearing2Mode === BearingMode.NAV2
 
                 PropertyChanges {
                     target: bearing2Arrow
@@ -187,7 +190,7 @@ Item {
             },
             State {
                 name: "gpsMode"
-                when: Bearings.brg2Mode == 3
+                when: GenSettings.bearing2Mode === BearingMode.GPS
 
                 PropertyChanges {
                     target: bearing2Arrow
@@ -200,7 +203,7 @@ Item {
             },
             State {
                 name: "adfMode"
-                when: Bearings.brg2Mode == 4
+                when: GenSettings.bearing2Mode === BearingMode.ADF
 
                 PropertyChanges {
                     target: bearing2Arrow

@@ -17,6 +17,7 @@ Item {
     Connections {
         target: MfdRoot
         function onGaugesLoaded(layoutPath) {
+            console.log("Gauges loaded: " + layoutPath);
             edLoader.setSource("qrc:/MfdPage/EngineDisplay/Gauges/Layouts/" + layoutPath + ".qml");
         }
     }

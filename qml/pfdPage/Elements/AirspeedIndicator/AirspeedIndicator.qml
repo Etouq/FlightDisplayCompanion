@@ -31,9 +31,9 @@ Item {
 
     Rectangle { // trendElement
         x: 192
-        y: Math.min(Airspeed.acceleration, 288)
+        y: Math.min(Airspeed.acceleration, 336)
         width: 7.68
-        height: Math.abs(Airspeed.acceleration - 288)
+        height: Math.abs(Airspeed.acceleration - 336)
         color: "#d12bc7"
     }
 

@@ -1,13 +1,14 @@
 import QtQuick 2.15
 import Pfd.Attitude 1.0
 
-Item {
+Rectangle {
 
+    color: "#00569d"
 
-    Rectangle {
-        anchors.fill: parent
-        color: "#00569d"
-    }
+    // Rectangle {
+    //     anchors.fill: parent
+    //     color: "#00569d"
+    // }
 
     Item {
         transform: [
@@ -22,17 +23,17 @@ Item {
         ]
 
         Rectangle {
-            x: -790
+            x: -1040
             y: 438
-            width: 3500
-            height: 3500
+            width: 4000
+            height: 4000
             color: "#48432e"
         }
 
         Rectangle {
-            x: -790
+            x: -1040
             y: 433.68
-            width: 3500
+            width: 4000
             height: 8.64
             color: "#e0e0e0"
         }

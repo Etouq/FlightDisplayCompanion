@@ -154,44 +154,85 @@ Item {
         font.bold: true
         text: "GPS"
 
-        Connections {
-            target: HSIndicator
-            function onNavSourceChanged() {
-                switch(HSIndicator.navSource) {
-                    case HsiNavSource.GPS:
-                        navSourceText.text = "GPS";
-                        navSourceText.color = "#D12BC7";
-                        break;
-                    case HsiNavSource.VOR1:
-                        navSourceText.text = "VOR1";
-                        navSourceText.color = "#10C210";
-                        break;
-                    case HsiNavSource.LOC1:
-                        navSourceText.text = "LOC1";
-                        navSourceText.color = "#10C210";
-                        break;
-                    case HsiNavSource.TCN1:
-                        navSourceText.text = "TCN1";
-                        navSourceText.color = "#10C210";
-                        break;
-                    case HsiNavSource.VOR2:
-                        navSourceText.text = "VOR2";
-                        navSourceText.color = "#10C210";
-                        break;
-                    case HsiNavSource.LOC2:
-                        navSourceText.text = "LOC2";
-                        navSourceText.color = "#10C210";
-                        break;
-                    case HsiNavSource.TCN2:
-                        navSourceText.text = "TCN2";
-                        navSourceText.color = "#10C210";
-                        break;
-                    default:
-                        navSourceText.text = "";
-                        break;
+        states: [
+            State {
+                name: ""
+
+                PropertyChanges {
+                    target: navSourceText
+                    text: ""
+                    color: "#10C210"
+                }
+            },
+            State {
+                name: "gpsSource"
+                when: HSIndicator.navSource === HsiNavSource.GPS
+
+                PropertyChanges {
+                    target: navSourceText
+                    text: "GPS"
+                    color: "#D12BC7"
+                }
+            },
+            State {
+                name: "vor1Source"
+                when: HSIndicator.navSource === HsiNavSource.VOR1
+                extend: ""
+
+                PropertyChanges {
+                    target: navSourceText
+                    text: "VOR1"
+                }
+            },
+            State {
+                name: "loc1Source"
+                when: HSIndicator.navSource === HsiNavSource.LOC1
+                extend: ""
+
+                PropertyChanges {
+                    target: navSourceText
+                    text: "LOC1"
+                }
+            },
+            State {
+                name: "tcn1Source"
+                when: HSIndicator.navSource === HsiNavSource.TCN1
+                extend: ""
+
+                PropertyChanges {
+                    target: navSourceText
+                    text: "TCN1"
+                }
+            },
+            State {
+                name: "vor2Source"
+                when: HSIndicator.navSource === HsiNavSource.VOR2
+                extend: ""
+                PropertyChanges {
+                    target: navSourceText
+                    text: "VOR2"
+                }
+            },
+            State {
+                name: "loc2Source"
+                when: HSIndicator.navSource === HsiNavSource.LOC2
+                extend: ""
+                PropertyChanges {
+                    target: navSourceText
+                    text: "LOC2"
+                }
+            },
+            State {
+                name: "tcn2Source"
+                when: HSIndicator.navSource === HsiNavSource.TCN2
+                extend: ""
+                PropertyChanges {
+                    target: navSourceText
+                    text: "TCN2"
                 }
             }
-        }
+        ]
+
     }
 
 

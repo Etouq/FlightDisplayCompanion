@@ -7,70 +7,8 @@ Shape {
     id: root
     transform: Rotation { angle: HSIndicator.course; origin.x: 345.6; origin.y: 288 }
 
-    //Component.onCompleted: hsiInterface.qmlArrowCompleted() // calls updatenavsource(GPS)
+    Component.onCompleted: HSIndicator.qmlArrowCompleted()
 
-    states: [
-        State {
-            name: "gpsSource"
-            when: HSIndicator.navSource === HsiNavSource.GPS
-
-            PropertyChanges {
-                target: beginArrow
-                fillColor: "#D12BC7"
-                strokeColor: "transparent"
-            }
-            PropertyChanges {
-                target: courseDeviationIndicator
-                fillColor: "#D12BC7"
-                strokeColor: "transparent"
-            }
-            PropertyChanges {
-                target: endArrow
-                fillColor: "#D12BC7"
-                strokeColor: "transparent"
-            }
-        },
-        State {
-            name: "vor/loc/tcn1Source"
-            when: HSIndicator.navSource === HsiNavSource.VOR1 || HSIndicator.navSource === HsiNavSource.LOC1 || HSIndicator.navSource === HsiNavSource.TCN1
-
-            PropertyChanges {
-                target: beginArrow
-                fillColor: "#10C210"
-                strokeColor: "transparent"
-            }
-            PropertyChanges {
-                target: courseDeviationIndicator
-                fillColor: "#10C210"
-                strokeColor: "transparent"
-            }
-            PropertyChanges {
-                target: endArrow
-                fillColor: "#10C210"
-                strokeColor: "transparent"
-            }
-        },
-        State {
-            name: "vor/loc/tcn2Source"
-            when: HSIndicator.navSource === HsiNavSource.VOR2 || HSIndicator.navSource === HsiNavSource.LOC2 || HSIndicator.navSource === HsiNavSource.TCN2
-
-            PropertyChanges {
-                target: beginArrow
-                fillColor: "transparent"
-                strokeColor: "#10C210"
-            }
-            PropertyChanges {
-                target: courseDeviationIndicator
-                fillColor: "transparent"
-                strokeColor: "#10C210"
-            }
-            PropertyChanges {
-                target: endArrow
-                fillColor: "transparent"
-                strokeColor: "#10C210"
-            }
-        }
-    ]
 
     ShapePath {
         id: beginArrow
@@ -206,4 +144,68 @@ Shape {
         border.color: "white"
         color: "transparent"
     }
+
+
+    states: [
+        State {
+            name: "gpsSource"
+            when: HSIndicator.navSource === HsiNavSource.GPS
+
+            PropertyChanges {
+                target: beginArrow
+                fillColor: "#D12BC7"
+                strokeColor: "transparent"
+            }
+            PropertyChanges {
+                target: courseDeviationIndicator
+                fillColor: "#D12BC7"
+                strokeColor: "transparent"
+            }
+            PropertyChanges {
+                target: endArrow
+                fillColor: "#D12BC7"
+                strokeColor: "transparent"
+            }
+        },
+        State {
+            name: "vor/loc/tcn1Source"
+            when: HSIndicator.navSource === HsiNavSource.VOR1 || HSIndicator.navSource === HsiNavSource.LOC1 || HSIndicator.navSource === HsiNavSource.TCN1
+
+            PropertyChanges {
+                target: beginArrow
+                fillColor: "#10C210"
+                strokeColor: "transparent"
+            }
+            PropertyChanges {
+                target: courseDeviationIndicator
+                fillColor: "#10C210"
+                strokeColor: "transparent"
+            }
+            PropertyChanges {
+                target: endArrow
+                fillColor: "#10C210"
+                strokeColor: "transparent"
+            }
+        },
+        State {
+            name: "vor/loc/tcn2Source"
+            when: HSIndicator.navSource === HsiNavSource.VOR2 || HSIndicator.navSource === HsiNavSource.LOC2 || HSIndicator.navSource === HsiNavSource.TCN2
+
+            PropertyChanges {
+                target: beginArrow
+                fillColor: "transparent"
+                strokeColor: "#10C210"
+            }
+            PropertyChanges {
+                target: courseDeviationIndicator
+                fillColor: "transparent"
+                strokeColor: "#10C210"
+            }
+            PropertyChanges {
+                target: endArrow
+                fillColor: "transparent"
+                strokeColor: "#10C210"
+            }
+        }
+    ]
 }

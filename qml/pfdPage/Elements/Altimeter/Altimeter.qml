@@ -40,9 +40,9 @@ Item {
 
     Rectangle {
         x: 48
-        y: Math.min(Altimeter.altitudeTrendValue, 240)
+        y: Math.min(Altimeter.altitudeTrendValue, 336)
         width: 7.68
-        height: Math.abs(Altimeter.altitudeTrendValue - 240)
+        height: Math.abs(Altimeter.altitudeTrendValue - 336)
         color: "#d12bc7"
     }
 
