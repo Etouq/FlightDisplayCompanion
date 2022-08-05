@@ -14,6 +14,7 @@ TscPageBase {
     signal mapSettingsClicked()
     signal planeIconClicked()
     signal flightplanClicked()
+    signal edSettingsClicked()
 
 
     Column {
@@ -65,6 +66,20 @@ TscPageBase {
 
                 onReleased: mfdHome.flightplanClicked()
             }
+        }
+
+        GradientButton {
+            anchors.horizontalCenter: parent.horizontalCenter
+
+            Img {
+                source: "qrc:/images/buttonImages/ICON_MAP_SETUP.png"
+            }
+
+            Title {
+                text: "ED\nSettings"
+            }
+
+            onReleased: mfdHome.edSettingsClicked()
         }
 
     }

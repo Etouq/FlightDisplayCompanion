@@ -8,6 +8,7 @@ import QtQml 2.15
 import "MapSettings"
 import "IconSettings"
 import "FlightplanPage"
+import "EdSettings"
 
 Item {
     id: mfdPageRoot
@@ -34,6 +35,9 @@ Item {
             }
             onFlightplanClicked: function() {
                 pageLoader.sourceComponent = flightplanComponent;
+            }
+            onEdSettingsClicked: function() {
+                pageLoader.sourceComponent = edSettingsComponent;
             }
             onPfdClicked: function() {
                 mfdPageRoot.pfdClicked();
@@ -85,6 +89,25 @@ Item {
         id: flightplanComponent
 
         FlightplanPage {
+            onBackClicked: function() {
+                pageLoader.sourceComponent = homeComponent;
+            }
+            onPfdClicked: function() {
+                mfdPageRoot.pfdClicked();
+            }
+            onMfdClicked: function() {
+                pageLoader.sourceComponent = homeComponent;
+            }
+            onNavcomClicked: function() {
+                mfdPageRoot.navcomClicked();
+            }
+        }
+    }
+
+    Component {
+        id: edSettingsComponent
+
+        EdSettings {
             onBackClicked: function() {
                 pageLoader.sourceComponent = homeComponent;
             }
