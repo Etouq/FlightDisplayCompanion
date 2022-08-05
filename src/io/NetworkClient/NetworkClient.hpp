@@ -4,6 +4,7 @@
 #include "common/typeEnums.hpp"
 #include "common/QmlEnums.hpp"
 #include "common/dataIdentifiers.hpp"
+#include "common/definitions/baseTypes.hpp"
 
 #include <QObject>
 #include <QString>
@@ -72,7 +73,7 @@ public:
 
         d_serverDatagramSocket.abort();
 
-        disconnectFromServer();
+        d_socket.disconnectFromHost();
         if (d_socket.state() != QAbstractSocket::UnconnectedState
             && !d_socket.waitForDisconnected(1000)) {
                 d_socket.abort();
@@ -119,27 +120,52 @@ public:
 
 public slots:
 
-    void startSim(const QByteArray &data)
-    {
-        ClientToServerIds clientId = ClientToServerIds::START;
-        QByteArray msg(reinterpret_cast<char *>(&clientId), sizeof(clientId));
-        msg += data;
-        d_socket.write(msg);
-    }
-
     void aircraftLoaded()
     {
-        ClientToServerIds clientId = ClientToServerIds::AIRCRAFT_LOADED;
-        d_socket.write(reinterpret_cast<char *>(&clientId), sizeof(clientId));
+        constexpr ClientToServerIds clientId = ClientToServerIds::AIRCRAFT_LOADED;
+        d_socket.write(reinterpret_cast<const char *>(&clientId), sizeof(clientId));
     }
 
     void sendCommandString(const QByteArray &commandString)
     {
-        ClientToServerIds clientId = ClientToServerIds::COMMAND_STRING;
-        QByteArray msg(reinterpret_cast<char *>(&clientId), sizeof(clientId));
+        if (d_socket.state() != QTcpSocket::ConnectedState)
+            return;
+
+        constexpr ClientToServerIds clientId = ClientToServerIds::COMMAND_STRING;
+        QByteArray msg(reinterpret_cast<const char *>(&clientId), sizeof(clientId));
+
+        const uint64_t commandSize = commandString.size();
+        msg.append(reinterpret_cast<const char *>(&commandSize), sizeof(commandSize));
+
         msg += commandString;
         d_socket.write(msg);
     }
+
+    void updateDefaultSpeedBugs(const QList<definitions::ReferenceSpeed> &newBugs)
+    {
+
+        uint16_t size = newBugs.size();
+
+        QByteArray dataToSend(reinterpret_cast<const char *>(&size), sizeof(size));
+
+        uint8_t identSize;
+        for (const definitions::ReferenceSpeed &bug : newBugs)
+        {
+            dataToSend.append(reinterpret_cast<const char *>(&bug.speed), sizeof(bug.speed));
+            identSize = bug.designator.toUtf8().size();
+            dataToSend.append(reinterpret_cast<const char *>(&identSize), sizeof(identSize));
+            dataToSend.append(bug.designator.toUtf8());
+        }
+
+        size = dataToSend.size();
+        dataToSend.prepend(reinterpret_cast<const char *>(&size), sizeof(size));
+
+        constexpr ClientToServerIds clientId = ClientToServerIds::UPDATE_DEFAULT_SPEEDBUGS;
+        dataToSend.prepend(reinterpret_cast<const char *>(&clientId), sizeof(clientId));
+
+        d_socket.write(dataToSend);
+    }
+
 
 
 private slots:
@@ -170,13 +196,6 @@ private slots:
         }
     }
 
-    void disconnectFromServer()
-    {
-        ClientToServerIds clientId = ClientToServerIds::QUIT;
-        d_socket.write(reinterpret_cast<char *>(&clientId), sizeof(clientId));
-        d_socket.disconnectFromHost();
-    }
-
 private:
 
     bool readPfdData();
@@ -188,9 +207,7 @@ private:
     {
         d_tryConnecting = true;
 
-        d_socket.setSocketOption(QAbstractSocket::KeepAliveOption, 1);
         d_socket.connectToHost(d_datagramAddress, d_datagramPort);
-        d_socket.setSocketOption(QAbstractSocket::LowDelayOption, 1);
 
         d_connectionAttemptKiller.start();
     }
@@ -208,8 +225,6 @@ signals:
     void portChanged();
 
     // sim
-    void simStartReceived();
-    void simStopReceived();
     void simStartupFailed();
 
     void loadAircraft(const definitions::AircraftDefinition &definition);
@@ -223,6 +238,7 @@ signals:
     // flightplan
     void clearFlightplanReceived();
     void receivedFlightplan(const QList<pages::mfd::FlightPlanWaypoint> &wpList);
+    void activeLegIdxChanged(int32_t newIdx);
     void gpsWpDtkChanged(double newValue);
     void gpsWpEteChanged(int newValue);
     void gpsDestEteChanged(int newValue);

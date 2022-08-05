@@ -11,14 +11,21 @@ namespace io::network
 
 void NetworkClient::broadcastReceived()
 {
+    QHostAddress serverAddress;
+    quint16 serverPort = 0;
+    if (!d_serverDatagramSocket.hasPendingDatagrams())
+        qDebug() << "received broadcast but no pending data";
+
     while (d_serverDatagramSocket.hasPendingDatagrams())
     {
         QByteArray datagram;
         datagram.resize(d_serverDatagramSocket.pendingDatagramSize());
 
-        d_serverDatagramSocket.readDatagram(datagram.data(), datagram.size());
+        d_serverDatagramSocket.readDatagram(datagram.data(), datagram.size(), &serverAddress, &serverPort);
 
-        if (d_connectionState == ConnectionState::CONNECTED)
+        // qDebug() << "received broadcast:" << serverAddress << "on port:" << serverPort << "with content:" << ("\n" + datagram);
+
+        if (d_socket.state() == QTcpSocket::ConnectedState || d_socket.state() == QTcpSocket::ConnectingState)
         {
             // already connected so just read to empty the buffer
             continue;
