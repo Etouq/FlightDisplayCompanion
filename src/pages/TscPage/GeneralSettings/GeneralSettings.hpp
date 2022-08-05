@@ -2,6 +2,7 @@
 #define __GENERAL_SETINGS_HPP__
 
 #include "common/QmlEnums.hpp"
+#include "common/dataIdentifiers.hpp"
 
 #include <QObject>
 #include <QSettings>
@@ -32,7 +33,17 @@ class GeneralSettings : public QObject
 public:
 
     explicit GeneralSettings(QObject *parent = nullptr)
-      : QObject(parent)
+      : QObject(parent),
+        d_showRangeText(d_settings.value("showRangeText", true).toBool()),
+        d_showRangeRings(d_settings.value("showRangeRings", true).toBool()),
+        d_showFuelRangeRing(d_settings.value("showFuelRangeRing", true).toBool()),
+        d_bottomTempType(BottomTemperatureType(d_settings.value("bottomTempType", static_cast<int>(BottomTemperatureType::TAT)).toInt())),
+        d_windMode(WindMode(d_settings.value("windMode", static_cast<int>(WindMode::OFF)).toInt())),
+        d_topTimeType(TimeType(d_settings.value("topTimeType", static_cast<int>(TimeType::UTC)).toInt())),
+        d_botTimeType(TimeType(d_settings.value("botTimeType", static_cast<int>(TimeType::LCL)).toInt())),
+        d_bearing1Mode(BearingMode(d_settings.value("bearing1Mode", static_cast<int>(BearingMode::OFF)).toInt())),
+        d_bearing2Mode(BearingMode(d_settings.value("bearing2Mode", static_cast<int>(BearingMode::OFF)).toInt())),
+        d_dmeMode(BearingMode(d_settings.value("dmeMode", static_cast<int>(BearingMode::OFF)).toInt()))
     {}
 
     bool showRangeText() const
@@ -52,18 +63,21 @@ public:
 
     void setShowRangeText(bool newValue)
     {
+        d_settings.setValue("showRangeText", newValue);
         d_showRangeText = newValue;
         emit showRangeTextChanged();
     }
 
     void setShowRangeRings(bool newValue)
     {
+        d_settings.setValue("showRangeRings", newValue);
         d_showRangeRings = newValue;
         emit showRangeRingsChanged();
     }
 
     void setShowFuelRangeRing(bool newValue)
     {
+        d_settings.setValue("showFuelRangeRing", newValue);
         d_showFuelRangeRing = newValue;
         emit showFuelRangeRingChanged();
     }
@@ -90,6 +104,7 @@ public:
 
     void setBottomTempType(BottomTemperatureType newType)
     {
+        d_settings.setValue("bottomTempType", static_cast<int>(newType));
         d_bottomTempType = newType;
         emit bottomTempTypeChanged();
     }
@@ -101,6 +116,7 @@ public:
 
     void setWindMode(WindMode newMode)
     {
+        d_settings.setValue("windMode", static_cast<int>(newMode));
         d_windMode = newMode;
         emit windModeChanged();
     }
@@ -136,11 +152,13 @@ public:
 
     void setTopTimeType(TimeType newType)
     {
+        d_settings.setValue("topTimeType", static_cast<int>(newType));
         d_topTimeType = newType;
         emit topTimeTypeChanged();
     }
     void setBotTimeType(TimeType newType)
     {
+        d_settings.setValue("botTimeType", static_cast<int>(newType));
         d_botTimeType = newType;
         emit botTimeTypeChanged();
     }
@@ -148,12 +166,14 @@ public:
     Q_INVOKABLE void nextBearing1Mode()
     {
         d_bearing1Mode = getNextBearingMode(d_bearing1Mode);
+        d_settings.setValue("bearing1Mode", static_cast<int>(d_bearing1Mode));
         emit bearing1ModeChanged();
     }
 
     Q_INVOKABLE void nextBearing2Mode()
     {
         d_bearing2Mode = getNextBearingMode(d_bearing2Mode);
+        d_settings.setValue("bearing2Mode", static_cast<int>(d_bearing2Mode));
         emit bearing2ModeChanged();
     }
 
@@ -172,7 +192,15 @@ public:
                 d_dmeMode = BearingMode::OFF;
                 break;
         }
+        d_settings.setValue("dmeMode", static_cast<int>(d_dmeMode));
         emit dmeModeChanged();
+    }
+
+    Q_INVOKABLE void nextCdiMode()
+    {
+        SimCommandId cmdId = SimCommandId::NEXT_CDI_MODE;
+        QByteArray dataToSend(reinterpret_cast<const char *>(&cmdId), sizeof(cmdId));
+        emit sendCommandsToSim(dataToSend);
     }
 
 signals:
@@ -186,6 +214,8 @@ signals:
     void windModeChanged();
     void topTimeTypeChanged();
     void botTimeTypeChanged();
+
+    void sendCommandsToSim(const QByteArray &data);
 
 private:
 
@@ -205,6 +235,8 @@ private:
                 return BearingMode::OFF;
         }
     }
+
+    QSettings d_settings;
 
     bool d_showRangeText = true;
     bool d_showRangeRings = true;
