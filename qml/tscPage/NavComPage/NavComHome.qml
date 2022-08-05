@@ -14,8 +14,6 @@ TscPageBase {
 
     pageTitle: "Radios"
 
-    showConnectionState: true
-
     signal xpndrClicked()
 
     signal radioClicked(string title, real minFreq, real maxFreq, int activeFreq, int stbyFreq, var endCallback, int nbDigits)
@@ -23,7 +21,7 @@ TscPageBase {
     Rectangle {
         y: 120
         width: 870
-        height: Math.min(988.8, (NavCom.com1Avail ? 196.8 : 0) + (NavCom.com2Avail ? 196.8 : 0) + (NavCom.com3Avail ? 196.8 : 0) + (NavCom.nav1Avail ? 196.8 : 0) + (NavCom.nav2Avail ? 196.8 : 0) + (NavCom.xpdrAvail ? 196.8 : 0) + 4.8 + 198.6)
+        height: Math.min(988.8, (NavCom.com1Avail ? 196.8 : 0) + (NavCom.com2Avail ? 196.8 : 0) + (NavCom.com3Avail ? 196.8 : 0) + (NavCom.nav1Avail ? 196.8 : 0) + (NavCom.nav2Avail ? 196.8 : 0) + (NavCom.xpdrAvail ? 196.8 : 0) + 4.8)
         anchors.horizontalCenter: parent.left
         anchors.horizontalCenterOffset: 864
 
@@ -71,8 +69,8 @@ TscPageBase {
 
                     sourceComponent: RadioRow {
                         name: "COM1"
-                        activeFreq: (NavCom.com1Freq / 1000000).toFixed(3)
-                        standbyFreq: (NavCom.com1StbyFreq / 1000000).toFixed(3)
+                        activeFreq: NavCom.com1Freq.toFixed(3)
+                        standbyFreq: NavCom.com1StbyFreq.toFixed(3)
 
                         onFrequencyClicked: root.radioClicked("COM1 Standby",
                                                               118,
@@ -90,8 +88,8 @@ TscPageBase {
 
                     sourceComponent: RadioRow {
                         name: "COM2"
-                        activeFreq: (NavCom.com2Freq / 1000000).toFixed(3)
-                        standbyFreq: (NavCom.com2StbyFreq / 1000000).toFixed(3)
+                        activeFreq: NavCom.com2Freq.toFixed(3)
+                        standbyFreq: NavCom.com2StbyFreq.toFixed(3)
 
                         onFrequencyClicked: root.radioClicked("COM2 Standby",
                                                               118,
@@ -109,8 +107,8 @@ TscPageBase {
 
                     sourceComponent: RadioRow {
                         name: "COM3"
-                        activeFreq: (NavCom.com3Freq / 1000000).toFixed(3)
-                        standbyFreq: (NavCom.com3StbyFreq / 1000000).toFixed(3)
+                        activeFreq: NavCom.com3Freq.toFixed(3)
+                        standbyFreq: NavCom.com3StbyFreq.toFixed(3)
 
                         onFrequencyClicked: root.radioClicked("COM3 Standby",
                                                               118,
@@ -128,8 +126,8 @@ TscPageBase {
 
                     sourceComponent: RadioRow {
                         name: "NAV1"
-                        activeFreq: (NavCom.nav1Freq / 1000000).toFixed(2)
-                        standbyFreq: (NavCom.nav1StbyFreq / 1000000).toFixed(2)
+                        activeFreq: NavCom.nav1Freq.toFixed(2)
+                        standbyFreq: NavCom.nav1StbyFreq.toFixed(2)
 
                         onFrequencyClicked: root.radioClicked("NAV1",
                                                               108,
@@ -147,8 +145,8 @@ TscPageBase {
 
                     sourceComponent: RadioRow {
                         name: "NAV2"
-                        activeFreq: (NavCom.nav2Freq / 1000000).toFixed(2)
-                        standbyFreq: (NavCom.nav2StbyFreq / 1000000).toFixed(2)
+                        activeFreq: NavCom.nav2Freq.toFixed(2)
+                        standbyFreq: NavCom.nav2Freq.toFixed(2)
 
                         onFrequencyClicked: root.radioClicked("NAV2",
                                                               108,
@@ -167,10 +165,6 @@ TscPageBase {
                     sourceComponent: TransponderRow {
                         onXpndrClicked: root.xpndrClicked()
                     }
-                }
-
-                ServerConnectionRow {
-
                 }
             }
 

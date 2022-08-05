@@ -3,75 +3,6 @@
         <file>main.qml</file>
         <file>MfdPage/MfdPage.qml</file>
         <file>MfdPage/NavTopBar.qml</file>
-        <file>PfdPage/PfdPage.qml</file>
-        <file>PfdPage/Elements/AngleOfAttackIndicator.qml</file>
-        <file>PfdPage/Elements/AutopilotInfos.qml</file>
-        <file>PfdPage/Elements/BottomBar.qml</file>
-        <file>PfdPage/Elements/ComInfos.qml</file>
-        <file>PfdPage/Elements/NavFreqInfos.qml</file>
-        <file>PfdPage/Elements/NavInfos.qml</file>
-        <file>PfdPage/Elements/RadarAltitude.qml</file>
-        <file>PfdPage/Elements/WindDataDisplay.qml</file>
-        <file>PfdPage/Elements/AirspeedIndicator/AirspeedIndicator.qml</file>
-        <file>PfdPage/Elements/AirspeedIndicator/AirspeedReferenceGroup.qml</file>
-        <file>PfdPage/Elements/AirspeedIndicator/CenterItem.qml</file>
-        <file>PfdPage/Elements/AirspeedIndicator/Cursor.qml</file>
-        <file>PfdPage/Elements/AirspeedIndicator/EndElement.qml</file>
-        <file>PfdPage/Elements/AirspeedIndicator/GradGroup.qml</file>
-        <file>PfdPage/Elements/AirspeedIndicator/StartElement.qml</file>
-        <file>PfdPage/Elements/Altimeter/Altimeter.qml</file>
-        <file>PfdPage/Elements/Altimeter/DigitsGroup.qml</file>
-        <file>PfdPage/Elements/Altimeter/GraduationGroup.qml</file>
-        <file>PfdPage/Elements/Altimeter/GraduationItem.qml</file>
-        <file>PfdPage/Elements/Altimeter/GroundLine.qml</file>
-        <file>PfdPage/Elements/Altimeter/SelectedAltitudeGroup.qml</file>
-        <file>PfdPage/Elements/Altimeter/VerticalDeviationGroup.qml</file>
-        <file>PfdPage/Elements/Altimeter/VerticalSpeedGroup.qml</file>
-        <file>PfdPage/Elements/AttitudeIndicator/AttitudeBackground.qml</file>
-        <file>PfdPage/Elements/AttitudeIndicator/AttitudeBank.qml</file>
-        <file>PfdPage/Elements/AttitudeIndicator/AttitudeIndicator.qml</file>
-        <file>PfdPage/Elements/AttitudeIndicator/AttitudePitch.qml</file>
-        <file>PfdPage/Elements/AttitudeIndicator/AttitudePitchContainer.qml</file>
-        <file>PfdPage/Elements/AttitudeIndicator/Cursors.qml</file>
-        <file>PfdPage/Elements/AttitudeIndicator/FlightDirector.qml</file>
-        <file>PfdPage/Elements/HsiIndicator/BackgroundCircle.qml</file>
-        <file>PfdPage/Elements/HsiIndicator/Bearing1FixedGroup.qml</file>
-        <file>PfdPage/Elements/HsiIndicator/Bearing2FixedGroup.qml</file>
-        <file>PfdPage/Elements/HsiIndicator/BgCircleItems.qml</file>
-        <file>PfdPage/Elements/HsiIndicator/Course.qml</file>
-        <file>PfdPage/Elements/HsiIndicator/DmeGroup.qml</file>
-        <file>PfdPage/Elements/HsiIndicator/HSIndicator.qml</file>
-        <file>PfdPage/Elements/HsiIndicator/StaticParts.qml</file>
-        <file>PfdPage/Elements/HsiIndicator/Turnrate.qml</file>
-        <file>settingsPage/SettingsPage.qml</file>
-        <file>settingsPage/StyledCheckBox.qml</file>
-        <file>settingsPage/ThumbnailView.qml</file>
-        <file>settingsPage/connection/ConnectionInput.qml</file>
-        <file>settingsPage/flightplan/FlightplanInput.qml</file>
-        <file>settingsPage/flightplan/FlightplanPage.qml</file>
-        <file>settingsPage/flightplan/FlightplanTable.qml</file>
-        <file>settingsPage/flightplan/FlightplanTableCell.qml</file>
-        <file>settingsPage/flightplan/StyledButton.qml</file>
-        <file>settingsPage/flightplan/StyledComboBox.qml</file>
-        <file>settingsPage/flightplan/StyledTextInput.qml</file>
-        <file>TscPage/TscPage.qml</file>
-        <file>TscPage/TscPageBase.qml</file>
-        <file>TscPage/styled_controls/GradientButton.qml</file>
-        <file>TscPage/styled_controls/GradientRoundButton.qml</file>
-        <file>TscPage/styled_controls/NumericKeyboard.qml</file>
-        <file>TscPage/styled_controls/FullKeyboard.qml</file>
-        <file>TscPage/styled_controls/LoadSpinner.qml</file>
-        <file>TscPage/styled_controls/gradientButtonElements/CenterImg.qml</file>
-        <file>TscPage/styled_controls/gradientButtonElements/GradientStatusBar.qml</file>
-        <file>TscPage/styled_controls/gradientButtonElements/Img.qml</file>
-        <file>TscPage/styled_controls/gradientButtonElements/ImgSmall.qml</file>
-        <file>TscPage/styled_controls/gradientButtonElements/LowerImg.qml</file>
-        <file>TscPage/styled_controls/gradientButtonElements/LowerValue.qml</file>
-        <file>TscPage/styled_controls/gradientButtonElements/MainNumber.qml</file>
-        <file>TscPage/styled_controls/gradientButtonElements/MainText.qml</file>
-        <file>TscPage/styled_controls/gradientButtonElements/Title.qml</file>
-        <file>TscPage/styled_controls/gradientButtonElements/TopText.qml</file>
-        <file>TscPage/styled_controls/gradientButtonElements/UpperTitle.qml</file>
         <file>MfdPage/EngineDisplay/Gauges/Elements/ValueBlinkAnimation.qml</file>
         <file>MfdPage/EngineDisplay/Gauges/Elements/Vertical/Gauge.qml</file>
         <file>MfdPage/EngineDisplay/Gauges/Elements/Vertical/DoubleGauge.qml</file>
@@ -103,38 +34,97 @@
         <file>MfdPage/GeoMapElem/MapButtons.qml</file>
         <file>MfdPage/GeoMapElem/OverlayMap.qml</file>
         <file>MfdPage/GeoMapElem/RangeCircles.qml</file>
+        <file>PfdPage/PfdPage.qml</file>
+        <file>PfdPage/Elements/AirspeedIndicator/AirspeedIndicator.qml</file>
+        <file>PfdPage/Elements/AirspeedIndicator/AirspeedReferenceGroup.qml</file>
+        <file>PfdPage/Elements/AirspeedIndicator/CenterItem.qml</file>
+        <file>PfdPage/Elements/AirspeedIndicator/Cursor.qml</file>
+        <file>PfdPage/Elements/AirspeedIndicator/EndElement.qml</file>
+        <file>PfdPage/Elements/AirspeedIndicator/GradGroup.qml</file>
         <file>PfdPage/Elements/AirspeedIndicator/SpeedBugElement.qml</file>
-        <file>testFile.qml</file>
+        <file>PfdPage/Elements/AirspeedIndicator/StartElement.qml</file>
+        <file>PfdPage/Elements/Altimeter/Altimeter.qml</file>
+        <file>PfdPage/Elements/Altimeter/DigitsGroup.qml</file>
+        <file>PfdPage/Elements/Altimeter/GraduationGroup.qml</file>
+        <file>PfdPage/Elements/Altimeter/GraduationItem.qml</file>
+        <file>PfdPage/Elements/Altimeter/GroundLine.qml</file>
+        <file>PfdPage/Elements/Altimeter/SelectedAltitudeGroup.qml</file>
+        <file>PfdPage/Elements/Altimeter/VerticalDeviationGroup.qml</file>
+        <file>PfdPage/Elements/Altimeter/VerticalSpeedGroup.qml</file>
+        <file>PfdPage/Elements/AttitudeIndicator/AttitudeBackground.qml</file>
+        <file>PfdPage/Elements/AttitudeIndicator/AttitudeBank.qml</file>
+        <file>PfdPage/Elements/AttitudeIndicator/AttitudeIndicator.qml</file>
+        <file>PfdPage/Elements/AttitudeIndicator/AttitudePitch.qml</file>
+        <file>PfdPage/Elements/AttitudeIndicator/AttitudePitchContainer.qml</file>
+        <file>PfdPage/Elements/AttitudeIndicator/Cursors.qml</file>
+        <file>PfdPage/Elements/AttitudeIndicator/FlightDirector.qml</file>
+        <file>PfdPage/Elements/HsiIndicator/BackgroundCircle.qml</file>
+        <file>PfdPage/Elements/HsiIndicator/Bearing1FixedGroup.qml</file>
+        <file>PfdPage/Elements/HsiIndicator/Bearing2FixedGroup.qml</file>
+        <file>PfdPage/Elements/HsiIndicator/BgCircleItems.qml</file>
+        <file>PfdPage/Elements/HsiIndicator/Course.qml</file>
+        <file>PfdPage/Elements/HsiIndicator/DmeGroup.qml</file>
+        <file>PfdPage/Elements/HsiIndicator/HSIndicator.qml</file>
+        <file>PfdPage/Elements/HsiIndicator/StaticParts.qml</file>
+        <file>PfdPage/Elements/HsiIndicator/Turnrate.qml</file>
+        <file>PfdPage/Elements/AngleOfAttackIndicator.qml</file>
+        <file>PfdPage/Elements/AutopilotInfos.qml</file>
+        <file>PfdPage/Elements/BottomBar.qml</file>
+        <file>PfdPage/Elements/ComInfos.qml</file>
+        <file>PfdPage/Elements/NavFreqInfos.qml</file>
+        <file>PfdPage/Elements/NavInfos.qml</file>
+        <file>PfdPage/Elements/RadarAltitude.qml</file>
+        <file>PfdPage/Elements/WindDataDisplay.qml</file>
+        <file>TscPage/TscPage.qml</file>
+        <file>TscPage/TscPageBase.qml</file>
+        <file>TscPage/MfdPage/MfdHome.qml</file>
+        <file>TscPage/MfdPage/MfdPage.qml</file>
+        <file>TscPage/MfdPage/EdSettings/EdSettings.qml</file>
+        <file>TscPage/MfdPage/EdSettings/TrimUnitPopup.qml</file>
+        <file>TscPage/MfdPage/FlightplanPage/FlightplanPage.qml</file>
+        <file>TscPage/MfdPage/FlightplanPage/FlightplanTable/FlightplanTable.qml</file>
+        <file>TscPage/MfdPage/FlightplanPage/FlightplanTable/FlightplanTableElement.qml</file>
+        <file>TscPage/MfdPage/FlightplanPage/FlightplanTable/private/TableCell.qml</file>
+        <file>TscPage/MfdPage/FlightplanPage/FlightplanTable/private/TableRow.qml</file>
         <file>TscPage/MfdPage/IconSettings/ColorPopup.qml</file>
         <file>TscPage/MfdPage/IconSettings/IconPopup.qml</file>
         <file>TscPage/MfdPage/IconSettings/IconSettings.qml</file>
         <file>TscPage/MfdPage/IconSettings/SizePopup.qml</file>
         <file>TscPage/MfdPage/MapSettings/MapOrientationPopup.qml</file>
         <file>TscPage/MfdPage/MapSettings/MapSettings.qml</file>
-        <file>TscPage/MfdPage/FlightplanPage/FlightplanPage.qml</file>
-        <file>TscPage/MfdPage/FlightplanPage/FlightplanTable.qml</file>
-        <file>TscPage/MfdPage/FlightplanPage/FlightplanTableCell.qml</file>
-        <file>TscPage/MfdPage/MfdHome.qml</file>
-        <file>TscPage/MfdPage/MfdPage.qml</file>
         <file>TscPage/NavComPage/FrequencyKeyboard.qml</file>
         <file>TscPage/NavComPage/NavComHome.qml</file>
         <file>TscPage/NavComPage/NavComPage.qml</file>
         <file>TscPage/NavComPage/RadioRow.qml</file>
         <file>TscPage/NavComPage/TransponderKeyboard.qml</file>
         <file>TscPage/NavComPage/TransponderRow.qml</file>
-        <file>TscPage/NavComPage/ServerConnectionRow.qml</file>
-        <file>TscPage/NavComPage/PortKeyboard.qml</file>
+        <file>TscPage/PfdPage/PfdHome.qml</file>
+        <file>TscPage/PfdPage/PfdPage.qml</file>
         <file>TscPage/PfdPage/Minimums/Minimums.qml</file>
         <file>TscPage/PfdPage/Minimums/MinimumsSource.qml</file>
+        <file>TscPage/PfdPage/PfdSettings/OptionsOverlay.qml</file>
+        <file>TscPage/PfdPage/PfdSettings/PfdSettings.qml</file>
         <file>TscPage/PfdPage/SpeedBugPage/SpeedBugNameKeyboard.qml</file>
         <file>TscPage/PfdPage/SpeedBugPage/SpeedBugPage.qml</file>
         <file>TscPage/PfdPage/SpeedBugPage/SpeedBugsRow.qml</file>
         <file>TscPage/PfdPage/SpeedBugPage/SpeedKeyboard.qml</file>
-        <file>TscPage/PfdPage/PfdSettings/PfdSettings.qml</file>
-        <file>TscPage/PfdPage/PfdSettings/OptionsOverlay.qml</file>
         <file>TscPage/PfdPage/Timers/TimeKeyboard.qml</file>
         <file>TscPage/PfdPage/Timers/Timers.qml</file>
-        <file>TscPage/PfdPage/PfdHome.qml</file>
-        <file>TscPage/PfdPage/PfdPage.qml</file>
+        <file>TscPage/styled_controls/FullKeyboard.qml</file>
+        <file>TscPage/styled_controls/GradientButton.qml</file>
+        <file>TscPage/styled_controls/GradientRoundButton.qml</file>
+        <file>TscPage/styled_controls/LoadSpinner.qml</file>
+        <file>TscPage/styled_controls/NumericKeyboard.qml</file>
+        <file>TscPage/styled_controls/gradientButtonElements/CenterImg.qml</file>
+        <file>TscPage/styled_controls/gradientButtonElements/GradientStatusBar.qml</file>
+        <file>TscPage/styled_controls/gradientButtonElements/Img.qml</file>
+        <file>TscPage/styled_controls/gradientButtonElements/ImgSmall.qml</file>
+        <file>TscPage/styled_controls/gradientButtonElements/LowerImg.qml</file>
+        <file>TscPage/styled_controls/gradientButtonElements/LowerValue.qml</file>
+        <file>TscPage/styled_controls/gradientButtonElements/MainNumber.qml</file>
+        <file>TscPage/styled_controls/gradientButtonElements/MainText.qml</file>
+        <file>TscPage/styled_controls/gradientButtonElements/Title.qml</file>
+        <file>TscPage/styled_controls/gradientButtonElements/TopText.qml</file>
+        <file>TscPage/styled_controls/gradientButtonElements/UpperTitle.qml</file>
     </qresource>
 </RCC>
