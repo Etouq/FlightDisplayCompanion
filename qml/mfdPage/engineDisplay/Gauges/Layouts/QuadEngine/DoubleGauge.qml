@@ -12,19 +12,19 @@ Item {
     readonly property real bottomGaugesMinWidth: getBottomGaugesMinWidth()
 
     function getBottomGaugesMinWidth() {
-        if (EngineMisc.hasEgt()) {
+        if (EngineMisc.hasSecondaryTempGauge()) {
             const oilTempGaugeData = MfdRoot.oilTempGauge()
-            const egtGaugeData = MfdRoot.egtGauge()
+            const secondaryTempGaugeData = MfdRoot.secondaryTempGauge()
             const oilPressGaugeData = MfdRoot.oilPressGauge()
 
             const oilTempGaugeWidth = 2 * oilTempGaugeData.valueMaxSize(
                                         ) + oilPressGaugeData.unitWidth() - 86
             const oilPressGaugeWidth = 2 * oilPressGaugeData.valueMaxSize(
                                          ) + oilPressGaugeData.unitWidth() - 86
-            const egtGaugeWidth = 2 * egtGaugeData.valueMaxSize(
-                                    ) + egtGaugeData.unitWidth() - 86
+            const secondaryTempGaugeWidth = 2 * secondaryTempGaugeData.valueMaxSize(
+                                    ) + secondaryTempGaugeData.unitWidth() - 86
 
-            return Math.max(oilTempGaugeWidth, egtGaugeWidth,
+            return Math.max(oilTempGaugeWidth, secondaryTempGaugeWidth,
                             oilPressGaugeWidth)
         }
 
@@ -110,7 +110,7 @@ Item {
     Vertical.QuadGauge {
         id: oilTempGauge
         centerX: 420 / 4 + (layoutRoot.bottomGaugesMinWidth + 96) / 2
-                 * (1 - (EngineMisc.hasEgt() ? 3 : 2) / 2)
+                 * (1 - (EngineMisc.hasSecondaryTempGauge() ? 3 : 2) / 2)
         yTop: 760
 
         title: oilTempGauge.gaugeData.getTitle()
@@ -124,7 +124,7 @@ Item {
     Vertical.QuadGauge {
         id: oilPressGauge
         centerX: 420 - (layoutRoot.bottomGaugesMinWidth + 96) / 2
-                 * (1 - (EngineMisc.hasEgt() ? 3 : 2) / 2) - 420 / 4
+                 * (1 - (EngineMisc.hasSecondaryTempGauge() ? 3 : 2) / 2) - 420 / 4
         yTop: 760
 
         title: oilPressGauge.gaugeData.getTitle()
@@ -137,18 +137,18 @@ Item {
 
     Loader {
         asynchronous: true
-        active: EngineMisc.hasEgt()
+        active: EngineMisc.hasSecondaryTempGauge()
         sourceComponent: Vertical.QuadGauge {
-            id: egtGauge
+            id: secondaryTempGauge
             centerX: 210
             yTop: 760
 
-            title: egtGauge.gaugeData.getTitle()
-            unit: egtGauge.gaugeData.getUnitString()
+            title: secondaryTempGauge.gaugeData.getTitle()
+            unit: secondaryTempGauge.gaugeData.getUnitString()
 
             minCenterWidth: layoutRoot.bottomGaugesMinWidth
 
-            gaugeData: MfdRoot.egtGauge()
+            gaugeData: MfdRoot.secondaryTempGauge()
         }
     }
 

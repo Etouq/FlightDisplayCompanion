@@ -94,7 +94,7 @@ Item {
 
     Vertical.DoubleGauge {
         id: oilTempGauge
-        centerX: EngineMisc.hasEgt() ?  82.5 : 120
+        centerX: EngineMisc.hasSecondaryTempGauge() ?  82.5 : 120
         yTop: 750
 
         title: oilTempGauge.gaugeData.getTitle()
@@ -105,7 +105,7 @@ Item {
 
     Vertical.DoubleGauge {
         id: oilPressGauge
-        centerX: EngineMisc.hasEgt() ?  337.5 : 300
+        centerX: EngineMisc.hasSecondaryTempGauge() ?  337.5 : 300
         yTop: 750
 
         title: oilPressGauge.gaugeData.getTitle()
@@ -116,17 +116,17 @@ Item {
 
     Loader {
         asynchronous: true
-        active: EngineMisc.hasEgt()
+        active: EngineMisc.hasSecondaryTempGauge()
         sourceComponent: Vertical.DoubleGauge {
-            id: egtGauge
+            id: secondaryTempGauge
 
             centerX: 210
             yTop: 750
 
-            title: egtGauge.gaugeData.getTitle()
-            unit: egtGauge.gaugeData.getUnitString()
+            title: secondaryTempGauge.gaugeData.getTitle()
+            unit: secondaryTempGauge.gaugeData.getUnitString()
 
-            gaugeData: MfdRoot.egtGauge()
+            gaugeData: MfdRoot.secondaryTempGauge()
         }
     }
 

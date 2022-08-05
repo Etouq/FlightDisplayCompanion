@@ -94,17 +94,17 @@ Item {
     }
 
     Loader {
-        id: egtLoader
+        id: secondaryTempGauge
         active: EngineMisc.hasSecondaryTempGauge()
         asynchronous: true
         sourceComponent: Vertical.DoubleGauge {
-            id: egtGauge
+            id: secondaryTempGauge
 
             centerX: 210
             yTop: 730.5
 
-            title: egtGauge.gaugeData.getTitle()
-            unit: egtGauge.gaugeData.getUnitString()
+            title: secondaryTempGauge.gaugeData.getTitle()
+            unit: secondaryTempGauge.gaugeData.getUnitString()
 
             gaugeData: MfdRoot.secondaryTempGauge()
         }

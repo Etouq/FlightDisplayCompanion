@@ -71,12 +71,14 @@ Item {
 
     Loader {
         active: main.hasApu
+        anchors.top: fuelTimeTitle.bottom
         sourceComponent: Item {
+            anchors.top: parent.bottom
             Text {
                 id: apuTitle
                 anchors.right: parent.left
                 anchors.rightMargin: -195
-                anchors.top: fuelTimeTitle.bottom
+                anchors.top: parent.top
                 color: "white"
                 font.pixelSize: 18
                 font.family: "Roboto Mono"
@@ -88,7 +90,7 @@ Item {
                 id: apuText
                 anchors.left: parent.right
                 anchors.leftMargin: -195
-                anchors.top: fuelTimeTitle.bottom
+                anchors.top: parent.top
                 color: "white"
                 font.pixelSize: 18
                 font.family: "Roboto Mono"
