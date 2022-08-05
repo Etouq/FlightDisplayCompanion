@@ -11,5 +11,4 @@ AircraftLoader::AircraftLoader(pages::mfd::MfdPage &mfdPage,
     d_pfdPage(pfdPage),
     d_tscPage(tscPage)
 {
-    connect(tscPage.getSelector(), &pages::tsc::AircraftSelector::loadAircraft, this, &AircraftLoader::loadAircraft);
 }
