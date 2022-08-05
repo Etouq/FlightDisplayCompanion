@@ -8,7 +8,6 @@ import IO.Network 1.0
 
 import "MfdPage"
 import "PfdPage"
-import "settingsPage"
 import "TscPage"
 
 ApplicationWindow {
