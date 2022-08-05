@@ -1,5 +1,6 @@
 import QtQuick 2.15
 
+import Pfd.HSIndicator 1.0
 import General.Settings 1.0
 import TypeEnums 1.0
 
@@ -51,9 +52,11 @@ TscPageBase {
             }
 
             LowerValue {
+                id: navSourceText
                 text: "GPS"
             }
 
+            onReleased: GenSettings.nextCdiMode()
         }
 
         Row {
@@ -154,5 +157,44 @@ TscPageBase {
         }
 
     }
+
+    states: [
+        State {
+            name: "noSource"
+            when: HSIndicator.navSource === HsiNavSource.NONE
+
+            PropertyChanges {
+                target: cdiButton
+                visible: false
+            }
+        },
+        State {
+            name: "gpsSource"
+            when: HSIndicator.navSource === HsiNavSource.GPS
+
+            PropertyChanges {
+                target: navSourceText
+                text: "GPS"
+            }
+        },
+        State {
+            name: "nav1Source"
+            when: HSIndicator.navSource === HsiNavSource.VOR1 || HSIndicator.navSource === HsiNavSource.LOC1 || HSIndicator.navSource === HsiNavSource.TCN1
+
+            PropertyChanges {
+                target: navSourceText
+                text: "NAV1"
+            }
+        },
+        State {
+            name: "nav2Source"
+            when: HSIndicator.navSource === HsiNavSource.VOR2 || HSIndicator.navSource === HsiNavSource.LOC2 || HSIndicator.navSource === HsiNavSource.TCN2
+
+            PropertyChanges {
+                target: navSourceText
+                text: "NAV2"
+            }
+        }
+    ]
 
 }
