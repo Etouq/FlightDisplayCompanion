@@ -12,10 +12,11 @@ void NetworkClient::socketStateChanged(QAbstractSocket::SocketState state)
             emit connectionStateChanged();
 
             connect(&d_socket, &QTcpSocket::readyRead, this, &NetworkClient::verifyConnectionVersion);
+            disconnect(&d_socket, &QTcpSocket::readyRead, this, &NetworkClient::readSimData);
 
             // restart udp socket if we're not shutting down
             if (!d_closingApplication)
-                d_serverDatagramSocket.bind(QHostAddress::Any, 12000, QUdpSocket::DontShareAddress);
+                d_serverDatagramSocket.bind(QHostAddress::Any, 11999, QUdpSocket::DontShareAddress);
 
             break;
         case QAbstractSocket::HostLookupState:
@@ -24,8 +25,10 @@ void NetworkClient::socketStateChanged(QAbstractSocket::SocketState state)
             emit connectionStateChanged();
             break;
         case QAbstractSocket::ConnectedState:
+
             d_connectionAttemptKiller.stop();
             d_serverDatagramSocket.close();
+
             d_tryConnecting = false;
             d_addressOrPortChanged = false;
 
