@@ -10,21 +10,18 @@ MapItemGroup {
 
         let fpPath = [];
 
-        for (let i = 0; i < Flightplan.getFlightPlanSize(); i++) {
-            fpPath.push(Flightplan.getPosition(i));
+        for (let i = 0; i < FlightplanModel.rowCount(); ++i) {
+            fpPath.push(FlightplanModel.position(i));
         }
 
-        const polylines = [flightPlanMapRoute, flightPlanMapRoute1, flightPlanMapRoute2, flightPlanMapRoute3, flightPlanMapRoute4];
+        const polylines = [flightPlanMapRoute, flightPlanMapRoute1, flightPlanMapRoute2, flightPlanMapRoute3];
 
-        // split into separate polylines since too many points makes the line disappear for som reason
-        for (let i = 0; i < polylines.length; ++i) {
-            if (i === polylines.length - 1 && (i + 1) * 60 <= fpPath.length) {
-                polylines[i].path = fpPath.slice(i * 60, fpPath.length);
-            }
-            else {
-                polylines[i].path = fpPath.slice(i * 60, (i + 1) * 60);
-            }
+        // split into separate polylines since too many points makes the line disappear for some reason
+        for (let i = 0; i < polylines.length - 1; ++i) {
+            polylines[i].path = fpPath.slice(i * 60, (i + 1) * 60);
         }
+
+        flightPlanMapRoute4.path = fpPath.slice(polylines.length * 60, fpPath.length);
     }
 
     MapPolyline {

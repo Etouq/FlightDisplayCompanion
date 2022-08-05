@@ -2,22 +2,30 @@ import QtQuick 2.15
 import QtLocation 5.15
 import QtPositioning 5.15
 import QtQuick.Controls 2.15
+import QtPositioning 5.15
 import Mfd.Flightplan 1.0
 import TypeEnums 1.0
 
 MapItemView {
-    model: 0
+    model: FlightplanModel
 
     delegate: MapQuickItem {
         id: waypointItem
 
         required property int index
+        required property string ident
+        required property string mapIconUrl
+        required property double lat
+        required property double lon
 
         anchorPoint.x: width / 2
         anchorPoint.y: width / 2
         width: 87.5
         height: 119.5
-        coordinate: Flightplan.getPosition(index)
+        coordinate {
+            latitude: waypointItem.lat
+            longitude: waypointItem.lon
+        }
 
         sourceItem: Item {
             width: 87.5
@@ -26,24 +34,7 @@ MapItemView {
             Image {
                 width: 87.5
                 height: 87.5
-                source: waypointTypeToIcon(Flightplan.getWpType(index))
-
-                function waypointTypeToIcon(wpType) {
-                    switch (wpType) {
-                        case WaypointType.AIRPORT:
-                            return "qrc:/images/mapImages/ICON_MAP_AIRPORT_NON_TOWERED_SERVICED_PINK.png";
-                        case WaypointType.INTERSECTION:
-                            return "qrc:/images/mapImages/ICON_MAP_INTERSECTION.png";
-                        case WaypointType.VOR:
-                            return "qrc:/images/mapImages/ICON_MAP_VOR.png";
-                        case WaypointType.NDB:
-                            return "qrc:/images/mapImages/ICON_MAP_NDB_WAYPOINT.png";
-                        case WaypointType.USER:
-                            return "qrc:/images/mapImages/ICON_MAP_USERWAYPOINT.png";
-                        default:
-                            return "";
-                    }
-                }
+                source: waypointItem.mapIconUrl
             }
 
             Label {
@@ -60,7 +51,7 @@ MapItemView {
                 font.bold: true
 
                 color: "white"
-                text: Flightplan.getIdent(index)
+                text: waypointItem.ident
 
                 background: Rectangle {
                     color: "#3f4851"

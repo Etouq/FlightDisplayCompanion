@@ -10,8 +10,6 @@ MapItemGroup {
         target: Flightplan
         function onFlightplanChanged() {
             flightplanPath.updatePath();
-            flightplanWaypoints.model = 0; // force update
-            flightplanWaypoints.model = Flightplan.getFlightPlanSize();
         }
     }
 
