@@ -34,9 +34,15 @@ set(PROJECT_SOURCES
 set(ANDROID_EXTRA_LIBS
     C:/Users/Mikey/AppData/Local/Android/Sdk/android_openssl/latest/arm64/libcrypto_1_1.so
     C:/Users/Mikey/AppData/Local/Android/Sdk/android_openssl/latest/arm64/libssl_1_1.so
+    C:/Users/Mikey/AppData/Local/Android/Sdk/android_openssl/latest/arm/libcrypto_1_1.so
+    C:/Users/Mikey/AppData/Local/Android/Sdk/android_openssl/latest/arm/libssl_1_1.so
+    C:/Users/Mikey/AppData/Local/Android/Sdk/android_openssl/latest/x86/libcrypto_1_1.so
+    C:/Users/Mikey/AppData/Local/Android/Sdk/android_openssl/latest/x86/libssl_1_1.so
+    C:/Users/Mikey/AppData/Local/Android/Sdk/android_openssl/latest/x86_64/libcrypto_1_1.so
+    C:/Users/Mikey/AppData/Local/Android/Sdk/android_openssl/latest/x86_64/libssl_1_1.so
 CACHE INTERNAL "")
 if(ANDROID)
-    include(C:/Users/Mikey/AppData/Local/Android/Sdk/android_openssl/CMakeLists.txt)
+#    include(C:/Users/Mikey/AppData/Local/Android/Sdk/android_openssl/CMakeLists.txt)
     add_library(${_PROJECT_NAME} SHARED
         ${PROJECT_SOURCES}
     )
@@ -64,3 +70,6 @@ target_link_libraries(${_PROJECT_NAME} PRIVATE
 set_target_properties(${_PROJECT_NAME} PROPERTIES
     WIN32_EXECUTABLE TRUE
 )
+if (ANDROID)
+    include(C:/Users/Mikey/AppData/Local/Android/Sdk/android_openssl/CMakeLists.txt)
+endif()
