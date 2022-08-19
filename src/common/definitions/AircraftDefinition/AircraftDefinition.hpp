@@ -35,10 +35,11 @@ struct AircraftDefinition
     SwitchingGaugeType gauge3Type = SwitchingGaugeType::NONE;
     SwitchingGaugeType gauge4Type = SwitchingGaugeType::NONE;
 
-    // never more than 1 of the switching gauges are a temperature type
+          // never more than 1 of the switching gauges are a temperature type
     TemperatureGaugeType engineTempType = TemperatureGaugeType::ITT;
 
     double maxPower = 1;
+    double maxTorque = 1;
 
     bool hasApu = false;
 
@@ -69,7 +70,15 @@ struct AircraftDefinition
     float redBegin = 0;
     float redEnd = 0;
     float highLimit = 0;
+
     bool noColors = false;
+    bool hasLowLimit = true;
+    bool hasFlapsSpeed = true;
+    bool hasGreenSpeed = true;
+    bool hasYellowSpeed = true;
+    bool hasRedSpeed = true;
+    bool hasHighLimit = true;
+
     bool dynamicBarberpole = false;
 
     QList<ReferenceSpeed> refSpeedDefaults = { { 85, "R" }, { 100, "X" }, { 124, "Y" }, { 85, "AP" } };

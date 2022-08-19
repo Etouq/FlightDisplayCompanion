@@ -18,7 +18,7 @@ GaugeDefinition GaugeDefinition::fromBinary(QIODevice &data)
     data.read(reinterpret_cast<char *>(&ret.minValue), sizeof(ret.minValue));
     data.read(reinterpret_cast<char *>(&ret.maxValue), sizeof(ret.maxValue));
 
-    uint16_t listSize = 0;
+    uint8_t listSize = 0;
     data.read(reinterpret_cast<char *>(&listSize), sizeof(listSize));
 
     double start = 0;
