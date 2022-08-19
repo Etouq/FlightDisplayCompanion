@@ -18,6 +18,7 @@ inline double getMultiplier(Units unit)
         case Units::KELVIN:
         case Units::KILOPASCAL:
         case Units::NEWTONMETER:
+        case Units::HP_IMPERIAL:
             return 1.0;
         case Units::LITRES:
         case Units::LITRES_PER_SECOND:
@@ -67,6 +68,19 @@ inline double getMultiplier(Units unit)
             return 1.0 / 1.355'818;
         case Units::INCHPOUND:
             return 8.850'745'767'6;
+        // power
+        case Units::HP_METRIC:
+            return 735.498'75 / 745.699'87;
+        case Units::WATT:
+            return 745.699'87;
+        case Units::KILOWATT:
+            return 0.745'699'87;
+        case Units::FT_LBF_HOUR:
+            return 550.0 / 3600.0;
+        case Units::FT_LBF_MIN:
+            return 550.0/ 60.0;
+        case Units::FT_LBF_SEC:
+            return 550.0;
         // volume
         case Units::CUBICCM:
         case Units::CUBICCM_PER_HOUR:

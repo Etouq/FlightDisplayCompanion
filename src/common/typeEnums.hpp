@@ -46,7 +46,8 @@ enum class TemperatureGaugeType : uint8_t
 {
     EGT = 0,
     ITT,
-    CHT
+    CHT,
+    TIT
 };
 
 enum class SwitchingGaugeType : uint8_t
@@ -56,14 +57,10 @@ enum class SwitchingGaugeType : uint8_t
     N2,
     ENGINE_TEMP, // itt, egt or cht
     RPM,
-    RPM_PCT,
     PROP_RPM,
-    PROP_RPM_PCT,
     POWER,
-    POWER_PCT,
     MANIFOLD_PRESSURE,
-    TORQUE,
-    TORQUE_PCT
+    TORQUE
 };
 
 #endif  // __TYPE_ENUMS_HPP__
