@@ -87,7 +87,6 @@ set(HPP_FILES
 
         src/AircraftLoader/AircraftLoader.hpp
 
-        src/common/AircraftConfig.hpp
         src/common/dataIdentifiers.hpp
         src/common/QmlEnums.hpp
         src/common/typeEnums.hpp
