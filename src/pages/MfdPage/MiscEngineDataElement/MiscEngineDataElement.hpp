@@ -268,10 +268,12 @@ public slots:
     {
         if (d_hasSpoilers)
         {
-            d_spoilersAngle = (newVal) *d_spoilersMaxAngle;
+            d_spoilersAngle = newVal * d_spoilersMaxAngle;
             emit spoilersAngleChanged();
-            int pctValue = lround(newVal * 100.0);
-            bool newShowSpoilersText = pctValue > 0;
+
+            const int pctValue = lround(newVal * 100.0);
+            const bool newShowSpoilersText = pctValue != 0;
+
             if (d_showSpoilersText != newShowSpoilersText)
             {
                 d_showSpoilersText = newShowSpoilersText;
@@ -279,8 +281,11 @@ public slots:
             }
             if (d_showSpoilersText)
             {
-                d_spoilersValue = QString::number(pctValue) + "%";
-                emit spoilersValueChanged();
+                if (const QString newSpoilersValue = QString::number(pctValue) + "%"; d_spoilersValue != newSpoilersValue)
+                {
+                    d_spoilersValue = newSpoilersValue;
+                    emit spoilersValueChanged();
+                }
             }
         }
     }
@@ -291,8 +296,8 @@ public slots:
         {
             d_flapsAngle = newVal;
             emit flapsAngleChanged();
-            int roundedAngle = lround(newVal);
-            bool newShowFlapsText = roundedAngle != 0;
+            const int roundedAngle = lround(newVal);
+            const bool newShowFlapsText = roundedAngle != 0;
             if (d_showFlapsText != newShowFlapsText)
             {
                 d_showFlapsText = newShowFlapsText;
@@ -322,14 +327,14 @@ public slots:
 
             if (d_trimUseDegrees)
             {
-                if (const QString newValue = QString::number(std::abs(d_elevTrimDegrees)) + "°";
+                if (const QString newValue = QString::number(d_elevTrimDegrees) + "°";
                     d_elevTrimValue != newValue)
                 {
                     d_elevTrimValue = newValue;
                     emit elevTrimValueChanged();
                 }
             }
-            else if (const QString newValue = QString::number(std::abs(d_elevTrimPct)) + "%";
+            else if (const QString newValue = QString::number(d_elevTrimPct) + "%";
                      d_elevTrimValue != newValue)
             {
                 d_elevTrimValue = newValue;
@@ -351,7 +356,7 @@ public slots:
             if (d_trimUseDegrees)
             {
                 if (const QString newValue =
-                      d_rudderTrimDegrees < 0 ? "" : " " + QString::number(std::abs(d_rudderTrimDegrees)) + "°";
+                      (d_rudderTrimDegrees < 0 ? "" : " ") + QString::number(d_rudderTrimDegrees) + "°";
                     d_rudderTrimValue != newValue)
                 {
                     d_rudderTrimValue = newValue;
@@ -359,7 +364,7 @@ public slots:
                 }
             }
             else if (const QString newValue =
-                       d_rudderTrimPct < 0 ? "" : " " + QString::number(std::abs(d_rudderTrimPct)) + "%";
+                       (d_rudderTrimPct < 0 ? "" : " ") + QString::number(d_rudderTrimPct) + "%";
                      d_rudderTrimValue != newValue)
             {
                 d_rudderTrimValue = newValue;
@@ -382,7 +387,7 @@ public slots:
             if (d_trimUseDegrees)
             {
                 if (const QString newValue =
-                      d_ailTrimDegrees < 0 ? "" : " " + QString::number(std::abs(d_ailTrimDegrees)) + "°";
+                      (d_ailTrimDegrees < 0 ? "" : " ") + QString::number(d_ailTrimDegrees) + "°";
                     d_aileronTrimValue != newValue)
                 {
                     d_aileronTrimValue = newValue;
@@ -390,7 +395,7 @@ public slots:
                 }
             }
             else if (const QString newValue =
-                       d_ailTrimPct < 0 ? "" : " " + QString::number(std::abs(d_ailTrimPct)) + "%";
+                       (d_ailTrimPct < 0 ? "" : " ") + QString::number(d_ailTrimPct) + "%";
                      d_aileronTrimValue != newValue)
             {
                 d_aileronTrimValue = newValue;
