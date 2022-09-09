@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.23)
 
 set(_PROJECT_NAME FlightDisplayCompanion)
-set(_PROJECT_VERSION 4)
+set(_PROJECT_VERSION 3.0.0)
 
 project(${_PROJECT_NAME} VERSION ${_PROJECT_VERSION} LANGUAGES CXX)
 
