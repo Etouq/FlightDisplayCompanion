@@ -9,7 +9,10 @@ void NetworkClient::verifyConnectionVersion()
 {
     uint8_t serverVersion = 0;
     if (static_cast<uint64_t>(d_socket.bytesAvailable()) < sizeof(serverVersion))
+    {
+        d_versionVerified = false;
         return;
+    }
 
     d_socket.read(reinterpret_cast<char *>(&serverVersion), sizeof(serverVersion));
 
@@ -32,6 +35,7 @@ void NetworkClient::verifyConnectionVersion()
         emit newErrorMessage("The network protocol of the Simconnect Server is newer than the one "
                              "used by this application. Please update this application.");
         d_socket.disconnectFromHost();
+        d_versionVerified = false;
         return;
     }
     if (s_communicationVersion > serverVersion)
@@ -40,9 +44,11 @@ void NetworkClient::verifyConnectionVersion()
         emit newErrorMessage("The network protocol of the Simconnect Server is older than the one "
                              "used by this application. Please update the Simconnect Server.");
         d_socket.disconnectFromHost();
+        d_versionVerified = false;
         return;
     }
 
+    d_versionVerified = true;
     // switch over data reading function
     disconnect(&d_socket, &QTcpSocket::readyRead, this, &NetworkClient::verifyConnectionVersion);
     connect(&d_socket, &QTcpSocket::readyRead, this, &NetworkClient::readSimData);

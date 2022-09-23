@@ -42,6 +42,7 @@ class NetworkClient : public QObject
     QUdpSocket d_serverDatagramSocket;
 
     static constexpr uint8_t s_communicationVersion = 3;
+    bool d_versionVerified = false;
 
     bool d_tryConnecting = false;
     bool d_addressOrPortChanged = false;
@@ -52,8 +53,8 @@ class NetworkClient : public QObject
     QTimer d_connectionAttemptKiller;
 
     // qml
-    QString d_address = "192.168.2.37";
-    quint16 d_port = 58008;
+    QString d_address = "";
+    quint16 d_port = 0;
 
     QString d_errorString = "";
     ConnectionState d_connectionState = ConnectionState::DISCONNECTED;
@@ -67,18 +68,7 @@ public:
 
     explicit NetworkClient(QObject *parent = nullptr);
 
-    ~NetworkClient()
-    {
-        d_closingApplication = true;
-
-        d_serverDatagramSocket.abort();
-
-        d_socket.disconnectFromHost();
-        if (d_socket.state() != QAbstractSocket::UnconnectedState
-            && !d_socket.waitForDisconnected(1000)) {
-                d_socket.abort();
-        }
-    }
+    ~NetworkClient();
 
     // qml
     const QString &address() const
@@ -117,6 +107,8 @@ public:
         return d_simRunning;
     }
 
+    Q_INVOKABLE void manualConnect(const QString &address, int port);
+
 
 public slots:
 
@@ -126,45 +118,9 @@ public slots:
         d_socket.write(reinterpret_cast<const char *>(&clientId), sizeof(clientId));
     }
 
-    void sendCommandString(const QByteArray &commandString)
-    {
-        if (d_socket.state() != QTcpSocket::ConnectedState)
-            return;
+    void sendCommandString(const QByteArray &commandString);
 
-        constexpr ClientToServerIds clientId = ClientToServerIds::COMMAND_STRING;
-        QByteArray msg(reinterpret_cast<const char *>(&clientId), sizeof(clientId));
-
-        const uint64_t commandSize = commandString.size();
-        msg.append(reinterpret_cast<const char *>(&commandSize), sizeof(commandSize));
-
-        msg += commandString;
-        d_socket.write(msg);
-    }
-
-    void updateDefaultSpeedBugs(const QList<definitions::ReferenceSpeed> &newBugs)
-    {
-
-        uint16_t size = newBugs.size();
-
-        QByteArray dataToSend(reinterpret_cast<const char *>(&size), sizeof(size));
-
-        uint8_t identSize;
-        for (const definitions::ReferenceSpeed &bug : newBugs)
-        {
-            dataToSend.append(reinterpret_cast<const char *>(&bug.speed), sizeof(bug.speed));
-            identSize = bug.designator.toUtf8().size();
-            dataToSend.append(reinterpret_cast<const char *>(&identSize), sizeof(identSize));
-            dataToSend.append(bug.designator.toUtf8());
-        }
-
-        size = dataToSend.size();
-        dataToSend.prepend(reinterpret_cast<const char *>(&size), sizeof(size));
-
-        constexpr ClientToServerIds clientId = ClientToServerIds::UPDATE_DEFAULT_SPEEDBUGS;
-        dataToSend.prepend(reinterpret_cast<const char *>(&clientId), sizeof(clientId));
-
-        d_socket.write(dataToSend);
-    }
+    void updateDefaultSpeedBugs(const QList<definitions::ReferenceSpeed> &newBugs);
 
 
 
@@ -177,24 +133,12 @@ private slots:
     void socketStateChanged(QAbstractSocket::SocketState state);
     void socketErrorOccurred(QAbstractSocket::SocketError error);
 
+    void udpSocketStateChanged(QAbstractSocket::SocketState state);
+    void udpSocketErrorOccurred(QAbstractSocket::SocketError error);
+
     void broadcastReceived();
 
-    void abortConnectionAttempt()
-    {
-        d_tryConnecting = false;
-        if (d_socket.state() != QTcpSocket::ConnectedState && d_socket.state() != QTcpSocket::ConnectingState)
-        {
-            d_socket.abort();
-
-            // address or port changed so try again with new address and port
-            if (d_addressOrPortChanged)
-            {
-                d_addressOrPortChanged = false;
-
-                connectToServer();
-            }
-        }
-    }
+    void abortConnectionAttempt();
 
 private:
 
@@ -203,14 +147,7 @@ private:
     bool readTscData();
     bool readServerData();
 
-    void connectToServer()
-    {
-        d_tryConnecting = true;
-
-        d_socket.connectToHost(d_datagramAddress, d_datagramPort);
-
-        d_connectionAttemptKiller.start();
-    }
+    void connectToServer();
 
 signals:
 

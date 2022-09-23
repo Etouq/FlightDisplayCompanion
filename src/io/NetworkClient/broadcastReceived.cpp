@@ -23,7 +23,7 @@ void NetworkClient::broadcastReceived()
 
         d_serverDatagramSocket.readDatagram(datagram.data(), datagram.size(), &serverAddress, &serverPort);
 
-        // qDebug() << "received broadcast:" << serverAddress << "on port:" << serverPort << "with content:" << ("\n" + datagram);
+        qDebug() << "received broadcast:" << serverAddress << "on port:" << serverPort << "with content:" << ("\n" + datagram);
 
         if (d_socket.state() == QTcpSocket::ConnectedState || d_socket.state() == QTcpSocket::ConnectingState)
         {

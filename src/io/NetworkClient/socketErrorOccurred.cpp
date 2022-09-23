@@ -5,7 +5,7 @@ namespace io::network
 
 void NetworkClient::socketErrorOccurred(QAbstractSocket::SocketError error)
 {
-    qDebug() << "socket error:" << error << d_socket.errorString();
+    qWarning() << "tcp socket error:" << error << d_socket.errorString();
     switch (error)
     {
         case QAbstractSocket::ConnectionRefusedError:
@@ -22,6 +22,11 @@ void NetworkClient::socketErrorOccurred(QAbstractSocket::SocketError error)
             emit newErrorMessage(d_socket.errorString());
             break;
     }
+}
+
+void NetworkClient::udpSocketErrorOccurred(QAbstractSocket::SocketError error)
+{
+    qWarning() << "udp socket error:" << error << d_serverDatagramSocket.errorString();
 }
 
 }  // namespace io::network
