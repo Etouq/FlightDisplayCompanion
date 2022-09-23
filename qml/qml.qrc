@@ -1,6 +1,7 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
+
         <file>MfdPage/MfdPage.qml</file>
         <file>MfdPage/NavTopBar.qml</file>
         <file>MfdPage/EngineDisplay/Gauges/Elements/ValueBlinkAnimation.qml</file>
@@ -34,6 +35,7 @@
         <file>MfdPage/GeoMapElem/MapButtons.qml</file>
         <file>MfdPage/GeoMapElem/OverlayMap.qml</file>
         <file>MfdPage/GeoMapElem/RangeCircles.qml</file>
+
         <file>PfdPage/PfdPage.qml</file>
         <file>PfdPage/Elements/AirspeedIndicator/AirspeedIndicator.qml</file>
         <file>PfdPage/Elements/AirspeedIndicator/AirspeedReferenceGroup.qml</file>
@@ -75,8 +77,11 @@
         <file>PfdPage/Elements/NavInfos.qml</file>
         <file>PfdPage/Elements/RadarAltitude.qml</file>
         <file>PfdPage/Elements/WindDataDisplay.qml</file>
+
         <file>TscPage/TscPage.qml</file>
         <file>TscPage/TscPageBase.qml</file>
+        <file>TscPage/ManualConnectPopup.qml</file>
+
         <file>TscPage/MfdPage/MfdHome.qml</file>
         <file>TscPage/MfdPage/MfdPage.qml</file>
         <file>TscPage/MfdPage/EdSettings/EdSettings.qml</file>
@@ -92,12 +97,14 @@
         <file>TscPage/MfdPage/IconSettings/SizePopup.qml</file>
         <file>TscPage/MfdPage/MapSettings/MapOrientationPopup.qml</file>
         <file>TscPage/MfdPage/MapSettings/MapSettings.qml</file>
+
         <file>TscPage/NavComPage/FrequencyKeyboard.qml</file>
         <file>TscPage/NavComPage/NavComHome.qml</file>
         <file>TscPage/NavComPage/NavComPage.qml</file>
         <file>TscPage/NavComPage/RadioRow.qml</file>
         <file>TscPage/NavComPage/TransponderKeyboard.qml</file>
         <file>TscPage/NavComPage/TransponderRow.qml</file>
+
         <file>TscPage/PfdPage/PfdHome.qml</file>
         <file>TscPage/PfdPage/PfdPage.qml</file>
         <file>TscPage/PfdPage/Minimums/Minimums.qml</file>
@@ -110,6 +117,7 @@
         <file>TscPage/PfdPage/SpeedBugPage/SpeedKeyboard.qml</file>
         <file>TscPage/PfdPage/Timers/TimeKeyboard.qml</file>
         <file>TscPage/PfdPage/Timers/Timers.qml</file>
+
         <file>TscPage/styled_controls/FullKeyboard.qml</file>
         <file>TscPage/styled_controls/GradientButton.qml</file>
         <file>TscPage/styled_controls/GradientRoundButton.qml</file>
