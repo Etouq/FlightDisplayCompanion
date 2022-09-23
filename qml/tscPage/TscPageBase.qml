@@ -41,6 +41,10 @@ Item {
         text: pageTitle
     }
 
+    ManualConnectPopup {
+        id: manualConnectPopup
+    }
+
     Rectangle { // navigation bar
         height: parent.height
         anchors.right: parent.right
@@ -161,7 +165,14 @@ Item {
                 height: 60
                 radius: 30
                 color: NetworkClient.connectionState === ConnectionState.CONNECTED ? "green": "red"
+
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: manualConnectPopup.open()
+                }
             }
+
+
         }
     }
 
@@ -175,6 +186,11 @@ Item {
 
             LoadSpinner {
                 radius: 30
+
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: manualConnectPopup.open()
+                }
             }
         }
 
