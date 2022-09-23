@@ -9,6 +9,9 @@ set(CPP_FILES
         src/common/definitions/AircraftDefinition/fromBinary.cpp
         src/common/definitions/gaugeDefinition/fromBinary.cpp
 
+        src/io/Logger/init.cpp
+        src/io/Logger/logOutput.cpp
+
         src/io/NetworkClient/NetworkClient.cpp
         src/io/NetworkClient/readSimData.cpp
         src/io/NetworkClient/readMfdData.cpp
@@ -19,6 +22,11 @@ set(CPP_FILES
         src/io/NetworkClient/socketStateChanged.cpp
         src/io/NetworkClient/socketErrorOccurred.cpp
         src/io/NetworkClient/broadcastReceived.cpp
+        src/io/NetworkClient/abortConnectionAttempt.cpp
+        src/io/NetworkClient/connectToServer.cpp
+        src/io/NetworkClient/manualConnect.cpp
+        src/io/NetworkClient/sendCommandString.cpp
+        src/io/NetworkClient/updateDefaultSpeedBugs.cpp
 
         src/pages/MfdPage/MfdPage.cpp
         src/pages/MfdPage/loadAircraft.cpp
@@ -97,6 +105,8 @@ set(HPP_FILES
         src/common/definitions/baseTypes.hpp
         src/common/definitions/AircraftDefinition/AircraftDefinition.hpp
         src/common/definitions/gaugeDefinition/gaugeDefinition.hpp
+
+        src/io/Logger/Logger.hpp
 
         src/io/NetworkClient/NetworkClient.hpp
 

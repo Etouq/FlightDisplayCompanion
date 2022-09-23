@@ -4,6 +4,7 @@
 #include "pages/MfdPage/MfdPage.hpp"
 #include "pages/PfdPage/PfdPage.hpp"
 #include "pages/TscPage/TscPage.hpp"
+#include "io/Logger/Logger.hpp"
 
 #include <QQmlApplicationEngine>
 #include <QFontDatabase>
@@ -11,12 +12,15 @@
 #include <QLocale>
 #include <QObject>
 #include <QSurfaceFormat>
-#include <QTimer>
+#include <QNetworkProxy>
 
 int main(int argc, char *argv[])
 {
+    Logger::init();
     //QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
-    qSetMessagePattern("[%{time HH:mm:ss.zzz} %{type}] %{if-category}%{category}: %{endif}- %{message}");
+//    qSetMessagePattern("[%{time HH:mm:ss.zzz} %{type}] %{if-category}%{category}: %{endif}- %{message}");
+    qInstallMessageHandler(Logger::logOutput);
+
     // initialize application
     QGuiApplication app(argc, argv);
     QGuiApplication::setOrganizationName("nl.Etouq");
@@ -24,6 +28,7 @@ int main(int argc, char *argv[])
     QGuiApplication::setApplicationDisplayName("Flight Display Companion Test");
 
     QLocale::setDefault(QLocale::c());
+    QNetworkProxy::setApplicationProxy(QNetworkProxy::NoProxy);
 
     // add roboto font
     QFontDatabase::addApplicationFont(":/fonts/RobotoMono-Bold.ttf");
