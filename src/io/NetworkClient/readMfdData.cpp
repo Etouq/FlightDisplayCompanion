@@ -118,7 +118,7 @@ bool NetworkClient::readMfdData()
         }
         case MfdIdentifier::GPS_WP_ETE:
         {
-            uint32_t newValue = 0;
+            int32_t newValue = 0;
             if (static_cast<uint64_t>(d_socket.bytesAvailable()) < sizeof(newValue))
             {
                 d_socket.rollbackTransaction();
@@ -132,7 +132,7 @@ bool NetworkClient::readMfdData()
         }
         case MfdIdentifier::GPS_DEST_ETE:
         {
-            uint32_t newValue = 0;
+            int32_t newValue = 0;
             if (static_cast<uint64_t>(d_socket.bytesAvailable()) < sizeof(newValue))
             {
                 d_socket.rollbackTransaction();

@@ -45,7 +45,7 @@ bool NetworkClient::readPfdData()
         }
         case PfdIdentifier::TRUE_AIRSPEED:
         {
-            uint32_t newValue = 0;
+            int32_t newValue = 0;
 
             if (static_cast<uint64_t>(d_socket.bytesAvailable()) < sizeof(newValue))
             {
@@ -60,7 +60,7 @@ bool NetworkClient::readPfdData()
         }
         case PfdIdentifier::REF_SPEED:
         {
-            uint32_t newValue = 0;
+            int32_t newValue = 0;
 
             if (static_cast<uint64_t>(d_socket.bytesAvailable()) < sizeof(newValue))
             {
@@ -107,7 +107,7 @@ bool NetworkClient::readPfdData()
         }
         case PfdIdentifier::REF_ALTITUDE:
         {
-            uint32_t newValue = 0;
+            int32_t newValue = 0;
 
             if (static_cast<uint64_t>(d_socket.bytesAvailable()) < sizeof(newValue))
             {
@@ -153,7 +153,7 @@ bool NetworkClient::readPfdData()
         }
         case PfdIdentifier::REF_VSPEED:
         {
-            uint32_t newValue = 0;
+            int32_t newValue = 0;
 
             if (static_cast<uint64_t>(d_socket.bytesAvailable()) < sizeof(newValue))
             {
@@ -421,7 +421,7 @@ bool NetworkClient::readPfdData()
         }
         case PfdIdentifier::GROUND_SPEED:
         {
-            uint32_t newValue = 0;
+            int32_t newValue = 0;
 
             if (static_cast<uint64_t>(d_socket.bytesAvailable()) < sizeof(newValue))
             {
